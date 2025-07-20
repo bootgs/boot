@@ -3,7 +3,8 @@
     "rootDir": "src",
     "outDir": "./dist",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "config/types"
     ],
     "types": [
       "google-apps-script"
@@ -33,10 +34,10 @@
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "composite": false,
-    "baseUrl": "src",
     //    "sourceMap": true,
     //    "declaration": true,
     //    "declarationMap": true,
+    "baseUrl": "src",
     "paths": {
       "@/*": [
         "./*"

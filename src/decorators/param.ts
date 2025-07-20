@@ -1,4 +1,7 @@
-import { INJECT_TOKENS_METADATA, PARAM_DEFINITIONS_METADATA } from "../config/constants";
+import {
+  INJECT_TOKENS_METADATA,
+  PARAM_DEFINITIONS_METADATA
+} from "../config/constants";
 import { InjectTokenDefinition, ParamDefinition, ParamSource } from "../types";
 
 /**
