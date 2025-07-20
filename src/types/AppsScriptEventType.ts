@@ -1,0 +1,8 @@
+export enum AppsScriptEventType {
+  INSTALL = "INSTALL",
+  OPEN = "OPEN",
+  EDIT = "EDIT",
+  CHANGE = "CHANGE",
+  SELECTION_CHANGE = "SELECTION_CHANGE",
+  FORM_SUBMIT = "FORM_SUBMIT"
+}

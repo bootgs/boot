@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="appsscript" pattern="file[appsscript-add-on-conditional-dropdowns]:src/main/appsscript//*" />
+</component>
