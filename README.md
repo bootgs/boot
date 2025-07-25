@@ -42,7 +42,7 @@ export class Sheet {
 ### Class decorators
 
 | Decorator             | Description                                                   |
-|-----------------------|---------------------------------------------------------------|
+| --------------------- | ------------------------------------------------------------- |
 | `@Controller()`       | Marks a class as a general-purpose controller.                |
 | `@Service()`          | Marks a class as a service, typically holding business logic. |
 | `@Repository()`       | Marks a class as a repository, abstracting data access logic. |
@@ -61,7 +61,7 @@ export class Sheet {
 ### Method decorators
 
 | Decorator            | Description                                                                                   |
-|----------------------|-----------------------------------------------------------------------------------------------|
+| -------------------- | --------------------------------------------------------------------------------------------- |
 | `@Install()`         | Handles `onInstall` event, triggered when the add-on is first installed.                      |
 | `@Open()`            | Handles `onOpen` event, triggered when a Google Sheet is opened.                              |
 | `@Edit()`            | Handles `onEdit` event, triggered by manual cell changes in a Google Sheet.                   |
@@ -86,7 +86,7 @@ export class Sheet {
 ### Parameter decorators
 
 | Decorator         | Description                                                |
-|-------------------|------------------------------------------------------------|
+| ----------------- | ---------------------------------------------------------- |
 | `@Event()`        | Injects the full Google Apps Script event object.          |
 | `@Request()`      | Injects the full request object or a specific key from it. |
 | `@Headers()`      | Injects request headers or a specific header value.        |
