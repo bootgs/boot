@@ -5,6 +5,7 @@ import globals from "./config/eslint/globals.ts";
 import prettier from "./config/eslint/prettier.ts";
 import json from "./config/eslint/json.ts";
 import markdown from "./config/eslint/markdown.ts";
+import customRules from "./config/eslint/custom-rules.ts";
 import ignores from "./config/eslint/ignores.ts";
 
 export default defineConfig([
@@ -14,5 +15,6 @@ export default defineConfig([
   prettier,
   ...json,
   markdown,
+  customRules,
   ignores
 ]);
