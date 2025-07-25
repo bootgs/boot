@@ -43,9 +43,10 @@ import {
   RequestBody,
   RequestParam,
   Response
-} from "@/appsscript/utils/boot";
+} from "@/types";
 import { PARAM_DEFINITIONS_METADATA } from "@/appsscript/utils/boot/config/constants";
 import { describe, expect, it } from "vitest";
+
 function getParameterMetadata(target, propertyKey) {
   const metadataTarget = target.prototype;
   const rawMetadata =
@@ -56,12 +57,14 @@ function getParameterMetadata(target, propertyKey) {
     ) || {};
   return rawMetadata;
 }
+
 describe("HTTP Parameter Decorators", () => {
   describe("@Param / @PathVariable", () => {
     it("should define correct metadata for a @Param with a key", () => {
       class TestController {
         testMethod(id) {}
       }
+
       __decorate(
         [
           __param(0, Param("id")),
@@ -82,6 +85,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(params) {}
       }
+
       __decorate(
         [
           __param(0, Param()),
@@ -102,6 +106,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(name) {}
       }
+
       __decorate(
         [
           __param(0, PathVariable("name")),
@@ -124,6 +129,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(search) {}
       }
+
       __decorate(
         [
           __param(0, Query("search")),
@@ -144,6 +150,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(queryParams) {}
       }
+
       __decorate(
         [
           __param(0, Query()),
@@ -164,6 +171,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(sort) {}
       }
+
       __decorate(
         [
           __param(0, RequestParam("sort")),
@@ -186,6 +194,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(data) {}
       }
+
       __decorate(
         [
           __param(0, Body("data")),
@@ -206,6 +215,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(fullBody) {}
       }
+
       __decorate(
         [
           __param(0, Body()),
@@ -226,6 +236,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(user) {}
       }
+
       __decorate(
         [
           __param(0, RequestBody("user")),
@@ -248,6 +259,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(event) {}
       }
+
       __decorate(
         [
           __param(0, Event()),
@@ -268,6 +280,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(event) {}
       }
+
       __decorate(
         [
           __param(0, Event("someKey")),
@@ -290,6 +303,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(auth) {}
       }
+
       __decorate(
         [
           __param(0, Headers("Authorization")),
@@ -314,6 +328,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(headers) {}
       }
+
       __decorate(
         [
           __param(0, Headers()),
@@ -336,6 +351,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(method) {}
       }
+
       __decorate(
         [
           __param(0, Request("method")),
@@ -356,6 +372,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(req) {}
       }
+
       __decorate(
         [
           __param(0, Request()),
@@ -378,6 +395,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(status) {}
       }
+
       __decorate(
         [
           __param(0, Response("status")),
@@ -398,6 +416,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(res) {}
       }
+
       __decorate(
         [
           __param(0, Response()),
@@ -420,6 +439,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(id, search, body, event, accept, req, ok) {}
       }
+
       __decorate(
         [
           __param(0, Param("userId")),
@@ -459,8 +479,10 @@ describe("HTTP Parameter Decorators", () => {
     it("should define correct metadata for parameters in different methods", () => {
       class TestController {
         methodOne(id) {}
+
         methodTwo(page) {}
       }
+
       __decorate(
         [
           __param(0, Param("id")),
@@ -497,8 +519,10 @@ describe("HTTP Parameter Decorators", () => {
     it("should correctly handle parameters with the same index but different methods", () => {
       class TestController {
         methodA(alpha) {}
+
         methodB(beta) {}
       }
+
       __decorate(
         [
           __param(0, Param("alpha")),
@@ -536,6 +560,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         someMethod(arg1, arg2) {}
       }
+
       const metadata = getParameterMetadata(TestController, "someMethod");
       expect(metadata).toEqual({}); // Метаданных не должно быть
     });
@@ -543,6 +568,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         existingMethod() {}
       }
+
       const metadata = getParameterMetadata(
         TestController,
         "nonExistentMethod"
@@ -555,6 +581,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(param) {}
       }
+
       __decorate(
         [
           __param(0, Param(null)),
@@ -575,6 +602,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(query) {}
       }
+
       __decorate(
         [
           __param(0, Query("")),
@@ -595,6 +623,7 @@ describe("HTTP Parameter Decorators", () => {
       class TestController {
         testMethod(body) {}
       }
+
       __decorate(
         [
           __param(0, Body(123)),

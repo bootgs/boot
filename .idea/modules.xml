@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/appsscript-add-on-conditional-dropdowns.iml" filepath="$PROJECT_DIR$/.idea/appsscript-add-on-conditional-dropdowns.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/appsscript-boot.iml" filepath="$PROJECT_DIR$/.idea/appsscript-boot.iml" />
     </modules>
   </component>
 </project>
