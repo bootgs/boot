@@ -36,6 +36,7 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Param / @PathVariable", () => {
     it("should define correct metadata for a @Param with a key", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         testMethod(@Param("id") id: string) {}
       }
 
@@ -47,6 +48,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for a @Param without a key (full object injection)", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Param() params: any) {}
       }
 
@@ -58,6 +60,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("PathVariable should be an alias for Param", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         testMethod(@PathVariable("name") name: string) {}
       }
 
@@ -71,6 +74,7 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Query / @RequestParam", () => {
     it("should define correct metadata for a @Query with a key", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         testMethod(@Query("search") search: string) {}
       }
 
@@ -82,7 +86,8 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for a @Query without a key", () => {
       class TestController {
-        testMethod(@Query() queryParams: any) {}
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        testMethod(@Query() queryParams: never) {}
       }
 
       const metadata = getParameterMetadata(TestController, "testMethod");
@@ -93,6 +98,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("RequestParam should be an alias for Query", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         testMethod(@RequestParam("sort") sort: string) {}
       }
 
@@ -106,7 +112,8 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Body / @RequestBody", () => {
     it("should define correct metadata for a @Body with a key", () => {
       class TestController {
-        testMethod(@Body("data") data: any) {}
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        testMethod(@Body("data") data: never) {}
       }
 
       const metadata = getParameterMetadata(TestController, "testMethod");
@@ -117,6 +124,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for a @Body without a key (full body injection)", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Body() fullBody: any) {}
       }
 
@@ -128,7 +136,8 @@ describe("HTTP Parameter Decorators", () => {
 
     it("RequestBody should be an alias for Body", () => {
       class TestController {
-        testMethod(@RequestBody("user") user: any) {}
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        testMethod(@RequestBody("user") user: never) {}
       }
 
       const metadata = getParameterMetadata(TestController, "testMethod");
@@ -141,6 +150,7 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Event", () => {
     it("should define correct metadata for @Event", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Event() event: any) {}
       }
 
@@ -152,6 +162,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define key as passed for @Event if provided", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Event("someKey" as any) event: any) {}
       }
 
@@ -165,6 +176,7 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Headers", () => {
     it("should define correct metadata for @Headers with a key", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         testMethod(@Headers("Authorization") auth: string) {}
       }
 
@@ -180,6 +192,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for @Headers without a key (full headers object)", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Headers() headers: any) {}
       }
 
@@ -193,6 +206,7 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Request", () => {
     it("should define correct metadata for @Request with a key", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         testMethod(@Request("method") method: string) {}
       }
 
@@ -204,6 +218,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for @Request without a key (full request object)", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Request() req: any) {}
       }
 
@@ -217,6 +232,7 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Response", () => {
     it("should define correct metadata for @Response with a key", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         testMethod(@Response("status") status: number) {}
       }
 
@@ -228,6 +244,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for @Response without a key (full response object)", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Response() res: any) {}
       }
 
@@ -242,12 +259,19 @@ describe("HTTP Parameter Decorators", () => {
     it("should define correct metadata for multiple parameters in the same method", () => {
       class TestController {
         testMethod(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           @Param("userId") id: string,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           @Query("search") search: string,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
           @Body() body: any,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
           @Event() event: any,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           @Headers("Accept") accept: string,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
           @Request() req: any,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           @Response("ok") ok: boolean
         ) {}
       }
@@ -266,8 +290,10 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for parameters in different methods", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         methodOne(@Param("id") id: string) {}
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         methodTwo(@Query("page") page: number) {}
       }
 
@@ -287,8 +313,10 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should correctly handle parameters with the same index but different methods", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         methodA(@Param("alpha") alpha: string) {}
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         methodB(@Query("beta") beta: string) {}
       }
 
@@ -307,6 +335,7 @@ describe("HTTP Parameter Decorators", () => {
   describe("No Decorator Applied", () => {
     it("should not define any parameter metadata if no decorator is applied to a method", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         someMethod(arg1: string, arg2: number) {}
       }
 
@@ -330,6 +359,7 @@ describe("HTTP Parameter Decorators", () => {
   describe("Invalid/Unexpected Keys", () => {
     it("should store null as key if provided", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Param(null as any) param: any) {}
       }
 
@@ -341,6 +371,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should store empty string as key if provided", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Query("") query: any) {}
       }
 
@@ -352,6 +383,7 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should store number as key if provided (TS warning, but JS allows)", () => {
       class TestController {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
         testMethod(@Body(123 as any) body: any) {}
       }
 

@@ -25,6 +25,7 @@ function createAppsScriptDecorator(
   eventType: AppsScriptEventType,
   options?: Omit<AppsScriptOptions, "eventType">
 ): MethodDecorator {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (target, key, descriptor: TypedPropertyDescriptor<any>) => {
     Reflect.defineMetadata(
       APPSSCRIPT_EVENT_METADATA,
@@ -167,6 +168,7 @@ function createHttpDecorator(method: RequestMethod) {
     return (
       target: object,
       key: string | symbol,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       descriptor: TypedPropertyDescriptor<any>
     ) => {
       Reflect.defineMetadata(

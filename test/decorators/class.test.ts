@@ -142,6 +142,7 @@ describe("HttpController Decorator", () => {
   });
 
   it("should correctly handle a number as basePath (TypeScript will warn, but JS runtime allows)", () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const numberBasePath = 123 as any;
 
     @HttpController(numberBasePath)
@@ -157,6 +158,7 @@ describe("HttpController Decorator", () => {
   });
 
   it("should correctly handle null as basePath (TypeScript will warn, but JS runtime allows)", () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const nullBasePath = null as any;
 
     @HttpController(nullBasePath)

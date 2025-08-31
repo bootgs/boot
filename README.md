@@ -1,4 +1,16 @@
+<a name="top"></a>
+
 # Boot for Google Apps Script Projects
+
+[![Built%20with-clasp](https://img.shields.io/badge/Built%20with-clasp-4285f4.svg)](https://github.com/google/clasp)
+[![License](https://img.shields.io/github/license/MaksymStoianov/appsscript-boot?label=License)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/MaksymStoianov/appsscript-boot?label=Release)](https://img.shields.io/github/v/release/MaksymStoianov/appsscript-boot)
+
+[![GitHub Stars](https://img.shields.io/github/stars/MaksymStoianov/appsscript-boot?style=social)](https://github.com/MaksymStoianov/appsscript-boot/stargazers)
+[![GitHub Fork](https://img.shields.io/github/forks/MaksymStoianov/appsscript-boot?style=social)](https://github.com/MaksymStoianov/appsscript-boot/forks)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/MaksymStoianov?style=social&logo=github)](https://github.com/sponsors/MaksymStoianov)
+
+## Introduction
 
 `appsscript-boot` is a powerful, scalable, and modern framework for building high-performance Google Apps Script
 applications.
@@ -41,6 +53,8 @@ export class Sheet {
 
 ### Class decorators
 
+<details open><summary>Class decorators</summary>
+
 | Decorator             | Description                                                   |
 | --------------------- | ------------------------------------------------------------- |
 | `@Controller()`       | Marks a class as a general-purpose controller.                |
@@ -58,32 +72,40 @@ export class Sheet {
 | `@SlideController()`  | Marks a class as a Google Slides event controller.            |
 | `@SlidesController()` | Alias for `@SlideController()`.                               |
 
+</details>
+
 ### Method decorators
 
-| Decorator            | Description                                                                                   |
-| -------------------- | --------------------------------------------------------------------------------------------- |
-| `@Install()`         | Handles `onInstall` event, triggered when the add-on is first installed.                      |
-| `@Open()`            | Handles `onOpen` event, triggered when a Google Sheet is opened.                              |
-| `@Edit()`            | Handles `onEdit` event, triggered by manual cell changes in a Google Sheet.                   |
-| `@Change()`          | Handles `onChange` event, triggered by any structural or content change in a Google Sheet.    |
-| `@SelectionChange()` | Handles `onSelectionChange` event, triggered by user cell selection changes.                  |
-| `@FormSubmit()`      | Handles `onFormSubmit` event, triggered when a form connected to a Google Sheet is submitted. |
-| `@Post()`            | Maps a method to handle HTTP POST requests.                                                   |
-| `@Get()`             | Maps a method to handle HTTP GET requests.                                                    |
-| `@Delete()`          | Maps a method to handle HTTP DELETE requests.                                                 |
-| `@Put()`             | Maps a method to handle HTTP PUT requests.                                                    |
-| `@Patch()`           | Maps a method to handle HTTP PATCH requests.                                                  |
-| `@Options()`         | Maps a method to handle HTTP OPTIONS requests.                                                |
-| `@Head()`            | Maps a method to handle HTTP HEAD requests.                                                   |
-| `@PostMapping()`     | Alias for `@Post()`.                                                                          |
-| `@GetMapping()`      | Alias for `@Get()`.                                                                           |
-| `@DeleteMapping()`   | Alias for `@Delete()`.                                                                        |
-| `@PutMapping()`      | Alias for `@Put()`.                                                                           |
-| `@PatchMapping()`    | Alias for `@Patch()`.                                                                         |
-| `@OptionsMapping()`  | Alias for `@Options()`.                                                                       |
-| `@HeadMapping()`     | Alias for `@Head()`.                                                                          |
+<details open><summary>Method decorators</summary>
+
+| Decorator            | Description                                                                                                                                                  |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `@Install()`         | Handles [`onInstall`](https://developers.google.com/apps-script/guides/triggers#oninstalle) event, triggered when the add-on is first installed.             |
+| `@Open()`            | Handles [`onOpen`](https://developers.google.com/apps-script/guides/triggers#onopene) event, triggered when a Google Sheet is opened.                        |
+| `@Edit()`            | Handles [`onEdit`](https://developers.google.com/apps-script/guides/triggers#onedite) event, triggered by manual cell changes in a Google Sheet.             |
+| `@Change()`          | Handles `onChange` event, triggered by any structural or content change in a Google Sheet.                                                                   |
+| `@SelectionChange()` | Handles [`onSelectionChange`](https://developers.google.com/apps-script/guides/triggers#onselectionchangee) event, triggered by user cell selection changes. |
+| `@FormSubmit()`      | Handles `onFormSubmit` event, triggered when a form connected to a Google Sheet is submitted.                                                                |
+| `@Post()`            | Maps a method to handle HTTP POST requests.                                                                                                                  |
+| `@Get()`             | Maps a method to handle HTTP GET requests.                                                                                                                   |
+| `@Delete()`          | Maps a method to handle HTTP DELETE requests.                                                                                                                |
+| `@Put()`             | Maps a method to handle HTTP PUT requests.                                                                                                                   |
+| `@Patch()`           | Maps a method to handle HTTP PATCH requests.                                                                                                                 |
+| `@Options()`         | Maps a method to handle HTTP OPTIONS requests.                                                                                                               |
+| `@Head()`            | Maps a method to handle HTTP HEAD requests.                                                                                                                  |
+| `@PostMapping()`     | Alias for `@Post()`.                                                                                                                                         |
+| `@GetMapping()`      | Alias for `@Get()`.                                                                                                                                          |
+| `@DeleteMapping()`   | Alias for `@Delete()`.                                                                                                                                       |
+| `@PutMapping()`      | Alias for `@Put()`.                                                                                                                                          |
+| `@PatchMapping()`    | Alias for `@Patch()`.                                                                                                                                        |
+| `@OptionsMapping()`  | Alias for `@Options()`.                                                                                                                                      |
+| `@HeadMapping()`     | Alias for `@Head()`.                                                                                                                                         |
+
+</details>
 
 ### Parameter decorators
+
+<details open><summary>Parameter decorators</summary>
 
 | Decorator         | Description                                                |
 | ----------------- | ---------------------------------------------------------- |
@@ -98,7 +120,9 @@ export class Sheet {
 | `@RequestBody()`  | Alias for `@Body()`.                                       |
 | `@Inject()`       | Explicitly specifies an injection token for a dependency.  |
 
-## TODO
+</details>
+
+## Tasks
 
 <details><summary>More</summary>
 
@@ -106,3 +130,15 @@ export class Sheet {
 - [ ] Develop a `Response` decorator for parameters.
 
 </details>
+
+## Changelog
+
+For a detailed list of changes and updates, please refer to the [CHANGELOG](CHANGELOG.md) file.
+
+## License
+
+This project is licensed under the [LICENSE](LICENSE) file.
+
+---
+
+⭐ **Like this project?** [Star our awesome repo »](https://github.com/MaksymStoianov/appsscript-boot)
