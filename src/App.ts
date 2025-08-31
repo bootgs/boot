@@ -37,7 +37,7 @@ export class App {
   private static instance: App | null = null;
 
   private readonly _controllers: Newable[] = [];
-  private readonly _providers = new Map<Newable, any>();
+  private readonly _providers = new Map<Newable, unknown>();
   private readonly _routes: RouteMetadata[] = [];
 
   /**
@@ -234,6 +234,7 @@ export class App {
       const handler =
         controller[route.handler as keyof typeof controller].bind(controller);
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const body = ((data, type): any => {
         if (!isString(data)) {
           return data;
@@ -297,6 +298,7 @@ export class App {
    * @param eventType - The expected type of event. This is used to match with the metadata placed by event decorators on controller methods.
    */
   private handleAppsScriptEvent(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     event: any,
     eventType: AppsScriptEventType
   ): void {
@@ -393,7 +395,9 @@ export class App {
    */
   private checkEventFilters(
     eventType: AppsScriptEventType,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     event: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     methodOptions: Record<string, any> | undefined
   ): boolean {
     if (!methodOptions) {
@@ -478,6 +482,7 @@ export class App {
     event: GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost
   ): HttpRequest {
     const headers: HttpHeaders =
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ((input: unknown): any => {
         if (!isString(input)) {
           return null;
@@ -678,6 +683,7 @@ export class App {
       body?: string | object | null | undefined;
       response?: HttpResponse;
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): any[] {
     const targetPrototype = Object.getPrototypeOf(target);
 
@@ -702,10 +708,12 @@ export class App {
 
     metadata.sort((a, b) => a.index - b.index);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const designParamTypes: Newable<any>[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) ||
       [];
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const args: any[] = [];
 
     for (const param of metadata) {
@@ -725,19 +733,22 @@ export class App {
         case ParamSource.BODY:
           args[param.index] =
             param.key && ctx.body && typeof ctx.body === "object"
-              ? (ctx.body as Record<string, any>)[param.key]
+              ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (ctx.body as Record<string, any>)[param.key]
               : ctx.body;
           break;
 
         case ParamSource.EVENT:
           args[param.index] = param.key
-            ? (ctx.event as any)[param.key]
+            ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (ctx.event as any)[param.key]
             : ctx.event;
           break;
 
         case ParamSource.REQUEST:
           args[param.index] = param.key
-            ? (ctx.request as any)?.[param.key]
+            ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (ctx.request as any)?.[param.key]
             : ctx.request;
           break;
 
@@ -754,7 +765,8 @@ export class App {
 
         case ParamSource.RESPONSE:
           args[param.index] = param.key
-            ? (ctx.response as any)?.[param.key]
+            ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (ctx.response as any)?.[param.key]
             : ctx.response;
           break;
 
@@ -768,6 +780,7 @@ export class App {
             } else {
               args[param.index] = undefined;
             }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
           } catch (err: unknown) {
             args[param.index] = undefined;
           }

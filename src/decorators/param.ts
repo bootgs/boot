@@ -1,7 +1,4 @@
-import {
-  INJECT_TOKENS_METADATA,
-  PARAM_DEFINITIONS_METADATA
-} from "../config/constants";
+import { INJECT_TOKENS_METADATA, PARAM_DEFINITIONS_METADATA } from "../config/constants";
 import { InjectTokenDefinition, ParamDefinition, ParamSource } from "../types";
 
 /**
@@ -37,6 +34,7 @@ function assignMetadata(
 function assignInjectMetadata(
   existing: Record<string, InjectTokenDefinition>,
   index: number,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   token?: any
 ): Record<string, InjectTokenDefinition> {
   const type = ParamSource.INJECT;
@@ -56,6 +54,7 @@ function assignInjectMetadata(
  * @environment `Google Apps Script`
  */
 export function getInjectionTokens(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   target: any,
   propertyKey?: string | symbol
 ): Record<string, InjectTokenDefinition> {
@@ -200,6 +199,7 @@ export const Event = createDecorator(ParamSource.EVENT);
  * @returns Декоратор параметра.
  * @environment `Google Apps Script`
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function Inject(token?: any): ParameterDecorator {
   return (target, propertyKey, parameterIndex) => {
     const metadataTarget =
