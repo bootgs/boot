@@ -1,18 +1,15 @@
-import {
-  INJECT_TOKENS_METADATA,
-  PARAM_DEFINITIONS_METADATA
-} from "../config/constants";
+import { INJECT_TOKENS_METADATA, PARAM_DEFINITIONS_METADATA } from "../config/constants";
 import { InjectTokenDefinition, ParamDefinition, ParamSource } from "../types";
 
 /**
- * Обновляет метаданные параметров с учётом позиции аргумента (индекса).
- * Используется внутренней фабричной функцией для регистрации декораторов параметров.
+ * Updates parameter metadata with the argument's position (index).
+ * Used by an internal factory function to register parameter decorators.
  *
- * @param existing - Существующие метаданные параметров.
- * @param index - Индекс (позиция) параметра в списке аргументов функции.
- * @param type - Тип источника данных для параметра.
- * @param [key] - Необязательный ключ для извлечения конкретного значения.
- * @returns Обновлённые метаданные параметров.
+ * @param   existing - The existing parameter metadata.
+ * @param   index - The index of the parameter in the function's argument list.
+ * @param   type - The data source type for the parameter.
+ * @param   [key] - An optional key to extract a specific value.
+ * @returns The updated parameter metadata.
  */
 function assignMetadata(
   existing: Record<string, ParamDefinition>,
@@ -27,12 +24,12 @@ function assignMetadata(
 }
 
 /**
- * Обновляет или добавляет метаданные для токенов внедрения конкретного параметра функции (аргумента) на основе его индекса и токена.
+ * Updates or adds metadata for the injection tokens of a specific function parameter (argument) based on its index and token.
  *
- * @param existing - Существующие метаданные токенов внедрения.
- * @param index - Индекс (позиция) параметра в списке аргументов функции.
- * @param [token] - Токен внедрения для данного параметра.
- * @returns Обновлённые метаданные токенов внедрения.
+ * @param   existing - The existing injection tokens metadata.
+ * @param   index - The index of the parameter in the function's argument list.
+ * @param   [token] - The injection token for this parameter.
+ * @returns The updated injection tokens metadata.
  */
 function assignInjectMetadata(
   existing: Record<string, InjectTokenDefinition>,
@@ -49,11 +46,11 @@ function assignInjectMetadata(
 }
 
 /**
- * Извлекает токены внедрения, связанные с конструктором класса или прототипом метода.
+ * Retrieves injection tokens associated with a class constructor or a method prototype.
  *
- * @param target - Конструктор класса (для параметров конструктора) или Прототип класса (для параметров метода).
- * @param [propertyKey] - Необязательный ключ свойства (имя метода), если токены внедряются в параметры метода.
- * @returns Объект с токенами, где ключ - это строка "${type}:${index}".
+ * @param       target - The class constructor (for constructor parameters) or the class prototype (for method parameters).
+ * @param       [propertyKey] - The optional property key (method name) if tokens are being injected into method parameters.
+ * @returns     An object with tokens, where the key is a string "${type}:${index}".
  * @environment `Google Apps Script`
  */
 export function getInjectionTokens(
@@ -78,7 +75,7 @@ export function getInjectionTokens(
 }
 
 /**
- * Создаёт параметр-декоратор с заданным источником.
+ * Creates a parameter decorator with a specified source.
  */
 function createDecorator(type: ParamSource) {
   return (key?: string): ParameterDecorator => {
@@ -116,90 +113,174 @@ function createDecorator(type: ParamSource) {
 }
 
 /**
- * Декоратор параметра для инъекции значений из параметров пути URL.
- * Это общий декоратор для параметров пути.
+ * A parameter decorator for injecting values from URL path parameters.
+ * This is a generic decorator for path parameters.
  *
- * @param key - Имя параметра пути для извлечения (`/users/{id}`).
- * @returns Декоратор параметра.
+ * @param       key - The name of the path parameter to extract (`/users/{id}`).
+ * @see         PathVariable
+ * @see         Query
+ * @see         RequestParam
+ * @see         Body
+ * @see         RequestBody
+ * @see         Request
+ * @see         Headers
+ * @see         Response
+ * @see         Event
+ * @see         Inject
+ * @returns     A parameter decorator.
  * @environment `Google Apps Script`
  */
 export const Param = createDecorator(ParamSource.PARAM);
 
 /**
- * Декоратор параметра для инъекции значений из query-параметров URL.
- * Это общий декоратор для query-параметров.
+ * A parameter decorator for injecting values from URL query parameters.
+ * This is a generic decorator for query parameters.
  *
- * @param [key] - Имя query-параметра для извлечения (`?name=value`).
- * @returns Декоратор параметра.
+ * @param       [key] - The name of the query parameter to extract (`?name=value`).
+ * @see         Param
+ * @see         PathVariable
+ * @see         RequestParam
+ * @see         Body
+ * @see         RequestBody
+ * @see         Request
+ * @see         Headers
+ * @see         Response
+ * @see         Event
+ * @see         Inject
+ * @returns     A parameter decorator.
  * @environment `Google Apps Script`
  */
 export const Query = createDecorator(ParamSource.QUERY);
 
 /**
- * Декоратор параметра для инъекции полного тела запроса (request body).
- * Обычно используется для HTTP POST/PUT/PATCH запросов.
+ * A parameter decorator for injecting the full request body.
+ * It is typically used for HTTP POST/PUT/PATCH requests.
  *
- * @param [key] - Имя ключа для извлечения конкретного значения из тела запроса (например, 'name' из JSON: `{ "name": "value" }`).
- * Если не указан, инжектируется полное тело запроса.
- * @returns Декоратор параметра.
+ * @param       [key] - The name of a key to extract a specific value from the request body (e.g., 'name' from JSON: `{ "name": "value" }`).
+ * If not specified, the full request body is injected.
+ * @see         Param
+ * @see         PathVariable
+ * @see         Query
+ * @see         RequestParam
+ * @see         RequestBody
+ * @see         Request
+ * @see         Headers
+ * @see         Response
+ * @see         Event
+ * @see         Inject
+ * @returns     A parameter decorator.
  * @environment `Google Apps Script`
  */
 export const Body = createDecorator(ParamSource.BODY);
 
 /**
- * @param [key] - Имя ключа для извлечения конкретного значения.
- * Если не указан, инжектируется полное ...
- * @returns Декоратор параметра.
+ * A parameter decorator for injecting the request object.
+ *
+ * @param       [key] - The name of a key to extract a specific value from the request object. If not specified, the entire request object is injected.
+ * @see         Param
+ * @see         PathVariable
+ * @see         Query
+ * @see         RequestParam
+ * @see         Body
+ * @see         RequestBody
+ * @see         Headers
+ * @see         Response
+ * @see         Event
+ * @see         Inject
+ * @returns     A parameter decorator.
  * @environment `Google Apps Script`
  */
 export const Request = createDecorator(ParamSource.REQUEST);
 
 /**
- * @param [key] - Имя ключа для извлечения конкретного значения.
- * Если не указан, инжектируется полное ...
- * @returns Декоратор параметра.
+ * A parameter decorator for injecting request headers.
+ *
+ * @param       [key] - The name of a header key to extract a specific value. If not specified, all request headers are injected as an object.
+ * @see         Param
+ * @see         PathVariable
+ * @see         Query
+ * @see         RequestParam
+ * @see         Body
+ * @see         RequestBody
+ * @see         Request
+ * @see         Headers
+ * @see         Response
+ * @see         Event
+ * @see         Inject
+ * @returns     A parameter decorator.
  * @environment `Google Apps Script`
  */
 export const Headers = createDecorator(ParamSource.HEADERS);
 
 /**
- * @param [key] - Имя ключа для извлечения конкретного значения.
- * Если не указан, инжектируется полное ...
- * @returns Декоратор параметра.
+ * A parameter decorator for injecting the response object.
+ *
+ * It is used to get a reference to the response object to set headers, status codes, or modify the response before it is sent.
+ *
+ * @see         Param
+ * @see         PathVariable
+ * @see         Query
+ * @see         RequestParam
+ * @see         Body
+ * @see         RequestBody
+ * @see         Request
+ * @see         Event
+ * @see         Inject
+ * @returns     A parameter decorator.
  * @environment `Google Apps Script`
  */
 export const Response = createDecorator(ParamSource.RESPONSE);
 
 /**
- * Декоратор параметра, эквивалентный {@link Param}.
+ * A parameter decorator equivalent to {@link Param}.
  */
 export const PathVariable = createDecorator(ParamSource.PARAM);
 
 /**
- * Декоратор параметра, эквивалентный {@link Query}.
+ * A parameter decorator equivalent to {@link Query}.
  */
 export const RequestParam = createDecorator(ParamSource.QUERY);
 
 /**
- * Декоратор параметра, эквивалентный {@link Body}.
+ * A parameter decorator equivalent to {@link Body}.
  */
 export const RequestBody = createDecorator(ParamSource.BODY);
 
 /**
- * Декоратор параметра, используемый для инъекции полного объекта события Google Apps Script.
+ * A parameter decorator used to inject the full Google Apps Script event object.
  *
- * @returns Декоратор параметра.
+ * @see         Path
+ * @see         PathVariable
+ * @see         Query
+ * @see         RequestParam
+ * @see         Body
+ * @see         RequestBody
+ * @see         Request
+ * @see         Headers
+ * @see         Response
+ * @see         Inject
+ * @returns     A parameter decorator.
  * @environment `Google Apps Script`
  */
 export const Event = createDecorator(ParamSource.EVENT);
 
 /**
- * Декоратор параметра, используемый для явного указания токена внедрения для зависимости.
+ * A parameter decorator used to explicitly specify an injection token for a dependency.
  *
- * Это полезно, когда тип параметра не может быть определен рефлексией (например, при использовании интерфейсов), или когда вам нужно внедрить конкретную реализацию, отличную от той, что соответствует типу.
+ * This is useful when a parameter's type cannot be determined by reflection (e.g., when using interfaces), or when you need to inject a specific implementation that is different from the type.
  *
- * @param [token] - Токен внедрения, который будет использоваться контейнером DI для разрешения зависимости. Обычно это конструктор класса (Constructor), но может быть и Symbol, строка или любой другой уникальный идентификатор.
- * @returns Декоратор параметра.
+ * @param       [token] - The injection token that the DI container will use to resolve the dependency. This is typically a class constructor (Constructor), but can also be a Symbol, string, or any other unique identifier.
+ * @see         Path
+ * @see         PathVariable
+ * @see         Query
+ * @see         RequestParam
+ * @see         Body
+ * @see         RequestBody
+ * @see         Request
+ * @see         Headers
+ * @see         Response
+ * @see         Event
+ * @returns     A parameter decorator.
  * @environment `Google Apps Script`
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

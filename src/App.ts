@@ -1,4 +1,4 @@
-import { isFunction, isString, normalize } from "appsscript-utils";
+import { isFunctionLike, isObject, isString, normalize } from "appsscript-utils";
 import {
   APPSSCRIPT_EVENT_METADATA,
   APPSSCRIPT_OPTIONS_METADATA,
@@ -55,7 +55,7 @@ export class App {
     this._routes = RouterExplorer.explore(controllers ?? []);
 
     for (const provider of providers ?? []) {
-      if (isFunction(provider)) {
+      if (isFunctionLike(provider)) {
         this._providers.set(provider, undefined);
       }
     }
@@ -67,7 +67,7 @@ export class App {
    * Static method to create or retrieve the singleton instance of the App.
    * This method is used to initialize the application.
    *
-   * @param config - The application configuration, including controllers and providers.
+   * @param   config - The application configuration, including controllers and providers.
    * @returns The single instance of the App.
    */
   static create(config?: AppConfig | null | undefined): App {
@@ -78,7 +78,15 @@ export class App {
    * Handles the add-on installation event (`onInstall`).
    * It scans for controllers decorated with `@Install()` and invokes their respective methods.
    *
-   * @param event - The installation event object.
+   * @param   event - The installation event object.
+   * @returns
+   * @see     onOpen
+   * @see     onEdit
+   * @see     onChange
+   * @see     onSelectionChange
+   * @see     onFormSubmit
+   * @see     doGet
+   * @see     doPost
    */
   onInstall(event: GoogleAppsScript.Events.AddonOnInstall): void {
     return this.handleAppsScriptEvent(event, AppsScriptEventType.INSTALL);
@@ -88,7 +96,15 @@ export class App {
    * Handles the _document_ | _spreadsheet_ | _presentation_ | _form_ open event (`onOpen`).
    * It scans for controllers decorated with `@Open()` and invokes their respective methods.
    *
-   * @param event - The open event object.
+   * @param   event - The open event object.
+   * @returns
+   * @see     onInstall
+   * @see     onEdit
+   * @see     onChange
+   * @see     onSelectionChange
+   * @see     onFormSubmit
+   * @see     doGet
+   * @see     doPost
    */
   onOpen(
     event:
@@ -104,7 +120,15 @@ export class App {
    * Handles the spreadsheet edit event (`onEdit`).
    * It scans for controllers decorated with `@Edit()` and invokes their respective methods.
    *
-   * @param event - The edit event object.
+   * @param   event - The edit event object.
+   * @returns
+   * @see     onInstall
+   * @see     onOpen
+   * @see     onChange
+   * @see     onSelectionChange
+   * @see     onFormSubmit
+   * @see     doGet
+   * @see     doPost
    */
   onEdit(event: GoogleAppsScript.Events.SheetsOnEdit): void {
     return this.handleAppsScriptEvent(event, AppsScriptEventType.EDIT);
@@ -114,7 +138,15 @@ export class App {
    * Handles the spreadsheet change event (`onChange`).
    * It scans for controllers decorated with `@Change()` and invokes their respective methods.
    *
-   * @param event - The change event object.
+   * @param   event - The change event object.
+   * @returns
+   * @see     onInstall
+   * @see     onOpen
+   * @see     onEdit
+   * @see     onSelectionChange
+   * @see     onFormSubmit
+   * @see     doGet
+   * @see     doPost
    */
   onChange(event: GoogleAppsScript.Events.SheetsOnChange): void {
     return this.handleAppsScriptEvent(event, AppsScriptEventType.CHANGE);
@@ -124,7 +156,15 @@ export class App {
    * Handles the spreadsheet selection change event (`onSelectionChange`).
    * It scans for controllers decorated with `@SelectionChange()` and invokes their respective methods.
    *
-   * @param event - The selection change event object.
+   * @param   event - The selection change event object.
+   * @returns
+   * @see     onInstall
+   * @see     onOpen
+   * @see     onEdit
+   * @see     onChange
+   * @see     onFormSubmit
+   * @see     doGet
+   * @see     doPost
    */
   onSelectionChange(
     event: GoogleAppsScript.Events.SheetsOnSelectionChange
@@ -139,7 +179,15 @@ export class App {
    * Handles the form submission event (`onFormSubmit`).
    * It scans for controllers decorated with `@FormSubmit()` and invokes their respective methods.
    *
-   * @param event - The form submission event object.
+   * @param   event - The form submission event object.
+   * @returns
+   * @see     onInstall
+   * @see     onOpen
+   * @see     onEdit
+   * @see     onChange
+   * @see     onSelectionChange
+   * @see     doGet
+   * @see     doPost
    */
   onFormSubmit(event: GoogleAppsScript.Events.FormsOnFormSubmit): void {
     return this.handleAppsScriptEvent(event, AppsScriptEventType.FORM_SUBMIT);
@@ -150,8 +198,15 @@ export class App {
    * It processes the incoming event, routes it to the appropriate controller method,
    * and returns a response suitable for Apps Script.
    *
-   * @param event - The HTTP GET event object.
+   * @param   event - The HTTP GET event object.
    * @returns The response to be returned by the Apps Script `doGet` function.
+   * @see     doPost
+   * @see     onInstall
+   * @see     onOpen
+   * @see     onEdit
+   * @see     onChange
+   * @see     onSelectionChange
+   * @see     onFormSubmit
    */
   doGet(
     event: GoogleAppsScript.Events.DoGet
@@ -169,8 +224,15 @@ export class App {
    * It processes the incoming event, routes it to the appropriate controller method,
    * and returns a response suitable for Apps Script.
    *
-   * @param event - The HTTP POST event object.
+   * @param   event - The HTTP POST event object.
    * @returns The response to be returned by the Apps Script `doPost` function.
+   * @see     doGet
+   * @see     onInstall
+   * @see     onOpen
+   * @see     onEdit
+   * @see     onChange
+   * @see     onSelectionChange
+   * @see     onFormSubmit
    */
   doPost(
     event: GoogleAppsScript.Events.DoPost
@@ -189,8 +251,8 @@ export class App {
    * It creates a structured request, finds a matching route, resolves the controller,
    * builds method parameters, executes the handler, and wraps the response.
    *
-   * @param method - The HTTP request method (GET, POST, PUT, DELETE, etc.).
-   * @param event - The raw Apps Script HTTP event object.
+   * @param   method - The HTTP request method (GET, POST, PUT, DELETE, etc.).
+   * @param   event - The raw Apps Script HTTP event object.
    * @returns The response to be returned by the Apps Script HTTP entry point function.
    */
   handleRequest(
@@ -204,10 +266,6 @@ export class App {
     | GoogleAppsScript.HTML.HtmlOutput {
     const request: HttpRequest = this.createRequest(method, event);
     const headers: HttpHeaders = {};
-
-    // FIXME: remove after debug
-    console.log("event:", JSON.stringify(event, null, 2));
-    console.log("request:", JSON.stringify(request, null, 2));
 
     try {
       let route: RouteMetadata | null = null;
@@ -244,8 +302,7 @@ export class App {
           try {
             return JSON.parse(data.trim());
           } catch (err: unknown) {
-            // TODO: translate to en
-            console.warn("Не удалось распарсить JSON:", err);
+            console.warn("Failed to parse JSON:", err);
           }
         }
 
@@ -318,8 +375,7 @@ export class App {
       );
 
       const isAppsScriptController =
-        typeof controllerType === "string" &&
-        controllerType.startsWith("appsscript");
+        isString(controllerType) && controllerType.startsWith("appsscript");
 
       if (!isAppsScriptController) {
         continue;
@@ -332,10 +388,7 @@ export class App {
       let currentProto = prototype;
       while (currentProto && currentProto !== Object.prototype) {
         Object.getOwnPropertyNames(currentProto).forEach(name => {
-          if (
-            name !== "constructor" &&
-            typeof currentProto[name] === "function"
-          ) {
+          if (name !== "constructor" && isFunctionLike(currentProto[name])) {
             methodNames.push(name);
           }
         });
@@ -388,9 +441,9 @@ export class App {
    * Checks if an Apps Script event matches specific filters defined in method options.
    * This allows event handlers to be triggered conditionally based on properties of the event, such as the edited range in a sheet, the ID of a submitted form, or the type of change.
    *
-   * @param eventType - The type of Apps Script event (e.g., EDIT, FORM_SUBMIT).
-   * @param event - The raw Apps Script event object. Its type varies based on `eventType`.
-   * @param methodOptions - An object containing filtering options for the event.
+   * @param   eventType - The type of Apps Script event (e.g., EDIT, FORM_SUBMIT).
+   * @param   event - The raw Apps Script event object. Its type varies based on `eventType`.
+   * @param   methodOptions - An object containing filtering options for the event.
    * @returns `true` if the event matches the specified filters or if no filters are defined, otherwise `false`.
    */
   private checkEventFilters(
@@ -473,8 +526,8 @@ export class App {
    * Creates a structured {@link HttpRequest} object from a raw Apps Script `DoGet` or `DoPost` event.
    * This involves parsing headers (if provided in event parameters), determining the request method, normalizing the path, extracting query parameters, and retrieving the request body for POST/PUT/PATCH/DELETE methods.
    *
-   * @param methodRequest - The expected request method, used as a fallback if the method isn't explicitly in `event.parameter.method`.
-   * @param event - The raw Apps Script `doGet` or `doPost` event object.
+   * @param   methodRequest - The expected request method, used as a fallback if the method isn't explicitly in `event.parameter.method`.
+   * @param   event - The raw Apps Script `doGet` or `doPost` event object.
    * @returns A structured object representing the HTTP request.
    */
   private createRequest(
@@ -490,9 +543,8 @@ export class App {
 
         try {
           return JSON.parse(input.trim());
-        } catch (err) {
-          // TODO: translate to en
-          console.warn("Не удалось распарсить JSON:", err);
+        } catch (err: unknown) {
+          console.warn("Failed to parse JSON:", err);
         }
 
         return null;
@@ -550,10 +602,10 @@ export class App {
    * For successful responses (2xx status codes), the `body` contains the `data`.
    * For error responses (non-2xx status codes), the `body` is wrapped in an `error` object.
    *
-   * @param request - The original request object, used to infer default status for GET/POST.
-   * @param status - The desired HTTP status code. If `undefined`, it defaults to `OK` for GET/HEAD/OPTIONS and `CREATED` for others.
-   * @param [headers={}] - Optional custom headers to include in the response.
-   * @param [data=null] - The data to be sent in the response body.
+   * @param   request - The original request object, used to infer default status for GET/POST.
+   * @param   status - The desired HTTP status code. If `undefined`, it defaults to `OK` for GET/HEAD/OPTIONS and `CREATED` for others.
+   * @param   [headers={}] - Optional custom headers to include in the response.
+   * @param   [data=null] - The data to be sent in the response body.
    * @returns A structured object representing the HTTP response.
    */
   private createResponse(
@@ -585,11 +637,7 @@ export class App {
       ok,
       status: resolvedStatus,
       statusText,
-      body: ok
-        ? data
-        : {
-            error: data
-          }
+      body: ok ? data : { error: data }
     };
   }
 
@@ -598,8 +646,8 @@ export class App {
    *
    * This method determines the appropriate output type (TextOutput, HtmlOutput, or raw string) based on the `Accept` header in the incoming {@link HttpRequest} and the content type.
    *
-   * @param request - The structured request object, including headers and URL.
-   * @param response - The structured response object to be wrapped.
+   * @param   request - The structured request object, including headers and URL.
+   * @param   response - The structured response object to be wrapped.
    * @returns A value that Apps Script can return directly to the client (e.g., web browser, Google Sheets UI).
    */
   private wrapResponse(
@@ -614,9 +662,6 @@ export class App {
       HeaderAcceptMimeType.HTML;
 
     response.headers["Content-Type"] = mimeType;
-
-    // FIXME: remove after debug
-    console.log("response:", JSON.stringify(response, null, 2));
 
     const isApi = request.url.pathname?.startsWith("/api/") || false;
     const result = JSON.stringify(isApi ? response : response.body);
@@ -648,16 +693,16 @@ export class App {
    *
    * This method inspects the metadata associated with the target method's parameters (e.g., `@Param`, `@Query`, `@Body`, `@Inject`) to populate the arguments array from the `ctx` (context) object.
    *
-   * @param target - The controller instance (the target object).
-   * @param propertyKey - The name of the method to be invoked.
-   * @param ctx - The context object containing event data.
-   * @param ctx.event - The raw Apps Script event object.
-   * @param [ctx.params] - An object containing extracted path parameters (e.g., from a URL like `/users/{id}`).
-   * @param [ctx.query] - An object containing query parameters (e.g., from a URL like `?name=value`).
-   * @param [ctx.body] - The raw request body content, typically a JSON string for POST requests.
-   * @param [ctx.request] - A structured request object derived from the Apps Script event.
-   * @param [ctx.headers] - An object containing request headers.
-   * @param [ctx.response] - A structured response object.
+   * @param   target - The controller instance (the target object).
+   * @param   propertyKey - The name of the method to be invoked.
+   * @param   ctx - The context object containing event data.
+   * @param   ctx.event - The raw Apps Script event object.
+   * @param   [ctx.params] - An object containing extracted path parameters (e.g., from a URL like `/users/{id}`).
+   * @param   [ctx.query] - An object containing query parameters (e.g., from a URL like `?name=value`).
+   * @param   [ctx.body] - The raw request body content, typically a JSON string for POST requests.
+   * @param   [ctx.request] - A structured request object derived from the Apps Script event.
+   * @param   [ctx.headers] - An object containing request headers.
+   * @param   [ctx.response] - A structured response object.
    * @returns An array of arguments, ready to be passed into the controller method.
    */
   private buildMethodParams(
@@ -732,7 +777,7 @@ export class App {
 
         case ParamSource.BODY:
           args[param.index] =
-            param.key && ctx.body && typeof ctx.body === "object"
+            param.key && ctx.body && isObject(ctx.body)
               ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (ctx.body as Record<string, any>)[param.key]
               : ctx.body;
@@ -795,9 +840,9 @@ export class App {
    * Resolves a class (Controller or Provider) and its dependencies from the DI container.
    *
    * @template T - The type of the class to resolve.
-   * @param {Newable<T>} target - The constructor function of the class to be resolved.
+   * @param    target - The constructor function of the class to be resolved.
    * This class should typically be decorated with `@Injectable()` or `@SheetsController()`.
-   * @returns {T} An instance of the target class with all its dependencies injected.
+   * @returns  {T} An instance of the target class with all its dependencies injected.
    */
   private resolve<T>(target: Newable<T>): T {
     if (this._providers.has(target)) {
@@ -848,8 +893,8 @@ export class App {
   /**
    * Checks if a given path matches a specified template.
    *
-   * @param template - The path template (e.g., '/users/{id}').
-   * @param actual - The actual request path (e.g., '/users/123').
+   * @param   template - The path template (e.g., '/users/{id}').
+   * @param   actual - The actual request path (e.g., '/users/123').
    * @returns `true` if the paths match, otherwise `false`.
    */
   private pathMatch(template: string, actual: string): boolean {
@@ -871,8 +916,8 @@ export class App {
   /**
    * Extracts path parameters from an actual URL based on a given template.
    *
-   * @param template - The path template, e.g., "/users/{id}/posts/{postId}".
-   * @param actual - The actual path, e.g., "/users/123/posts/456".
+   * @param   template - The path template, e.g., "/users/{id}/posts/{postId}".
+   * @param   actual - The actual path, e.g., "/users/123/posts/456".
    * @returns An object containing the extracted path parameters.
    * For example, for the above inputs, it might return `{ id: "123", postId: "456" }`.
    */
