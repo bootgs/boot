@@ -1,9 +1,4 @@
-import {
-  isFunctionLike,
-  isObject,
-  isString,
-  normalize
-} from "appsscript-utils";
+import { isFunctionLike, isObject, isString, isUndefined, normalize } from "appsscript-utils";
 import {
   APPSSCRIPT_EVENT_METADATA,
   APPSSCRIPT_OPTIONS_METADATA,
@@ -41,7 +36,7 @@ import {
 export class App {
   private static instance: App | null = null;
 
-  private readonly _controllers: Newable[] = [];
+  private readonly _controllers = new Map<Newable, unknown>();
   private readonly _providers = new Map<Newable, unknown>();
   private readonly _routes: RouteMetadata[] = [];
 
@@ -56,13 +51,25 @@ export class App {
       return App.instance;
     }
 
-    this._controllers = controllers ?? [];
-    this._routes = RouterExplorer.explore(controllers ?? []);
+    for (const controller of controllers ?? []) {
+      if (!isFunctionLike(controller)) continue;
+
+      const isController = Reflect.getMetadata(
+        CONTROLLER_WATERMARK,
+        controller
+      );
+
+      if (!isController) continue;
+
+      this._controllers.set(controller, null);
+    }
+
+    this._routes = RouterExplorer.explore(this._controllers);
 
     for (const provider of providers ?? []) {
-      if (isFunctionLike(provider)) {
-        this._providers.set(provider, undefined);
-      }
+      if (!isFunctionLike(provider)) continue;
+
+      this._providers.set(provider, null);
     }
 
     App.instance = this;
@@ -364,20 +371,9 @@ export class App {
     event: any,
     eventType: AppsScriptEventType
   ): void {
-    for (const ControllerClass of this._controllers) {
-      const isController = Reflect.getMetadata(
-        CONTROLLER_WATERMARK,
-        ControllerClass
-      );
-
-      if (!isController) {
-        continue;
-      }
-
-      const controllerType: string | undefined = Reflect.getMetadata(
-        CONTROLLER_TYPE_METADATA,
-        ControllerClass
-      );
+    for (const controller of this._controllers.keys()) {
+      const controllerType: string | null =
+        Reflect.getMetadata(CONTROLLER_TYPE_METADATA, controller) || null;
 
       const isAppsScriptController =
         isString(controllerType) && controllerType.startsWith("appsscript");
@@ -386,7 +382,7 @@ export class App {
         continue;
       }
 
-      const controllerInstance = this.resolve(ControllerClass);
+      const controllerInstance = this.resolve(controller);
       const prototype = Object.getPrototypeOf(controllerInstance);
 
       const methodNames: string[] = [];
@@ -850,6 +846,14 @@ export class App {
    * @returns  {T} An instance of the target class with all its dependencies injected.
    */
   private resolve<T>(target: Newable<T>): T {
+    if (this._controllers.has(target)) {
+      const instance = this._controllers.get(target);
+
+      if (instance) {
+        return instance as T;
+      }
+    }
+
     if (this._providers.has(target)) {
       const instance = this._providers.get(target);
 
@@ -875,20 +879,29 @@ export class App {
       return this.resolve(tokenToResolve);
     });
 
-    if (deps.some(dep => dep === undefined)) {
+    if (deps.some(isUndefined)) {
       throw new Error(`Could not resolve all dependencies for ${target.name}`);
     }
 
     const instance = new target(...deps);
 
     const isController = Reflect.hasMetadata(CONTROLLER_WATERMARK, target);
+
+    if (isController) {
+      this._controllers.set(target, instance);
+    } else {
+      console.warn(
+        `[Resolve WARN] ${target.name} is not registered as a provider and is not marked @Controller().`
+      );
+    }
+
     const isInjectable = Reflect.hasMetadata(INJECTABLE_WATERMARK, target);
 
-    if (isController || isInjectable) {
+    if (isInjectable) {
       this._providers.set(target, instance);
     } else {
       console.warn(
-        `[Resolve WARN] ${target.name} is not registered as a provider and is not marked @Injectable() or @Controller().`
+        `[Resolve WARN] ${target.name} is not registered as a provider and is not marked @Injectable().`
       );
     }
 
