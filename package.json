@@ -1,6 +1,6 @@
 {
   "name": "appsscript-boot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Boot for Google Apps Script Projects.",
   "main": "src/index.ts",
   "scripts": {
