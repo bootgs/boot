@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/MaksymStoianov/appsscript-boot/compare/v1.0.2...v1.0.3) (2025-09-02)
+
+
+### Bug Fixes
+
+* controllers ([17fcdb4](https://github.com/MaksymStoianov/appsscript-boot/commit/17fcdb415ee0e7cec98976ff7b0dd6270b78cf02))
+* controllers ([79339ae](https://github.com/MaksymStoianov/appsscript-boot/commit/79339ae8109af400ed2e1eb3580f2d2f2cb1946a))
+
 ## [1.0.2](https://github.com/MaksymStoianov/appsscript-boot/compare/v1.0.1...v1.0.2) (2025-09-02)
 
 
