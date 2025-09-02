@@ -1,5 +1,4 @@
-import { isRegExp, isString } from "appsscript-utils";
-import { nonEmpty } from "appsscript-utils/src/base/nonEmpty"; // FIXME
+import { isRegExp, isString, nonEmpty } from "appsscript-utils";
 import {
   APPSSCRIPT_EVENT_METADATA,
   APPSSCRIPT_OPTIONS_METADATA,
