@@ -1,5 +1,9 @@
 import { isFunctionLike, isString } from "appsscript-utils";
-import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA, CONTROLLER_TYPE_METADATA } from "config/constants";
+import {
+  APPSSCRIPT_EVENT_METADATA,
+  APPSSCRIPT_OPTIONS_METADATA,
+  CONTROLLER_TYPE_METADATA
+} from "config/constants";
 import {
   buildMethodParams,
   checkEventFilters,
