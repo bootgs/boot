@@ -3,8 +3,8 @@ import {
   CONTROLLER_OPTIONS_METADATA,
   CONTROLLER_TYPE_METADATA,
   CONTROLLER_WATERMARK
-} from "@/config/constants";
-import { HttpController, RestController } from "@/decorators";
+} from "src/config/constants";
+import { HttpController, RestController } from "src/decorators";
 import { describe, expect, it } from "vitest";
 
 describe("HttpController Decorator", () => {

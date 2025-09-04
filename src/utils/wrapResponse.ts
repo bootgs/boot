@@ -1,4 +1,4 @@
-import { HeaderAcceptMimeType, HttpRequest, HttpResponse } from "types";
+import { HeaderAcceptMimeType, HttpRequest, HttpResponse } from "../types";
 
 /**
  * Wraps a {@link HttpResponse} object into a format suitable for return from Apps Script entry point functions (e.g., `doGet`, `doPost`).

@@ -1,6 +1,6 @@
-import { INJECT_TOKENS_METADATA } from "config/constants";
-import { InjectTokenDefinition, ParamSource } from "types";
-import { assignInjectMetadata, createParamDecorator } from "utils";
+import { INJECT_TOKENS_METADATA } from "../config/constants";
+import { InjectTokenDefinition, ParamSource } from "../types";
+import { assignInjectMetadata, createParamDecorator } from "../utils";
 
 /**
  * A parameter decorator for injecting values from URL path parameters.

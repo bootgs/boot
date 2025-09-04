@@ -1,10 +1,4 @@
-import {
-  HttpHeaders,
-  HttpRequest,
-  HttpResponse,
-  HttpStatus,
-  RequestMethod
-} from "types";
+import { HttpHeaders, HttpRequest, HttpResponse, HttpStatus, RequestMethod } from "../types";
 
 /**
  * Creates a structured {@link HttpResponse} object based on the incoming request, a desired HTTP status, headers, and response data.

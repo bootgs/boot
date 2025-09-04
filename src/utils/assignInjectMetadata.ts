@@ -1,4 +1,4 @@
-import { InjectTokenDefinition, ParamSource } from "types";
+import { InjectTokenDefinition, ParamSource } from "../types";
 
 /**
  * Updates or adds metadata for the injection tokens of a specific function parameter (argument) based on its index and token.

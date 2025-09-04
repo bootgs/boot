@@ -1,12 +1,11 @@
-import "reflect-metadata";
 import { normalize } from "appsscript-utils";
 import {
   CONTROLLER_OPTIONS_METADATA,
   CONTROLLER_TYPE_METADATA,
   METHOD_METADATA,
   PATH_METADATA
-} from "config/constants";
-import { Newable, RouteMetadata } from "types";
+} from "../config/constants";
+import { Newable, RouteMetadata } from "../types";
 
 export class RouterExplorer {
   static explore(controllers: Map<Newable, unknown>): RouteMetadata[] {

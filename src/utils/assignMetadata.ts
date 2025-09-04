@@ -1,4 +1,4 @@
-import { ParamDefinition, ParamSource } from "types";
+import { ParamDefinition, ParamSource } from "../types";
 
 /**
  * Updates parameter metadata with the argument's position (index).

@@ -1,4 +1,4 @@
-import { AppsScriptEventType } from "types";
+import { AppsScriptEventType } from "../types";
 
 /**
  * Checks if an Apps Script event matches specific filters defined in method options.

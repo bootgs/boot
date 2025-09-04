@@ -6,12 +6,9 @@ import {
   Newable,
   ParamDefinition,
   ParamSource
-} from "types";
-import {
-  PARAM_DEFINITIONS_METADATA,
-  PARAMTYPES_METADATA
-} from "config/constants";
-import { getInjectionTokens, resolve } from "utils";
+} from "../types";
+import { PARAM_DEFINITIONS_METADATA, PARAMTYPES_METADATA } from "../config/constants";
+import { getInjectionTokens, resolve } from "../utils";
 import { isObject } from "appsscript-utils";
 
 /**

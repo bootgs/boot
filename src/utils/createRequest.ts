@@ -1,4 +1,4 @@
-import { HttpHeaders, HttpRequest, ParsedUrl, RequestMethod } from "types";
+import { HttpHeaders, HttpRequest, ParsedUrl, RequestMethod } from "../types";
 import { isString, normalize } from "appsscript-utils";
 
 /**

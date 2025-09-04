@@ -1,6 +1,6 @@
-import { ParamDefinition, ParamSource } from "types";
-import { PARAM_DEFINITIONS_METADATA } from "config/constants";
-import { assignMetadata } from "utils";
+import { ParamDefinition, ParamSource } from "../types";
+import { PARAM_DEFINITIONS_METADATA } from "../config/constants";
+import { assignMetadata } from "../utils";
 
 /**
  * Creates a parameter decorator with a specified source.

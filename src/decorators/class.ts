@@ -5,7 +5,7 @@ import {
   INJECTABLE_WATERMARK,
   REPOSITORY_WATERMARK,
   SERVICE_WATERMARK
-} from "config/constants";
+} from "../config/constants";
 
 /**
  * A class decorator that marks a class as a generic controller in the application.

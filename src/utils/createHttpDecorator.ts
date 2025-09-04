@@ -1,5 +1,5 @@
-import { RequestMethod } from "types";
-import { METHOD_METADATA, PATH_METADATA } from "config/constants";
+import { RequestMethod } from "../types";
+import { METHOD_METADATA, PATH_METADATA } from "../config/constants";
 
 /**
  * A factory function that creates method decorators for HTTP methods.

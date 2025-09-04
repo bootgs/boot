@@ -1,10 +1,6 @@
 import { isRegExp, isString, nonEmpty } from "appsscript-utils";
-import { AppsScriptEventType, RequestMethod } from "types";
-import {
-  AppsScriptOptions,
-  createHttpDecorator,
-  createMethodDecorator
-} from "utils";
+import { AppsScriptEventType, RequestMethod } from "../types";
+import { AppsScriptOptions, createHttpDecorator, createMethodDecorator } from "../utils";
 
 /**
  * A method decorator for handling the `onInstall` event in Google Sheets.

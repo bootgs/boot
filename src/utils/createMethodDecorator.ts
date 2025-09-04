@@ -1,8 +1,5 @@
-import { AppsScriptEventType } from "types";
-import {
-  APPSSCRIPT_EVENT_METADATA,
-  APPSSCRIPT_OPTIONS_METADATA
-} from "config/constants";
+import { AppsScriptEventType } from "../types";
+import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA } from "../config/constants";
 
 /**
  * Options for Google Apps Script events.

@@ -1,4 +1,3 @@
-import { buildAliases } from "./buildAliases";
 import { BuildOptions, ResolveOptions } from "./types";
 
 /**
@@ -7,11 +6,9 @@ import { BuildOptions, ResolveOptions } from "./types";
  * @param options - Build options including paths and target type.
  * @returns Resolve redux with generated aliases.
  */
-export function buildResolversConfig({ paths }: BuildOptions): ResolveOptions {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function buildResolversConfig(options: BuildOptions): ResolveOptions {
   return {
-    alias: {
-      ...buildAliases(paths.src),
-      "@": paths.src
-    }
+    alias: {}
   };
 }

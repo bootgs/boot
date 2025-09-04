@@ -1,9 +1,5 @@
 import { isFunctionLike, isString } from "appsscript-utils";
-import {
-  APPSSCRIPT_EVENT_METADATA,
-  APPSSCRIPT_OPTIONS_METADATA,
-  CONTROLLER_TYPE_METADATA
-} from "config/constants";
+import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA, CONTROLLER_TYPE_METADATA } from "./config/constants";
 import {
   buildMethodParams,
   checkEventFilters,
@@ -15,7 +11,7 @@ import {
   resolve,
   RouterExplorer,
   wrapResponse
-} from "utils";
+} from "./utils";
 import {
   AppConfig,
   AppsScriptEventType,
@@ -25,7 +21,7 @@ import {
   Newable,
   RequestMethod,
   RouteMetadata
-} from "types";
+} from "./types";
 
 /**
  * The main application class responsible for handling various types of Google Apps Script events.
