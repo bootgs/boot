@@ -1,16 +1,10 @@
 {
   "compilerOptions": {
     "rootDir": "../..",
-    "typeRoots": [
-      "../../node_modules/@types",
-      "../types"
-    ],
+    "typeRoots": ["../../node_modules/@types", "../types"],
     "tsBuildInfoFile": "../../node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "ES2023",
-    "lib": [
-      "ES2023",
-      "dom"
-    ],
+    "lib": ["ES2023", "dom"],
     "module": "ESNext",
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -26,12 +20,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": [
-    "../../config/**/*",
-    "../../vite.config.ts"
-  ],
-  "exclude": [
-    "../../node_modules",
-    "../../dist"
-  ]
+  "include": ["../../config/**/*", "../../vite.config.ts"],
+  "exclude": ["../../node_modules", "../../dist"]
 }
