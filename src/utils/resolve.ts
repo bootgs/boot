@@ -1,7 +1,7 @@
-import { isUndefined } from "appsscript-utils";
 import { Newable, ParamSource } from "../types";
 import { getInjectionTokens, isController, isInjectable } from "../utils";
 import { PARAMTYPES_METADATA } from "../config/constants";
+import { isFunctionLike } from "appsscript-utils";
 
 /**
  * Resolves a class (Controller or Provider) and its dependencies from the DI container.
@@ -39,20 +39,30 @@ export function resolve<T>(
 
   const explicitInjectTokens = getInjectionTokens(target);
 
-  const deps = designParamTypes.map((type, index) => {
-    const paramKey = `${ParamSource.INJECT}:${index}`;
-    const injectDefinition = explicitInjectTokens[paramKey];
-    const tokenToResolve = injectDefinition ? injectDefinition.token : type;
+  const deps = new Array(
+    Math.max(designParamTypes.length, Object.keys(explicitInjectTokens).length)
+  );
 
-    if (!tokenToResolve) {
-      return undefined;
+  for (let i = 0; i < deps.length; i++) {
+    const paramKey = `${ParamSource.INJECT}:${i}`;
+    const injectDefinition = explicitInjectTokens[paramKey];
+    const tokenToResolve = injectDefinition
+      ? injectDefinition.token
+      : designParamTypes[i];
+
+    if (!isFunctionLike(tokenToResolve)) {
+      throw new Error(
+        `[Resolve ERROR]: Invalid injection token at index ${i} of '${target.name}'. Expected a class constructor.`
+      );
     }
 
-    return resolve(controllers, providers, tokenToResolve);
-  });
+    if (!providers.has(tokenToResolve) && !controllers.has(tokenToResolve)) {
+      throw new Error(
+        `[Resolve ERROR]: '${tokenToResolve.name}' is not registered as a provider or controller.`
+      );
+    }
 
-  if (deps.some(isUndefined)) {
-    throw new Error(`Could not resolve all dependencies for ${target.name}`);
+    deps[i] = resolve(controllers, providers, tokenToResolve);
   }
 
   const instance = new target(...deps);

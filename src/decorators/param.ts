@@ -1,5 +1,5 @@
 import { INJECT_TOKENS_METADATA } from "../config/constants";
-import { InjectTokenDefinition, ParamSource } from "../types";
+import { InjectTokenDefinition, Newable, ParamSource } from "../types";
 import { assignInjectMetadata, createParamDecorator } from "../utils";
 
 /**
@@ -173,8 +173,7 @@ export const Event = createParamDecorator(ParamSource.EVENT);
  * @see         Event
  * @environment `Google Apps Script`
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function Inject(token?: any): ParameterDecorator {
+export function Inject(token?: Newable | string | symbol): ParameterDecorator {
   return (target, propertyKey, parameterIndex) => {
     const metadataTarget =
       typeof target === "function" ? target : target.constructor;

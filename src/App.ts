@@ -1,9 +1,5 @@
 import { isFunctionLike, isString } from "appsscript-utils";
-import {
-  APPSSCRIPT_EVENT_METADATA,
-  APPSSCRIPT_OPTIONS_METADATA,
-  CONTROLLER_TYPE_METADATA
-} from "./config/constants";
+import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA, CONTROLLER_TYPE_METADATA } from "./config/constants";
 import {
   buildMethodParams,
   checkEventFilters,
@@ -295,6 +291,7 @@ export class App {
         this._providers,
         route.controller
       );
+
       const handler =
         controllerInstance[
           route.handler as keyof typeof controllerInstance
