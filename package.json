@@ -8,7 +8,7 @@
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "test": "vitest run",
-    "build": "rm -rf dist/* && tsc --noEmit"
+    "build": "rm -rf dist/* && tsc"
   },
   "repository": {
     "type": "git",
