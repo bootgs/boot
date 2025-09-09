@@ -14,6 +14,7 @@ import {
  * This decorator does not define the specifics of how to handle an event (e.g., HTTP, Sheets events);
  * that is done using additional, more specific decorators.
  *
+ * @returns     A class decorator.
  * @see         HttpController
  * @see         RestController
  * @see         DocController
@@ -24,7 +25,6 @@ import {
  * @see         SheetsController
  * @see         SlideController
  * @see         SlidesController
- * @returns     A class decorator.
  * @environment `Google Apps Script`
  */
 export function Controller(
@@ -49,9 +49,9 @@ export function Controller(
  *
  * Services typically contain the application's business logic and interact with repositories. Classes marked with `@Service` can be automatically injected into other components (e.g., controllers) using a dependency injection system.
  *
+ * @returns     A class decorator.
  * @see         Repository
  * @see         Injectable
- * @returns     A class decorator.
  * @environment `Google Apps Script`
  */
 export function Service(): ClassDecorator {
@@ -66,9 +66,9 @@ export function Service(): ClassDecorator {
  *
  * Repositories are responsible for abstracting data access logic (e.g., interacting with a database, external APIs, or, in the case of Google Apps Script, with Google Sheets, Docs, etc.).
  *
+ * @returns     A class decorator.
  * @see         Service
  * @see         Injectable
- * @returns     A class decorator.
  * @environment `Google Apps Script`
  */
 export function Repository(): ClassDecorator {
@@ -84,9 +84,9 @@ export function Repository(): ClassDecorator {
  * This is a universal decorator used to register classes in the DI container, making them available for injection into other components.
  * It can be used for classes that do not fall under the `@Service` or `@Repository` categories but still need to be managed by DI (e.g., utility classes, configuration classes).
  *
+ * @returns     A class decorator.
  * @see         Service
  * @see         Repository
- * @returns     A class decorator.
  * @environment `Google Apps Script`
  */
 export function Injectable(): ClassDecorator {
@@ -101,10 +101,9 @@ export function Injectable(): ClassDecorator {
  * Controllers are responsible for routing requests to the corresponding handler methods.
  *
  * @param [basePath='/'] - The base URL path for all routes defined in this controller's methods.
- *
+ * @returns     A class decorator.
  * @see         Controller
  * @see         RestController
- * @returns     A class decorator.
  * @environment `Google Apps Script`
  */
 export function HttpController(
@@ -126,6 +125,7 @@ export const RestController = HttpController;
  * A class decorator that marks a class as a controller intended to handle
  * Google Docs events (onOpen, etc.).
  *
+ * @returns     A class decorator.
  * @see         Controller
  * @see         DocsController
  * @see         FormController
@@ -134,7 +134,6 @@ export const RestController = HttpController;
  * @see         SheetsController
  * @see         SlideController
  * @see         SlidesController
- * @returns     A class decorator.
  * @environment `Google Apps Script`
  */
 export function DocController(): ClassDecorator {
@@ -152,6 +151,7 @@ export const DocsController = DocController;
  * A class decorator that marks a class as a controller intended to handle
  * Google Forms events (onOpen, etc.).
  *
+ * @returns     A class decorator.
  * @see         Controller
  * @see         DocController
  * @see         DocsController
@@ -160,7 +160,6 @@ export const DocsController = DocController;
  * @see         SheetsController
  * @see         SlideController
  * @see         SlidesController
- * @returns     A class decorator.
  * @environment `Google Apps Script`
  */
 export function FormController(): ClassDecorator {
@@ -180,6 +179,7 @@ export const FormsController = FormController;
  *
  * @param [sheetName] - An optional sheet name (or names/RegExp) to which this controller applies. If not specified, the controller can handle events for any sheet unless overridden at the method level.
  *
+ * @returns     A class decorator.
  * @see         Controller
  * @see         DocController
  * @see         DocsController
@@ -188,7 +188,6 @@ export const FormsController = FormController;
  * @see         SheetsController
  * @see         SlideController
  * @see         SlidesController
- * @returns     A class decorator.
  * @environment `Google Apps Script`
  */
 export function SheetController(
@@ -208,6 +207,7 @@ export const SheetsController = SheetController;
  * A class decorator that marks a class as a controller intended to handle
  * Google Slides events (onOpen, etc.).
  *
+ * @returns     A class decorator.
  * @see         Controller
  * @see         DocController
  * @see         DocsController
@@ -216,7 +216,6 @@ export const SheetsController = SheetController;
  * @see         SheetController
  * @see         SheetsController
  * @see         SlidesController
- * @returns     A class decorator.
  * @environment `Google Apps Script`
  */
 export function SlideController(): ClassDecorator {

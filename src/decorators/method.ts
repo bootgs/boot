@@ -1,97 +1,53 @@
 import { isRegExp, isString, nonEmpty } from "appsscript-utils";
-import {
-  APPSSCRIPT_EVENT_METADATA,
-  APPSSCRIPT_OPTIONS_METADATA,
-  METHOD_METADATA,
-  PATH_METADATA
-} from "../config/constants";
 import { AppsScriptEventType, RequestMethod } from "../types";
-
-/**
- * Options for Google Apps Script events.
- *
- * This interface defines event-specific filters for `onEdit`, `onFormSubmit`, and `onChange` handlers.
- */
-interface AppsScriptOptions {
-  eventType: AppsScriptEventType;
-  range?: string | string[] | RegExp;
-  formId?: string | string[];
-  changeType?:
-    | GoogleAppsScript.Events.SheetsOnChangeChangeType
-    | GoogleAppsScript.Events.SheetsOnChangeChangeType[];
-}
-
-/**
- * A factory function that creates a method decorator for Google Apps Script event handlers.
- *
- * @param   eventType - The specific type of Apps Script event to handle.
- * @param   options - Optional filters for the event.
- * @returns A method decorator.
- */
-function createAppsScriptDecorator(
-  eventType: AppsScriptEventType,
-  options?: Omit<AppsScriptOptions, "eventType">
-): MethodDecorator {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (target, key, descriptor: TypedPropertyDescriptor<any>) => {
-    Reflect.defineMetadata(
-      APPSSCRIPT_EVENT_METADATA,
-      eventType,
-      descriptor.value
-    );
-    Reflect.defineMetadata(
-      APPSSCRIPT_OPTIONS_METADATA,
-      options || {},
-      descriptor.value
-    );
-
-    return descriptor;
-  };
-}
+import {
+  AppsScriptOptions,
+  createHttpDecorator,
+  createMethodDecorator
+} from "../utils";
 
 /**
  * A method decorator for handling the `onInstall` event in Google Sheets.
  *
  * It fires when the add-on is first installed by a user.
  *
+ * @returns     A method decorator.
  * @see         Open
  * @see         Edit
  * @see         Change
  * @see         SelectionChange
  * @see         FormSubmit
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
-export const Install = () =>
-  createAppsScriptDecorator(AppsScriptEventType.INSTALL);
+export const Install = () => createMethodDecorator(AppsScriptEventType.INSTALL);
 
 /**
  * A method decorator for handling the `onOpen` event in Google Sheets.
  *
  * It fires when a user opens the spreadsheet.
  *
+ * @returns     A method decorator.
  * @see         Install
  * @see         Edit
  * @see         Change
  * @see         SelectionChange
  * @see         FormSubmit
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
-export const Open = () => createAppsScriptDecorator(AppsScriptEventType.OPEN);
+export const Open = () => createMethodDecorator(AppsScriptEventType.OPEN);
 
 /**
  * A method decorator for handling the `onEdit` event in Google Sheets.
  *
  * It fires when the contents of a spreadsheet's cells are changed manually.
  *
- * @param args - An optional list of one or more A1-notations (e.g., 'A1:C5'), sheet names (e.g., 'Sheet1'), or a regular expression.
+ * @param       args - An optional list of one or more A1-notations (e.g., 'A1:C5'), sheet names (e.g., 'Sheet1'), or a regular expression.
+ * @returns     A method decorator.
  * @see         Install
  * @see         Open
  * @see         Change
  * @see         SelectionChange
  * @see         FormSubmit
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const Edit = (...args: (string | RegExp | string[])[]) => {
@@ -114,7 +70,7 @@ export const Edit = (...args: (string | RegExp | string[])[]) => {
     }
   }
 
-  return createAppsScriptDecorator(AppsScriptEventType.EDIT, options);
+  return createMethodDecorator(AppsScriptEventType.EDIT, options);
 };
 
 /**
@@ -123,48 +79,48 @@ export const Edit = (...args: (string | RegExp | string[])[]) => {
  * It fires on any change in the spreadsheet (including changes to formulas, moving rows, inserting images, etc.).
  *
  * @param       [changeType] - An optional filter by change type.
+ * @returns     A method decorator.
  * @see         Install
  * @see         Open
  * @see         Edit
  * @see         SelectionChange
  * @see         FormSubmit
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const Change = (
   changeType?:
     | GoogleAppsScript.Events.SheetsOnChangeChangeType
     | GoogleAppsScript.Events.SheetsOnChangeChangeType[]
-) => createAppsScriptDecorator(AppsScriptEventType.CHANGE, { changeType });
+) => createMethodDecorator(AppsScriptEventType.CHANGE, { changeType });
 
 /**
  * A method decorator for handling the `onSelectionChange` event in Google Sheets.
  *
  * It fires when a user's cell selection changes.
  *
+ * @returns     A method decorator.
  * @see         Install
  * @see         Open
  * @see         Edit
  * @see         Change
  * @see         FormSubmit
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const SelectionChange = () =>
-  createAppsScriptDecorator(AppsScriptEventType.SELECTION_CHANGE);
+  createMethodDecorator(AppsScriptEventType.SELECTION_CHANGE);
 
 /**
  * A method decorator for handling the `onFormSubmit` event in Google Sheets.
  *
  * It fires when a form is submitted and its data is recorded in the spreadsheet.
  *
- * @param       [formId] - An optional filter by form ID. The method will only be called if a form with the specified ID was submitted.
+ * @param       args
+ * @returns     A method decorator.
  * @see         Install
  * @see         Open
  * @see         Edit
  * @see         Change
  * @see         SelectionChange
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const FormSubmit = (...args: (string | string[])[]) => {
@@ -187,46 +143,14 @@ export const FormSubmit = (...args: (string | string[])[]) => {
     }
   }
 
-  return createAppsScriptDecorator(AppsScriptEventType.FORM_SUBMIT, options);
+  return createMethodDecorator(AppsScriptEventType.FORM_SUBMIT, options);
 };
-
-/**
- * A factory function that creates method decorators for HTTP methods.
- * It is not intended for direct use.
- *
- * @param       method - The HTTP method to be associated with the decorator.
- * @returns     A function that returns a method decorator.
- * @environment `Google Apps Script`
- */
-function createHttpDecorator(method: RequestMethod) {
-  return (path?: string): MethodDecorator => {
-    return (
-      target: object,
-      key: string | symbol,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      descriptor: TypedPropertyDescriptor<any>
-    ) => {
-      Reflect.defineMetadata(
-        METHOD_METADATA,
-        method || RequestMethod.GET,
-        descriptor.value
-      );
-
-      Reflect.defineMetadata(
-        PATH_METADATA,
-        !path ? "/" : path,
-        descriptor.value
-      );
-
-      return descriptor;
-    };
-  };
-}
 
 /**
  * A method decorator for handling HTTP POST requests.
  *
  * @param       [path='/'] - The relative path for the route.
+ * @returns     A method decorator.
  * @see         PostMapping
  * @see         Get
  * @see         GetMapping
@@ -240,7 +164,6 @@ function createHttpDecorator(method: RequestMethod) {
  * @see         OptionsMapping
  * @see         Head
  * @see         HeadMapping
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const Post = createHttpDecorator(RequestMethod.POST);
@@ -249,6 +172,7 @@ export const Post = createHttpDecorator(RequestMethod.POST);
  * A method decorator for handling HTTP GET requests.
  *
  * @param       [path='/'] - The relative path for the route.
+ * @returns     A method decorator.
  * @see         Post
  * @see         PostMapping
  * @see         GetMapping
@@ -262,7 +186,6 @@ export const Post = createHttpDecorator(RequestMethod.POST);
  * @see         OptionsMapping
  * @see         Head
  * @see         HeadMapping
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const Get = createHttpDecorator(RequestMethod.GET);
@@ -271,6 +194,7 @@ export const Get = createHttpDecorator(RequestMethod.GET);
  * A method decorator for handling HTTP DELETE requests.
  *
  * @param       [path='/'] - The relative path for the route.
+ * @returns     A method decorator.
  * @see         Post
  * @see         PostMapping
  * @see         Get
@@ -284,7 +208,6 @@ export const Get = createHttpDecorator(RequestMethod.GET);
  * @see         OptionsMapping
  * @see         Head
  * @see         HeadMapping
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const Delete = createHttpDecorator(RequestMethod.DELETE);
@@ -293,6 +216,7 @@ export const Delete = createHttpDecorator(RequestMethod.DELETE);
  * A method decorator for handling HTTP PUT requests.
  *
  * @param       [path='/'] - The relative path for the route.
+ * @returns     A method decorator.
  * @see         Post
  * @see         PostMapping
  * @see         Get
@@ -306,7 +230,6 @@ export const Delete = createHttpDecorator(RequestMethod.DELETE);
  * @see         OptionsMapping
  * @see         Head
  * @see         HeadMapping
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const Put = createHttpDecorator(RequestMethod.PUT);
@@ -315,6 +238,7 @@ export const Put = createHttpDecorator(RequestMethod.PUT);
  * A method decorator for handling HTTP PATCH requests.
  *
  * @param       [path='/'] - The relative path for the route.
+ * @returns     A method decorator.
  * @see         Post
  * @see         PostMapping
  * @see         Get
@@ -328,7 +252,6 @@ export const Put = createHttpDecorator(RequestMethod.PUT);
  * @see         OptionsMapping
  * @see         Head
  * @see         HeadMapping
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const Patch = createHttpDecorator(RequestMethod.PATCH);
@@ -337,6 +260,7 @@ export const Patch = createHttpDecorator(RequestMethod.PATCH);
  * A method decorator for handling HTTP OPTIONS requests.
  *
  * @param       [path='/'] - The relative path for the route.
+ * @returns     A method decorator.
  * @see         Post
  * @see         PostMapping
  * @see         Get
@@ -350,7 +274,6 @@ export const Patch = createHttpDecorator(RequestMethod.PATCH);
  * @see         OptionsMapping
  * @see         Head
  * @see         HeadMapping
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const Options = createHttpDecorator(RequestMethod.OPTIONS);
@@ -359,6 +282,7 @@ export const Options = createHttpDecorator(RequestMethod.OPTIONS);
  * A method decorator for handling HTTP HEAD requests.
  *
  * @param       [path='/'] - The relative path for the route.
+ * @returns     A method decorator.
  * @see         Post
  * @see         PostMapping
  * @see         Get
@@ -372,7 +296,6 @@ export const Options = createHttpDecorator(RequestMethod.OPTIONS);
  * @see         Options
  * @see         OptionsMapping
  * @see         HeadMapping
- * @returns     A method decorator.
  * @environment `Google Apps Script`
  */
 export const Head = createHttpDecorator(RequestMethod.HEAD);

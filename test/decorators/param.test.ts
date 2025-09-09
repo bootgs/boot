@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { PARAM_DEFINITIONS_METADATA } from "@/config/constants";
+import { PARAM_DEFINITIONS_METADATA } from "src/config/constants";
 import {
   Body,
   Event,
@@ -11,8 +11,8 @@ import {
   RequestBody,
   RequestParam,
   Response
-} from "@/decorators";
-import { ParamDefinition, ParamSource } from "@/types";
+} from "src/decorators";
+import { ParamDefinition, ParamSource } from "src/types";
 import { describe, expect, it } from "vitest";
 
 function getParameterMetadata(
