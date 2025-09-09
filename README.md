@@ -42,12 +42,137 @@ import {Get, RestController} from "appsscript-boot";
 
 @RestController("api/sheet")
 export class Sheet {
-  @Get("active-range")
-  getActiveRange(): string {
-    return "This action return active range.";
-  }
+    @Get("active-range")
+    getActiveRange(): string {
+        return "This action return active range.";
+    }
 }
 ```
+
+This code is a great example of using the `appsscript-boot` framework to build a **web app on Google Apps Script** with
+a **REST API** architecture. Essentially, it turns your standard Apps Script code into a full-fledged web application
+that can handle and respond to HTTP requests (GET and POST).
+
+<details><summary>More ...</summary>
+
+#### Why is this needed?
+
+Google Apps Script has simple `doGet` and `doPost` functions for handling web requests, but they're quite basic. To
+build a
+more complex application with multiple API endpoints, you'd have to write a lot of manual routing logic. This can
+quickly become clunky and difficult to manage.
+
+`appsscript-boot` solves this problem by providing decorators (`@RestController`, `@Get`) and automated routing. This
+allows
+you to structure your code in a way that is common in modern web frameworks like Express.js or NestJS.
+
+The result is code that is more organized, readable, and scalable.
+
+```TypeScript
+import {App, Newable, Get, RestController} from "appsscript-boot";
+
+/**
+ * This JSDoc comment describes the `doGet` function.
+ * It's the standard handler for GET requests in Google Apps Script.
+ *
+ * @param   event The GET request event object, containing request information.
+ * @returns The result of the request processing, usually HTML content or JSON.
+ */
+// The `doGet` function is a mandatory entry point for web app GET requests.
+export function doGet(event: GoogleAppsScript.Events.DoGet) {
+    // Defines an array of controllers that the application will use.
+    // In this case, only the `Sheet` class is used.
+    const controllers: Newable[] = [Sheet];
+
+    // Defines an array of providers (services) that will be available for injection.
+    // There are no providers in this example.
+    const providers: Newable[] = [];
+
+    // Creates an application instance, passing it the list of controllers and providers.
+    const app = App.create({
+        controllers,
+        providers
+    });
+
+    // Delegates the processing of the GET request to the created application instance.
+    return app.doGet(event);
+}
+
+/**
+ * This JSDoc comment describes the `doPost` function.
+ * It's the standard handler for POST requests in Google Apps Script.
+ *
+ * @param event The POST request event object.
+ * @returns The result of the request processing.
+ */
+// The `doPost` function is the entry point for web app POST requests.
+export function doPost(event: GoogleAppsScript.Events.DoPost) {
+    // Defines controllers for POST requests (same logic as for `doGet`).
+    const controllers: Newable[] = [Sheet];
+
+    // Defines providers (none here).
+    const providers: Newable[] = [];
+
+    // Creates an application instance.
+    const app = App.create({
+        controllers,
+        providers
+    });
+
+    // Delegates the processing of the POST request to the application.
+    return app.doPost(event);
+}
+
+/**
+ * This JSDoc comment describes the `Sheet` class.
+ * It acts as a REST controller for handling API requests.
+ */
+// The `@RestController` decorator declares this class as a controller and sets the base path to "api/sheet".
+@RestController("api/sheet")
+export class Sheet {
+    /**
+     * This JSDoc comment describes the `getActiveRange` method.
+     * It is a handler for a GET request.
+     */
+    // The `@Get` decorator marks this method as a GET request handler and sets the endpoint path to "active-range".
+    // The full path to this endpoint will be "api/sheet/active-range".
+    @Get("active-range")
+    // The method signature: it takes no arguments and returns a string.
+    getActiveRange(): string {
+        // The return value of the method.
+        return "This action return active range.";
+    }
+}
+```
+
+#### How does it work?
+
+The process is built on two key parts:
+
+1. Entry Points (`doGet` and `doPost`): These are the only functions that Google Apps Script calls when it receives a
+   web
+   request. Instead of processing requests directly, they act as a "gateway." They initialize the application (
+   `App.create`)
+   with its controllers and then delegate all further processing to the framework's core handler.
+
+2. Controllers (`@RestController`): The Sheet class is your controller. The `@RestController("api/sheet")` decorator
+   tells
+   the
+   framework that this class will handle all requests starting with the `/api/sheet` path. The methods within this
+   class (
+   `getActiveRange`) become your endpoints. The `@Get("active-range")` decorator specifies that the method should handle
+   GET
+   requests to the `/api/sheet/active-range` path.
+
+So, when a GET request comes in for `https://script.google.com/macros/s/.../exec?path=/api/sheet/active-range`, Apps
+Script
+calls `doGet`, which then passes the request to the framework. The framework parses the URL, finds the matching
+controller (`Sheet`) and method (`getActiveRange`), executes it, and returns the result as an HTTP response.
+
+This approach completely separates your request handling logic from the low-level details of Apps Script, making your
+code **clean**, **modular**, and **maintainable**.
+
+</details>
 
 ## Decorators
 
