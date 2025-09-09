@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/MaksymStoianov/appsscript-boot/compare/v1.0.3...v1.1.0) (2025-09-09)
+
+
+### Features
+
+* Refactor utils and add createApp alias ([c4ac82f](https://github.com/MaksymStoianov/appsscript-boot/commit/c4ac82fed83df22816c9d065e1ac7028aedce5e9))
+
+
+### Bug Fixes
+
+* Critical bug preventing dependency injection ([a62b212](https://github.com/MaksymStoianov/appsscript-boot/commit/a62b212376ef6909f6c2e83fd291096b6a5a5bb7))
+
 ## [1.0.3](https://github.com/MaksymStoianov/appsscript-boot/compare/v1.0.2...v1.0.3) (2025-09-02)
 
 
