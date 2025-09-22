@@ -1,6 +1,12 @@
 <a name="top"></a>
 
-# Boot for Google Apps Script Projects
+![Project banner for Google Apps Script Boot Framework](docs/assets/google-apps-script-boot-author-MaksymStoianov-artist-DarynaMikhailenko.JPG)
+
+<p align="right">
+  <i>Artist: <a href="https://darynamikhailenko.com/?utm_source=github&utm_medium=readme&utm_campaign=appsscript-boot&utm_content=banner_artist_credit" title="Portfolio of Daryna Mikhailenko, the artist">Daryna Mikhailenko</a></i>
+</p>
+
+# Boot Framework for Google Apps Script™ projects
 
 [![Built%20with-clasp](https://img.shields.io/badge/Built%20with-clasp-4285f4.svg)](https://github.com/google/clasp)
 [![License](https://img.shields.io/github/license/MaksymStoianov/appsscript-boot?label=License)](LICENSE)
@@ -28,7 +34,7 @@ npm install github:MaksymStoianov/appsscript-boot#main
 For example:
 
 ```bash
-npm install github:MaksymStoianov/appsscript-boot#v1.0.0
+npm install github:MaksymStoianov/appsscript-boot#v1.1.0
 ```
 
 ## How to Use
@@ -181,7 +187,7 @@ code **clean**, **modular**, and **maintainable**.
 <details open><summary>Class decorators</summary>
 
 | Decorator             | Description                                                   |
-| --------------------- | ------------------------------------------------------------- |
+|-----------------------|---------------------------------------------------------------|
 | `@Controller()`       | Marks a class as a general-purpose controller.                |
 | `@Service()`          | Marks a class as a service, typically holding business logic. |
 | `@Repository()`       | Marks a class as a repository, abstracting data access logic. |
@@ -204,7 +210,7 @@ code **clean**, **modular**, and **maintainable**.
 <details open><summary>Method decorators</summary>
 
 | Decorator            | Description                                                                                                                                                  |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `@Install()`         | Handles [`onInstall`](https://developers.google.com/apps-script/guides/triggers#oninstalle) event, triggered when the add-on is first installed.             |
 | `@Open()`            | Handles [`onOpen`](https://developers.google.com/apps-script/guides/triggers#onopene) event, triggered when a Google Sheet is opened.                        |
 | `@Edit()`            | Handles [`onEdit`](https://developers.google.com/apps-script/guides/triggers#onedite) event, triggered by manual cell changes in a Google Sheet.             |
@@ -233,7 +239,7 @@ code **clean**, **modular**, and **maintainable**.
 <details open><summary>Parameter decorators</summary>
 
 | Decorator         | Description                                                |
-| ----------------- | ---------------------------------------------------------- |
+|-------------------|------------------------------------------------------------|
 | `@Event()`        | Injects the full Google Apps Script event object.          |
 | `@Request()`      | Injects the full request object or a specific key from it. |
 | `@Headers()`      | Injects request headers or a specific header value.        |
