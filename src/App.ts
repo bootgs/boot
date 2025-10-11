@@ -286,7 +286,12 @@ export class App {
       if (!route) {
         return wrapResponse(
           request,
-          createResponse(request, HttpStatus.NOT_FOUND, headers)
+          createResponse(
+            request,
+            HttpStatus.NOT_FOUND,
+            headers,
+            `Not Found: Cannot ${request.method} ${request.url.pathname}`
+          )
         );
       }
 
@@ -300,6 +305,12 @@ export class App {
         controllerInstance[
           route.handler as keyof typeof controllerInstance
         ].bind(controllerInstance);
+
+      if (!isFunctionLike(handler)) {
+        throw new Error(
+          `Method "${String(route.handler)}" in controller "${route.controller.name}" is not a callable function.`
+        );
+      }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const body = ((data, type): any => {
@@ -440,6 +451,20 @@ export class App {
           continue;
         }
 
+        const handler =
+          controllerInstance[
+            methodName as keyof typeof controllerInstance
+          ].bind(controllerInstance);
+
+        if (!isFunctionLike(handler)) {
+          console.warn(
+            "Method '%s' in controller '%s' is not a callable function and was skipped during event handling.",
+            methodName,
+            controller.name
+          );
+          continue;
+        }
+
         const args = buildMethodParams(
           controllerInstance,
           methodName,
@@ -451,7 +476,7 @@ export class App {
         );
 
         try {
-          controllerInstance?.[methodName]?.(...args);
+          handler(...args);
         } catch (err: unknown) {
           console.error(
             "Error:",
