@@ -1,5 +1,6 @@
 import "reflect-metadata";
-import { METHOD_METADATA, PATH_METADATA } from "src/config/constants";
+import { describe, expect, it } from "vitest";
+import { METHOD_METADATA, PATH_METADATA } from "../../src/config/constants";
 import {
   Delete,
   DeleteMapping,
@@ -15,9 +16,8 @@ import {
   PostMapping,
   Put,
   PutMapping
-} from "src/decorators";
-import { RequestMethod } from "src/types";
-import { describe, expect, it } from "vitest";
+} from "../../src/decorators";
+import { RequestMethod } from "../../src/types";
 
 describe("HTTP Method Decorators", () => {
   function testHttpMethodDecorator(

@@ -1,33 +1,38 @@
 {
-  "name": "appsscript-boot",
-  "version": "1.0.0",
-  "description": "Boot for Google Apps Script Projects.",
+  "name": "bootgs",
+  "version": "1.1.0",
+  "description": "Boot Framework for Google Apps Script™ projects.",
   "main": "src/index.ts",
   "scripts": {
+    "maint": "bash ./sctipts/maintenance.sh",
     "dev": "vitest",
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "test": "vitest run",
-    "build": "rm -rf dist/* && tsc"
+    "build": "rm -rf dist/* && tsc",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MaksymStoianov/appsscript-boot.git"
+    "url": "git+https://github.com/bootgs/boot.git"
   },
   "keywords": [
     "google-apps-script",
     "googleappsscript",
+    "apps-script",
     "appsscript",
     "gas",
-    "typescript"
+    "typescript",
+    "javascript",
+    "bootgs"
   ],
   "author": "Maksym Stoianov <stoianov.maksym@gmail.com>",
   "license": "Apache-2.0",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/MaksymStoianov/appsscript-boot/issues"
+    "url": "https://github.com/bootgs/boot/issues"
   },
-  "homepage": "https://github.com/MaksymStoianov/appsscript-boot#readme",
+  "homepage": "https://github.com/bootgs/boot#readme",
   "funding": [
     {
       "type": "github",
@@ -40,20 +45,20 @@
   ],
   "devDependencies": {
     "@eslint/json": "^0.13.2",
-    "@eslint/markdown": "^7.2.0",
-    "@types/google-apps-script": "^2.0.1",
-    "@types/node": "^24.3.1",
-    "eslint": "^9.35.0",
+    "@eslint/markdown": "^7.5.0",
+    "@types/google-apps-script": "^2.0.7",
+    "@types/node": "^24.9.1",
+    "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-googleappsscript": "^1.0.5",
     "husky": "^9.1.7",
     "prettier": "^3.6.2",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.42.0",
-    "vitest": "^3.2.4"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2",
+    "vitest": "^4.0.4"
   },
   "dependencies": {
-    "appsscript-utils": "github:MaksymStoianov/appsscript-utils#main",
+    "apps-script-utils": "github:MaksymStoianov/apps-script-utils#main",
     "reflect-metadata": "^0.2.2"
   }
 }

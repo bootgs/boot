@@ -1,4 +1,4 @@
-import { normalize } from "appsscript-utils";
+import { normalize } from "apps-script-utils";
 import {
   CONTROLLER_OPTIONS_METADATA,
   CONTROLLER_TYPE_METADATA,

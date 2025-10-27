@@ -26,7 +26,10 @@
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "composite": false,
-    "baseUrl": "../.."
+    "baseUrl": "../..",
+    "paths": {
+      "src/*": ["../../src/*"]
+    }
   },
   "include": ["../../src/**/*", "../../test/**/*"],
   "exclude": ["../../node_modules", "../../dist"]

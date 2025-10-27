@@ -18,7 +18,11 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": "../..",
+    "paths": {
+      "src/*": ["../../src/*"]
+    }
   },
   "include": ["../../config/**/*", "../../vite.config.ts"],
   "exclude": ["../../node_modules", "../../dist"]
