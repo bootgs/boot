@@ -1,11 +1,11 @@
 import "reflect-metadata";
+import { describe, expect, it } from "vitest";
 import {
   CONTROLLER_OPTIONS_METADATA,
   CONTROLLER_TYPE_METADATA,
   CONTROLLER_WATERMARK
-} from "src/config/constants";
-import { HttpController, RestController } from "src/decorators";
-import { describe, expect, it } from "vitest";
+} from "../../src/config/constants";
+import { HttpController, RestController } from "../../src/decorators";
 
 describe("HttpController Decorator", () => {
   it("should define CONTROLLER_WATERMARK, CONTROLLER_TYPE_METADATA as 'http', and PATH_METADATA within options", () => {

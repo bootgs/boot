@@ -1,3 +1,8 @@
+import { isObject } from "apps-script-utils";
+import {
+  PARAM_DEFINITIONS_METADATA,
+  PARAMTYPES_METADATA
+} from "../config/constants";
 import {
   HttpHeaders,
   HttpRequest,
@@ -7,12 +12,7 @@ import {
   ParamDefinition,
   ParamSource
 } from "../types";
-import {
-  PARAM_DEFINITIONS_METADATA,
-  PARAMTYPES_METADATA
-} from "../config/constants";
 import { getInjectionTokens, resolve } from "../utils";
-import { isObject } from "appsscript-utils";
 
 /**
  * Creates an array of arguments for invoking a controller method, based on parameter metadata and the provided context.

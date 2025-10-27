@@ -1,7 +1,7 @@
+import { isFunctionLike } from "apps-script-utils";
+import { PARAMTYPES_METADATA } from "../config/constants";
 import { Newable, ParamSource } from "../types";
 import { getInjectionTokens, isController, isInjectable } from "../utils";
-import { PARAMTYPES_METADATA } from "../config/constants";
-import { isFunctionLike } from "appsscript-utils";
 
 /**
  * Resolves a class (Controller or Provider) and its dependencies from the DI container.

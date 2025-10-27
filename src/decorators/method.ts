@@ -1,4 +1,4 @@
-import { isRegExp, isString, nonEmpty } from "appsscript-utils";
+import { isRegExp, isString, nonEmpty } from "apps-script-utils";
 import { AppsScriptEventType, RequestMethod } from "../types";
 import {
   AppsScriptOptions,

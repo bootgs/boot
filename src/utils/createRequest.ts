@@ -1,5 +1,5 @@
+import { isString, normalize } from "apps-script-utils";
 import { HttpHeaders, HttpRequest, ParsedUrl, RequestMethod } from "../types";
-import { isString, normalize } from "appsscript-utils";
 
 /**
  * Creates a structured {@link HttpRequest} object from a raw Apps Script `DoGet` or `DoPost` event.
