@@ -36,7 +36,6 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Param / @PathVariable", () => {
     it("should define correct metadata for a @Param with a key", () => {
       class TestController {
-         
         testMethod(
           @Param("id")
           id: string
@@ -51,7 +50,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for a @Param without a key (full object injection)", () => {
       class TestController {
-         
         testMethod(
           @Param()
           params: any
@@ -66,7 +64,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("PathVariable should be an alias for Param", () => {
       class TestController {
-         
         testMethod(
           @PathVariable("name")
           name: string
@@ -83,7 +80,6 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Query / @RequestParam", () => {
     it("should define correct metadata for a @Query with a key", () => {
       class TestController {
-         
         testMethod(
           @Query("search")
           search: string
@@ -98,7 +94,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for a @Query without a key", () => {
       class TestController {
-         
         testMethod(
           @Query()
           queryParams: never
@@ -113,7 +108,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("RequestParam should be an alias for Query", () => {
       class TestController {
-         
         testMethod(
           @RequestParam("sort")
           sort: string
@@ -130,7 +124,6 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Body / @RequestBody", () => {
     it("should define correct metadata for a @Body with a key", () => {
       class TestController {
-         
         testMethod(
           @Body("data")
           data: never
@@ -145,7 +138,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for a @Body without a key (full body injection)", () => {
       class TestController {
-         
         testMethod(
           @Body()
           fullBody: any
@@ -160,7 +152,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("RequestBody should be an alias for Body", () => {
       class TestController {
-         
         testMethod(
           @RequestBody("user")
           user: never
@@ -177,7 +168,6 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Event", () => {
     it("should define correct metadata for @Event", () => {
       class TestController {
-         
         testMethod(
           @Event()
           event: any
@@ -192,7 +182,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define key as passed for @Event if provided", () => {
       class TestController {
-         
         testMethod(
           @Event("someKey" as any)
           event: any
@@ -209,7 +198,6 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Headers", () => {
     it("should define correct metadata for @Headers with a key", () => {
       class TestController {
-         
         testMethod(
           @Headers("Authorization")
           auth: string
@@ -228,7 +216,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for @Headers without a key (full headers object)", () => {
       class TestController {
-         
         testMethod(
           @Headers()
           headers: any
@@ -245,7 +232,6 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Request", () => {
     it("should define correct metadata for @Request with a key", () => {
       class TestController {
-         
         testMethod(
           @Request("method")
           method: string
@@ -260,7 +246,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for @Request without a key (full request object)", () => {
       class TestController {
-         
         testMethod(
           @Request()
           req: any
@@ -277,7 +262,6 @@ describe("HTTP Parameter Decorators", () => {
   describe("@Response", () => {
     it("should define correct metadata for @Response with a key", () => {
       class TestController {
-         
         testMethod(
           @Response("status")
           status: number
@@ -292,7 +276,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for @Response without a key (full response object)", () => {
       class TestController {
-         
         testMethod(
           @Response()
           res: any
@@ -310,25 +293,24 @@ describe("HTTP Parameter Decorators", () => {
     it("should define correct metadata for multiple parameters in the same method", () => {
       class TestController {
         testMethod(
-           
           @Param("userId")
           id: string,
-           
+
           @Query("search")
           search: string,
-           
+
           @Body()
           body: any,
-           
+
           @Event()
           event: any,
-           
+
           @Headers("Accept")
           accept: string,
-           
+
           @Request()
           req: any,
-           
+
           @Response("ok")
           ok: boolean
         ) {}
@@ -348,13 +330,11 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should define correct metadata for parameters in different methods", () => {
       class TestController {
-         
         methodOne(
           @Param("id")
           id: string
         ) {}
 
-         
         methodTwo(
           @Query("page")
           page: number
@@ -377,13 +357,11 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should correctly handle parameters with the same index but different methods", () => {
       class TestController {
-         
         methodA(
           @Param("alpha")
           alpha: string
         ) {}
 
-         
         methodB(
           @Query("beta")
           beta: string
@@ -429,7 +407,6 @@ describe("HTTP Parameter Decorators", () => {
   describe("Invalid/Unexpected Keys", () => {
     it("should store null as key if provided", () => {
       class TestController {
-         
         testMethod(
           @Param(null as any)
           param: any
@@ -444,7 +421,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should store empty string as key if provided", () => {
       class TestController {
-         
         testMethod(
           @Query("")
           query: any
@@ -459,7 +435,6 @@ describe("HTTP Parameter Decorators", () => {
 
     it("should store number as key if provided (TS warning, but JS allows)", () => {
       class TestController {
-         
         testMethod(
           @Body(123 as any)
           body: any
