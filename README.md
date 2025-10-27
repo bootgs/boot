@@ -186,7 +186,7 @@ code **clean**, **modular**, and **maintainable**.
 <details open><summary>Class decorators</summary>
 
 | Decorator             | Description                                                   |
-|-----------------------|---------------------------------------------------------------|
+| --------------------- | ------------------------------------------------------------- |
 | `@Controller()`       | Marks a class as a general-purpose controller.                |
 | `@Service()`          | Marks a class as a service, typically holding business logic. |
 | `@Repository()`       | Marks a class as a repository, abstracting data access logic. |
@@ -209,7 +209,7 @@ code **clean**, **modular**, and **maintainable**.
 <details open><summary>Method decorators</summary>
 
 | Decorator            | Description                                                                                                                                                  |
-|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `@Install()`         | Handles [`onInstall`](https://developers.google.com/apps-script/guides/triggers#oninstalle) event, triggered when the add-on is first installed.             |
 | `@Open()`            | Handles [`onOpen`](https://developers.google.com/apps-script/guides/triggers#onopene) event, triggered when a Google Sheet is opened.                        |
 | `@Edit()`            | Handles [`onEdit`](https://developers.google.com/apps-script/guides/triggers#onedite) event, triggered by manual cell changes in a Google Sheet.             |
@@ -238,7 +238,7 @@ code **clean**, **modular**, and **maintainable**.
 <details open><summary>Parameter decorators</summary>
 
 | Decorator         | Description                                                |
-|-------------------|------------------------------------------------------------|
+| ----------------- | ---------------------------------------------------------- |
 | `@Event()`        | Injects the full Google Apps Script event object.          |
 | `@Request()`      | Injects the full request object or a specific key from it. |
 | `@Headers()`      | Injects request headers or a specific header value.        |
