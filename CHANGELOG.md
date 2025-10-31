@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/bootgs/boot/compare/v1.1.0...v1.1.1) (2025-10-31)
+
+
+### Bug Fixes
+
+* bugs ([ee0cde5](https://github.com/bootgs/boot/commit/ee0cde5ce8bb63776ec91c951e9152c482eb1c18))
+
 ## [1.1.0](https://github.com/MaksymStoianov/appsscript-boot/compare/v1.0.3...v1.1.0) (2025-09-09)
 
 
