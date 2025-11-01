@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2](https://github.com/bootgs/boot/compare/v1.1.1...v1.1.2) (2025-11-01)
+
+
+### Bug Fixes
+
+* update package.json ([ece9d69](https://github.com/bootgs/boot/commit/ece9d691d0ba1a8871da7198a1e9d7a8539842c5))
+* update package.json ([83c9a45](https://github.com/bootgs/boot/commit/83c9a4506d74fc3e9132d98ee8c2298a7ecf660d))
+
 ## [1.1.1](https://github.com/bootgs/boot/compare/v1.1.0...v1.1.1) (2025-10-31)
 
 
