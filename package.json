@@ -1,6 +1,6 @@
 {
   "name": "bootgs",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Boot Framework for Google Apps Script™ projects.",
   "main": "src/index.ts",
   "scripts": {
