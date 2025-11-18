@@ -47,6 +47,9 @@
       "url": "https://buymeacoffee.com/MaksymStoianov"
     }
   ],
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
   "devDependencies": {
     "@eslint/json": "^0.13.2",
     "@eslint/markdown": "^7.5.0",
@@ -57,7 +60,6 @@
     "eslint-plugin-googleappsscript": "^1.0.5",
     "husky": "^9.1.7",
     "prettier": "^3.6.2",
-    "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2",
     "vitest": "^4.0.4"
   },

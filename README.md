@@ -3,7 +3,9 @@
 ![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
 
 <p align="right">
-  <i>Artist: <a href="https://darynamikhailenko.com/?utm_source=github&utm_medium=readme&utm_campaign=apps-script-boot&utm_content=banner-artist-credit" title="Portfolio of Daryna Mikhailenko, the artist">Daryna Mikhailenko</a></i>
+    <small>
+      <i>Artist: <a href="https://darynamikhailenko.com/?utm_source=github&utm_medium=readme&utm_campaign=apps-script-boot&utm_content=banner-artist-credit" title="Portfolio of Daryna Mikhailenko, the artist">Daryna Mikhailenko</a></i>
+    </small>
 </p>
 
 # Boot Framework for Google Apps Script™ projects
