@@ -51,7 +51,7 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@eslint/json": "^0.13.2",
+    "@eslint/json": "^1.0.0",
     "@eslint/markdown": "^7.5.0",
     "@types/google-apps-script": "^2.0.7",
     "@types/node": "^24.9.1",
