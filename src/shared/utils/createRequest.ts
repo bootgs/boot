@@ -1,5 +1,6 @@
 import { isString, normalize } from "apps-script-utils";
-import { HttpHeaders, HttpRequest, ParsedUrl, RequestMethod } from "../types";
+import { HttpHeaders, HttpRequest, ParsedUrl } from "domain/types";
+import { RequestMethod } from "domain/enums";
 
 /**
  * Creates a structured {@link HttpRequest} object from a raw Apps Script `DoGet` or `DoPost` event.
@@ -14,14 +15,13 @@ export function createRequest(
   event: GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost
 ): HttpRequest {
   const headers: HttpHeaders =
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ((input: unknown): any => {
+    ((input: unknown): HttpHeaders | null => {
       if (!isString(input)) {
         return null;
       }
 
       try {
-        return JSON.parse(input.trim());
+        return JSON.parse(input.trim()) as HttpHeaders;
       } catch (err: unknown) {
         console.warn("Failed to parse JSON:", err);
       }
@@ -30,21 +30,14 @@ export function createRequest(
     })(event?.parameter?.headers) || {};
 
   const methodParam = event?.parameter?.method?.toLowerCase();
-  const method = Object.values(RequestMethod).includes(
-    methodParam as RequestMethod
-  )
+  const method = Object.values(RequestMethod).includes(methodParam as RequestMethod)
     ? (methodParam as RequestMethod)
     : methodRequest;
 
-  const rawPathname =
-    event?.pathInfo ||
-    event?.parameter?.path ||
-    event?.parameter?.pathname ||
-    "";
+  const rawPathname = event?.pathInfo || event?.parameter?.path || event?.parameter?.pathname || "";
   const pathname = normalize(rawPathname);
 
-  const search = (params =>
-    isString(params) && params.length > 0 ? `?${params}` : undefined)(
+  const search = ((params) => (isString(params) && params.length > 0 ? `?${params}` : undefined))(
     event?.queryString
   );
 

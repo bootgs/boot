@@ -1,8 +1,5 @@
-import { AppsScriptEventType } from "../types";
-import {
-  APPSSCRIPT_EVENT_METADATA,
-  APPSSCRIPT_OPTIONS_METADATA
-} from "../config/constants";
+import { AppsScriptEventType } from "domain/enums";
+import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA } from "domain/constants";
 
 /**
  * Options for Google Apps Script events.
@@ -29,18 +26,15 @@ export function createMethodDecorator(
   eventType: AppsScriptEventType,
   options?: Omit<AppsScriptOptions, "eventType">
 ): MethodDecorator {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (target, key, descriptor: TypedPropertyDescriptor<any>) => {
-    Reflect.defineMetadata(
-      APPSSCRIPT_EVENT_METADATA,
-      eventType,
-      descriptor.value
-    );
-    Reflect.defineMetadata(
-      APPSSCRIPT_OPTIONS_METADATA,
-      options || {},
-      descriptor.value
-    );
+  return <T>(
+    _target: object,
+    _key: string | symbol,
+    descriptor: TypedPropertyDescriptor<T>
+  ): TypedPropertyDescriptor<T> => {
+    if (descriptor.value) {
+      Reflect.defineMetadata(APPSSCRIPT_EVENT_METADATA, eventType, descriptor.value);
+      Reflect.defineMetadata(APPSSCRIPT_OPTIONS_METADATA, options || {}, descriptor.value);
+    }
 
     return descriptor;
   };

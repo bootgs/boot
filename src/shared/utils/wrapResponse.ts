@@ -1,4 +1,5 @@
-import { HeaderAcceptMimeType, HttpRequest, HttpResponse } from "../types";
+import { HeaderAcceptMimeType } from "domain/enums";
+import { HttpRequest, HttpResponse } from "domain/types";
 
 /**
  * Wraps a {@link HttpResponse} object into a format suitable for return from Apps Script entry point functions (e.g., `doGet`, `doPost`).
@@ -20,7 +21,7 @@ export function wrapResponse(
     (request.headers?.Accept as HeaderAcceptMimeType) ||
     HeaderAcceptMimeType.HTML;
 
-  response.headers["Content-Type"] = mimeType;
+  response.headers[ "Content-Type" ] = mimeType;
 
   const isApi = request.url.pathname?.startsWith("/api/") || false;
   const result = JSON.stringify(isApi ? response : response.body);

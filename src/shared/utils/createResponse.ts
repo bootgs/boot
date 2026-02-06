@@ -1,10 +1,5 @@
-import {
-  HttpHeaders,
-  HttpRequest,
-  HttpResponse,
-  HttpStatus,
-  RequestMethod
-} from "../types";
+import { HttpHeaders, HttpRequest, HttpResponse } from "domain/types";
+import { HttpStatus, RequestMethod } from "domain/enums";
 
 /**
  * Creates a structured {@link HttpResponse} object based on the incoming request, a desired HTTP status, headers, and response data.
@@ -27,7 +22,7 @@ export function createResponse(
 ): HttpResponse {
   const resolvedStatus =
     status ??
-    ([RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS].includes(
+    ([ RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS ].includes(
       request.method
     )
       ? HttpStatus.OK
@@ -35,10 +30,10 @@ export function createResponse(
 
   const statusText = ((): string => {
     const entry = Object.entries(HttpStatus).find(
-      ([, value]) => value === resolvedStatus
+      ([ , value ]) => value === resolvedStatus
     );
 
-    return entry ? entry[0] : "UNKNOWN_STATUS";
+    return entry ? entry[ 0 ] : "UNKNOWN_STATUS";
   })();
 
   const ok = resolvedStatus >= 200 && resolvedStatus < 300;

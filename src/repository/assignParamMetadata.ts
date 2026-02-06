@@ -1,4 +1,5 @@
-import { ParamDefinition, ParamSource } from "../../../domain";
+import { ParamDefinition } from "domain/types";
+import { ParamSource } from "domain/enums";
 
 /**
  * Updates parameter metadata with the argument's position (index).
@@ -17,6 +18,6 @@ export function assignParamMetadata(
 ): Record<string, ParamDefinition> {
   return {
     ...existing,
-    [`${type as string}:${index}`]: { type, key, index }
+    [ `${type as string}:${index}` ]: { type, key, index }
   };
 }
