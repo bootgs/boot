@@ -1,3 +1,3 @@
-export type { BuildOptions } from "./BuildOptions";
-export type { BuildPaths } from "./BuildPaths";
-export type { ResolveOptions } from "./ResolveOptions";
+export * from "./BuildOptions";
+export * from "./BuildPaths";
+export * from "./ResolveOptions";

@@ -1,0 +1,96 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    /**
+     * Disable error reporting for unreachable code.
+     * @see https://www.typescriptlang.org/tsconfig#allowUnreachableCode
+     */
+    "allowUnreachableCode": false,
+
+    /**
+     * Disable error reporting for unused labels.
+     * @see https://www.typescriptlang.org/tsconfig#allowUnusedLabels
+     */
+    "allowUnusedLabels": false,
+
+    /**
+     * Base directory to resolve non-relative module names.
+     * @see https://www.typescriptlang.org/tsconfig#baseUrl
+     */
+    "baseUrl": "../../src",
+
+    /**
+     * Enable project compilation.
+     * @see https://www.typescriptlang.org/tsconfig#composite
+     */
+    "composite": false,
+
+    /**
+     * Emit design-type metadata for decorated declarations in source files.
+     * @see https://www.typescriptlang.org/tsconfig#emitDecoratorMetadata
+     */
+    "emitDecoratorMetadata": true,
+
+    /**
+     * Enable experimental support for legacy experimental decorators.
+     * @see https://www.typescriptlang.org/tsconfig#experimentalDecorators
+     */
+    "experimentalDecorators": true,
+
+    /**
+     * Ensure each file can be safely transpiled without relying on other imports.
+     * @see https://www.typescriptlang.org/tsconfig#isolatedModules
+     */
+    "isolatedModules": false,
+
+    /**
+     * List of library files to be included in the compilation.
+     * @see https://www.typescriptlang.org/tsconfig#lib
+     */
+    "lib": ["ESNext"],
+
+    /**
+     * A series of entries which re-map imports to lookup locations relative to the 'baseUrl'.
+     * @see https://www.typescriptlang.org/tsconfig#paths
+     */
+    "paths": {
+      "src/*": ["./*"]
+    },
+
+    /**
+     * Specify the file to store incremental compilation information.
+     * @see https://www.typescriptlang.org/tsconfig#tsBuildInfoFile
+     */
+    "tsBuildInfoFile": "../../node_modules/.tmp/tsconfig.appsscript.tsbuildinfo",
+
+    /**
+     * List of folders to include type definitions from.
+     * @see https://www.typescriptlang.org/tsconfig#typeRoots
+     */
+    "typeRoots": ["../../node_modules/@types", "../types"],
+
+    /**
+     * Specify type package names to be included without being referenced in a source file.
+     * @see https://www.typescriptlang.org/tsconfig#types
+     */
+    "types": ["google-apps-script"],
+
+    /**
+     * Emit ECMAScript-standard-compliant class fields.
+     * @see https://www.typescriptlang.org/tsconfig#useDefineForClassFields
+     */
+    "useDefineForClassFields": false
+  },
+
+  /**
+   * Specifies a list of glob patterns that match files to be included in compilation.
+   * @see https://www.typescriptlang.org/tsconfig#include
+   */
+  "include": ["../../src/**/*", "../../test/**/*", "../../config/**/*"],
+
+  /**
+   * Specifies a list of files to be excluded from compilation.
+   * @see https://www.typescriptlang.org/tsconfig#exclude
+   */
+  "exclude": ["../../node_modules", "../../dist"]
+}

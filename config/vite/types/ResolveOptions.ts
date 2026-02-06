@@ -1,12 +1,12 @@
 import { AliasOptions, ResolveOptions as ViteResolveOptions } from "vite";
 
 /**
- * Represents Vite's resolve configuration options, with the addition of optional alias configuration.
- * This type is used to define how Vite should resolve modules, including custom aliases.
+ * Vite resolve options with optional aliases.
  */
 export type ResolveOptions = ViteResolveOptions & {
+
   /**
-   * Optional alias configuration to create custom module aliases.
+   * Module aliases.
    */
   alias?: AliasOptions;
 };

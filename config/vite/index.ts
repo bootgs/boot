@@ -1,4 +1,3 @@
 export * from "./types";
-
-export { buildAliases } from "./buildAliases";
-export { buildResolversConfig } from "./buildResolversConfig";
+export * from "./factories";
+export * from "./utils";

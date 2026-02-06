@@ -1,30 +1,30 @@
 /**
- * Represents the directory paths used in the build process.
- * Provides the paths for the root directory, source files, distribution, and optionally configuration and public directories.
+ * Directory paths used in the build process.
  */
 export type BuildPaths = {
+
   /**
-   * The root directory of the project.
+   * Project root directory.
    */
   root: string;
 
   /**
-   * Optional url to the configuration directory.
+   * Configuration directory.
    */
   config: string;
 
   /**
-   * The output directory for the build.
+   * Build output directory.
    */
   dist: string;
 
   /**
-   * Optional url to the public directory for static assets.
+   * Public directory for static assets.
    */
   public?: string;
 
   /**
-   * The source directory for the project files.
+   * Source directory.
    */
   src: string;
 };

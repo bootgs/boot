@@ -1,0 +1,95 @@
+{
+  "compilerOptions": {
+    /**
+     * Allow importing files with a TypeScript-specific extension (.ts, .tsx, etc.).
+     * @see https://www.typescriptlang.org/tsconfig#allowImportingTsExtensions
+     */
+    "allowImportingTsExtensions": true,
+
+    /**
+     * Emit additional JavaScript to ease support for importing CommonJS modules.
+     * @see https://www.typescriptlang.org/tsconfig#esModuleInterop
+     */
+    "esModuleInterop": true,
+
+    /**
+     * Ensure that the casing is correct in imports.
+     * @see https://www.typescriptlang.org/tsconfig#forceConsistentCasingInFileNames
+     */
+    "forceConsistentCasingInFileNames": true,
+
+    /**
+     * Specify what module code is generated.
+     * @see https://www.typescriptlang.org/tsconfig#module
+     */
+    "module": "ESNext",
+
+    /**
+     * Control what method is used to detect whether a file is a script or a module.
+     * @see https://www.typescriptlang.org/tsconfig#moduleDetection
+     */
+    "moduleDetection": "force",
+
+    /**
+     * Specify how TypeScript looks up a file from a given module specifier.
+     * @see https://www.typescriptlang.org/tsconfig#moduleResolution
+     */
+    "moduleResolution": "bundler",
+
+    /**
+     * Disable emitting files from a compilation.
+     * @see https://www.typescriptlang.org/tsconfig#noEmit
+     */
+    "noEmit": true,
+
+    /**
+     * Enable error reporting for fallthrough cases in switch statements.
+     * @see https://www.typescriptlang.org/tsconfig#noFallthroughCasesInSwitch
+     */
+    "noFallthroughCasesInSwitch": true,
+
+    /**
+     * Ensure that any non-relative imports are not only present but also have a valid type definition.
+     * @see https://www.typescriptlang.org/tsconfig#noUncheckedSideEffectImports
+     */
+    "noUncheckedSideEffectImports": true,
+
+    /**
+     * Enable error reporting when local variables aren't read.
+     * @see https://www.typescriptlang.org/tsconfig#noUnusedLocals
+     */
+    "noUnusedLocals": false,
+
+    /**
+     * Raise an error when a function parameter isn't read.
+     * @see https://www.typescriptlang.org/tsconfig#noUnusedParameters
+     */
+    "noUnusedParameters": false,
+
+    /**
+     * Specify the root folder within your source files.
+     * @see https://www.typescriptlang.org/tsconfig#rootDir
+     */
+    "rootDir": "../../",
+
+    /**
+     * Skip type checking all .d.ts files.
+     * @see https://www.typescriptlang.org/tsconfig#skipLibCheck
+     */
+    "skipLibCheck": true,
+
+    /**
+     * Enable all strict type-checking options.
+     * @see https://www.typescriptlang.org/tsconfig#strict
+     */
+    "strict": true,
+
+    /**
+     * Set the JavaScript language version for emitted JavaScript and include compatible library declarations.
+     * @see https://www.typescriptlang.org/tsconfig#target
+     */
+    "target": "ESNext",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}

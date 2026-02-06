@@ -1,9 +1,13 @@
 // https://typescriptlang.org/docs/handbook/tsconfig-json.html
 {
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
   "files": [],
   "references": [
     {
-      "path": "./config/typescript/tsconfig.json"
+      "path": "./config/typescript/tsconfig.appsscript.json"
     },
     {
       "path": "./config/typescript/tsconfig.node.json"
