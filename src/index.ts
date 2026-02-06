@@ -1,8 +1,6 @@
-import "reflect-metadata";
-import { App } from "./App";
+import { BootApplication, BootApplicationFactory } from "controller";
 
-export * from "./types";
-export * from "./decorators";
+export * from "controller";
 
-export { App };
-export const createApp = App.create;
+export { BootApplication as App };
+export const createApp = BootApplicationFactory.create;
