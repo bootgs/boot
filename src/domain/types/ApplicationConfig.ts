@@ -1,7 +1,7 @@
 import { Newable } from "./Newable";
 import { Provider } from "./Provider";
 
-export interface AppConfig {
+export interface ApplicationConfig {
   controllers?: Newable[];
   providers?: Provider[];
 }

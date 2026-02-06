@@ -1,5 +1,5 @@
 import { HttpHeaders } from "./HttpHeaders";
-import { HttpStatus } from "./HttpStatus";
+import { HttpStatus } from "domain/enums";
 
 export interface HttpResponse {
   headers: HttpHeaders;

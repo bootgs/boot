@@ -2,9 +2,9 @@ export enum ParamSource {
   PARAM = "PARAM",
   QUERY = "QUERY",
   BODY = "BODY",
-  EVENT = "EVENT",
-  REQUEST = "REQUEST",
   HEADERS = "HEADERS",
+  REQUEST = "REQUEST",
   RESPONSE = "RESPONSE",
+  EVENT = "EVENT",
   INJECT = "INJECT"
 }

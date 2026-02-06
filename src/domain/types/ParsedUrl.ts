@@ -1,6 +1,4 @@
-export interface ParsedUrlQuery {
-  [key: string]: string | string[] | undefined;
-}
+import { ParsedUrlQuery } from "./ParsedUrlQuery";
 
 export interface ParsedUrl {
   pathname: string;

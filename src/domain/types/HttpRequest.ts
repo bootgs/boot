@@ -1,6 +1,6 @@
 import { HttpHeaders } from "./HttpHeaders";
 import { ParsedUrl } from "./ParsedUrl";
-import { RequestMethod } from "./RequestMethod";
+import { RequestMethod } from "domain/enums";
 
 export interface HttpRequest {
   headers: HttpHeaders;
