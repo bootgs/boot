@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 /**
  * Repository for managing metadata across the framework.
  */
