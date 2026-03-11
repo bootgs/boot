@@ -1,6 +1,15 @@
 {
-  "extends": "./tsconfig.base.json",
+  /**
+   * Instructs the TypeScript compiler how to compile the .ts files.
+   * @see https://www.typescriptlang.org/tsconfig#compilerOptions
+   */
   "compilerOptions": {
+    /**
+     * Allow importing files with a TypeScript-specific extension (.ts, .tsx, etc.).
+     * @see https://www.typescriptlang.org/tsconfig#allowImportingTsExtensions
+     */
+    "allowImportingTsExtensions": false,
+
     /**
      * Disable error reporting for unreachable code.
      * @see https://www.typescriptlang.org/tsconfig#allowUnreachableCode
@@ -14,28 +23,16 @@
     "allowUnusedLabels": false,
 
     /**
-     * Base directory to resolve non-relative module names.
-     * @see https://www.typescriptlang.org/tsconfig#baseUrl
-     */
-    "baseUrl": "../../src",
-
-    /**
      * Enable project compilation.
      * @see https://www.typescriptlang.org/tsconfig#composite
      */
-    "composite": false,
+    "composite": true,
 
     /**
-     * Emit design-type metadata for decorated declarations in source files.
-     * @see https://www.typescriptlang.org/tsconfig#emitDecoratorMetadata
+     * Generate .d.ts files from TypeScript and JavaScript files in your project.
+     * @see https://www.typescriptlang.org/tsconfig#declaration
      */
-    "emitDecoratorMetadata": true,
-
-    /**
-     * Enable experimental support for legacy experimental decorators.
-     * @see https://www.typescriptlang.org/tsconfig#experimentalDecorators
-     */
-    "experimentalDecorators": true,
+    "declaration": true,
 
     /**
      * Ensure each file can be safely transpiled without relying on other imports.
@@ -50,12 +47,22 @@
     "lib": ["ESNext"],
 
     /**
-     * A series of entries which re-map imports to lookup locations relative to the 'baseUrl'.
-     * @see https://www.typescriptlang.org/tsconfig#paths
+     * Disable emitting files from a compilation.
+     * @see https://www.typescriptlang.org/tsconfig#noEmit
      */
-    "paths": {
-      "src/*": ["./*"]
-    },
+    "noEmit": false,
+
+    /**
+     * Specify an output folder for all emitted files.
+     * @see https://www.typescriptlang.org/tsconfig#outDir
+     */
+    "outDir": "../../dist",
+
+    /**
+     * Specify the root folder within your source files.
+     * @see https://www.typescriptlang.org/tsconfig#rootDir
+     */
+    "rootDir": "../../src",
 
     /**
      * Specify the file to store incremental compilation information.
@@ -67,13 +74,13 @@
      * List of folders to include type definitions from.
      * @see https://www.typescriptlang.org/tsconfig#typeRoots
      */
-    "typeRoots": ["../../node_modules/@types", "../types"],
+    "typeRoots": ["../../node_modules/@types", "../../node_modules", "../types"],
 
     /**
      * Specify type package names to be included without being referenced in a source file.
      * @see https://www.typescriptlang.org/tsconfig#types
      */
-    "types": ["google-apps-script"],
+    "types": ["google-apps-script", "reflect-metadata"],
 
     /**
      * Emit ECMAScript-standard-compliant class fields.
@@ -83,14 +90,20 @@
   },
 
   /**
-   * Specifies a list of glob patterns that match files to be included in compilation.
-   * @see https://www.typescriptlang.org/tsconfig#include
-   */
-  "include": ["../../src/**/*", "../../test/**/*", "../../config/**/*"],
-
-  /**
    * Specifies a list of files to be excluded from compilation.
    * @see https://www.typescriptlang.org/tsconfig#exclude
    */
-  "exclude": ["../../node_modules", "../../dist"]
+  "exclude": ["../../dist", "../../node_modules"],
+
+  /**
+   * Path to a base configuration file to inherit from.
+   * @see https://www.typescriptlang.org/tsconfig#extends
+   */
+  "extends": "./tsconfig.base.json",
+
+  /**
+   * Specifies a list of glob patterns that match files to be included in compilation.
+   * @see https://www.typescriptlang.org/tsconfig#include
+   */
+  "include": ["../../src/**/*"]
 }

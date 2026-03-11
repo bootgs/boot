@@ -1,13 +1,13 @@
-import commonIgnores from "./common-ignores.ts";
-import envAppsscript from "./env-appsscript.ts";
-import langJavascript from "./lang-javascript.ts";
-import langJson from "./lang-json.ts";
-import langMarkdown from "./lang-markdown.ts";
-import langTypescript from "./lang-typescript.ts";
-import overridesTests from "./overrides-tests.ts";
-import rulesJsdoc from "./rules-jsdoc.ts";
-import rulesSpacing from "./rules-spacing.ts";
-import rulesPrettier from "./rules-prettier.ts";
+import commonIgnores from "./common-ignores";
+import envAppsscript from "./env-appsscript";
+import langJavascript from "./lang-javascript";
+import langJson from "./lang-json";
+import langMarkdown from "./lang-markdown";
+import langTypescript from "./lang-typescript";
+import overridesTests from "./overrides-tests";
+import rulesJsdoc from "./rules-jsdoc";
+import rulesSpacing from "./rules-spacing";
+import rulesPrettier from "./rules-prettier";
 
 /**
  * ESLint configurations entry point.

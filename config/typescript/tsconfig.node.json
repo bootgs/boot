@@ -1,5 +1,8 @@
 {
-  "extends": "./tsconfig.base.json",
+  /**
+   * Instructs the TypeScript compiler how to compile the .ts files.
+   * @see https://www.typescriptlang.org/tsconfig#compilerOptions
+   */
   "compilerOptions": {
     /**
      * Ensure each file can be safely transpiled without relying on other imports.
@@ -33,14 +36,26 @@
   },
 
   /**
-   * Specifies a list of glob patterns that match files to be included in compilation.
-   * @see https://www.typescriptlang.org/tsconfig#include
-   */
-  "include": ["../../config/**/*", "../../vite.config.ts"],
-
-  /**
    * Specifies a list of files to be excluded from compilation.
    * @see https://www.typescriptlang.org/tsconfig#exclude
    */
-  "exclude": ["../../node_modules", "../../dist"]
+  "exclude": ["../../dist", "../../node_modules"],
+
+  /**
+   * Path to a base configuration file to inherit from.
+   * @see https://www.typescriptlang.org/tsconfig#extends
+   */
+  "extends": "./tsconfig.base.json",
+
+  /**
+   * Specifies a list of glob patterns that match files to be included in compilation.
+   * @see https://www.typescriptlang.org/tsconfig#include
+   */
+  "include": [
+    "../../config/**/*",
+    "../../eslint.config.js",
+    "../../src/**/*",
+    "../../test/**/*",
+    "../../vitest.config.ts"
+  ]
 }
