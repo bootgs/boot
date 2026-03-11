@@ -1,5 +1,5 @@
-import { HeaderAcceptMimeType, HttpStatus, RequestMethod } from "domain/enums";
-import { HttpHeaders, HttpRequest, HttpResponse } from "domain/types";
+import { HeaderAcceptMimeType, HttpStatus, RequestMethod } from "../domain/enums";
+import { HttpHeaders, HttpRequest, HttpResponse } from "../domain/types";
 
 export class ResponseBuilder {
   /**

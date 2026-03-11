@@ -7,12 +7,12 @@ import {
   Newable,
   ParamDefinition,
   RouteMetadata
-} from "domain/types";
-import { PARAM_DEFINITIONS_METADATA, PARAMTYPES_METADATA } from "domain/constants";
-import { ParamSource } from "domain/enums";
-import { RouteExecutionContext } from "domain/entities";
-import { getInjectionTokens } from "repository";
-import { PathMatcher, Resolver } from "service";
+} from "../domain/types";
+import { PARAM_DEFINITIONS_METADATA, PARAMTYPES_METADATA } from "../domain/constants";
+import { ParamSource } from "../domain/enums";
+import { RouteExecutionContext } from "../domain/entities";
+import { getInjectionTokens } from "../repository";
+import { PathMatcher, Resolver } from "../service";
 
 export class Router {
   private readonly pathMatcher = new PathMatcher();

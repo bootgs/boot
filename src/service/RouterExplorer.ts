@@ -1,6 +1,6 @@
 import { normalize } from "apps-script-utils";
-import { CONTROLLER_OPTIONS_METADATA, CONTROLLER_TYPE_METADATA, METHOD_METADATA, PATH_METADATA } from "domain/constants";
-import { Newable, RouteMetadata } from "domain/types";
+import { CONTROLLER_OPTIONS_METADATA, CONTROLLER_TYPE_METADATA, METHOD_METADATA, PATH_METADATA } from "../domain/constants";
+import { Newable, RouteMetadata } from "../domain/types";
 
 export class RouterExplorer {
   public explore(controllers: Map<Newable, unknown>): RouteMetadata[] {

@@ -1,9 +1,9 @@
 import { isFunctionLike } from "apps-script-utils";
-import { InjectionToken, Newable } from "domain/types";
-import { ParamSource } from "domain/enums";
-import { PARAMTYPES_METADATA } from "domain/constants";
-import { getInjectionTokens } from "repository";
-import { isController, isInjectable } from "shared/utils";
+import { InjectionToken, Newable } from "../domain/types";
+import { ParamSource } from "../domain/enums";
+import { PARAMTYPES_METADATA } from "../domain/constants";
+import { getInjectionTokens } from "../repository";
+import { isController, isInjectable } from "../shared/utils";
 
 export class Resolver {
   constructor(
