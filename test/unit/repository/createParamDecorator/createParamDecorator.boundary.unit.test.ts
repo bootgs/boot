@@ -15,8 +15,8 @@ describe("createParamDecorator: boundary", () => {
 
     const metadata = Reflect.getMetadata(PARAM_DEFINITIONS_METADATA, Test.prototype, "method");
     expect(metadata).toEqual({
-      [ `${ParamSource.QUERY}:0` ]: { type: ParamSource.QUERY, key: "id", index: 0 },
-      [ `${ParamSource.BODY}:1` ]: { type: ParamSource.BODY, key: undefined, index: 1 }
+      [`${ParamSource.QUERY}:0`]: { type: ParamSource.QUERY, key: "id", index: 0 },
+      [`${ParamSource.BODY}:1`]: { type: ParamSource.BODY, key: undefined, index: 1 }
     });
   });
 
@@ -30,7 +30,7 @@ describe("createParamDecorator: boundary", () => {
 
     const metadata = Reflect.getMetadata(PARAM_DEFINITIONS_METADATA, Test.prototype, "method");
     expect(metadata).toEqual({
-      [ `${ParamSource.HEADERS}:0` ]: { type: ParamSource.HEADERS, key: undefined, index: 0 }
+      [`${ParamSource.HEADERS}:0`]: { type: ParamSource.HEADERS, key: undefined, index: 0 }
     });
   });
 });

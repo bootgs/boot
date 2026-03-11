@@ -18,6 +18,6 @@ export function assignInjectMetadata(
 
   return {
     ...existing,
-    [ `${type as string}:${index}` ]: { type, token, index }
+    [`${type as string}:${index}`]: { type, token, index }
   };
 }

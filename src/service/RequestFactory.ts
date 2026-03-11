@@ -68,7 +68,7 @@ export class RequestFactory {
       }
 
       const contentType =
-        headers[ "Content-Type" ] || ("postData" in event ? event?.postData?.type : undefined) || "";
+        headers["Content-Type"] || ("postData" in event ? event?.postData?.type : undefined) || "";
 
       if (contentType.includes("application/json")) {
         try {

@@ -6,7 +6,7 @@ import type { Linter } from "eslint";
  * @see https://eslint.org/docs/latest/use/configure/ignore
  */
 const config: Linter.Config = {
-  ignores: [ "dist/*", "package-lock.json", "tsconfig*.json", "src/**/*.js" ]
+  ignores: ["dist/*", "package-lock.json", "tsconfig*.json", "src/**/*.js"]
 };
 
 export default config;

@@ -1,6 +1,10 @@
 import "reflect-metadata";
 import { describe, expect, it } from "vitest";
-import { CONTROLLER_OPTIONS_METADATA, CONTROLLER_TYPE_METADATA, CONTROLLER_WATERMARK } from "src/domain/constants";
+import {
+  CONTROLLER_OPTIONS_METADATA,
+  CONTROLLER_TYPE_METADATA,
+  CONTROLLER_WATERMARK
+} from "src/domain/constants";
 import { RestController } from "src/controller/decorators";
 
 describe("@RestController: Positive", () => {

@@ -35,16 +35,7 @@ aid in code organization.
 Install the framework via npm:
 
 ```bash
-npm install github:bootgs/boot#main
-```
-
-> [!TIP]
-> Use specific tags (e.g., `#v1.1.0`) in production for stability.
-
-For example:
-
-```bash
-npm install github:bootgs/boot#v1.1.0
+npm install bootgs
 ```
 
 ## Quick Start
@@ -55,7 +46,7 @@ Create a class to handle your application's logic. Decorators make it easy to ma
 events.
 
 ```TypeScript
-import {Get, RestController} from "boot";
+import {Get, RestController} from "bootgs";
 
 @RestController("api/sheet")
 export class SheetController {
@@ -75,7 +66,7 @@ Bootstrap your application by creating an `App` instance and delegating the stan
 `doPost`) to it.
 
 ```TypeScript
-import {App} from "boot";
+import {App} from "bootgs";
 import {SheetController} from "./SheetController";
 
 /**

@@ -45,9 +45,9 @@ export class Resolver {
     for (let i = 0; i < deps.length; i++) {
       const paramKey = `${ParamSource.INJECT}:${i}`;
 
-      const injectDefinition = explicitInjectTokens[ paramKey ];
+      const injectDefinition = explicitInjectTokens[paramKey];
 
-      const tokenToResolve = injectDefinition ? injectDefinition.token : designParamTypes[ i ];
+      const tokenToResolve = injectDefinition ? injectDefinition.token : designParamTypes[i];
 
       if (!tokenToResolve) {
         throw new Error(
@@ -70,7 +70,7 @@ export class Resolver {
         );
       }
 
-      deps[ i ] = isFunctionLike(tokenToResolve)
+      deps[i] = isFunctionLike(tokenToResolve)
         ? this.resolve(tokenToResolve as Newable)
         : this._providers.get(tokenToResolve);
     }

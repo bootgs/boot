@@ -20,7 +20,7 @@ class UserController {
 
 describe("Integration: BootApplication: Positive", () => {
   const app = BootApplicationFactory.create({
-    controllers: [ UserController ]
+    controllers: [UserController]
   });
 
   // Mock ContentService and HtmlService
@@ -41,7 +41,7 @@ describe("Integration: BootApplication: Positive", () => {
   it("should handle GET request with path and query params", async () => {
     const event = {
       parameter: { fields: "name,email" },
-      parameters: { fields: [ "name,email" ] },
+      parameters: { fields: ["name,email"] },
       contextPath: "",
       contentLength: -1,
       queryString: "fields=name,email",
@@ -51,9 +51,9 @@ describe("Integration: BootApplication: Positive", () => {
     await app.doGet(event);
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
-    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[ 0 ][ 0 ];
+    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[0][0];
     const responseBody = JSON.parse(callArgs as string);
-    expect(responseBody).toEqual({ id: "123", fields: [ "name,email" ], method: "GET" });
+    expect(responseBody).toEqual({ id: "123", fields: ["name,email"], method: "GET" });
   });
 
   it("should handle POST request with body", async () => {
@@ -70,7 +70,7 @@ describe("Integration: BootApplication: Positive", () => {
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
     const lastCall = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls.length - 1;
-    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[ lastCall ][ 0 ];
+    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[lastCall][0];
     const responseBody = JSON.parse(callArgs as string);
     expect(responseBody).toEqual({ name: "John Doe", method: "POST" });
   });

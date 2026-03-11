@@ -1,4 +1,8 @@
-import { CONTROLLER_OPTIONS_METADATA, CONTROLLER_TYPE_METADATA, CONTROLLER_WATERMARK } from "../../domain/constants";
+import {
+  CONTROLLER_OPTIONS_METADATA,
+  CONTROLLER_TYPE_METADATA,
+  CONTROLLER_WATERMARK
+} from "../../domain/constants";
 
 /**
  * Controller options.

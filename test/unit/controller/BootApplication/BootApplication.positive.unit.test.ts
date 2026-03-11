@@ -13,7 +13,7 @@ describe("BootApplication: Positive", () => {
 
     const app = new BootApplication({
       controllers: [],
-      providers: [ ClassProvider, valueProvider, classProvider, factoryProvider, existingProvider ]
+      providers: [ClassProvider, valueProvider, classProvider, factoryProvider, existingProvider]
     });
 
     const providers = (app as unknown as { _providers: Map<unknown, unknown> })._providers;

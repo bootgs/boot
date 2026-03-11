@@ -13,15 +13,10 @@ import { HttpRequest, HttpResponse } from "../../domain/types";
 export function wrapResponse(
   request: HttpRequest,
   response: HttpResponse
-):
-  | string
-  | GoogleAppsScript.Content.TextOutput
-  | GoogleAppsScript.HTML.HtmlOutput {
-  const mimeType =
-    (request.headers?.Accept as HeaderAcceptMimeType) ||
-    HeaderAcceptMimeType.HTML;
+): string | GoogleAppsScript.Content.TextOutput | GoogleAppsScript.HTML.HtmlOutput {
+  const mimeType = (request.headers?.Accept as HeaderAcceptMimeType) || HeaderAcceptMimeType.HTML;
 
-  response.headers[ "Content-Type" ] = mimeType;
+  response.headers["Content-Type"] = mimeType;
 
   const isApi = request.url.pathname?.startsWith("/api/") || false;
   const result = JSON.stringify(isApi ? response : response.body);
@@ -34,14 +29,10 @@ export function wrapResponse(
       return result;
 
     case HeaderAcceptMimeType.JSON:
-      return ContentService.createTextOutput(result).setMimeType(
-        ContentService.MimeType.JSON
-      );
+      return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
 
     case HeaderAcceptMimeType.TEXT:
-      return ContentService.createTextOutput(result).setMimeType(
-        ContentService.MimeType.TEXT
-      );
+      return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.TEXT);
 
     case HeaderAcceptMimeType.HTML:
       return HtmlService.createHtmlOutput(result);

@@ -62,7 +62,7 @@ export class Router {
     const args = this.buildMethodParams(controllerInstance as object, route.handler, ctx);
 
     try {
-      const handler = (controllerInstance as Record<string | symbol, unknown>)[ route.handler ] as (
+      const handler = (controllerInstance as Record<string | symbol, unknown>)[route.handler] as (
         ...args: unknown[]
       ) => unknown;
       const result = await handler.apply(controllerInstance, args);
@@ -111,31 +111,31 @@ export class Router {
     for (const param of metadata) {
       switch (param.type) {
         case ParamSource.PARAM:
-          args[ param.index ] = param.key ? (ctx.params ?? {})[ param.key ] : ctx.params;
+          args[param.index] = param.key ? (ctx.params ?? {})[param.key] : ctx.params;
           break;
 
         case ParamSource.QUERY:
-          args[ param.index ] = param.key ? (ctx.query ?? {})[ param.key ] : ctx.query;
+          args[param.index] = param.key ? (ctx.query ?? {})[param.key] : ctx.query;
           break;
 
         case ParamSource.BODY:
-          args[ param.index ] =
+          args[param.index] =
             param.key && ctx.body && isObject(ctx.body)
-              ? (ctx.body as unknown as Record<string, unknown>)[ param.key ]
+              ? (ctx.body as unknown as Record<string, unknown>)[param.key]
               : ctx.body;
           break;
 
         case ParamSource.EVENT:
-          args[ param.index ] =
+          args[param.index] =
             param.key && isObject(ctx.event)
-              ? (ctx.event as unknown as Record<string, unknown>)[ param.key ]
+              ? (ctx.event as unknown as Record<string, unknown>)[param.key]
               : ctx.event;
           break;
 
         case ParamSource.REQUEST:
-          args[ param.index ] =
+          args[param.index] =
             param.key && isObject(ctx.request)
-              ? (ctx.request as unknown as Record<string, unknown>)[ param.key ]
+              ? (ctx.request as unknown as Record<string, unknown>)[param.key]
               : ctx.request;
           break;
 
@@ -144,30 +144,30 @@ export class Router {
             const headerKey = Object.keys(ctx.headers).find(
               (k) => k.toLowerCase() === param.key!.toLowerCase()
             );
-            args[ param.index ] = headerKey ? ctx.headers[ headerKey ] : undefined;
+            args[param.index] = headerKey ? ctx.headers[headerKey] : undefined;
           } else {
-            args[ param.index ] = ctx.headers;
+            args[param.index] = ctx.headers;
           }
           break;
 
         case ParamSource.RESPONSE:
-          args[ param.index ] =
+          args[param.index] =
             param.key && isObject(ctx.response)
-              ? (ctx.response as unknown as Record<string, unknown>)[ param.key ]
+              ? (ctx.response as unknown as Record<string, unknown>)[param.key]
               : ctx.response;
           break;
 
         case ParamSource.INJECT:
           try {
-            const tokenToResolve = "token" in param ? param.token : designParamTypes[ param.index ];
+            const tokenToResolve = "token" in param ? param.token : designParamTypes[param.index];
 
             if (tokenToResolve) {
-              args[ param.index ] = this._resolver.resolve(tokenToResolve);
+              args[param.index] = this._resolver.resolve(tokenToResolve);
             } else {
-              args[ param.index ] = undefined;
+              args[param.index] = undefined;
             }
           } catch {
-            args[ param.index ] = undefined;
+            args[param.index] = undefined;
           }
           break;
       }

@@ -35,8 +35,8 @@ class TestController {
 describe("Inject Decorator: Positive", () => {
   it("should correctly inject dependencies using constructor and @Inject", () => {
     const app = BootApplicationFactory.create({
-      controllers: [ TestController ],
-      providers: [ ServiceA, ServiceB ]
+      controllers: [TestController],
+      providers: [ServiceA, ServiceB]
     });
 
     const instance = (app as unknown as { _resolver: Resolver })._resolver.resolve(TestController);

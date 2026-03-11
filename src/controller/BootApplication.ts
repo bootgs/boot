@@ -1,6 +1,13 @@
 import { ApplicationConfig, InjectionToken, Newable } from "../domain/types";
 import { AppsScriptEventType, RequestMethod } from "../domain/enums";
-import { EventDispatcher, RequestFactory, Resolver, ResponseBuilder, Router, RouterExplorer } from "../service";
+import {
+  EventDispatcher,
+  RequestFactory,
+  Resolver,
+  ResponseBuilder,
+  Router,
+  RouterExplorer
+} from "../service";
 
 export class BootApplication {
   private readonly _controllers = new Map<Newable, unknown>();

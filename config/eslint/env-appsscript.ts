@@ -4,7 +4,7 @@ import type { Linter } from "eslint";
  * Google Apps Script environment settings.
  */
 const config: Linter.Config = {
-  files: [ "src/**/*.{js,mjs,cjs,ts,jsx,tsx}" ],
+  files: ["src/**/*.{js,mjs,cjs,ts,jsx,tsx}"],
   rules: {
     "no-restricted-globals": [
       "error",

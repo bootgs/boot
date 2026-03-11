@@ -15,7 +15,7 @@ class FaultyController {
 describe("Inject Decorator: Negative", () => {
   it("should throw error when injecting an unregistered provider", () => {
     const app = BootApplicationFactory.create({
-      controllers: [ FaultyController ],
+      controllers: [FaultyController],
       providers: []
     });
 

@@ -18,6 +18,6 @@ export function assignParamMetadata(
 ): Record<string, ParamDefinition> {
   return {
     ...existing,
-    [ `${type as string}:${index}` ]: { type, key, index }
+    [`${type as string}:${index}`]: { type, key, index }
   };
 }

@@ -6,10 +6,7 @@
  * @returns An object containing the extracted path parameters.
  * For example, for the above inputs, it might return `{ id: "123", postId: "456" }`.
  */
-export function extractPathParams(
-  template: string,
-  actual: string
-): Record<string, string> {
+export function extractPathParams(template: string, actual: string): Record<string, string> {
   const tplParts = template.split("/").filter(Boolean);
   const actParts = actual.split("/").filter(Boolean);
   const params: Record<string, string> = {};
@@ -17,7 +14,7 @@ export function extractPathParams(
   tplParts.forEach((part, i) => {
     if (part.startsWith("{") && part.endsWith("}")) {
       const paramName = part.slice(1, -1);
-      params[ paramName ] = actParts[ i ];
+      params[paramName] = actParts[i];
     }
   });
 

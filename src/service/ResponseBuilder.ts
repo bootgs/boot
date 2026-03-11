@@ -19,14 +19,14 @@ export class ResponseBuilder {
   ): HttpResponse {
     const resolvedStatus =
       status ??
-      ([ RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS ].includes(request.method)
+      ([RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS].includes(request.method)
         ? HttpStatus.OK
         : HttpStatus.CREATED);
 
     const statusText = ((): string => {
-      const entry = Object.entries(HttpStatus).find(([ , value ]) => value === resolvedStatus);
+      const entry = Object.entries(HttpStatus).find(([, value]) => value === resolvedStatus);
 
-      return entry ? entry[ 0 ] : "UNKNOWN_STATUS";
+      return entry ? entry[0] : "UNKNOWN_STATUS";
     })();
 
     const ok = resolvedStatus >= 200 && resolvedStatus < 300;
@@ -53,7 +53,7 @@ export class ResponseBuilder {
   ): string | GoogleAppsScript.Content.TextOutput | GoogleAppsScript.HTML.HtmlOutput {
     const mimeType = (request.headers?.Accept as HeaderAcceptMimeType) || HeaderAcceptMimeType.HTML;
 
-    response.headers[ "Content-Type" ] = mimeType;
+    response.headers["Content-Type"] = mimeType;
 
     const isApi = request.url.pathname?.startsWith("/api/") || false;
 

@@ -4,7 +4,6 @@
  * @see https://developers.google.com/apps-script/guides/triggers
  */
 export enum AppsScriptEventType {
-
   /**
    * Срабатывает при установке дополнения.
    *

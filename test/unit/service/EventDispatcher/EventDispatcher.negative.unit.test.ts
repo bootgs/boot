@@ -25,8 +25,8 @@ describe("EventDispatcher: Negative", () => {
   beforeEach(() => {
     controller = new TestEventController();
     app = BootApplicationFactory.create({
-      controllers: [ TestEventController ],
-      providers: [ { provide: TestEventController, useValue: controller } ]
+      controllers: [TestEventController],
+      providers: [{ provide: TestEventController, useValue: controller }]
     });
   });
 

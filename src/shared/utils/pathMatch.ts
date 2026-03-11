@@ -17,6 +17,6 @@ export function pathMatch(template: string, actual: string): boolean {
     if (part.startsWith("{") && part.endsWith("}")) {
       return true;
     }
-    return part === actParts[ i ];
+    return part === actParts[i];
   });
 }

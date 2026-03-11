@@ -9,10 +9,10 @@ import type { Linter } from "eslint";
 const config: Array<Linter.Config> = [
   ...markdown.configs.recommended.map((config) => ({
     ...config,
-    files: [ "**/*.md" ]
+    files: ["**/*.md"]
   })),
   {
-    files: [ "**/*.md" ],
+    files: ["**/*.md"],
     rules: {
       "markdown/no-missing-label-refs": "off"
     }
