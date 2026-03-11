@@ -1,29 +1,61 @@
 {
+  /**
+   * Instructs the TypeScript compiler how to compile the .ts files.
+   * @see https://www.typescriptlang.org/tsconfig#compilerOptions
+   */
   "compilerOptions": {
-    "rootDir": "../..",
-    "typeRoots": ["../../node_modules/@types", "../types"],
-    "tsBuildInfoFile": "../../node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "target": "ES2023",
-    "lib": ["ES2023", "dom"],
-    "module": "ESNext",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
+    /**
+     * Ensure each file can be safely transpiled without relying on other imports.
+     * @see https://www.typescriptlang.org/tsconfig#isolatedModules
+     */
     "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "strict": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-    "baseUrl": "../..",
-    "paths": {
-      "src/*": ["../../src/*"]
-    }
+
+    /**
+     * List of library files to be included in the compilation.
+     * @see https://www.typescriptlang.org/tsconfig#lib
+     */
+    "lib": ["ES2023", "dom"],
+
+    /**
+     * Set the JavaScript language version for emitted JavaScript and include compatible library declarations.
+     * @see https://www.typescriptlang.org/tsconfig#target
+     */
+    "target": "ES2023",
+
+    /**
+     * Specify the file to store incremental compilation information.
+     * @see https://www.typescriptlang.org/tsconfig#tsBuildInfoFile
+     */
+    "tsBuildInfoFile": "../../node_modules/.tmp/tsconfig.node.tsbuildinfo",
+
+    /**
+     * List of folders to include type definitions from.
+     * @see https://www.typescriptlang.org/tsconfig#typeRoots
+     */
+    "typeRoots": ["../../node_modules/@types", "../types"]
   },
-  "include": ["../../config/**/*", "../../vite.config.ts"],
-  "exclude": ["../../node_modules", "../../dist"]
+
+  /**
+   * Specifies a list of files to be excluded from compilation.
+   * @see https://www.typescriptlang.org/tsconfig#exclude
+   */
+  "exclude": ["../../dist", "../../node_modules"],
+
+  /**
+   * Path to a base configuration file to inherit from.
+   * @see https://www.typescriptlang.org/tsconfig#extends
+   */
+  "extends": "./tsconfig.base.json",
+
+  /**
+   * Specifies a list of glob patterns that match files to be included in compilation.
+   * @see https://www.typescriptlang.org/tsconfig#include
+   */
+  "include": [
+    "../../config/**/*",
+    "../../eslint.config.js",
+    "../../src/**/*",
+    "../../test/**/*",
+    "../../vitest.config.ts"
+  ]
 }

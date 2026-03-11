@@ -1,24 +1,23 @@
-export { buildMethodParams } from "./buildMethodParams";
-export { checkEventFilters } from "./checkEventFilters";
-export { createRequest } from "./createRequest";
-export { createResponse } from "./createResponse";
-export { extractPathParams } from "./extractPathParams";
-export { getInjectionTokens } from "./getInjectionTokens";
-export { isController } from "./isController";
-export { isInjectable } from "./isInjectable";
-export { pathMatch } from "./pathMatch";
-export { resolve } from "./resolve";
-export { RouterExplorer } from "./RouterExplorer";
-export { wrapResponse } from "./wrapResponse";
+import { InjectionToken, Newable } from "../domain/types";
+import { EventDispatcher, Resolver } from "../service";
 
-// decorators/class
+export function resolve<T>(
+  controllers: Map<Newable, unknown>,
+  providers: Map<InjectionToken, unknown>,
+  token: InjectionToken<T>
+): T {
+  const resolver = new Resolver(controllers, providers);
+  return resolver.resolve(token);
+}
 
-// decorators/method
-export { createHttpDecorator } from "./createHttpDecorator";
-export { createMethodDecorator } from "./createMethodDecorator";
-export type { AppsScriptOptions } from "./createMethodDecorator";
-
-// decorators/param
-export { assignMetadata } from "./assignMetadata";
-export { assignInjectMetadata } from "./assignInjectMetadata";
-export { createParamDecorator } from "./createParamDecorator";
+export function buildMethodParams(
+  target: object,
+  methodName: string | symbol,
+  context: { event: unknown },
+  controllers: Map<Newable, unknown>,
+  providers: Map<InjectionToken, unknown>
+): unknown[] {
+  const resolver = new Resolver(controllers, providers);
+  const dispatcher = new EventDispatcher(resolver, controllers);
+  return dispatcher.buildMethodParams(target, methodName, context.event);
+}

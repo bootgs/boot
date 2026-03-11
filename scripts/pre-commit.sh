@@ -57,7 +57,7 @@ echo ""
 
 # Линтинг
 echo "$LOG_TAG: Running lint..."
-npm run lint
+npm run lint:fix
 if [ $? -ne 0 ]; then
   echo " ✗ Error: Linting failed."
   exit 1
@@ -68,7 +68,7 @@ echo ""
 
 # Форматирование
 echo "$LOG_TAG: Running format..."
-npm run format
+npm run format:fix
 if [ $? -ne 0 ]; then
   echo " ✗ Error: Formatting failed."
   exit 1

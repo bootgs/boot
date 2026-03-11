@@ -8,178 +8,94 @@
     </small>
 </p>
 
-# Boot Framework for Google Apps Script™ projects
+# Boot Framework for Google Apps Script™
 
-[![Built%20with-clasp](https://img.shields.io/badge/Built%20with-clasp-4285f4.svg)](https://github.com/google/clasp)
-[![License](https://img.shields.io/github/license/bootgs/boot?label=License)](LICENSE)
-[![Latest release](https://img.shields.io/github/v/release/bootgs/boot?label=Release)](https://github.com/bootgs/boot/releases)
+<p align="left">
+  <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
+</p>
 
-[![GitHub Stars](https://img.shields.io/github/stars/bootgs/boot?style=social)](https://github.com/bootgs/boot/stargazers)
-[![GitHub Fork](https://img.shields.io/github/forks/bootgs/boot?style=social)](https://github.com/bootgs/boot/forks)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/MaksymStoianov?style=social&logo=github)](https://github.com/sponsors/MaksymStoianov)
+<p align="left">
+  <a href="https://github.com/bootgs/boot/stargazers"><img src="https://img.shields.io/github/stars/bootgs/boot?style=social" alt="GitHub Stars"></a>
+  <a href="https://github.com/bootgs/boot/forks"><img src="https://img.shields.io/github/forks/bootgs/boot?style=social" alt="GitHub Fork"></a>
+  <a href="https://github.com/sponsors/MaksymStoianov"><img src="https://img.shields.io/github/sponsors/MaksymStoianov?style=social&logo=github" alt="GitHub Sponsors"></a>
+</p>
 
 ## Introduction
 
-**Boot.gs** is a powerful, scalable, and modern framework for building high-performance Google Apps Script applications.
+**Boot.gs** is a lightweight framework designed to help build structured Google Apps Script applications. It aims to
+bring familiar development patterns, such as decorators and dependency injection, to the Apps Script environment to
+aid in code organization.
 
-## How to Install
+## Installation
 
-To get started, install the dependencies:
-
-```bash
-npm install github:bootgs/boot#main
-```
-
-> **Note:** It's recommended to use tags (`#vX.Y.Z`) for production environments to ensure version stability.
-
-For example:
+Install the framework via npm:
 
 ```bash
-npm install github:bootgs/boot#v1.1.0
+npm install bootgs
 ```
 
-## How to Use
+## Quick Start
 
-### 1. Creating a Controller
+### 1. Define a Controller
 
-Define a REST controller that will handle HTTP requests to your Apps Script web application:
+Create a class to handle your application's logic. Decorators make it easy to map methods to specific endpoints or
+events.
 
 ```TypeScript
-import {Get, RestController} from "boot";
+import {Get, RestController} from "bootgs";
 
 @RestController("api/sheet")
-export class Sheet {
-  @Get("active-range")
-  getActiveRange(): string {
-    return "This action return active range.";
-  }
+export class SheetController {
+    /**
+     * Handles GET requests to /api/sheet/active-range
+     */
+    @Get("active-range")
+    getActiveRange(): string {
+        return "This action returns the active sheet range.";
+    }
 }
 ```
 
-This code is a great example of using the **Boot.gs** framework to build a **web app on Google Apps Script** with
-a **REST API** architecture. Essentially, it turns your standard Apps Script code into a full-fledged web application
-that can handle and respond to HTTP requests (GET and POST).
+### 2. Initialize the Application
 
-<details><summary>More ...</summary>
-
-#### Why is this needed?
-
-Google Apps Script has simple `doGet` and `doPost` functions for handling web requests, but they're quite basic. To
-build a
-more complex application with multiple API endpoints, you'd have to write a lot of manual routing logic. This can
-quickly become clunky and difficult to manage.
-
-**Boot.gs** solves this problem by providing decorators (`@RestController`, `@Get`) and automated routing. This
-allows
-you to structure your code in a way that is common in modern web frameworks like Express.js or NestJS.
-
-The result is code that is more organized, readable, and scalable.
+Bootstrap your application by creating an `App` instance and delegating the standard Apps Script entry points (`doGet`,
+`doPost`) to it.
 
 ```TypeScript
-import {App, Newable, Get, RestController} from "boot";
+import {App} from "bootgs";
+import {SheetController} from "./SheetController";
 
 /**
- * This JSDoc comment describes the `doGet` function.
- * It's the standard handler for GET requests in Google Apps Script.
- *
- * @param   event The GET request event object, containing request information.
- * @returns The result of the request processing, usually HTML content or JSON.
+ * Global entry point for GET requests.
  */
-// The `doGet` function is a mandatory entry point for web app GET requests.
 export function doGet(event: GoogleAppsScript.Events.DoGet) {
-  // Defines an array of controllers that the application will use.
-  // In this case, only the `Sheet` class is used.
-  const controllers: Newable[] = [Sheet];
-
-  // Defines an array of providers (services) that will be available for injection.
-  // There are no providers in this example.
-  const providers: Newable[] = [];
-
-  // Creates an application instance, passing it the list of controllers and providers.
-  const app = App.create({
-    controllers,
-    providers
-  });
-
-  // Delegates the processing of the GET request to the created application instance.
-  return app.doGet(event);
+    const app = App.create({
+        controllers: [SheetController]
+    });
+    return app.doGet(event);
 }
 
 /**
- * This JSDoc comment describes the `doPost` function.
- * It's the standard handler for POST requests in Google Apps Script.
- *
- * @param event The POST request event object.
- * @returns The result of the request processing.
+ * Global entry point for POST requests.
  */
-// The `doPost` function is the entry point for web app POST requests.
 export function doPost(event: GoogleAppsScript.Events.DoPost) {
-  // Defines controllers for POST requests (same logic as for `doGet`).
-  const controllers: Newable[] = [Sheet];
-
-  // Defines providers (none here).
-  const providers: Newable[] = [];
-
-  // Creates an application instance.
-  const app = App.create({
-    controllers,
-    providers
-  });
-
-  // Delegates the processing of the POST request to the application.
-  return app.doPost(event);
-}
-
-/**
- * This JSDoc comment describes the `Sheet` class.
- * It acts as a REST controller for handling API requests.
- */
-// The `@RestController` decorator declares this class as a controller and sets the base path to "api/sheet".
-@RestController("api/sheet")
-export class Sheet {
-  /**
-   * This JSDoc comment describes the `getActiveRange` method.
-   * It is a handler for a GET request.
-   */
-  // The `@Get` decorator marks this method as a GET request handler and sets the endpoint path to "active-range".
-  // The full path to this endpoint will be "api/sheet/active-range".
-  @Get("active-range")
-  // The method signature: it takes no arguments and returns a string.
-  getActiveRange(): string {
-    // The return value of the method.
-    return "This action return active range.";
-  }
+    const app = App.create({
+        controllers: [SheetController]
+    });
+    return app.doPost(event);
 }
 ```
 
-#### How does it work?
+## Features
 
-The process is built on two key parts:
-
-1. Entry Points (`doGet` and `doPost`): These are the only functions that Google Apps Script calls when it receives a
-   web
-   request. Instead of processing requests directly, they act as a "gateway." They initialize the application (
-   `App.create`)
-   with its controllers and then delegate all further processing to the framework's core handler.
-
-2. Controllers (`@RestController`): The Sheet class is your controller. The `@RestController("api/sheet")` decorator
-   tells
-   the
-   framework that this class will handle all requests starting with the `/api/sheet` path. The methods within this
-   class (
-   `getActiveRange`) become your endpoints. The `@Get("active-range")` decorator specifies that the method should handle
-   GET
-   requests to the `/api/sheet/active-range` path.
-
-So, when a GET request comes in for `https://script.google.com/macros/s/.../exec?path=/api/sheet/active-range`, Apps
-Script
-calls `doGet`, which then passes the request to the framework. The framework parses the URL, finds the matching
-controller (`Sheet`) and method (`getActiveRange`), executes it, and returns the result as an HTTP response.
-
-This approach completely separates your request handling logic from the low-level details of Apps Script, making your
-code **clean**, **modular**, and **maintainable**.
-
-</details>
+- **Decorator-based Routing**: Intuitive mapping of HTTP and Apps Script events.
+- **Dependency Injection**: Decouple your components for better testability.
+- **Type Safety**: Built with TypeScript for a robust development experience.
+- **Modern Architecture**: Inspired by frameworks like NestJS and Spring Boot.
 
 ## Decorators
 
@@ -187,22 +103,90 @@ code **clean**, **modular**, and **maintainable**.
 
 <details open><summary>Class decorators</summary>
 
-| Decorator             | Description                                                   |
-| --------------------- | ------------------------------------------------------------- |
-| `@Controller()`       | Marks a class as a general-purpose controller.                |
-| `@Service()`          | Marks a class as a service, typically holding business logic. |
-| `@Repository()`       | Marks a class as a repository, abstracting data access logic. |
-| `@Injectable()`       | Marks a class as available for dependency injection.          |
-| `@HttpController()`   | Marks a class as an HTTP request controller.                  |
-| `@RestController()`   | Alias for `@HttpController()`.                                |
-| `@DocController()`    | Marks a class as a Google Docs event controller.              |
-| `@DocsController()`   | Alias for `@DocController()`.                                 |
-| `@FormController()`   | Marks a class as a Google Forms event controller.             |
-| `@FormsController()`  | Alias for `@FormController()`.                                |
-| `@SheetController()`  | Marks a class as a Google Sheets event controller.            |
-| `@SheetsController()` | Alias for `@SheetController()`.                               |
-| `@SlideController()`  | Marks a class as a Google Slides event controller.            |
-| `@SlidesController()` | Alias for `@SlideController()`.                               |
+<table width="100%">
+  <thead>
+    <tr>
+      <th align="left">Decorator</th>
+      <th align="left">Returns</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>@Controller(type?: string, options?: object)</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a general-purpose controller.</td>
+    </tr>
+    <tr>
+      <td><code>@HttpController(basePath?: string)</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as an HTTP request controller. Default base path is <code>/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@SheetController(sheetName?: string | string[] | RegExp)</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a Google Sheets event controller. Can be filtered by sheet name (string, array, or RegExp).</td>
+    </tr>
+    <tr>
+      <td><code>@DocController()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a Google Docs event controller.</td>
+    </tr>
+    <tr>
+      <td><code>@SlideController()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a Google Slides event controller.</td>
+    </tr>
+    <tr>
+      <td><code>@FormController()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a Google Forms event controller.</td>
+    </tr>
+    <tr>
+      <td><code>@Service()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a service, typically holding business logic.</td>
+    </tr>
+    <tr>
+      <td><code>@Repository()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a repository, abstracting data access logic.</td>
+    </tr>
+    <tr>
+      <td><code>@Injectable()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as available for dependency injection.</td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center"><b>Aliases</b></td>
+    </tr>
+    <tr>
+      <td><code>@RestController(basePath?: string)</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Alias for <code>@HttpController()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@SheetsController(sheetName?: string | string[] | RegExp)</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Alias for <code>@SheetController()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@DocsController()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Alias for <code>@DocController()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@SlidesController()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Alias for <code>@SlideController()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@FormsController()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Alias for <code>@FormController()</code>.</td>
+    </tr>
+  </tbody>
+</table>
 
 </details>
 
@@ -210,28 +194,123 @@ code **clean**, **modular**, and **maintainable**.
 
 <details open><summary>Method decorators</summary>
 
-| Decorator            | Description                                                                                                                                                  |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `@Install()`         | Handles [`onInstall`](https://developers.google.com/apps-script/guides/triggers#oninstalle) event, triggered when the add-on is first installed.             |
-| `@Open()`            | Handles [`onOpen`](https://developers.google.com/apps-script/guides/triggers#onopene) event, triggered when a Google Sheet is opened.                        |
-| `@Edit()`            | Handles [`onEdit`](https://developers.google.com/apps-script/guides/triggers#onedite) event, triggered by manual cell changes in a Google Sheet.             |
-| `@Change()`          | Handles `onChange` event, triggered by any structural or content change in a Google Sheet.                                                                   |
-| `@SelectionChange()` | Handles [`onSelectionChange`](https://developers.google.com/apps-script/guides/triggers#onselectionchangee) event, triggered by user cell selection changes. |
-| `@FormSubmit()`      | Handles `onFormSubmit` event, triggered when a form connected to a Google Sheet is submitted.                                                                |
-| `@Post()`            | Maps a method to handle HTTP POST requests.                                                                                                                  |
-| `@Get()`             | Maps a method to handle HTTP GET requests.                                                                                                                   |
-| `@Delete()`          | Maps a method to handle HTTP DELETE requests.                                                                                                                |
-| `@Put()`             | Maps a method to handle HTTP PUT requests.                                                                                                                   |
-| `@Patch()`           | Maps a method to handle HTTP PATCH requests.                                                                                                                 |
-| `@Options()`         | Maps a method to handle HTTP OPTIONS requests.                                                                                                               |
-| `@Head()`            | Maps a method to handle HTTP HEAD requests.                                                                                                                  |
-| `@PostMapping()`     | Alias for `@Post()`.                                                                                                                                         |
-| `@GetMapping()`      | Alias for `@Get()`.                                                                                                                                          |
-| `@DeleteMapping()`   | Alias for `@Delete()`.                                                                                                                                       |
-| `@PutMapping()`      | Alias for `@Put()`.                                                                                                                                          |
-| `@PatchMapping()`    | Alias for `@Patch()`.                                                                                                                                        |
-| `@OptionsMapping()`  | Alias for `@Options()`.                                                                                                                                      |
-| `@HeadMapping()`     | Alias for `@Head()`.                                                                                                                                         |
+<table width="100%">
+  <thead>
+    <tr>
+      <th align="left">Decorator</th>
+      <th align="left">Returns</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>@Install()</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Handles <a href="https://developers.google.com/apps-script/guides/triggers#oninstalle"><code>onInstall</code></a> event.</td>
+    </tr>
+    <tr>
+      <td><code>@Open()</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Handles <a href="https://developers.google.com/apps-script/guides/triggers#onopene"><code>onOpen</code></a> event.</td>
+    </tr>
+    <tr>
+      <td><code>@Edit(...range?: (string | RegExp | string[])[])</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Handles <a href="https://developers.google.com/apps-script/guides/triggers#onedite"><code>onEdit</code></a> event. Filter by A1-notation, sheet name, or RegExp.</td>
+    </tr>
+    <tr>
+      <td><code>@Change(changeType?: SheetsOnChangeChangeType | SheetsOnChangeChangeType[])</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Handles <code>onChange</code> event. Filter by <code>SheetsOnChangeChangeType</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@SelectionChange()</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Handles <a href="https://developers.google.com/apps-script/guides/triggers#onselectionchangee"><code>onSelectionChange</code></a> event.</td>
+    </tr>
+    <tr>
+      <td><code>@FormSubmit(...formId?: (string | string[])[])</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Handles <code>onFormSubmit</code> event. Filter by one or more form IDs.</td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center"><b>HTTP Methods</b></td>
+    </tr>
+    <tr>
+      <td><code>@Get(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Maps a method to handle HTTP GET requests. Default path is <code>/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@Post(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Maps a method to handle HTTP POST requests.</td>
+    </tr>
+    <tr>
+      <td><code>@Put(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Maps a method to handle HTTP PUT requests.</td>
+    </tr>
+    <tr>
+      <td><code>@Patch(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Maps a method to handle HTTP PATCH requests.</td>
+    </tr>
+    <tr>
+      <td><code>@Delete(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Maps a method to handle HTTP DELETE requests.</td>
+    </tr>
+    <tr>
+      <td><code>@Head(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Maps a method to handle HTTP HEAD requests.</td>
+    </tr>
+    <tr>
+      <td><code>@Options(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Maps a method to handle HTTP OPTIONS requests.</td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center"><b>Aliases</b></td>
+    </tr>
+    <tr>
+      <td><code>@GetMapping(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Alias for <code>@Get()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@PostMapping(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Alias for <code>@Post()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@PutMapping(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Alias for <code>@Put()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@PatchMapping(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Alias for <code>@Patch()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@DeleteMapping(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Alias for <code>@Delete()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@HeadMapping(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Alias for <code>@Head()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@OptionsMapping(path?: string)</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Alias for <code>@Options()</code>.</td>
+    </tr>
+  </tbody>
+</table>
 
 </details>
 
@@ -239,38 +318,92 @@ code **clean**, **modular**, and **maintainable**.
 
 <details open><summary>Parameter decorators</summary>
 
-| Decorator         | Description                                                |
-| ----------------- | ---------------------------------------------------------- |
-| `@Event()`        | Injects the full Google Apps Script event object.          |
-| `@Request()`      | Injects the full request object or a specific key from it. |
-| `@Headers()`      | Injects request headers or a specific header value.        |
-| `@Param()`        | Injects values from URL path parameters.                   |
-| `@PathVariable()` | Alias for `@Param()`.                                      |
-| `@Query()`        | Injects values from URL query parameters.                  |
-| `@RequestParam()` | Alias for `@Query()`.                                      |
-| `@Body()`         | Injects the full request body or a specific key from it.   |
-| `@RequestBody()`  | Alias for `@Body()`.                                       |
-| `@Inject()`       | Explicitly specifies an injection token for a dependency.  |
+<table width="100%">
+  <thead>
+    <tr>
+      <th align="left">Decorator</th>
+      <th align="left">Returns</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>@Event()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Injects the full Google Apps Script event object.</td>
+    </tr>
+    <tr>
+      <td><code>@Request(key?: string)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Injects the full request object or a specific property.</td>
+    </tr>
+    <tr>
+      <td><code>@Headers(key?: string)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Injects request headers or a specific header value.</td>
+    </tr>
+    <tr>
+      <td><code>@Body(key?: string)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Injects the full request body or a specific key.</td>
+    </tr>
+    <tr>
+      <td><code>@Param(key?: string)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Injects values from URL path parameters.</td>
+    </tr>
+    <tr>
+      <td><code>@Query(key?: string)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Injects values from URL query parameters.</td>
+    </tr>
+    <tr>
+      <td><code>@Inject(token: any)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Explicitly specifies an injection token for a dependency.</td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center"><b>Aliases</b></td>
+    </tr>
+    <tr>
+      <td><code>@RequestBody(key?: string)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Alias for <code>@Body()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@PathVariable(key?: string)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Alias for <code>@Param()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@RequestParam(key?: string)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Alias for <code>@Query()</code>.</td>
+    </tr>
+  </tbody>
+</table>
 
 </details>
 
-## Tasks
+## Contributing
 
-<details><summary>More</summary>
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on our code of conduct,
+and the process for submitting pull requests.
 
-- [ ] Develop a `Cron` decorator for methods.
-- [ ] Develop a `Response` decorator for parameters.
+## Roadmap
 
-</details>
+Check out our [Roadmap](ROADMAP.md) to see what we have planned for future releases.
 
 ## Changelog
 
-For a detailed list of changes and updates, please refer to the [CHANGELOG](CHANGELOG.md) file.
+For a detailed list of changes and updates, please refer to the [CHANGELOG](CHANGELOG.md).
 
 ## License
 
-This project is licensed under the [LICENSE](LICENSE) file.
+This project is licensed under the [Apache-2.0 License](LICENSE).
 
 ---
 
-⭐ **Like this project?** [Star our awesome repo »](https://github.com/bootgs/boot)
+<p align="center">
+  ⭐ <b>Like this project?</b> Give it a star on <a href="https://github.com/bootgs/boot">GitHub</a>!
+</p>

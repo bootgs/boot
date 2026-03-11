@@ -1,9 +1,35 @@
-// https://typescriptlang.org/docs/handbook/tsconfig-json.html
 {
+  /**
+   * Instructs the TypeScript compiler how to compile the .ts files.
+   * @see https://www.typescriptlang.org/tsconfig#compilerOptions
+   */
+  "compilerOptions": {
+    /**
+     * Emit design-type metadata for decorated declarations in source files.
+     * @see https://www.typescriptlang.org/tsconfig#emitDecoratorMetadata
+     */
+    "emitDecoratorMetadata": true,
+
+    /**
+     * Enable experimental support for legacy experimental decorators.
+     * @see https://www.typescriptlang.org/tsconfig#experimentalDecorators
+     */
+    "experimentalDecorators": true
+  },
+
+  /**
+   * Specifies an allowed list of files to be included in the program.
+   * @see https://www.typescriptlang.org/tsconfig#files
+   */
   "files": [],
+
+  /**
+   * Project references are a way to structure your TypeScript programs into smaller pieces.
+   * @see https://www.typescriptlang.org/tsconfig#references
+   */
   "references": [
     {
-      "path": "./config/typescript/tsconfig.json"
+      "path": "./config/typescript/tsconfig.appsscript.json"
     },
     {
       "path": "./config/typescript/tsconfig.node.json"

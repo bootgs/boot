@@ -1,19 +1,28 @@
 import { ConfigEnv } from "vite";
-import type { BuildPaths } from "./BuildPaths";
+import { BuildPaths } from "./BuildPaths";
 
 /**
- * Represents the configuration options for the build process in Vite.
- * Extends Vite's `ConfigEnv` to include project-specific paths, environment flags,
- * and target type (`Apps Script` or `WebApp`) for customization during the build.
+ * Build configuration options.
+ * Extends Vite's `ConfigEnv` with project-specific paths and flags.
  */
 export interface BuildOptions extends ConfigEnv {
   /**
-   * Paths used in the project, including source and distribution directories.
+   * Project paths.
    */
   paths: BuildPaths;
 
   /**
-   * Indicates if the build is in development mode.
+   * Google Apps Script target flag.
+   */
+  isAppsScript?: boolean;
+
+  /**
+   * Web App target flag.
+   */
+  isWebApp?: boolean;
+
+  /**
+   * Development mode flag.
    */
   isDev: boolean;
 }
