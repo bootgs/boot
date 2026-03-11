@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/bootgs/boot/compare/v1.3.0...v1.3.1) (2026-03-11)
+
+
+### Bug Fixes
+
+* add import reflect-metadata ([923ee31](https://github.com/bootgs/boot/commit/923ee3191a4415b3e0b69dab97b59bce889f2492))
+* add import reflect-metadata ([f6a8b7e](https://github.com/bootgs/boot/commit/f6a8b7ecd395a0b0eecffad52978910cf26528b2))
+
 ## [1.3.0](https://github.com/bootgs/boot/compare/v1.2.0...v1.3.0) (2026-03-11)
 
 
