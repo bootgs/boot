@@ -1,4 +1,4 @@
-import { HttpHeaders, HttpRequest, HttpResponse, ParsedUrlQuery } from "domain/types";
+import { HttpHeaders, HttpRequest, HttpResponse, ParsedUrlQuery } from "../../domain/types";
 
 /**
  * Execution context for a route handler.

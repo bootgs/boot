@@ -1,4 +1,4 @@
-import { ParamSource } from "domain/enums";
+import { ParamSource } from "../../domain/enums";
 import { InjectionToken } from "./InjectionToken";
 
 export interface InjectTokenDefinition {

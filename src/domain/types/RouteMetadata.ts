@@ -1,5 +1,5 @@
 import { Newable } from "./Newable";
-import { RequestMethod } from "domain/enums";
+import { RequestMethod } from "../../domain/enums";
 
 export interface RouteMetadata {
   controller: Newable;
