@@ -1,5 +1,5 @@
-import { ParamSource } from "domain/enums";
-import { createParamDecorator } from "repository";
+import { ParamSource } from "../../../domain/enums";
+import { createParamDecorator } from "../../../repository";
 
 /**
  * A parameter decorator for injecting the request object.

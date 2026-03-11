@@ -1,4 +1,4 @@
-import { ENTITY_WATERMARK } from "domain/constants";
+import { ENTITY_WATERMARK } from "../../domain/constants";
 
 /**
  * Decorator that marks a class as an entity.

@@ -1,3 +1,3 @@
-import { Param } from "controller/decorators/params";
+import { Param } from "../../../controller/decorators/params";
 
 export const PathVariable = Param;

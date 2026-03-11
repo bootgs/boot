@@ -1,6 +1,6 @@
-import { INJECT_TOKENS_METADATA } from "domain/constants";
-import { InjectTokenDefinition, Newable } from "domain/types";
-import { assignInjectMetadata } from "repository";
+import { INJECT_TOKENS_METADATA } from "../../domain/constants";
+import { InjectTokenDefinition, Newable } from "../../domain/types";
+import { assignInjectMetadata } from "../../repository";
 
 /**
  * A parameter decorator used to explicitly specify an injection token for a dependency.

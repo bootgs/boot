@@ -1,4 +1,4 @@
-import { INJECTABLE_WATERMARK } from "domain/constants";
+import { INJECTABLE_WATERMARK } from "../../domain/constants";
 
 /**
  * Decorator that marks a class as injectable (a provider).

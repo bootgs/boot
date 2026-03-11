@@ -1,5 +1,5 @@
-import { RequestMethod } from "domain/enums";
-import { createHttpDecorator } from "repository";
+import { RequestMethod } from "../../../domain/enums";
+import { createHttpDecorator } from "../../../repository";
 
 /**
  * Route handler decorator for HTTP PUT requests.
