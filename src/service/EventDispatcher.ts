@@ -24,7 +24,7 @@ export class EventDispatcher {
       for (const propertyName of propertyNames) {
         if (propertyName === "constructor") continue;
 
-        const methodHandler = prototype[propertyName];
+        const methodHandler = prototype[ propertyName ];
 
         const eventMetadata = Reflect.getMetadata(APPSSCRIPT_EVENT_METADATA, methodHandler);
 
@@ -35,7 +35,7 @@ export class EventDispatcher {
 
           const args = this.buildMethodParams(instance as object, propertyName, event);
 
-          const handler = (instance as Record<string | symbol, unknown>)[propertyName] as (
+          const handler = (instance as Record<string | symbol, unknown>)[ propertyName ] as (
             ...args: unknown[]
           ) => unknown;
           await handler.apply(instance, args);
@@ -73,23 +73,23 @@ export class EventDispatcher {
     for (const param of metadata) {
       switch (param.type) {
         case ParamSource.EVENT:
-          args[param.index] =
+          args[ param.index ] =
             param.key && typeof event === "object" && event !== null
-              ? (event as Record<string, unknown>)[param.key]
+              ? (event as Record<string, unknown>)[ param.key ]
               : event;
           break;
 
         case ParamSource.INJECT:
           try {
-            const tokenToResolve = "token" in param ? param.token : designParamTypes[param.index];
+            const tokenToResolve = "token" in param ? param.token : designParamTypes[ param.index ];
 
             if (tokenToResolve) {
-              args[param.index] = this.resolver.resolve(tokenToResolve);
+              args[ param.index ] = this.resolver.resolve(tokenToResolve);
             } else {
-              args[param.index] = undefined;
+              args[ param.index ] = undefined;
             }
           } catch {
-            args[param.index] = undefined;
+            args[ param.index ] = undefined;
           }
           break;
       }
@@ -118,7 +118,7 @@ export class EventDispatcher {
             return false;
           }
 
-          const ranges = Array.isArray(options.range) ? options.range : [options.range];
+          const ranges = Array.isArray(options.range) ? options.range : [ options.range ];
 
           // TODO: isRegExp
           return ranges.some((r: string | RegExp) =>
@@ -138,7 +138,7 @@ export class EventDispatcher {
             return false;
           }
 
-          const formIds = Array.isArray(options.formId) ? options.formId : [options.formId];
+          const formIds = Array.isArray(options.formId) ? options.formId : [ options.formId ];
 
           return formIds.some((id: string) => eventFormId === id);
         }
@@ -155,7 +155,7 @@ export class EventDispatcher {
 
           const changeTypes = Array.isArray(options.changeType)
             ? options.changeType
-            : [options.changeType];
+            : [ options.changeType ];
 
           return changeTypes.some((type: unknown) => eventChangeType === type);
         }
