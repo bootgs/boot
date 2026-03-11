@@ -1,6 +1,13 @@
 # Changelog
 
-## [1.1.2](https://github.com/bootgs/boot/compare/v1.1.1...v1.1.2) (2025-11-18)
+## [1.2.0](https://github.com/bootgs/boot/compare/v1.1.1...v1.2.0) (2026-03-11)
+
+
+### Features
+
+* restructure controllers and services ([2ebad08](https://github.com/bootgs/boot/commit/2ebad08d59d065177073af68b284dc710e27d4d6))
+* restructure domain models and exceptions ([484e5eb](https://github.com/bootgs/boot/commit/484e5ebf8cee74384b91da85c46ddeb90a41fe0f))
+* restructure repositories and shared utilities ([2e8c043](https://github.com/bootgs/boot/commit/2e8c043acc07d4e6eb0b3430c26a1083c650eb79))
 
 
 ### Bug Fixes
