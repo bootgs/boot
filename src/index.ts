@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { BootApplication, BootApplicationFactory } from "./controller";
 
 export * from "./controller";
