@@ -1,5 +1,5 @@
-import { METHOD_METADATA, PATH_METADATA } from "domain/constants";
-import { RequestMethod } from "domain/enums";
+import { METHOD_METADATA, PATH_METADATA } from "../domain/constants";
+import { RequestMethod } from "../domain/enums";
 
 /**
  * A factory function that creates method decorators for HTTP methods.

@@ -1,5 +1,5 @@
 import { InjectionToken, Newable } from "../domain/types";
-import { Resolver, EventDispatcher } from "../service";
+import { EventDispatcher, Resolver } from "../service";
 
 export function resolve<T>(
   controllers: Map<Newable, unknown>,

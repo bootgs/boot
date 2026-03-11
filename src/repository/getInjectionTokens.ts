@@ -1,5 +1,5 @@
-import { INJECT_TOKENS_METADATA } from "domain/constants";
-import { InjectTokenDefinition } from "domain/types";
+import { INJECT_TOKENS_METADATA } from "../domain/constants";
+import { InjectTokenDefinition } from "../domain/types";
 
 /**
  * Retrieves injection tokens associated with a class constructor or a method prototype.

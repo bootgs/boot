@@ -1,5 +1,5 @@
-import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA } from "domain/constants";
-import { AppsScriptEventType } from "domain/enums";
+import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA } from "../domain/constants";
+import { AppsScriptEventType } from "../domain/enums";
 
 /**
  * A factory function that creates method decorators for Apps Script events.

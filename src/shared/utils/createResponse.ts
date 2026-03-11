@@ -1,5 +1,5 @@
-import { HttpHeaders, HttpRequest, HttpResponse } from "domain/types";
-import { HttpStatus, RequestMethod } from "domain/enums";
+import { HttpHeaders, HttpRequest, HttpResponse } from "../../domain/types";
+import { HttpStatus, RequestMethod } from "../../domain/enums";
 
 /**
  * Creates a structured {@link HttpResponse} object based on the incoming request, a desired HTTP status, headers, and response data.

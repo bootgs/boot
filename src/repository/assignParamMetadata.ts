@@ -1,5 +1,5 @@
-import { ParamDefinition } from "domain/types";
-import { ParamSource } from "domain/enums";
+import { ParamDefinition } from "../domain/types";
+import { ParamSource } from "../domain/enums";
 
 /**
  * Updates parameter metadata with the argument's position (index).

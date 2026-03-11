@@ -1,13 +1,6 @@
-import { ApplicationConfig, InjectionToken, Newable } from "domain/types";
-import { AppsScriptEventType, RequestMethod } from "domain/enums";
-import {
-  EventDispatcher,
-  RequestFactory,
-  Resolver,
-  ResponseBuilder,
-  Router,
-  RouterExplorer
-} from "service";
+import { ApplicationConfig, InjectionToken, Newable } from "../domain/types";
+import { AppsScriptEventType, RequestMethod } from "../domain/enums";
+import { EventDispatcher, RequestFactory, Resolver, ResponseBuilder, Router, RouterExplorer } from "../service";
 
 export class BootApplication {
   private readonly _controllers = new Map<Newable, unknown>();
@@ -74,7 +67,7 @@ export class BootApplication {
     await this._eventDispatcher.dispatch(AppsScriptEventType.CHANGE, event);
   }
 
-  // TODO
+  // TODO: onSelectionChange
   // public async onSelectionChange(event: GoogleAppsScript.Events.SheetsOnSelectionChange) {
   //   await this.eventDispatcher.dispatch(AppsScriptEventType.SELECTION_CHANGE, event);
   // }

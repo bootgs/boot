@@ -1,5 +1,5 @@
-import { ApplicationConfig } from "domain/types";
-import { BootApplication } from "controller";
+import { ApplicationConfig } from "../domain/types";
+import { BootApplication } from "../controller";
 
 export class BootApplicationFactory {
   /**

@@ -1,5 +1,5 @@
-import { HttpStatus } from "domain/enums";
-import { AppException } from "exceptions";
+import { HttpStatus } from "../domain/enums";
+import { AppException } from "../exceptions";
 
 export class HttpException extends AppException {
   constructor(

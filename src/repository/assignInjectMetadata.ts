@@ -1,5 +1,5 @@
-import { ParamSource } from "domain/enums";
-import { InjectionToken, InjectTokenDefinition } from "domain/types";
+import { ParamSource } from "../domain/enums";
+import { InjectionToken, InjectTokenDefinition } from "../domain/types";
 
 /**
  * Updates or adds metadata for the injection tokens of a specific function parameter (argument) based on its index and token.

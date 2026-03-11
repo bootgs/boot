@@ -1,7 +1,7 @@
-import { PARAM_DEFINITIONS_METADATA } from "domain/constants";
-import { ParamDefinition } from "domain/types";
-import { ParamSource } from "domain/enums";
-import { assignParamMetadata } from "repository";
+import { PARAM_DEFINITIONS_METADATA } from "../domain/constants";
+import { ParamDefinition } from "../domain/types";
+import { ParamSource } from "../domain/enums";
+import { assignParamMetadata } from "../repository";
 
 /**
  * Creates a parameter decorator with a specified source.
