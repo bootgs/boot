@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.2](https://github.com/bootgs/boot/compare/v1.3.1...v1.3.2) (2026-03-17)
+
+
+### Bug Fixes
+
+* format ([b16e6b7](https://github.com/bootgs/boot/commit/b16e6b71330ab34d6e8520f75e47ff1d00a06d0f))
+* update apps-script-utils to v1.9.0 ([c74766f](https://github.com/bootgs/boot/commit/c74766f8965bd83987f9c2534ace9f8148686079))
+* update apps-script-utils to v1.9.0 ([41f2a20](https://github.com/bootgs/boot/commit/41f2a20d9ef8c28b2b803152c5de9114d1685478))
+
 ## [1.3.1](https://github.com/bootgs/boot/compare/v1.3.0...v1.3.1) (2026-03-11)
 
 
