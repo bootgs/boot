@@ -13,7 +13,7 @@ export const testConfig = (_options: BuildOptions): ViteUserConfig["test"] => {
     globals: true,
     server: {
       deps: {
-        inline: ["apps-script-utils"]
+        inline: [ "apps-script-utils" ]
       }
     }
   };

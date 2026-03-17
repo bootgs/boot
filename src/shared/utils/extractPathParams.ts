@@ -14,7 +14,7 @@ export function extractPathParams(template: string, actual: string): Record<stri
   tplParts.forEach((part, i) => {
     if (part.startsWith("{") && part.endsWith("}")) {
       const paramName = part.slice(1, -1);
-      params[paramName] = actParts[i];
+      params[ paramName ] = actParts[ i ];
     }
   });
 

@@ -16,7 +16,7 @@ export function wrapResponse(
 ): string | GoogleAppsScript.Content.TextOutput | GoogleAppsScript.HTML.HtmlOutput {
   const mimeType = (request.headers?.Accept as HeaderAcceptMimeType) || HeaderAcceptMimeType.HTML;
 
-  response.headers["Content-Type"] = mimeType;
+  response.headers[ "Content-Type" ] = mimeType;
 
   const isApi = request.url.pathname?.startsWith("/api/") || false;
   const result = JSON.stringify(isApi ? response : response.body);

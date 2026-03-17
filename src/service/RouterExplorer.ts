@@ -34,7 +34,7 @@ export class RouterExplorer {
           continue;
         }
 
-        const methodHandler = prototype[propertyName];
+        const methodHandler = prototype[ propertyName ];
 
         const routePath = Reflect.getMetadata(PATH_METADATA, methodHandler);
 
