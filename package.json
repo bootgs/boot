@@ -75,7 +75,7 @@
     "node": ">=22.14.0"
   },
   "dependencies": {
-    "apps-script-utils": "github:MaksymStoianov/apps-script-utils#main",
+    "apps-script-utils": "^1.9.0",
     "reflect-metadata": "^0.2.2"
   }
 }

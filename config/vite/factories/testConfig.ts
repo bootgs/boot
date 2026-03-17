@@ -10,6 +10,11 @@ import { BuildOptions } from "../types";
  */
 export const testConfig = (_options: BuildOptions): ViteUserConfig["test"] => {
   return {
-    globals: true
+    globals: true,
+    server: {
+      deps: {
+        inline: [ "apps-script-utils" ]
+      }
+    }
   };
 };
