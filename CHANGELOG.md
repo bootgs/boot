@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/bootgs/boot/compare/v1.5.0...v1.5.1) (2026-03-20)
+
+
+### Bug Fixes
+
+* change onMenu to a getter returning a Proxy ([8623bf3](https://github.com/bootgs/boot/commit/8623bf339fae58e916122e431f3360d115d26cc4))
+
 ## [1.5.0](https://github.com/bootgs/boot/compare/v1.4.0...v1.5.0) (2026-03-20)
 
 
