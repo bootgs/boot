@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://github.com/bootgs/boot/compare/v1.4.0...v1.5.0) (2026-03-20)
+
+
+### Features
+
+* update core logic to use apps-script-utils and refactor ([faea336](https://github.com/bootgs/boot/commit/faea3366624fcf945279d23f81def83c492b29f2))
+
+
+### Bug Fixes
+
+* format ([f5e8896](https://github.com/bootgs/boot/commit/f5e8896ab75a861abe02cccf4739c23d529a1bb5))
+
 ## [1.4.0](https://github.com/bootgs/boot/compare/v1.3.2...v1.4.0) (2026-03-20)
 
 
