@@ -87,12 +87,11 @@ export class Resolver {
       }
 
       deps[ i ] = isFunctionLike(tokenToResolve)
-        ? this.resolve(tokenToResolve as Newable)
+        ? this.resolve(tokenToResolve)
         : this._providers.get(tokenToResolve);
     }
 
-    const TargetClass = target as unknown as new (...args: unknown[]) => T;
-    const instance = new TargetClass(...deps);
+    const instance = new target(...deps);
 
     if (isController(target)) {
       this._controllers.set(target, instance);

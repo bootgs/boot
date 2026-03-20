@@ -9,6 +9,7 @@ import { InjectTokenDefinition, Newable, ParamDefinition } from "../domain/types
 import { getInjectionTokens } from "../repository";
 import { Resolver } from "../service";
 import { isFunctionLike } from "apps-script-utils";
+import { isChangeEvent, isEditEvent, isFormSubmitEvent, isRecord } from "../shared/utils";
 
 /**
  * Service for dispatching events to controllers.
@@ -50,12 +51,15 @@ export class EventDispatcher {
         if (eventMetadata === eventType && this.checkFilters(eventType, event, options)) {
           const instance = this.resolver.resolve(controller);
 
-          const args = this.buildMethodParams(instance as object, propertyName, event);
+          if (!isRecord(instance)) continue;
 
-          const handler = (instance as Record<string | symbol, unknown>)[ propertyName ] as (
-            ...args: unknown[]
-          ) => unknown;
-          await handler.apply(instance, args);
+          const args = this.buildMethodParams(instance, propertyName, event);
+
+          const handler = instance[ propertyName ];
+
+          if (typeof handler === "function") {
+            await Reflect.apply(handler, instance, args);
+          }
         }
       }
     }
@@ -70,7 +74,9 @@ export class EventDispatcher {
    */
   public async dispatchByName(methodName: string, event: unknown): Promise<void> {
     for (const controller of this.controllers.keys()) {
-      const instance = this.resolver.resolve(controller) as Record<string, any>;
+      const instance = this.resolver.resolve(controller);
+
+      if (!isRecord(instance)) continue;
 
       const prototype = Object.getPrototypeOf(instance);
 
@@ -91,9 +97,9 @@ export class EventDispatcher {
         continue;
       }
 
-      const handler = instance[ methodName ].bind(instance);
+      const method = instance[ methodName ];
 
-      if (!isFunctionLike(handler)) {
+      if (!isFunctionLike(method)) {
         console.warn(
           "Method '%s' in controller '%s' is not a callable function and was skipped during event handling.",
           methodName,
@@ -103,10 +109,10 @@ export class EventDispatcher {
         continue;
       }
 
-      const args = this.buildMethodParams(instance as object, methodName, event);
+      const args = this.buildMethodParams(instance, methodName, event);
 
       try {
-        await handler(...args);
+        await Reflect.apply(method, instance, args);
       } catch (err: unknown) {
         console.error("Error:", err instanceof Error ? err.stack : String(err));
       }
@@ -136,9 +142,10 @@ export class EventDispatcher {
       propertyKey
     );
 
-    const metadata: (ParamDefinition | InjectTokenDefinition)[] = (
-      Object.values(rawMetadata) as (ParamDefinition | InjectTokenDefinition)[]
-    ).concat(Object.values(rawInjectMetadata) as (ParamDefinition | InjectTokenDefinition)[]);
+    const metadata: (ParamDefinition | InjectTokenDefinition)[] = [
+      ...Object.values(rawMetadata),
+      ...Object.values(rawInjectMetadata)
+    ];
 
     metadata.sort((a, b) => a.index - b.index);
 
@@ -150,10 +157,7 @@ export class EventDispatcher {
     for (const param of metadata) {
       switch (param.type) {
         case ParamSource.EVENT:
-          args[ param.index ] =
-            param.key && typeof event === "object" && event !== null
-              ? (event as Record<string, unknown>)[ param.key ]
-              : event;
+          args[ param.index ] = param.key && isRecord(event) ? event[ param.key ] : event;
           break;
 
         case ParamSource.INJECT:
@@ -193,11 +197,10 @@ export class EventDispatcher {
     switch (eventType) {
       case AppsScriptEventType.EDIT:
         if (options.range) {
-          const editEvent = event as GoogleAppsScript.Events.SheetsOnEdit;
+          if (!isEditEvent(event)) return false;
+
           const eventRangeA1 =
-            typeof editEvent.range?.getA1Notation === "function"
-              ? editEvent.range.getA1Notation()
-              : null;
+            typeof event.range?.getA1Notation === "function" ? event.range.getA1Notation() : null;
 
           if (!eventRangeA1) {
             return false;
@@ -214,10 +217,10 @@ export class EventDispatcher {
 
       case AppsScriptEventType.FORM_SUBMIT:
         if (options.formId) {
-          const submitEvent = event as GoogleAppsScript.Events.FormsOnFormSubmit;
-          const eventFormId = (
-            submitEvent.source as unknown as { getId?: () => string }
-          )?.getId?.();
+          if (!isFormSubmitEvent(event)) return false;
+
+          const eventFormId =
+            typeof event.source?.getId === "function" ? event.source.getId() : null;
 
           if (!eventFormId) {
             return false;
@@ -231,8 +234,9 @@ export class EventDispatcher {
 
       case AppsScriptEventType.CHANGE:
         if (options.changeType) {
-          const changeEvent = event as GoogleAppsScript.Events.SheetsOnChange;
-          const eventChangeType = changeEvent.changeType;
+          if (!isChangeEvent(event)) return false;
+
+          const eventChangeType = event.changeType;
 
           if (!eventChangeType) {
             return false;

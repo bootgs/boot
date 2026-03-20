@@ -14,7 +14,10 @@ export function wrapResponse(
   request: HttpRequest,
   response: HttpResponse
 ): string | GoogleAppsScript.Content.TextOutput | GoogleAppsScript.HTML.HtmlOutput {
-  const mimeType = (request.headers?.Accept as HeaderAcceptMimeType) || HeaderAcceptMimeType.HTML;
+  const acceptHeader = request.headers?.Accept;
+  const mimeType =
+    Object.values(HeaderAcceptMimeType).find((v) => v === acceptHeader) ||
+    HeaderAcceptMimeType.HTML;
 
   response.headers[ "Content-Type" ] = mimeType;
 
