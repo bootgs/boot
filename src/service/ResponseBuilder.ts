@@ -1,6 +1,9 @@
 import { HeaderAcceptMimeType, HttpStatus, RequestMethod } from "../domain/enums";
 import { HttpHeaders, HttpRequest, HttpResponse } from "../domain/types";
 
+/**
+ * Service for building and wrapping HTTP responses.
+ */
 export class ResponseBuilder {
   /**
    * Creates a structured HttpResponse object.

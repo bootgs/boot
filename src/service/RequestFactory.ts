@@ -2,6 +2,9 @@ import { isString, normalize } from "apps-script-utils";
 import { HttpHeaders, HttpRequest, ParsedUrl } from "../domain/types";
 import { RequestMethod } from "../domain/enums";
 
+/**
+ * Factory for creating structured HttpRequest objects.
+ */
 export class RequestFactory {
   /**
    * Creates a structured HttpRequest object from a raw Apps Script DoGet or DoPost event.

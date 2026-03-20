@@ -1,6 +1,9 @@
 import { ApplicationConfig } from "../domain/types";
 import { BootApplication } from "../controller";
 
+/**
+ * Factory for creating BootApplication instances.
+ */
 export class BootApplicationFactory {
   /**
    * Creates an instance of BootApplication.

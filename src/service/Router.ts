@@ -14,14 +14,31 @@ import { RouteExecutionContext } from "../domain/entities";
 import { getInjectionTokens } from "../repository";
 import { PathMatcher, Resolver } from "../service";
 
+/**
+ * Router service for handling HTTP requests and dispatching them to controllers.
+ */
 export class Router {
   private readonly pathMatcher = new PathMatcher();
 
+  /**
+   * Creates a new instance of Router.
+   *
+   * @param {Resolver} _resolver The dependency resolver.
+   * @param {RouteMetadata[]} _routes The registered routes.
+   */
   constructor(
     private readonly _resolver: Resolver,
     private readonly _routes: RouteMetadata[]
   ) {}
 
+  /**
+   * Handles an incoming HTTP request.
+   *
+   * @param {HttpRequest} request The HTTP request object.
+   * @param {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event The Apps Script event object.
+   * @param {Function} responseBuilder A function to build an HTTP response.
+   * @returns {Promise<HttpResponse>} A promise that resolves to the HTTP response.
+   */
   public async handle(
     request: HttpRequest,
     event: GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost,
@@ -79,6 +96,14 @@ export class Router {
     }
   }
 
+  /**
+   * Builds the parameters for a controller method based on the route execution context.
+   *
+   * @param {object} target The target object.
+   * @param {string | symbol} propertyKey The name of the property.
+   * @param {RouteExecutionContext} ctx The route execution context.
+   * @returns {unknown[]} An array of parameters for the method.
+   */
   private buildMethodParams(
     target: object,
     propertyKey: string | symbol,

@@ -5,12 +5,28 @@ import { PARAMTYPES_METADATA } from "../domain/constants";
 import { getInjectionTokens } from "../repository";
 import { isController, isInjectable } from "../shared/utils";
 
+/**
+ * Dependency injection resolver.
+ */
 export class Resolver {
+  /**
+   * Creates a new instance of Resolver.
+   *
+   * @param {Map<InjectionToken, unknown>} _controllers Registered controllers.
+   * @param {Map<InjectionToken, unknown>} _providers Registered providers.
+   */
   constructor(
     private readonly _controllers: Map<InjectionToken, unknown>,
     private readonly _providers: Map<InjectionToken, unknown>
   ) {}
 
+  /**
+   * Resolves a dependency by its injection token.
+   *
+   * @param {InjectionToken<T>} token The injection token.
+   * @returns {T} The resolved instance.
+   * @throws {Error} If the dependency cannot be resolved.
+   */
   public resolve<T>(token: InjectionToken<T>): T {
     if (this._controllers.has(token)) {
       const instance = this._controllers.get(token);

@@ -7,7 +7,16 @@ import {
 } from "../domain/constants";
 import { Newable, RouteMetadata } from "../domain/types";
 
+/**
+ * Explorer for identifying routes in controllers.
+ */
 export class RouterExplorer {
+  /**
+   * Explores the registered controllers and extracts route metadata.
+   *
+   * @param {Map<Newable, unknown>} controllers The registered controllers.
+   * @returns {RouteMetadata[]} An array of extracted route metadata.
+   */
   public explore(controllers: Map<Newable, unknown>): RouteMetadata[] {
     const routes: RouteMetadata[] = [];
 
