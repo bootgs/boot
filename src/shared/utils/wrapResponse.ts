@@ -22,22 +22,28 @@ export function wrapResponse(
   response.headers[ "Content-Type" ] = mimeType;
 
   const isApi = request.url.pathname?.startsWith("/api/") || false;
+
   const result = JSON.stringify(isApi ? response : response.body);
 
   switch (mimeType) {
-    case HeaderAcceptMimeType.GOOGLE_JSON:
+    case HeaderAcceptMimeType.GOOGLE_JSON: {
       return result;
+    }
 
-    case HeaderAcceptMimeType.GOOGLE_TEXT:
+    case HeaderAcceptMimeType.GOOGLE_TEXT: {
       return result;
+    }
 
-    case HeaderAcceptMimeType.JSON:
+    case HeaderAcceptMimeType.JSON: {
       return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
+    }
 
-    case HeaderAcceptMimeType.TEXT:
+    case HeaderAcceptMimeType.TEXT: {
       return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.TEXT);
+    }
 
-    case HeaderAcceptMimeType.HTML:
+    case HeaderAcceptMimeType.HTML: {
       return HtmlService.createHtmlOutput(result);
+    }
   }
 }
