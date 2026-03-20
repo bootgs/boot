@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/bootgs/boot/compare/v1.3.2...v1.4.0) (2026-03-20)
+
+
+### Features
+
+* **core:** add onMenu method to BootApplication for Google Apps Script menu handling ([0dbd1a9](https://github.com/bootgs/boot/commit/0dbd1a9dc9351fea0e37dfa118315b86aa8e40af))
+
 ## [1.3.2](https://github.com/bootgs/boot/compare/v1.3.1...v1.3.2) (2026-03-17)
 
 
