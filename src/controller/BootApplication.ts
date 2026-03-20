@@ -1,14 +1,7 @@
 import { isString } from "apps-script-utils";
 import { ApplicationConfig, AppsScriptMenuProxy, InjectionToken, Newable } from "../domain/types";
 import { AppsScriptEventType, RequestMethod } from "../domain/enums";
-import {
-  EventDispatcher,
-  RequestFactory,
-  Resolver,
-  ResponseBuilder,
-  Router,
-  RouterExplorer
-} from "../service";
+import { EventDispatcher, RequestFactory, Resolver, ResponseBuilder, Router, RouterExplorer } from "../service";
 
 /**
  * Main application class for bootstrapping and handling Google Apps Script events.
@@ -57,6 +50,40 @@ export class BootApplication {
     this._router = new Router(this._resolver, routes);
 
     this._eventDispatcher = new EventDispatcher(this._resolver, this._controllers);
+  }
+
+  /**
+   * Returns a Proxy object that can be used to handle Google Apps Script menu actions.
+   *
+   * @returns {AppsScriptMenuProxy} A Proxy object.
+   */
+  public get onMenu(): AppsScriptMenuProxy {
+    const handler = () => proxy;
+
+    const proxy = new Proxy(handler, {
+      get: (target, prop, receiver) => {
+        if (!isString(prop)) {
+          return Reflect.get(target, prop, receiver);
+        }
+
+        if (prop === "inspect") {
+          return Reflect.get(target, prop, receiver);
+        }
+
+        if (prop === "apply" || prop === "call" || prop === "bind") {
+          return Reflect.get(target, prop, receiver);
+        }
+
+        return (event: GoogleAppsScript.Events.AppsScriptEvent) => {
+          return this._eventDispatcher.dispatchByName(prop, event);
+        };
+      },
+      apply: (target, thisArg, argArray) => {
+        return Reflect.apply(target, thisArg, argArray);
+      }
+    }) as unknown as AppsScriptMenuProxy;
+
+    return proxy;
   }
 
   /**
@@ -109,6 +136,11 @@ export class BootApplication {
     await this._eventDispatcher.dispatch(AppsScriptEventType.EDIT, event);
   }
 
+  // TODO: onSelectionChange
+  // public async onSelectionChange(event: GoogleAppsScript.Events.SheetsOnSelectionChange) {
+  //   await this.eventDispatcher.dispatch(AppsScriptEventType.SELECTION_CHANGE, event);
+  // }
+
   /**
    * Handles Google Apps Script onChange events.
    *
@@ -119,11 +151,6 @@ export class BootApplication {
     await this._eventDispatcher.dispatch(AppsScriptEventType.CHANGE, event);
   }
 
-  // TODO: onSelectionChange
-  // public async onSelectionChange(event: GoogleAppsScript.Events.SheetsOnSelectionChange) {
-  //   await this.eventDispatcher.dispatch(AppsScriptEventType.SELECTION_CHANGE, event);
-  // }
-
   /**
    * Handles Google Apps Script onFormSubmit events.
    *
@@ -132,29 +159,6 @@ export class BootApplication {
    */
   public async onFormSubmit(event: GoogleAppsScript.Events.FormsOnFormSubmit) {
     await this._eventDispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, event);
-  }
-
-  /**
-   * Returns a Proxy object that can be used to handle Google Apps Script menu actions.
-   *
-   * @returns {AppsScriptMenuProxy} A Proxy object.
-   */
-  public onMenu(): AppsScriptMenuProxy {
-    return new Proxy(this, {
-      get(target, prop, receiver) {
-        if (!isString(prop)) {
-          return Reflect.get(target, prop, receiver);
-        }
-
-        if (prop === "inspect") {
-          return Reflect.get(target, prop, receiver);
-        }
-
-        return (event: GoogleAppsScript.Events.AppsScriptEvent) => {
-          return target._eventDispatcher.dispatchByName(prop, event);
-        };
-      }
-    }) as unknown as AppsScriptMenuProxy;
   }
 
   /**

@@ -57,4 +57,18 @@ describe("BootApplication: Menu Handling", () => {
 
     expect(capturedEvent).toBe(event);
   });
+
+  it("should return proxy when accessed as a property", () => {
+    const app = new BootApplication({ controllers: [], providers: [] });
+    const menu = (app as any).onMenu;
+    expect(typeof menu).toBe("function");
+    expect(typeof menu.openSidebarHome).toBe("function");
+  });
+
+  it("should return same proxy when called as a function", () => {
+    const app = new BootApplication({ controllers: [], providers: [] });
+    const menu = app.onMenu;
+    const result = (menu as any)();
+    expect(result).toBe(menu);
+  });
 });
