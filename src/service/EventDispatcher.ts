@@ -8,13 +8,30 @@ import { AppsScriptEventType, ParamSource } from "../domain/enums";
 import { InjectTokenDefinition, Newable, ParamDefinition } from "../domain/types";
 import { getInjectionTokens } from "../repository";
 import { Resolver } from "../service";
+import { isFunctionLike } from "apps-script-utils";
 
+/**
+ * Service for dispatching events to controllers.
+ */
 export class EventDispatcher {
+  /**
+   * Creates a new instance of EventDispatcher.
+   *
+   * @param {Resolver} resolver The dependency resolver.
+   * @param {Map<Newable, unknown>} controllers The registered controllers.
+   */
   constructor(
     private readonly resolver: Resolver,
     private readonly controllers: Map<Newable, unknown>
   ) {}
 
+  /**
+   * Dispatches an event to the registered controllers.
+   *
+   * @param {AppsScriptEventType} eventType The type of the event to dispatch.
+   * @param {unknown} event The event object.
+   * @returns {Promise<void>} A promise that resolves when all handlers have finished.
+   */
   public async dispatch(eventType: AppsScriptEventType, event: unknown): Promise<void> {
     for (const controller of this.controllers.keys()) {
       const prototype = controller.prototype;
@@ -44,6 +61,66 @@ export class EventDispatcher {
     }
   }
 
+  /**
+   * Dispatches an event to the registered controllers by its name.
+   *
+   * @param {string} methodName The name of the method to dispatch the event to.
+   * @param {unknown} event The event object.
+   * @returns {Promise<void>} A promise that resolves when all handlers have finished.
+   */
+  public async dispatchByName(methodName: string, event: unknown): Promise<void> {
+    for (const controller of this.controllers.keys()) {
+      const instance = this.resolver.resolve(controller) as Record<string, any>;
+
+      const prototype = Object.getPrototypeOf(instance);
+
+      const methodNames: string[] = [];
+
+      let currentProto = prototype;
+
+      while (currentProto && currentProto !== Object.prototype) {
+        Object.getOwnPropertyNames(currentProto).forEach((name) => {
+          if (name !== "constructor" && isFunctionLike(currentProto[ name ])) {
+            methodNames.push(name);
+          }
+        });
+        currentProto = Object.getPrototypeOf(currentProto);
+      }
+
+      if (!methodNames.includes(methodName)) {
+        continue;
+      }
+
+      const handler = instance[ methodName ].bind(instance);
+
+      if (!isFunctionLike(handler)) {
+        console.warn(
+          "Method '%s' in controller '%s' is not a callable function and was skipped during event handling.",
+          methodName,
+          controller.name
+        );
+
+        continue;
+      }
+
+      const args = this.buildMethodParams(instance as object, methodName, event);
+
+      try {
+        await handler(...args);
+      } catch (err: unknown) {
+        console.error("Error:", err instanceof Error ? err.stack : String(err));
+      }
+    }
+  }
+
+  /**
+   * Builds the parameters for a controller method.
+   *
+   * @param {object} target The target object.
+   * @param {string | symbol} propertyKey The name of the property.
+   * @param {unknown} event The event object.
+   * @returns {unknown[]} An array of parameters for the method.
+   */
   public buildMethodParams(
     target: object,
     propertyKey: string | symbol,
@@ -98,6 +175,14 @@ export class EventDispatcher {
     return args;
   }
 
+  /**
+   * Checks if the event should be dispatched based on the provided options.
+   *
+   * @param {AppsScriptEventType} eventType The type of the event.
+   * @param {unknown} event The event object.
+   * @param {Record<string, unknown> | undefined} options The options to check against.
+   * @returns {boolean} True if the event should be dispatched, false otherwise.
+   */
   private checkFilters(
     eventType: AppsScriptEventType,
     event: unknown,
