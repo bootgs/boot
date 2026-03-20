@@ -78,8 +78,9 @@ export class Resolver {
           );
         }
 
-        const tokenName =
-          typeof tokenToResolve === "function" ? tokenToResolve.name : String(tokenToResolve);
+        const tokenName = isFunctionLike(tokenToResolve)
+          ? tokenToResolve.name
+          : String(tokenToResolve);
 
         throw new Error(
           `[Resolve ERROR]: '${tokenName}' is not registered as a provider or controller.`
@@ -91,7 +92,7 @@ export class Resolver {
         : this._providers.get(tokenToResolve);
     }
 
-    const instance = new target(...deps);
+    const instance = Reflect.construct(target, deps);
 
     if (isController(target)) {
       this._controllers.set(target, instance);

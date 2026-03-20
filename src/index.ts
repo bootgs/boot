@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { BootApplication, BootApplicationFactory } from "./controller";
 
 export * from "./controller";
-export * from "./utils";
+export * from "./shared/utils";
 export * from "./domain/types";
 export * from "./domain/enums";
 

@@ -1,6 +1,14 @@
+import { isString } from "apps-script-utils";
 import { ApplicationConfig, AppsScriptMenuProxy, InjectionToken, Newable } from "../domain/types";
 import { AppsScriptEventType, RequestMethod } from "../domain/enums";
-import { EventDispatcher, RequestFactory, Resolver, ResponseBuilder, Router, RouterExplorer } from "../service";
+import {
+  EventDispatcher,
+  RequestFactory,
+  Resolver,
+  ResponseBuilder,
+  Router,
+  RouterExplorer
+} from "../service";
 
 /**
  * Main application class for bootstrapping and handling Google Apps Script events.
@@ -134,7 +142,7 @@ export class BootApplication {
   public onMenu(): AppsScriptMenuProxy {
     return new Proxy(this, {
       get(target, prop, receiver) {
-        if (typeof prop !== "string") {
+        if (!isString(prop)) {
           return Reflect.get(target, prop, receiver);
         }
 

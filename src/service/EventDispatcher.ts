@@ -8,7 +8,7 @@ import { AppsScriptEventType, ParamSource } from "../domain/enums";
 import { InjectTokenDefinition, Newable, ParamDefinition } from "../domain/types";
 import { getInjectionTokens } from "../repository";
 import { Resolver } from "../service";
-import { isFunctionLike } from "apps-script-utils";
+import { isFunctionLike, isRegExp } from "apps-script-utils";
 import { isChangeEvent, isEditEvent, isFormSubmitEvent, isRecord } from "../shared/utils";
 
 /**
@@ -40,7 +40,9 @@ export class EventDispatcher {
       const propertyNames = Object.getOwnPropertyNames(prototype);
 
       for (const propertyName of propertyNames) {
-        if (propertyName === "constructor") continue;
+        if (propertyName === "constructor") {
+          continue;
+        }
 
         const methodHandler = prototype[ propertyName ];
 
@@ -57,7 +59,7 @@ export class EventDispatcher {
 
           const handler = instance[ propertyName ];
 
-          if (typeof handler === "function") {
+          if (isFunctionLike(handler)) {
             await Reflect.apply(handler, instance, args);
           }
         }
@@ -192,15 +194,20 @@ export class EventDispatcher {
     event: unknown,
     options: Record<string, unknown> | undefined
   ): boolean {
-    if (!options) return true;
+    if (!options) {
+      return true;
+    }
 
     switch (eventType) {
       case AppsScriptEventType.EDIT:
         if (options.range) {
-          if (!isEditEvent(event)) return false;
+          if (!isEditEvent(event)) {
+            return false;
+          }
 
-          const eventRangeA1 =
-            typeof event.range?.getA1Notation === "function" ? event.range.getA1Notation() : null;
+          const eventRangeA1 = isFunctionLike(event.range?.getA1Notation)
+            ? event.range.getA1Notation()
+            : null;
 
           if (!eventRangeA1) {
             return false;
@@ -208,19 +215,19 @@ export class EventDispatcher {
 
           const ranges = Array.isArray(options.range) ? options.range : [ options.range ];
 
-          // TODO: isRegExp
           return ranges.some((r: string | RegExp) =>
-            r instanceof RegExp ? r.test(eventRangeA1) : eventRangeA1 === r
+            isRegExp(r) ? r.test(eventRangeA1) : eventRangeA1 === r
           );
         }
         break;
 
       case AppsScriptEventType.FORM_SUBMIT:
         if (options.formId) {
-          if (!isFormSubmitEvent(event)) return false;
+          if (!isFormSubmitEvent(event)) {
+            return false;
+          }
 
-          const eventFormId =
-            typeof event.source?.getId === "function" ? event.source.getId() : null;
+          const eventFormId = isFunctionLike(event.source?.getId) ? event.source.getId() : null;
 
           if (!eventFormId) {
             return false;
@@ -234,7 +241,9 @@ export class EventDispatcher {
 
       case AppsScriptEventType.CHANGE:
         if (options.changeType) {
-          if (!isChangeEvent(event)) return false;
+          if (!isChangeEvent(event)) {
+            return false;
+          }
 
           const eventChangeType = event.changeType;
 

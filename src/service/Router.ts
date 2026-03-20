@@ -1,3 +1,4 @@
+import { isFunctionLike, isNumber, isString } from "apps-script-utils";
 import {
   HttpHeaders,
   HttpRequest,
@@ -85,7 +86,7 @@ export class Router {
     try {
       const handler = controllerInstance[ route.handler ];
 
-      if (typeof handler !== "function") {
+      if (!isFunctionLike(handler)) {
         throw new Error(
           `Method '${String(route.handler)}' not found in controller '${route.controller.name}'.`
         );
@@ -103,8 +104,8 @@ export class Router {
       let message = String(err);
 
       if (isRecord(err)) {
-        if (typeof err.status === "number") status = err.status;
-        if (typeof err.message === "string") message = err.message;
+        if (isNumber(err.status)) status = err.status;
+        if (isString(err.message)) message = err.message;
       }
 
       return responseBuilder(request, status, {}, message);
