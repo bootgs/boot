@@ -28,7 +28,7 @@ describe("BootApplication: Menu Handling", () => {
     const action = menu.testMethod;
     expect(typeof action).toBe("function");
 
-    const result = action();
+    const result = action({} as any);
     expect(result).toBeInstanceOf(Promise);
     await result;
 
@@ -53,7 +53,7 @@ describe("BootApplication: Menu Handling", () => {
     const menu = app.onMenu();
     const event = { source: "menu" };
 
-    await menu.testMethod(event);
+    await menu.testMethod(event as any);
 
     expect(capturedEvent).toBe(event);
   });
