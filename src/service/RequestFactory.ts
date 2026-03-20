@@ -1,6 +1,7 @@
 import { isString, normalize } from "apps-script-utils";
 import { HttpHeaders, HttpRequest, ParsedUrl } from "../domain/types";
 import { RequestMethod } from "../domain/enums";
+import { isRecord } from "../shared/utils";
 
 /**
  * Factory for creating structured HttpRequest objects.
@@ -24,7 +25,8 @@ export class RequestFactory {
         }
 
         try {
-          return JSON.parse(input.trim()) as HttpHeaders;
+          const parsed = JSON.parse(input.trim());
+          return isRecord(parsed) ? (parsed as HttpHeaders) : null;
         } catch (err: unknown) {
           console.warn("Failed to parse JSON:", err);
         }
@@ -34,9 +36,7 @@ export class RequestFactory {
 
     const methodParam = event?.parameter?.method?.toLowerCase();
 
-    const method = Object.values(RequestMethod).includes(methodParam as RequestMethod)
-      ? (methodParam as RequestMethod)
-      : methodRequest;
+    const method = Object.values(RequestMethod).find((v) => v === methodParam) || methodRequest;
 
     const rawPathname =
       event?.pathInfo || event?.parameter?.path || event?.parameter?.pathname || "/";

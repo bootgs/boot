@@ -10,7 +10,7 @@ const config: Linter.Config = {
      * Disallows usage of the `any` type.
      * @see {@link https://typescript-eslint.io/rules/no-explicit-any/ no-explicit-any}
      */
-    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-explicit-any": "off",
 
     /**
      * Disallows unused variables.

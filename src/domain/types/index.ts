@@ -1,3 +1,4 @@
+export * from "./AppsScriptMenuProxy";
 export * from "./ApplicationConfig";
 export * from "./ClassProvider";
 export * from "./ErrorResponse";

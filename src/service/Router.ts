@@ -1,4 +1,4 @@
-import { isObject } from "apps-script-utils";
+import { isFunctionLike, isNumber, isString } from "apps-script-utils";
 import {
   HttpHeaders,
   HttpRequest,
@@ -13,6 +13,7 @@ import { ParamSource } from "../domain/enums";
 import { RouteExecutionContext } from "../domain/entities";
 import { getInjectionTokens } from "../repository";
 import { PathMatcher, Resolver } from "../service";
+import { isHttpResponse, isRecord } from "../shared/utils";
 
 /**
  * Router service for handling HTTP requests and dispatching them to controllers.
@@ -76,22 +77,37 @@ export class Router {
       response: responseBuilder(request, undefined, {}, null)
     };
 
-    const args = this.buildMethodParams(controllerInstance as object, route.handler, ctx);
+    if (!isRecord(controllerInstance)) {
+      throw new Error(`Controller '${route.controller.name}' is not a valid object.`);
+    }
+
+    const args = this.buildMethodParams(controllerInstance, route.handler, ctx);
 
     try {
-      const handler = (controllerInstance as Record<string | symbol, unknown>)[ route.handler ] as (
-        ...args: unknown[]
-      ) => unknown;
-      const result = await handler.apply(controllerInstance, args);
+      const handler = controllerInstance[ route.handler ];
 
-      if (isObject(result) && "status" in result && "body" in result) {
-        return result as HttpResponse;
+      if (!isFunctionLike(handler)) {
+        throw new Error(
+          `Method '${String(route.handler)}' not found in controller '${route.controller.name}'.`
+        );
+      }
+
+      const result = await Reflect.apply(handler, controllerInstance, args);
+
+      if (isHttpResponse(result)) {
+        return result;
       }
 
       return responseBuilder(request, ctx.response?.status, ctx.response?.headers, result);
     } catch (err: unknown) {
-      const status = (err as { status?: number })?.status || 500;
-      const message = (err as { message?: string })?.message || String(err);
+      let status = 500;
+      let message = String(err);
+
+      if (isRecord(err)) {
+        if (isNumber(err.status)) status = err.status;
+        if (isString(err.message)) message = err.message;
+      }
+
       return responseBuilder(request, status, {}, message);
     }
   }
@@ -112,24 +128,22 @@ export class Router {
     const targetPrototype = Object.getPrototypeOf(target);
 
     const rawMetadata: Record<string, ParamDefinition> =
-      (Reflect.getMetadata(PARAM_DEFINITIONS_METADATA, targetPrototype, propertyKey) as Record<
-        string,
-        ParamDefinition
-      >) || {};
+      Reflect.getMetadata(PARAM_DEFINITIONS_METADATA, targetPrototype, propertyKey) || {};
 
     const rawInjectMetadata: Record<string, InjectTokenDefinition> = getInjectionTokens(
       targetPrototype,
       propertyKey
     );
 
-    const metadata: (ParamDefinition | InjectTokenDefinition)[] = (
-      Object.values(rawMetadata) as (ParamDefinition | InjectTokenDefinition)[]
-    ).concat(Object.values(rawInjectMetadata) as (ParamDefinition | InjectTokenDefinition)[]);
+    const metadata: (ParamDefinition | InjectTokenDefinition)[] = [
+      ...Object.values(rawMetadata),
+      ...Object.values(rawInjectMetadata)
+    ];
 
     metadata.sort((a, b) => a.index - b.index);
 
     const designParamTypes: Newable[] =
-      (Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) as Newable[]) || [];
+      Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
 
     const args: unknown[] = [];
 
@@ -144,24 +158,16 @@ export class Router {
           break;
 
         case ParamSource.BODY:
-          args[ param.index ] =
-            param.key && ctx.body && isObject(ctx.body)
-              ? (ctx.body as unknown as Record<string, unknown>)[ param.key ]
-              : ctx.body;
+          args[ param.index ] = param.key && isRecord(ctx.body) ? ctx.body[ param.key ] : ctx.body;
           break;
 
         case ParamSource.EVENT:
-          args[ param.index ] =
-            param.key && isObject(ctx.event)
-              ? (ctx.event as unknown as Record<string, unknown>)[ param.key ]
-              : ctx.event;
+          args[ param.index ] = param.key && isRecord(ctx.event) ? ctx.event[ param.key ] : ctx.event;
           break;
 
         case ParamSource.REQUEST:
           args[ param.index ] =
-            param.key && isObject(ctx.request)
-              ? (ctx.request as unknown as Record<string, unknown>)[ param.key ]
-              : ctx.request;
+            param.key && isRecord(ctx.request) ? ctx.request[ param.key ] : ctx.request;
           break;
 
         case ParamSource.HEADERS:
@@ -177,9 +183,7 @@ export class Router {
 
         case ParamSource.RESPONSE:
           args[ param.index ] =
-            param.key && isObject(ctx.response)
-              ? (ctx.response as unknown as Record<string, unknown>)[ param.key ]
-              : ctx.response;
+            param.key && isRecord(ctx.response) ? ctx.response[ param.key ] : ctx.response;
           break;
 
         case ParamSource.INJECT:
