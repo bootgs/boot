@@ -38,6 +38,12 @@ Install the framework via npm:
 npm install bootgs
 ```
 
+Make sure to import `reflect-metadata` at the very beginning of your application (usually in the entry point file):
+
+```TypeScript
+import "reflect-metadata";
+```
+
 ## Quick Start
 
 ### 1. Define a Controller
@@ -92,8 +98,12 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
 
 ## Features
 
-- **Decorator-based Routing**: Intuitive mapping of HTTP and Apps Script events.
-- **Dependency Injection**: Decouple your components for better testability.
+- **Decorator-based Routing**: Intuitive mapping of HTTP and Apps Script events (GET, POST, etc.).
+- **Spring Boot & NestJS Patterns**: Familiar decorators like `@RequestMapping`, `@Autowired`, `@Value`.
+- **Guards & Security**: Protect your endpoints with `@UseGuards` and `@Roles`.
+- **Pipes & Validation**: Transform and validate incoming data with `@UsePipes` and built-in pipes (e.g., `ParseIntPipe`).
+- **Global Error Handling**: Centralized exception management using `@ControllerAdvice` and `@ExceptionHandler`.
+- **Dependency Injection**: Fully-featured DI for better decoupling and testability.
 - **Type Safety**: Built with TypeScript for a robust development experience.
 - **Modern Architecture**: Inspired by frameworks like NestJS and Spring Boot.
 
@@ -118,9 +128,19 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td>Marks a class as a general-purpose controller.</td>
     </tr>
     <tr>
+      <td><code>@RequestMapping(path?: string, method?: RequestMethod | RequestMethod[])</code></td>
+      <td><code>ClassDecorator & MethodDecorator</code></td>
+      <td>Maps a specific request path onto a controller or a handler method.</td>
+    </tr>
+    <tr>
       <td><code>@HttpController(basePath?: string)</code></td>
       <td><code>ClassDecorator</code></td>
       <td>Marks a class as an HTTP request controller. Default base path is <code>/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@ControllerAdvice()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a global exception handler and data binder.</td>
     </tr>
     <tr>
       <td><code>@SheetController(sheetName?: string | string[] | RegExp)</code></td>
@@ -164,6 +184,11 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td><code>@RestController(basePath?: string)</code></td>
       <td><code>ClassDecorator</code></td>
       <td>Alias for <code>@HttpController()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@RestControllerAdvice()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Alias for <code>@ControllerAdvice()</code>.</td>
     </tr>
     <tr>
       <td><code>@SheetsController(sheetName?: string | string[] | RegExp)</code></td>
@@ -237,6 +262,11 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td colspan="3" align="center"><b>HTTP Methods</b></td>
     </tr>
     <tr>
+      <td><code>@RequestMapping(path?: string, method?: RequestMethod | RequestMethod[])</code></td>
+      <td><code>ClassDecorator & MethodDecorator</code></td>
+      <td>Maps a specific request path onto a controller or a handler method.</td>
+    </tr>
+    <tr>
       <td><code>@Get(path?: string)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP GET requests. Default path is <code>/</code>.</td>
@@ -270,6 +300,34 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td><code>@Options(path?: string)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP OPTIONS requests.</td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center"><b>Error Handling & Security</b></td>
+    </tr>
+    <tr>
+      <td><code>@ExceptionHandler(value?: Newable | Newable[])</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Annotation for handling exceptions in specific handler classes and/or handler methods.</td>
+    </tr>
+    <tr>
+      <td><code>@ResponseStatus(value: number)</code></td>
+      <td><code>MethodDecorator & ClassDecorator</code></td>
+      <td>Marks a method or exception class with the status code that should be returned.</td>
+    </tr>
+    <tr>
+      <td><code>@UseGuards(...guards: any[])</code></td>
+      <td><code>MethodDecorator & ClassDecorator</code></td>
+      <td>Specifies the guards to be used for a controller or method.</td>
+    </tr>
+    <tr>
+      <td><code>@Roles(...roles: string[])</code></td>
+      <td><code>MethodDecorator & ClassDecorator</code></td>
+      <td>Specifies the roles required to access a controller or method (used with guards).</td>
+    </tr>
+    <tr>
+      <td><code>@UsePipes(...pipes: any[])</code></td>
+      <td><code>MethodDecorator & ClassDecorator</code></td>
+      <td>Specifies the pipes to be used for a controller or method.</td>
     </tr>
     <tr>
       <td colspan="3" align="center"><b>Aliases</b></td>
@@ -343,19 +401,19 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td>Injects request headers or a specific header value.</td>
     </tr>
     <tr>
-      <td><code>@Body(key?: string)</code></td>
+      <td><code>@Body(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
-      <td>Injects the full request body or a specific key.</td>
+      <td>Injects the full request body or a specific key. Supports transformation pipes.</td>
     </tr>
     <tr>
-      <td><code>@Param(key?: string)</code></td>
+      <td><code>@Param(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
-      <td>Injects values from URL path parameters.</td>
+      <td>Injects values from URL path parameters. Supports transformation pipes.</td>
     </tr>
     <tr>
-      <td><code>@Query(key?: string)</code></td>
+      <td><code>@Query(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
-      <td>Injects values from URL query parameters.</td>
+      <td>Injects values from URL query parameters. Supports transformation pipes.</td>
     </tr>
     <tr>
       <td><code>@Inject(token: any)</code></td>
@@ -363,20 +421,30 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td>Explicitly specifies an injection token for a dependency.</td>
     </tr>
     <tr>
+      <td><code>@Value(key: string)</code></td>
+      <td><code>ParameterDecorator & PropertyDecorator</code></td>
+      <td>Injects a value from the application configuration.</td>
+    </tr>
+    <tr>
       <td colspan="3" align="center"><b>Aliases</b></td>
     </tr>
     <tr>
-      <td><code>@RequestBody(key?: string)</code></td>
+      <td><code>@Autowired(token?: any)</code></td>
+      <td><code>ParameterDecorator & PropertyDecorator</code></td>
+      <td>Alias for <code>@Inject()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@RequestBody(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
       <td>Alias for <code>@Body()</code>.</td>
     </tr>
     <tr>
-      <td><code>@PathVariable(key?: string)</code></td>
+      <td><code>@PathVariable(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
       <td>Alias for <code>@Param()</code>.</td>
     </tr>
     <tr>
-      <td><code>@RequestParam(key?: string)</code></td>
+      <td><code>@RequestParam(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
       <td>Alias for <code>@Query()</code>.</td>
     </tr>
@@ -384,6 +452,62 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
 </table>
 
 </details>
+
+### Built-in Pipes
+
+Pipes can be used to transform data before it reaches your handler:
+
+| Pipe | Description |
+| :--- | :--- |
+| `ParseIntPipe` | Transforms a string to an integer. |
+| `ParseFloatPipe` | Transforms a string to a float. |
+| `ParseBoolPipe` | Transforms a string to a boolean. |
+
+## Advanced Examples
+
+### Guards and Pipes
+
+Secure your methods with guards and transform parameters with pipes:
+
+```TypeScript
+import {Get, RestController, UseGuards, Roles, Query, ParseIntPipe} from "bootgs";
+import {AuthGuard} from "./guards/AuthGuard";
+
+@RestController("admin")
+@UseGuards(AuthGuard)
+export class AdminController {
+
+    @Get("user-details")
+    @Roles("ADMIN")
+    getUserDetails(@Query("id", ParseIntPipe) id: number): object {
+        return {
+            userId: id,
+            message: "Success!"
+        };
+    }
+}
+```
+
+### Global Error Handling
+
+Use `@ControllerAdvice` to handle exceptions globally across the whole application:
+
+```TypeScript
+import {ControllerAdvice, ExceptionHandler, ResponseStatus} from "bootgs";
+
+@ControllerAdvice()
+export class GlobalExceptionHandler {
+
+    @ExceptionHandler(Error)
+    @ResponseStatus(500)
+    handleError(error: Error): object {
+        return {
+            status: "Error",
+            message: error.message
+        };
+    }
+}
+```
 
 ## Contributing
 
