@@ -38,12 +38,6 @@ Install the framework via npm:
 npm install bootgs
 ```
 
-Make sure to import `reflect-metadata` at the very beginning of your application (usually in the entry point file):
-
-```TypeScript
-import "reflect-metadata";
-```
-
 ## Quick Start
 
 ### 1. Define a Controller
@@ -100,7 +94,6 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
 
 - **Decorator-based Routing**: Intuitive mapping of HTTP and Apps Script events (GET, POST, etc.).
 - **Spring Boot & NestJS Patterns**: Familiar decorators like `@RequestMapping`, `@Autowired`, `@Value`.
-- **Guards & Security**: Protect your endpoints with `@UseGuards` and `@Roles`.
 - **Pipes & Validation**: Transform and validate incoming data with `@UsePipes` and built-in pipes (e.g., `ParseIntPipe`).
 - **Global Error Handling**: Centralized exception management using `@ControllerAdvice` and `@ExceptionHandler`.
 - **Dependency Injection**: Fully-featured DI for better decoupling and testability.
@@ -315,16 +308,6 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td>Marks a method or exception class with the status code that should be returned.</td>
     </tr>
     <tr>
-      <td><code>@UseGuards(...guards: any[])</code></td>
-      <td><code>MethodDecorator & ClassDecorator</code></td>
-      <td>Specifies the guards to be used for a controller or method.</td>
-    </tr>
-    <tr>
-      <td><code>@Roles(...roles: string[])</code></td>
-      <td><code>MethodDecorator & ClassDecorator</code></td>
-      <td>Specifies the roles required to access a controller or method (used with guards).</td>
-    </tr>
-    <tr>
       <td><code>@UsePipes(...pipes: any[])</code></td>
       <td><code>MethodDecorator & ClassDecorator</code></td>
       <td>Specifies the pipes to be used for a controller or method.</td>
@@ -465,20 +448,17 @@ Pipes can be used to transform data before it reaches your handler:
 
 ## Advanced Examples
 
-### Guards and Pipes
+### Pipes
 
-Secure your methods with guards and transform parameters with pipes:
+Transform parameters with pipes:
 
 ```TypeScript
-import {Get, RestController, UseGuards, Roles, Query, ParseIntPipe} from "bootgs";
-import {AuthGuard} from "./guards/AuthGuard";
+import {Get, RestController, Query, ParseIntPipe} from "bootgs";
 
-@RestController("admin")
-@UseGuards(AuthGuard)
-export class AdminController {
+@RestController("users")
+export class UserController {
 
-    @Get("user-details")
-    @Roles("ADMIN")
+    @Get("details")
     getUserDetails(@Query("id", ParseIntPipe) id: number): object {
         return {
             userId: id,

@@ -54,16 +54,6 @@ export const PARAM_DEFINITIONS_METADATA: string = "custom:param";
 export const PARAMTYPES_METADATA: string = "design:paramtypes";
 
 /**
- * Metadata key for storing guards.
- */
-export const GUARDS_METADATA: string = "custom:guards";
-
-/**
- * Metadata key for storing roles.
- */
-export const ROLES_METADATA: string = "custom:roles";
-
-/**
  * Metadata key for storing pipes.
  */
 export const PIPES_METADATA: string = "custom:pipes";

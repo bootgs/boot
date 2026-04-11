@@ -1,7 +1,6 @@
 export * from "./appsscript";
 export * from "./params";
 export * from "./routing";
-export * from "./security";
 export * from "./validation";
 
 export * from "./Controller";

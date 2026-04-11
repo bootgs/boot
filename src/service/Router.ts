@@ -1,7 +1,5 @@
 import { isFunctionLike, isNumber, isString } from "apps-script-utils";
 import {
-  CanActivate,
-  ExecutionContext,
   HttpHeaders,
   HttpRequest,
   HttpResponse,
@@ -13,7 +11,6 @@ import {
 } from "../domain/types";
 import {
   EXCEPTION_HANDLER_METADATA,
-  GUARDS_METADATA,
   PARAM_DEFINITIONS_METADATA,
   PARAMTYPES_METADATA,
   PIPES_METADATA,
@@ -105,16 +102,6 @@ export class Router {
       throw new Error(
         `Method '${String(route.handler)}' not found in controller '${route.controller.name}'.`
       );
-    }
-
-    const executionContext: ExecutionContext = this.createExecutionContext(
-      controllerInstance,
-      handler,
-      ctx
-    );
-
-    if (!this.checkGuards(executionContext, controllerInstance, handler)) {
-      return responseBuilder(request, 403, {}, { message: "Forbidden resource" });
     }
 
     const args = this.buildMethodParams(controllerInstance, route.handler, ctx);
@@ -454,52 +441,5 @@ export class Router {
     }
 
     return args;
-  }
-
-  /**
-   * Checks the guards for a given execution context.
-   *
-   * @param {ExecutionContext} context The execution context.
-   * @param {object} instance The controller instance.
-   * @param {Function} handler The handler function.
-   * @returns {boolean} Whether the route can be activated.
-   */
-  private checkGuards(context: ExecutionContext, instance: object, handler: Function): boolean {
-    const controllerGuards: any[] =
-      Reflect.getMetadata(GUARDS_METADATA, instance.constructor) || [];
-    const methodGuards: any[] = Reflect.getMetadata(GUARDS_METADATA, handler) || [];
-
-    const guards = [ ...controllerGuards, ...methodGuards ];
-
-    for (const guard of guards) {
-      const guardInstance: CanActivate =
-        typeof guard === "function" ? this._resolver.resolve(guard) : guard;
-
-      if (!guardInstance.canActivate(context)) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * Creates an execution context.
-   *
-   * @param {object} instance The controller instance.
-   * @param {Function} handler The handler function.
-   * @param {RouteExecutionContext} ctx The route execution context.
-   * @returns {ExecutionContext} The execution context.
-   */
-  private createExecutionContext(
-    instance: object,
-    handler: Function,
-    ctx: RouteExecutionContext
-  ): ExecutionContext {
-    return {
-      ...ctx,
-      getClass: <T = any>(): T => instance.constructor as any,
-      getHandler: (): Function => handler
-    };
   }
 }

@@ -1,6 +1,5 @@
 export * from "./AppsScriptMenuProxy";
 export * from "./ApplicationConfig";
-export * from "./CanActivate";
 export * from "./ClassProvider";
 export * from "./ErrorResponse";
 export * from "./ExistingProvider";
