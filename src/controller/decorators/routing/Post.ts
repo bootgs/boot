@@ -6,5 +6,11 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @param   {string} [path] - Route path (optional).
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```typescript
+ * @Post('/users')
+ * createUser(@Body() dto: CreateUserDto) {}
+ * ```
  */
 export const Post = createHttpDecorator(RequestMethod.POST);

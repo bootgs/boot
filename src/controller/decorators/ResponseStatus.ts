@@ -5,6 +5,13 @@ import { RESPONSE_STATUS_METADATA } from "../../domain/constants";
  *
  * @param   {number} status - The HTTP status code.
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```typescript
+ * @Get('/users')
+ * @ResponseStatus(200)
+ * getUsers() {}
+ * ```
  */
 export function ResponseStatus(status: number): MethodDecorator {
   return (

@@ -1,8 +1,4 @@
-import {
-  CONTROLLER_OPTIONS_METADATA,
-  METHOD_METADATA,
-  PATH_METADATA
-} from "../../../domain/constants";
+import { CONTROLLER_OPTIONS_METADATA, METHOD_METADATA, PATH_METADATA } from "../../../domain/constants";
 import { RequestMethod } from "../../../domain/enums";
 
 /**
@@ -31,6 +27,15 @@ export interface RequestMappingOptions {
  *
  * @param   {string | RequestMappingOptions} [options] - Mapping options.
  * @returns {ClassDecorator & MethodDecorator} A decorator.
+ *
+ * @example
+ * ```typescript
+ * @RequestMapping({ path: '/users', method: RequestMethod.GET })
+ * getUsers() {}
+ *
+ * @RequestMapping('/users')
+ * class UserController {}
+ * ```
  */
 export function RequestMapping(
   options?: string | RequestMappingOptions

@@ -7,5 +7,13 @@ import { Inject } from "../../controller/decorators";
  *
  * @param   {any} [token] - The injection token.
  * @returns {ParameterDecorator & PropertyDecorator} A decorator.
+ *
+ * @example
+ * ```typescript
+ * class MyService {
+ *   @Autowired()
+ *   private readonly provider: any;
+ * }
+ * ```
  */
 export const Autowired = Inject;

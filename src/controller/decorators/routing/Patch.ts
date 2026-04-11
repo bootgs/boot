@@ -6,5 +6,11 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @param   {string} [path] - Route path (optional).
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```typescript
+ * @Patch('/users/:id')
+ * patchUser(@PathVariable('id') id: string, @Body() dto: Partial<UpdateUserDto>) {}
+ * ```
  */
 export const Patch = createHttpDecorator(RequestMethod.PATCH);

@@ -4,6 +4,12 @@ import { ENTITY_WATERMARK } from "../../domain/constants";
  * Decorator that marks a class as an entity.
  *
  * @returns {ClassDecorator} A class decorator.
+ *
+ * @example
+ * ```typescript
+ * @Entity()
+ * class User {}
+ * ```
  */
 export function Entity(): ClassDecorator {
   return (target: object): void => {

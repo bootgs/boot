@@ -6,5 +6,11 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @param   {string} [path] - Route path (optional).
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```typescript
+ * @Delete('/users/:id')
+ * deleteUser(@PathVariable('id') id: string) {}
+ * ```
  */
 export const Delete = createHttpDecorator(RequestMethod.DELETE);

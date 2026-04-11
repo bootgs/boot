@@ -5,6 +5,13 @@ import { PIPES_METADATA } from "../../../domain/constants";
  *
  * @param   {...any[]} pipes - The pipes to apply.
  * @returns {MethodDecorator & ClassDecorator} A decorator.
+ *
+ * @example
+ * ```typescript
+ * @UsePipes(new ValidationPipe())
+ * @Post()
+ * create(@Body() dto: CreateDto) {}
+ * ```
  */
 export function UsePipes(...pipes: any[]): MethodDecorator & ClassDecorator {
   return (

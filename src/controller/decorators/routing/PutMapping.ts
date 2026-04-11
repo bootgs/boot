@@ -6,5 +6,11 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @param   {string} [path] - Route path (optional).
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```typescript
+ * @PutMapping('/users/:id')
+ * updateUser(@PathVariable('id') id: string, @Body() dto: UpdateUserDto) {}
+ * ```
  */
 export const PutMapping = createHttpDecorator(RequestMethod.PUT);

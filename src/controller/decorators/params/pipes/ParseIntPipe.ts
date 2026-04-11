@@ -2,6 +2,12 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
 
 /**
  * Pipe for parsing input as integers.
+ *
+ * @example
+ * ```typescript
+ * @Get('/:id')
+ * getUser(@Param('id', ParseIntPipe) id: number) {}
+ * ```
  */
 export class ParseIntPipe implements PipeTransform<string | number, number> {
   /**

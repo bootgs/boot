@@ -7,6 +7,13 @@ import { assignInjectMetadata } from "../../repository";
  *
  * @param   {Newable | string | symbol} [token] - The injection token that the DI container will use to resolve the dependency.
  * @returns {ParameterDecorator} A parameter decorator.
+ *
+ * @example
+ * ```typescript
+ * class MyService {
+ *   constructor(@Inject('MyProvider') private readonly provider: any) {}
+ * }
+ * ```
  */
 export function Inject(token?: Newable | string | symbol): ParameterDecorator {
   return (

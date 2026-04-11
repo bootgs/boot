@@ -18,6 +18,12 @@ export interface ControllerOptions {
  * @param   {string} type - Controller type (e.g., 'http', 'sheets').
  * @param   {ControllerOptions} [options] - Controller options.
  * @returns {ClassDecorator} A class decorator.
+ *
+ * @example
+ * ```typescript
+ * @Controller('http', { basePath: '/api' })
+ * class MyController {}
+ * ```
  */
 export function Controller(type: string, options: ControllerOptions = {}): ClassDecorator {
   return (target: object): void => {

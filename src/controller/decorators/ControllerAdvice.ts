@@ -5,6 +5,17 @@ import { CONTROLLER_ADVICE_WATERMARK, INJECTABLE_WATERMARK } from "../../domain/
  * Global exception handlers can be defined in these classes.
  *
  * @returns {ClassDecorator} A class decorator.
+ *
+ * @example
+ * ```typescript
+ * @ControllerAdvice()
+ * class GlobalExceptionHandler {
+ *   @ExceptionHandler(Error)
+ *   handleError(error: Error) {
+ *     return { message: error.message };
+ *   }
+ * }
+ * ```
  */
 export function ControllerAdvice(): ClassDecorator {
   return (target: object): void => {
@@ -15,5 +26,11 @@ export function ControllerAdvice(): ClassDecorator {
 
 /**
  * Alias for `@ControllerAdvice()`.
+ *
+ * @example
+ * ```typescript
+ * @RestControllerAdvice()
+ * class GlobalExceptionHandler {}
+ * ```
  */
 export const RestControllerAdvice = ControllerAdvice;

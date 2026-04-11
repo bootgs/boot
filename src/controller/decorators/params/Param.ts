@@ -6,5 +6,11 @@ import { createParamDecorator } from "../../../repository";
  *
  * @param   {string} key - The name of the path parameter to extract (`/users/{id}`).
  * @returns {ParameterDecorator} A parameter decorator.
+ *
+ * @example
+ * ```typescript
+ * @Get('/:id')
+ * getUser(@Param('id') id: string) {}
+ * ```
  */
 export const Param = createParamDecorator(ParamSource.PARAM);

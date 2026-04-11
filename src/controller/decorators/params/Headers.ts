@@ -6,5 +6,11 @@ import { createParamDecorator } from "../../../repository";
  *
  * @param   {string} [key] - The name of a header to extract.
  * @returns {ParameterDecorator} A parameter decorator.
+ *
+ * @example
+ * ```typescript
+ * @Get()
+ * get(@Headers('Authorization') auth: string) {}
+ * ```
  */
 export const Headers = createParamDecorator(ParamSource.HEADERS);

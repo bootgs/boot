@@ -6,5 +6,11 @@ import { createParamDecorator } from "../../../repository";
  *
  * @param   {string} [key] - The name of a key to extract a specific value from the event object.
  * @returns {ParameterDecorator} A parameter decorator.
+ *
+ * @example
+ * ```typescript
+ * @OnOpen()
+ * onOpen(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {}
+ * ```
  */
 export const Event = createParamDecorator(ParamSource.EVENT);

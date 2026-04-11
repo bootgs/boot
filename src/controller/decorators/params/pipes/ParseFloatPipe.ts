@@ -2,6 +2,12 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
 
 /**
  * Pipe for parsing input as floating-point numbers.
+ *
+ * @example
+ * ```typescript
+ * @Get()
+ * get(@Query('price', ParseFloatPipe) price: number) {}
+ * ```
  */
 export class ParseFloatPipe implements PipeTransform<string | number, number> {
   /**

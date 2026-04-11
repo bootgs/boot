@@ -6,6 +6,14 @@ import { Newable } from "../../domain/types";
  *
  * @param   {...Newable<Error>[]} exceptions - The exceptions to handle.
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```typescript
+ * @ExceptionHandler(UserNotFoundException)
+ * handleUserNotFound(exception: UserNotFoundException) {
+ *   return { message: exception.message };
+ * }
+ * ```
  */
 export function ExceptionHandler(...exceptions: Newable<Error>[]): MethodDecorator {
   return (

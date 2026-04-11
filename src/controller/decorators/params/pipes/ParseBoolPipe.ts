@@ -2,6 +2,12 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
 
 /**
  * Pipe for parsing input as boolean.
+ *
+ * @example
+ * ```typescript
+ * @Get()
+ * get(@Query('active', ParseBoolPipe) active: boolean) {}
+ * ```
  */
 export class ParseBoolPipe implements PipeTransform<string | boolean, boolean> {
   /**

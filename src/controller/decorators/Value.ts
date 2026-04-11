@@ -8,6 +8,13 @@ import { assignParamMetadata } from "../../repository";
  *
  * @param   {string} key - The configuration key (e.g., "app.name").
  * @returns {ParameterDecorator} A parameter decorator.
+ *
+ * @example
+ * ```typescript
+ * class MyService {
+ *   constructor(@Value('app.name') private readonly appName: string) {}
+ * }
+ * ```
  */
 export function Value(key: string): ParameterDecorator {
   return (

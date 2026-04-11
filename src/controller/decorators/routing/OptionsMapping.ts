@@ -6,5 +6,11 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @param   {string} [path] - Route path (optional).
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```typescript
+ * @OptionsMapping('/users')
+ * getOptions() {}
+ * ```
  */
 export const OptionsMapping = createHttpDecorator(RequestMethod.OPTIONS);

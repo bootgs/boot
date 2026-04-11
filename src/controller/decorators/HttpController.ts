@@ -5,6 +5,12 @@ import { Controller } from "../../controller/decorators";
  *
  * @param   {string} [basePath] - The base path for all routes in this controller.
  * @returns {ClassDecorator} A class decorator.
+ *
+ * @example
+ * ```typescript
+ * @HttpController('/api')
+ * class MyController {}
+ * ```
  */
 export function HttpController(basePath: string = "/"): ClassDecorator {
   return Controller("http", { basePath: basePath === undefined ? "/" : basePath });

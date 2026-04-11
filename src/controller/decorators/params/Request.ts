@@ -6,5 +6,11 @@ import { createParamDecorator } from "../../../repository";
  *
  * @param   {string} [key] - The name of a key to extract from the request object.
  * @returns {ParameterDecorator} A parameter decorator.
+ *
+ * @example
+ * ```typescript
+ * @Get()
+ * get(@Request() req: any) {}
+ * ```
  */
 export const Request = createParamDecorator(ParamSource.REQUEST);
