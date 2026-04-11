@@ -9,15 +9,23 @@ import { assignInjectMetadata } from "../../repository";
  * @returns {ParameterDecorator} A parameter decorator.
  */
 export function Inject(token?: Newable | string | symbol): ParameterDecorator {
-  return (target, propertyKey, parameterIndex) => {
-    const metadataTarget = target;
+  return (
+    target: object,
+    propertyKey: string | symbol | undefined,
+    parameterIndex: number
+  ): void => {
+    const metadataTarget: object = target;
 
     const existing: Record<string, InjectTokenDefinition> =
       (propertyKey
         ? Reflect.getMetadata(INJECT_TOKENS_METADATA, metadataTarget, propertyKey)
         : Reflect.getMetadata(INJECT_TOKENS_METADATA, metadataTarget)) || {};
 
-    const updatedTokens = assignInjectMetadata(existing, parameterIndex, token);
+    const updatedTokens: Record<string, InjectTokenDefinition> = assignInjectMetadata(
+      existing,
+      parameterIndex,
+      token
+    );
 
     if (propertyKey) {
       Reflect.defineMetadata(INJECT_TOKENS_METADATA, updatedTokens, metadataTarget, propertyKey);

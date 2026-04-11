@@ -1,14 +1,14 @@
 import "reflect-metadata";
-import {
-  CONTROLLER_OPTIONS_METADATA,
-  CONTROLLER_TYPE_METADATA,
-  CONTROLLER_WATERMARK
-} from "../../domain/constants";
+import { CONTROLLER_OPTIONS_METADATA, CONTROLLER_TYPE_METADATA, CONTROLLER_WATERMARK } from "../../domain/constants";
 
 /**
- * Controller options.
+ * Interface representing controller options.
  */
 export interface ControllerOptions {
+
+  /**
+   * The base path for all routes in the controller.
+   */
   basePath?: string;
 }
 
@@ -20,7 +20,7 @@ export interface ControllerOptions {
  * @returns {ClassDecorator} A class decorator.
  */
 export function Controller(type: string, options: ControllerOptions = {}): ClassDecorator {
-  return (target: object) => {
+  return (target: object): void => {
     Reflect.defineMetadata(CONTROLLER_WATERMARK, true, target);
     Reflect.defineMetadata(CONTROLLER_TYPE_METADATA, type, target);
     Reflect.defineMetadata(CONTROLLER_OPTIONS_METADATA, options, target);

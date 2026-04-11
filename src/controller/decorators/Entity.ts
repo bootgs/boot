@@ -6,7 +6,7 @@ import { ENTITY_WATERMARK } from "../../domain/constants";
  * @returns {ClassDecorator} A class decorator.
  */
 export function Entity(): ClassDecorator {
-  return (target: object) => {
+  return (target: object): void => {
     // In a GAS context, this might be used to map classes to Spreadsheet ranges or other storage.
     // For now, it serves as a semantic marker.
     Reflect.defineMetadata(ENTITY_WATERMARK, true, target);

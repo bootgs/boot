@@ -6,7 +6,7 @@ import { INJECTABLE_WATERMARK } from "../../domain/constants";
  * @returns {ClassDecorator} A class decorator.
  */
 export function Injectable(): ClassDecorator {
-  return (target: object) => {
+  return (target: object): void => {
     Reflect.defineMetadata(INJECTABLE_WATERMARK, true, target);
   };
 }
