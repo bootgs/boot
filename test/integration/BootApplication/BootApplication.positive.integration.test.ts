@@ -38,40 +38,52 @@ describe("Integration: BootApplication: Positive", () => {
     createHtmlOutput: vi.fn().mockReturnValue({})
   };
 
-  it("should handle GET request with path and query params", async () => {
+  it("should handle GET request with path and query params", () => {
     const event = {
       parameter: { fields: "name,email" },
       parameters: { fields: [ "name,email" ] },
       contextPath: "",
       contentLength: -1,
       queryString: "fields=name,email",
-      pathInfo: "users/123"
+      pathInfo: "api/users/123"
     } as unknown as GoogleAppsScript.Events.DoGet;
 
-    await app.doGet(event);
+    app.doGet(event);
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
     const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[ 0 ][ 0 ];
     const responseBody = JSON.parse(callArgs as string);
-    expect(responseBody).toEqual({ id: "123", fields: [ "name,email" ], method: "GET" });
+    expect(responseBody).toEqual({
+      ok: true,
+      status: 200,
+      statusText: "OK",
+      headers: { "Content-Type": "text/html" },
+      body: { id: "123", fields: [ "name,email" ], method: "GET" }
+    });
   });
 
-  it("should handle POST request with body", async () => {
+  it("should handle POST request with body", () => {
     const data = { name: "John Doe" };
     const event = {
       postData: {
         contents: JSON.stringify(data),
         type: "application/json"
       },
-      pathInfo: "users"
+      pathInfo: "api/users"
     } as unknown as GoogleAppsScript.Events.DoPost;
 
-    await app.doPost(event);
+    app.doPost(event);
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
     const lastCall = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls.length - 1;
     const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[ lastCall ][ 0 ];
     const responseBody = JSON.parse(callArgs as string);
-    expect(responseBody).toEqual({ name: "John Doe", method: "POST" });
+    expect(responseBody).toEqual({
+      ok: true,
+      status: 201,
+      statusText: "CREATED",
+      headers: { "Content-Type": "text/html" },
+      body: { name: "John Doe", method: "POST" }
+    });
   });
 });

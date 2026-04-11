@@ -24,34 +24,44 @@ describe("BootApplication: Positive", () => {
     expect(providers.has("EXISTING")).toBe(true);
   });
 
-  it("should dispatch INSTALL event on onInstall", async () => {
+  it("should initialize ResponseBuilder with apiPrefix from config", () => {
+    const apiPrefix = "/custom-api/";
+    const app = new BootApplication({
+      controllers: [],
+      apiPrefix
+    });
+
+    const responseBuilder = (app as unknown as { _responseBuilder: { _apiPrefix: string } })
+      ._responseBuilder;
+    expect(responseBuilder._apiPrefix).toBe(apiPrefix);
+  });
+
+  it("should dispatch INSTALL event on onInstall", () => {
     const app = new BootApplication({ controllers: [] });
     const dispatchSpy = vi
       .spyOn(
-        (app as unknown as { _eventDispatcher: { dispatch: () => Promise<void> } })
-          ._eventDispatcher,
+        (app as unknown as { _eventDispatcher: { dispatch: () => void } })._eventDispatcher,
         "dispatch"
       )
-      .mockResolvedValue(undefined);
+      .mockReturnValue(undefined);
 
     const event = {} as GoogleAppsScript.Events.AddonOnInstall;
-    await app.onInstall(event);
+    app.onInstall(event);
 
     expect(dispatchSpy).toHaveBeenCalledWith(AppsScriptEventType.INSTALL, event);
   });
 
-  it("should dispatch FORM_SUBMIT event on onFormSubmit", async () => {
+  it("should dispatch FORM_SUBMIT event on onFormSubmit", () => {
     const app = new BootApplication({ controllers: [] });
     const dispatchSpy = vi
       .spyOn(
-        (app as unknown as { _eventDispatcher: { dispatch: () => Promise<void> } })
-          ._eventDispatcher,
+        (app as unknown as { _eventDispatcher: { dispatch: () => void } })._eventDispatcher,
         "dispatch"
       )
-      .mockResolvedValue(undefined);
+      .mockReturnValue(undefined);
 
     const event = {} as GoogleAppsScript.Events.FormsOnFormSubmit;
-    await app.onFormSubmit(event);
+    app.onFormSubmit(event);
 
     expect(dispatchSpy).toHaveBeenCalledWith(AppsScriptEventType.FORM_SUBMIT, event);
   });

@@ -25,7 +25,7 @@ describe("Router: Extra", () => {
     } as unknown as Resolver;
   });
 
-  it("should return HttpResponse directly if returned from handler", async () => {
+  it("should return HttpResponse directly if returned from handler", () => {
     class TestController {
       @Get("/")
       handle() {
@@ -43,7 +43,7 @@ describe("Router: Extra", () => {
       .fn()
       .mockImplementation((_req, status, _headers, data) => ({ status, body: data }));
 
-    const result = await router.handle(
+    const result = router.handle(
       request,
       {} as unknown as GoogleAppsScript.Events.DoGet,
       resBuilder as unknown as (
@@ -58,7 +58,7 @@ describe("Router: Extra", () => {
     expect(resBuilder).toHaveBeenCalledTimes(1);
   });
 
-  it("should inject various parameter types (with and without keys)", async () => {
+  it("should inject various parameter types (with and without keys)", () => {
     class Service {}
     const serviceInstance = new Service();
     class TestController {
@@ -123,7 +123,7 @@ describe("Router: Extra", () => {
       .fn()
       .mockImplementation((_req, status, headers, data) => ({ status, headers, body: data }));
 
-    const response = await router.handle(
+    const response = router.handle(
       request,
       mockEvent as unknown as GoogleAppsScript.Events.DoGet,
       resBuilder as unknown as (
@@ -151,7 +151,7 @@ describe("Router: Extra", () => {
     expect(result.bUser).toBe("john");
   });
 
-  it("should handle missing token in @Inject", async () => {
+  it("should handle missing token in @Inject", () => {
     class TestController {
       @Get("/")
       handle(@Inject(undefined as unknown as string) s: unknown) {
@@ -168,7 +168,7 @@ describe("Router: Extra", () => {
       .fn()
       .mockImplementation((_req, status, _headers, data) => ({ status, body: data }));
 
-    const response = await router.handle(
+    const response = router.handle(
       request,
       {} as unknown as GoogleAppsScript.Events.DoGet,
       resBuilder as unknown as (
@@ -181,7 +181,7 @@ describe("Router: Extra", () => {
     expect(response.body).toBeUndefined();
   });
 
-  it("should handle injection failure in router", async () => {
+  it("should handle injection failure in router", () => {
     class TestController {
       @Get("/")
       handle(@Inject("UNKNOWN") s: unknown) {
@@ -201,7 +201,7 @@ describe("Router: Extra", () => {
       .fn()
       .mockImplementation((_req, status, _headers, data) => ({ status, body: data }));
 
-    const response = await router.handle(
+    const response = router.handle(
       request,
       {} as unknown as GoogleAppsScript.Events.DoGet,
       resBuilder as unknown as (

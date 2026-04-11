@@ -30,21 +30,21 @@ describe("EventDispatcher: Negative", () => {
     });
   });
 
-  it("should not dispatch OnEdit event when range does not match", async () => {
+  it("should not dispatch OnEdit event when range does not match", () => {
     const mockEvent = {
       range: {
         getA1Notation: () => "B2"
       }
     } as unknown as GoogleAppsScript.Events.SheetsOnEdit;
-    await app.onEdit(mockEvent);
+    app.onEdit(mockEvent);
     expect(controller.onEditCalled).toBe(false);
   });
 
-  it("should not dispatch OnChange event when changeType does not match", async () => {
+  it("should not dispatch OnChange event when changeType does not match", () => {
     const mockEvent = {
       changeType: "REMOVE_ROW"
     } as unknown as GoogleAppsScript.Events.SheetsOnChange;
-    await app.onChange(mockEvent);
+    app.onChange(mockEvent);
     expect(controller.onChangeCalled).toBe(false);
   });
 });

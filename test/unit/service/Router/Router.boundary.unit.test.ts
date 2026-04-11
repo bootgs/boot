@@ -5,7 +5,7 @@ import { HttpStatus, RequestMethod } from "src/domain/enums";
 import { HttpHeaders, HttpRequest, HttpResponse, RouteMetadata } from "src/domain/types";
 
 describe("Router: Boundary", () => {
-  it("should handle routes with same path but different methods", async () => {
+  it("should handle routes with same path but different methods", () => {
     class TestController {
       get() {
         return "get";
@@ -29,7 +29,7 @@ describe("Router: Boundary", () => {
       statusText: "OK"
     }));
 
-    const res1 = await router.handle(
+    const res1 = router.handle(
       { method: RequestMethod.GET, url: { pathname: "/test" } } as unknown as HttpRequest,
       {} as unknown as GoogleAppsScript.Events.DoGet,
       responseBuilder as unknown as (
@@ -41,7 +41,7 @@ describe("Router: Boundary", () => {
     );
     expect(res1.body).toBe("get");
 
-    const res2 = await router.handle(
+    const res2 = router.handle(
       { method: RequestMethod.POST, url: { pathname: "/test" } } as unknown as HttpRequest,
       {} as unknown as GoogleAppsScript.Events.DoPost,
       responseBuilder as unknown as (

@@ -16,7 +16,7 @@ describe("EventDispatcher: Extra", () => {
     } as unknown as Resolver;
   });
 
-  it("should support RegExp in OnEdit filter", async () => {
+  it("should support RegExp in OnEdit filter", () => {
     class TestController {
       public called = false;
       @OnEdit({ range: /^A\d+$/ })
@@ -28,15 +28,15 @@ describe("EventDispatcher: Extra", () => {
     vi.mocked(resolver.resolve).mockReturnValue(instance);
     dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
 
-    await dispatcher.dispatch(AppsScriptEventType.EDIT, { range: { getA1Notation: () => "A10" } });
+    dispatcher.dispatch(AppsScriptEventType.EDIT, { range: { getA1Notation: () => "A10" } });
     expect(instance.called).toBe(true);
 
     instance.called = false;
-    await dispatcher.dispatch(AppsScriptEventType.EDIT, { range: { getA1Notation: () => "B1" } });
+    dispatcher.dispatch(AppsScriptEventType.EDIT, { range: { getA1Notation: () => "B1" } });
     expect(instance.called).toBe(false);
   });
 
-  it("should return false if range notation is missing in EDIT event", async () => {
+  it("should return false if range notation is missing in EDIT event", () => {
     class TestController {
       public called = false;
       @OnEdit({ range: "A1" })
@@ -48,11 +48,11 @@ describe("EventDispatcher: Extra", () => {
     vi.mocked(resolver.resolve).mockReturnValue(instance);
     dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
 
-    await dispatcher.dispatch(AppsScriptEventType.EDIT, { range: {} }); // Missing getA1Notation
+    dispatcher.dispatch(AppsScriptEventType.EDIT, { range: {} }); // Missing getA1Notation
     expect(instance.called).toBe(false);
   });
 
-  it("should filter OnFormSubmit by formId", async () => {
+  it("should filter OnFormSubmit by formId", () => {
     class TestController {
       public called = false;
       @OnFormSubmit({ formId: "FORM_1" })
@@ -64,19 +64,19 @@ describe("EventDispatcher: Extra", () => {
     vi.mocked(resolver.resolve).mockReturnValue(instance);
     dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
 
-    await dispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, {
+    dispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, {
       source: { getId: () => "FORM_1" }
     });
     expect(instance.called).toBe(true);
 
     instance.called = false;
-    await dispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, {
+    dispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, {
       source: { getId: () => "FORM_2" }
     });
     expect(instance.called).toBe(false);
   });
 
-  it("should return false if formId is missing in FORM_SUBMIT event", async () => {
+  it("should return false if formId is missing in FORM_SUBMIT event", () => {
     class TestController {
       public called = false;
       @OnFormSubmit({ formId: "FORM_1" })
@@ -88,11 +88,11 @@ describe("EventDispatcher: Extra", () => {
     vi.mocked(resolver.resolve).mockReturnValue(instance);
     dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
 
-    await dispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, { source: {} }); // Missing getId
+    dispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, { source: {} }); // Missing getId
     expect(instance.called).toBe(false);
   });
 
-  it("should return false if changeType is missing in CHANGE event", async () => {
+  it("should return false if changeType is missing in CHANGE event", () => {
     class TestController {
       public called = false;
       @OnChange({ changeType: "EDIT" })
@@ -104,11 +104,11 @@ describe("EventDispatcher: Extra", () => {
     vi.mocked(resolver.resolve).mockReturnValue(instance);
     dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
 
-    await dispatcher.dispatch(AppsScriptEventType.CHANGE, {}); // Missing changeType
+    dispatcher.dispatch(AppsScriptEventType.CHANGE, {}); // Missing changeType
     expect(instance.called).toBe(false);
   });
 
-  it("should support @Inject in event handlers", async () => {
+  it("should support @Inject in event handlers", () => {
     class Service {}
     class TestController {
       public injectedService: unknown;
@@ -127,13 +127,13 @@ describe("EventDispatcher: Extra", () => {
 
     dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
 
-    await dispatcher.dispatch(AppsScriptEventType.EDIT, {
+    dispatcher.dispatch(AppsScriptEventType.EDIT, {
       range: { getA1Notation: () => "A1" }
     } as unknown as GoogleAppsScript.Events.SheetsOnEdit);
     expect(controllerInstance.injectedService).toBe(serviceInstance);
   });
 
-  it("should handle injection failure in event handlers", async () => {
+  it("should handle injection failure in event handlers", () => {
     class TestController {
       public injectedValue: unknown = "initial";
       @OnEdit()
@@ -149,7 +149,7 @@ describe("EventDispatcher: Extra", () => {
 
     dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
 
-    await dispatcher.dispatch(AppsScriptEventType.EDIT, {
+    dispatcher.dispatch(AppsScriptEventType.EDIT, {
       range: { getA1Notation: () => "A1" }
     } as unknown as GoogleAppsScript.Events.SheetsOnEdit);
     expect(controllerInstance.injectedValue).toBeUndefined();

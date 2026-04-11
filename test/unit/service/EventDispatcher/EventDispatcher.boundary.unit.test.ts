@@ -24,9 +24,9 @@ describe("EventDispatcher: Boundary", () => {
     });
   });
 
-  it("should not throw error and not dispatch when event range is missing", async () => {
+  it("should not throw error and not dispatch when event range is missing", () => {
     const mockEvent = {} as unknown as GoogleAppsScript.Events.SheetsOnEdit;
-    await expect(app.onEdit(mockEvent)).resolves.toBeUndefined();
+    expect(app.onEdit(mockEvent)).toBeUndefined();
     expect(controller.onEditCalled).toBe(false);
   });
 });

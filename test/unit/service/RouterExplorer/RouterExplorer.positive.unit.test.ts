@@ -40,4 +40,21 @@ describe("RouterExplorer: Positive", () => {
       })
     );
   });
+
+  it("should respect apiPrefix when exploring routes", () => {
+    @HttpController("/users")
+    class UserController {
+      @Get()
+      findAll() {}
+    }
+
+    const controllers = new Map<Newable, unknown>();
+    controllers.set(UserController, null);
+
+    const apiPrefix = "/api/v1/";
+    const routes = explorer.explore(controllers, apiPrefix);
+
+    expect(routes).toHaveLength(1);
+    expect(routes[ 0 ].path).toBe("/api/v1/users");
+  });
 });
