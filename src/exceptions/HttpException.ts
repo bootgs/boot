@@ -7,6 +7,7 @@ export class HttpException extends AppException {
     public readonly status: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR
   ) {
     super(message, status);
+
     this.name = "HttpException";
   }
 }

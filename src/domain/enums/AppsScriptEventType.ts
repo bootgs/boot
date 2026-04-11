@@ -1,47 +1,47 @@
 /**
- * Перечисление типов событий Google Apps Script.
+ * Enum for Google Apps Script event types.
  *
  * @see https://developers.google.com/apps-script/guides/triggers
  */
 export enum AppsScriptEventType {
 
   /**
-   * Срабатывает при установке дополнения.
+   * Triggered when an add-on is installed.
    *
    * @see https://developers.google.com/apps-script/guides/triggers#oninstall
    */
   INSTALL = "INSTALL",
 
   /**
-   * Срабатывает при открытии документа, таблицы, презентации или формы.
+   * Triggered when a document, spreadsheet, presentation, or form is opened.
    *
    * @see https://developers.google.com/apps-script/guides/triggers#onopen
    */
   OPEN = "OPEN",
 
   /**
-   * Срабатывает, когда пользователь изменяет значение ячейки в таблице.
+   * Triggered when a user changes a cell value in a spreadsheet.
    *
    * @see https://developers.google.com/apps-script/guides/triggers#onedit
    */
   EDIT = "EDIT",
 
   /**
-   * Срабатывает, когда пользователь изменяет структуру таблицы (например, добавляет строку).
+   * Triggered when a user changes the structure of a spreadsheet (e.g., adds a row).
    *
    * @see https://developers.google.com/apps-script/guides/triggers/installable#change
    */
   CHANGE = "CHANGE",
 
   /**
-   * Срабатывает, когда пользователь меняет выделение в таблице.
+   * Triggered when a user changes the selection in a spreadsheet.
    *
    * @see https://developers.google.com/apps-script/guides/triggers#onselectionchange
    */
   SELECTION_CHANGE = "SELECTION_CHANGE",
 
   /**
-   * Срабатывает, когда пользователь отправляет форму или отвечает на опрос.
+   * Triggered when a user submits a form or responds to a quiz.
    *
    * @see https://developers.google.com/apps-script/guides/triggers/installable#form-submit
    */

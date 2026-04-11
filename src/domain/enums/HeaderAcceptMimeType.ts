@@ -1,38 +1,38 @@
 /**
- * Перечисление MIME-типов, используемых в заголовке Accept для определения формата ответа.
+ * Enum of MIME types used in the Accept header to determine the response format.
  *
  * @see https://developers.google.com/apps-script/reference/content/mime-type
  */
 export enum HeaderAcceptMimeType {
 
   /**
-   * Специальный тип для возврата JSON-строки напрямую (без TextOutput).
-   * Используется для внутренних нужд Google Apps Script.
+   * Special type for returning a JSON string directly (without TextOutput).
+   * Used for internal Google Apps Script purposes.
    */
   GOOGLE_TEXT = "google/plain",
 
   /**
-   * Специальный тип для возврата JSON-строки напрямую (без TextOutput).
-   * Используется для внутренних нужд Google Apps Script.
+   * Special type for returning a JSON string directly (without TextOutput).
+   * Used for internal Google Apps Script purposes.
    */
   GOOGLE_JSON = "google/json",
 
   /**
-   * HTML контент.
+   * HTML content.
    *
    * @see https://developers.google.com/apps-script/reference/html/html-service
    */
   HTML = "text/html",
 
   /**
-   * Простой текст.
+   * Plain text.
    *
    * @see https://developers.google.com/apps-script/reference/content/mime-type
    */
   TEXT = "text/plain",
 
   /**
-   * Данные в формате JSON.
+   * JSON formatted data.
    *
    * @see https://developers.google.com/apps-script/reference/content/mime-type
    */

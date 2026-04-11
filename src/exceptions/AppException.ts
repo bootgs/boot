@@ -10,6 +10,7 @@ export class AppException extends Error {
     public readonly status: number = 500
   ) {
     super(message);
+
     this.name = "AppException";
   }
 }
