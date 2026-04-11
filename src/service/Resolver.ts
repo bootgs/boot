@@ -1,5 +1,5 @@
 import { isFunctionLike } from "apps-script-utils";
-import { InjectionToken, Newable } from "../domain/types";
+import { InjectionToken, InjectTokenDefinition, Newable } from "../domain/types";
 import { ParamSource } from "../domain/enums";
 import { PARAMTYPES_METADATA } from "../domain/constants";
 import { getInjectionTokens } from "../repository";
@@ -12,8 +12,8 @@ export class Resolver {
   /**
    * Creates a new instance of Resolver.
    *
-   * @param {Map<InjectionToken, unknown>} _controllers Registered controllers.
-   * @param {Map<InjectionToken, unknown>} _providers Registered providers.
+   * @param {Map<InjectionToken, unknown>} _controllers - Registered controllers.
+   * @param {Map<InjectionToken, unknown>} _providers - Registered providers.
    */
   constructor(
     private readonly _controllers: Map<InjectionToken, unknown>,
@@ -23,47 +23,49 @@ export class Resolver {
   /**
    * Resolves a dependency by its injection token.
    *
-   * @param {InjectionToken<T>} token The injection token.
+   * @param   {InjectionToken<T>} token - The injection token.
    * @returns {T} The resolved instance.
-   * @throws {Error} If the dependency cannot be resolved.
+   * @throws  {Error} If the dependency cannot be resolved.
    */
   public resolve<T>(token: InjectionToken<T>): T {
     if (this._controllers.has(token)) {
-      const instance = this._controllers.get(token);
+      const instance: unknown = this._controllers.get(token);
 
       if (instance) return instance as T;
     }
 
     if (this._providers.has(token)) {
-      const instance = this._providers.get(token);
+      const instance: unknown = this._providers.get(token);
 
       if (instance) return instance as T;
     }
 
     if (!isFunctionLike(token)) {
-      const tokenName = String(token);
+      const tokenName: string = String(token);
 
       throw new Error(
         `[Resolve ERROR]: '${tokenName}' is not registered as a provider or controller.`
       );
     }
 
-    const target = token as Newable<T>;
+    const target: Newable<T> = token as Newable<T>;
 
     const designParamTypes: Newable[] = Reflect.getMetadata(PARAMTYPES_METADATA, target) || [];
 
-    const explicitInjectTokens = getInjectionTokens(target);
+    const explicitInjectTokens: Record<string, InjectTokenDefinition> = getInjectionTokens(target);
 
-    const deps = new Array(
+    const deps: unknown[] = new Array(
       Math.max(target.length, designParamTypes.length, Object.keys(explicitInjectTokens).length)
     );
 
-    for (let i = 0; i < deps.length; i++) {
-      const paramKey = `${ParamSource.INJECT}:${i}`;
+    for (let i: number = 0; i < deps.length; i++) {
+      const paramKey: string = `${ParamSource.INJECT}:${i}`;
 
-      const injectDefinition = explicitInjectTokens[ paramKey ];
+      const injectDefinition: InjectTokenDefinition | undefined = explicitInjectTokens[ paramKey ];
 
-      const tokenToResolve = injectDefinition ? injectDefinition.token : designParamTypes[ i ];
+      const tokenToResolve: InjectionToken | undefined = injectDefinition
+        ? injectDefinition.token
+        : designParamTypes[ i ];
 
       if (!tokenToResolve) {
         throw new Error(
@@ -78,7 +80,7 @@ export class Resolver {
           );
         }
 
-        const tokenName = isFunctionLike(tokenToResolve)
+        const tokenName: string = isFunctionLike(tokenToResolve)
           ? tokenToResolve.name
           : String(tokenToResolve);
 
@@ -92,7 +94,7 @@ export class Resolver {
         : this._providers.get(tokenToResolve);
     }
 
-    const instance = Reflect.construct(target, deps);
+    const instance: T = Reflect.construct(target, deps);
 
     if (isController(target)) {
       this._controllers.set(target, instance);

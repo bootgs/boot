@@ -3,6 +3,7 @@ import {
   HttpHeaders,
   HttpRequest,
   HttpResponse,
+  InjectionToken,
   InjectTokenDefinition,
   Newable,
   ParamDefinition,
@@ -38,9 +39,9 @@ export class Router {
    * @param {HttpRequest} request The HTTP request object.
    * @param {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event The Apps Script event object.
    * @param {Function} responseBuilder A function to build an HTTP response.
-   * @returns {Promise<HttpResponse>} A promise that resolves to the HTTP response.
+   * @returns {HttpResponse} The HTTP response.
    */
-  public async handle(
+  public handle(
     request: HttpRequest,
     event: GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost,
     responseBuilder: (
@@ -49,9 +50,10 @@ export class Router {
       headers?: HttpHeaders,
       data?: unknown
     ) => HttpResponse
-  ): Promise<HttpResponse> {
-    const route = this._routes.find(
-      (r) => r.method === request.method && this.pathMatcher.match(r.path, request.url.pathname)
+  ): HttpResponse {
+    const route: RouteMetadata | undefined = this._routes.find(
+      (r: RouteMetadata) =>
+        r.method === request.method && this.pathMatcher.match(r.path, request.url.pathname)
     );
 
     if (!route) {
@@ -63,9 +65,12 @@ export class Router {
       );
     }
 
-    const controllerInstance = this._resolver.resolve(route.controller);
+    const controllerInstance: unknown = this._resolver.resolve(route.controller);
 
-    const params = this.pathMatcher.extractParams(route.path, request.url.pathname);
+    const params: Record<string, string> = this.pathMatcher.extractParams(
+      route.path,
+      request.url.pathname
+    );
 
     const ctx: RouteExecutionContext = {
       event,
@@ -92,7 +97,7 @@ export class Router {
         );
       }
 
-      const result = await Reflect.apply(handler, controllerInstance, args);
+      const result: unknown = Reflect.apply(handler, controllerInstance, args);
 
       if (isHttpResponse(result)) {
         return result;
@@ -100,8 +105,8 @@ export class Router {
 
       return responseBuilder(request, ctx.response?.status, ctx.response?.headers, result);
     } catch (err: unknown) {
-      let status = 500;
-      let message = String(err);
+      let status: number = 500;
+      let message: string = String(err);
 
       if (isRecord(err)) {
         if (isNumber(err.status)) status = err.status;
@@ -125,7 +130,7 @@ export class Router {
     propertyKey: string | symbol,
     ctx: RouteExecutionContext
   ): unknown[] {
-    const targetPrototype = Object.getPrototypeOf(target);
+    const targetPrototype: Record<string, unknown> = Object.getPrototypeOf(target);
 
     const rawMetadata: Record<string, ParamDefinition> =
       Reflect.getMetadata(PARAM_DEFINITIONS_METADATA, targetPrototype, propertyKey) || {};
@@ -140,7 +145,10 @@ export class Router {
       ...Object.values(rawInjectMetadata)
     ];
 
-    metadata.sort((a, b) => a.index - b.index);
+    metadata.sort(
+      (a: ParamDefinition | InjectTokenDefinition, b: ParamDefinition | InjectTokenDefinition) =>
+        a.index - b.index
+    );
 
     const designParamTypes: Newable[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
@@ -172,8 +180,8 @@ export class Router {
 
         case ParamSource.HEADERS:
           if (param.key && ctx.headers) {
-            const headerKey = Object.keys(ctx.headers).find(
-              (k) => k.toLowerCase() === param.key!.toLowerCase()
+            const headerKey: string | undefined = Object.keys(ctx.headers).find(
+              (k: string) => k.toLowerCase() === param.key!.toLowerCase()
             );
             args[ param.index ] = headerKey ? ctx.headers[ headerKey ] : undefined;
           } else {
@@ -188,7 +196,8 @@ export class Router {
 
         case ParamSource.INJECT:
           try {
-            const tokenToResolve = "token" in param ? param.token : designParamTypes[ param.index ];
+            const tokenToResolve: InjectionToken | undefined =
+              "token" in param ? param.token : designParamTypes[ param.index ];
 
             if (tokenToResolve) {
               args[ param.index ] = this._resolver.resolve(tokenToResolve);

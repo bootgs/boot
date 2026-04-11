@@ -6,6 +6,23 @@ import { HttpHeaders, HttpRequest, HttpResponse } from "../domain/types";
  */
 export class ResponseBuilder {
   /**
+   * The prefix for API routes.
+   *
+   * @private
+   * @readonly
+   */
+  private readonly _apiPrefix: string;
+
+  /**
+   * Creates a new instance of ResponseBuilder.
+   *
+   * @param {string} apiPrefix - The prefix for API routes.
+   */
+  constructor(apiPrefix: string = "/api/") {
+    this._apiPrefix = apiPrefix;
+  }
+
+  /**
    * Creates a structured HttpResponse object.
    *
    * @param   {HttpRequest} request - The original request object.
@@ -20,19 +37,21 @@ export class ResponseBuilder {
     headers: HttpHeaders | undefined = {},
     data: unknown = null
   ): HttpResponse {
-    const resolvedStatus =
+    const resolvedStatus: HttpStatus =
       status ??
       ([ RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS ].includes(request.method)
         ? HttpStatus.OK
         : HttpStatus.CREATED);
 
-    const statusText = ((): string => {
-      const entry = Object.entries(HttpStatus).find(([ , value ]) => value === resolvedStatus);
+    const statusText: string = ((): string => {
+      const entry: [string, HttpStatus] | undefined = Object.entries(HttpStatus).find(
+        ([ , value ]: [string, unknown]): boolean => value === resolvedStatus
+      ) as [string, HttpStatus] | undefined;
 
       return entry ? entry[ 0 ] : "UNKNOWN_STATUS";
     })();
 
-    const ok = resolvedStatus >= 200 && resolvedStatus < 300;
+    const ok: boolean = resolvedStatus >= 200 && resolvedStatus < 300;
 
     return {
       headers,
@@ -53,36 +72,44 @@ export class ResponseBuilder {
   public wrap(
     request: HttpRequest,
     response: HttpResponse
-  ): string | GoogleAppsScript.Content.TextOutput | GoogleAppsScript.HTML.HtmlOutput {
-    const acceptHeader = request.headers?.Accept;
-    const mimeType =
-      Object.values(HeaderAcceptMimeType).find((v) => v === acceptHeader) ||
-      HeaderAcceptMimeType.HTML;
+  ): GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string {
+    const acceptHeader: string | undefined = request.headers?.Accept;
+
+    const mimeType: HeaderAcceptMimeType =
+      Object.values(HeaderAcceptMimeType).find(
+        (v: HeaderAcceptMimeType): boolean => v === acceptHeader
+      ) || HeaderAcceptMimeType.HTML;
 
     response.headers[ "Content-Type" ] = mimeType;
 
-    const isApi = request.url.pathname?.startsWith("/api/") || false;
+    const isApi: boolean = request.url.pathname?.startsWith(this._apiPrefix) || false;
 
-    const result = JSON.stringify(isApi ? response : response.body);
+    const result: string = JSON.stringify(isApi ? response : response.body);
 
     switch (mimeType) {
-      case HeaderAcceptMimeType.GOOGLE_JSON:
+      case HeaderAcceptMimeType.GOOGLE_JSON: {
         return result;
+      }
 
-      case HeaderAcceptMimeType.GOOGLE_TEXT:
+      case HeaderAcceptMimeType.GOOGLE_TEXT: {
         return result;
+      }
 
-      case HeaderAcceptMimeType.JSON:
+      case HeaderAcceptMimeType.JSON: {
         return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
+      }
 
-      case HeaderAcceptMimeType.TEXT:
+      case HeaderAcceptMimeType.TEXT: {
         return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.TEXT);
+      }
 
-      case HeaderAcceptMimeType.HTML:
+      case HeaderAcceptMimeType.HTML: {
         return HtmlService.createHtmlOutput(result);
+      }
 
-      default:
+      default: {
         return HtmlService.createHtmlOutput(result);
+      }
     }
   }
 }
