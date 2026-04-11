@@ -12,6 +12,7 @@ import {
 } from "../domain/types";
 import { AppsScriptEventType, RequestMethod } from "../domain/enums";
 import { EventDispatcher, RequestFactory, Resolver, ResponseBuilder, Router, RouterExplorer } from "../service";
+import { isControllerAdvice } from "../shared/utils";
 
 /**
  * Main application class for bootstrapping and handling Google Apps Script events.
@@ -19,6 +20,8 @@ import { EventDispatcher, RequestFactory, Resolver, ResponseBuilder, Router, Rou
 export class BootApplication {
   private readonly _controllers: Map<Newable, unknown> = new Map<Newable, unknown>();
   private readonly _providers: Map<InjectionToken, unknown> = new Map<InjectionToken, unknown>();
+  private readonly _config: Record<string, any>;
+  private readonly _advices: InjectionToken[] = [];
   private readonly _resolver: Resolver;
   private readonly _router: Router;
   private readonly _requestFactory: RequestFactory;
@@ -31,12 +34,17 @@ export class BootApplication {
    * @param {ApplicationConfig} config - The application configuration.
    */
   constructor(config: ApplicationConfig) {
+    this._config = config.config || {};
+
     (config.controllers || []).forEach(
       (c: Newable): Map<Newable, unknown> => this._controllers.set(c, null)
     );
 
     (config.providers || []).forEach((p: Provider): void => {
+      let token: InjectionToken;
+
       if ("provide" in p) {
+        token = p.provide;
         if ("useValue" in p) {
           this._providers.set(p.provide, p.useValue);
         } else if ("useClass" in p) {
@@ -49,11 +57,16 @@ export class BootApplication {
           this._providers.set(p.provide, null);
         }
       } else {
+        token = p;
         this._providers.set(p, null);
+      }
+
+      if (isControllerAdvice(token)) {
+        this._advices.push(token);
       }
     });
 
-    this._resolver = new Resolver(this._controllers, this._providers);
+    this._resolver = new Resolver(this._controllers, this._providers, this._config);
 
     this._requestFactory = new RequestFactory();
 
@@ -65,7 +78,7 @@ export class BootApplication {
 
     const routes: RouteMetadata[] = explorer.explore(this._controllers, apiPrefix);
 
-    this._router = new Router(this._resolver, routes);
+    this._router = new Router(this._resolver, routes, this._advices, this._config);
 
     this._eventDispatcher = new EventDispatcher(this._resolver, this._controllers);
   }

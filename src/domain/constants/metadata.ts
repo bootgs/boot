@@ -24,6 +24,11 @@ export const ENTITY_WATERMARK: string = "__entity__";
 export const INJECTABLE_WATERMARK: string = "__injectable__";
 
 /**
+ * Key for marking classes as controller advice.
+ */
+export const CONTROLLER_ADVICE_WATERMARK: string = "__controller_advice__";
+
+/**
  * Metadata key for storing controller type.
  */
 export const CONTROLLER_TYPE_METADATA: string = "controller:type";
@@ -47,3 +52,28 @@ export const PARAM_DEFINITIONS_METADATA: string = "custom:param";
  * Metadata key for storing constructor parameter types (standard for TypeScript).
  */
 export const PARAMTYPES_METADATA: string = "design:paramtypes";
+
+/**
+ * Metadata key for storing guards.
+ */
+export const GUARDS_METADATA: string = "custom:guards";
+
+/**
+ * Metadata key for storing roles.
+ */
+export const ROLES_METADATA: string = "custom:roles";
+
+/**
+ * Metadata key for storing pipes.
+ */
+export const PIPES_METADATA: string = "custom:pipes";
+
+/**
+ * Metadata key for storing response status.
+ */
+export const RESPONSE_STATUS_METADATA: string = "custom:response_status";
+
+/**
+ * Metadata key for storing exception handlers.
+ */
+export const EXCEPTION_HANDLER_METADATA: string = "custom:exception_handlers";

@@ -41,5 +41,10 @@ export enum ParamSource {
   /**
    * Dependency injection.
    */
-  INJECT = "INJECT"
+  INJECT = "INJECT",
+
+  /**
+   * Configuration value injection.
+   */
+  VALUE = "VALUE"
 }

@@ -21,8 +21,11 @@ export interface ControllerOptions {
  */
 export function Controller(type: string, options: ControllerOptions = {}): ClassDecorator {
   return (target: object): void => {
+    const existingOptions: ControllerOptions =
+      Reflect.getMetadata(CONTROLLER_OPTIONS_METADATA, target) || {};
+
     Reflect.defineMetadata(CONTROLLER_WATERMARK, true, target);
     Reflect.defineMetadata(CONTROLLER_TYPE_METADATA, type, target);
-    Reflect.defineMetadata(CONTROLLER_OPTIONS_METADATA, options, target);
+    Reflect.defineMetadata(CONTROLLER_OPTIONS_METADATA, { ...existingOptions, ...options }, target);
   };
 }

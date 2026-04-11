@@ -19,4 +19,9 @@ export interface ParamDefinition {
    * The parameter index in the method signature.
    */
   index: number;
+
+  /**
+   * Optional pipes for the parameter.
+   */
+  pipes?: any[];
 }

@@ -22,4 +22,9 @@ export interface ApplicationConfig {
    * @default "/api/"
    */
   apiPrefix?: string;
+
+  /**
+   * Application configuration properties.
+   */
+  config?: Record<string, any>;
 }

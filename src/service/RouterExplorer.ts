@@ -53,18 +53,24 @@ export class RouterExplorer {
           methodHandler as object
         );
 
-        const requestMethod: RequestMethod | undefined = Reflect.getMetadata(
+        const requestMethods: RequestMethod | RequestMethod[] | undefined = Reflect.getMetadata(
           METHOD_METADATA,
           methodHandler as object
         );
 
-        if (routePath && requestMethod) {
-          routes.push({
-            controller,
-            handler: propertyName,
-            method: requestMethod,
-            path: decodeURI(normalize(`/${apiPrefix}/${basePath}/${routePath}`))
-          });
+        if (routePath && requestMethods) {
+          const methods: RequestMethod[] = Array.isArray(requestMethods)
+            ? requestMethods
+            : [ requestMethods ];
+
+          for (const method of methods) {
+            routes.push({
+              controller,
+              handler: propertyName,
+              method,
+              path: decodeURI(normalize(`/${apiPrefix}/${basePath}/${routePath}`))
+            });
+          }
         }
       }
     }

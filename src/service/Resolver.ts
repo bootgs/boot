@@ -14,10 +14,12 @@ export class Resolver {
    *
    * @param {Map<InjectionToken, unknown>} _controllers - Registered controllers.
    * @param {Map<InjectionToken, unknown>} _providers - Registered providers.
+   * @param {Record<string, any>} _config - Application configuration.
    */
   constructor(
     private readonly _controllers: Map<InjectionToken, unknown>,
-    private readonly _providers: Map<InjectionToken, unknown>
+    private readonly _providers: Map<InjectionToken, unknown>,
+    private readonly _config: Record<string, any> = {}
   ) {}
 
   /**
@@ -63,6 +65,11 @@ export class Resolver {
 
       const injectDefinition: InjectTokenDefinition | undefined = explicitInjectTokens[ paramKey ];
 
+      if (injectDefinition && injectDefinition.type === ParamSource.VALUE) {
+        deps[ i ] = this.resolveConfigValue(injectDefinition.token as string);
+        continue;
+      }
+
       const tokenToResolve: InjectionToken | undefined = injectDefinition
         ? injectDefinition.token
         : designParamTypes[ i ];
@@ -107,5 +114,28 @@ export class Resolver {
     }
 
     return instance;
+  }
+
+  /**
+   * Resolves a configuration value by its key.
+   * Supports nested keys (e.g., "app.name").
+   *
+   * @param {string} key The configuration key.
+   * @returns {unknown} The resolved value.
+   */
+  private resolveConfigValue(key: string): unknown {
+    if (!key) return undefined;
+
+    const parts = key.split(".");
+    let current: any = this._config;
+
+    for (const part of parts) {
+      if (current === null || typeof current !== "object") {
+        return undefined;
+      }
+      current = current[ part ];
+    }
+
+    return current;
   }
 }

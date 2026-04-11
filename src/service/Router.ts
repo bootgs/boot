@@ -1,5 +1,7 @@
 import { isFunctionLike, isNumber, isString } from "apps-script-utils";
 import {
+  CanActivate,
+  ExecutionContext,
   HttpHeaders,
   HttpRequest,
   HttpResponse,
@@ -9,7 +11,14 @@ import {
   ParamDefinition,
   RouteMetadata
 } from "../domain/types";
-import { PARAM_DEFINITIONS_METADATA, PARAMTYPES_METADATA } from "../domain/constants";
+import {
+  EXCEPTION_HANDLER_METADATA,
+  GUARDS_METADATA,
+  PARAM_DEFINITIONS_METADATA,
+  PARAMTYPES_METADATA,
+  PIPES_METADATA,
+  RESPONSE_STATUS_METADATA
+} from "../domain/constants";
 import { ParamSource } from "../domain/enums";
 import { RouteExecutionContext } from "../domain/entities";
 import { getInjectionTokens } from "../repository";
@@ -27,10 +36,14 @@ export class Router {
    *
    * @param {Resolver} _resolver The dependency resolver.
    * @param {RouteMetadata[]} _routes The registered routes.
+   * @param {InjectionToken[]} _advices The registered controller advices.
+   * @param {Record<string, any>} _config Application configuration.
    */
   constructor(
     private readonly _resolver: Resolver,
-    private readonly _routes: RouteMetadata[]
+    private readonly _routes: RouteMetadata[],
+    private readonly _advices: InjectionToken[] = [],
+    private readonly _config: Record<string, any> = {}
   ) {}
 
   /**
@@ -65,7 +78,7 @@ export class Router {
       );
     }
 
-    const controllerInstance: unknown = this._resolver.resolve(route.controller);
+    const controllerInstance: any = this._resolver.resolve(route.controller);
 
     const params: Record<string, string> = this.pathMatcher.extractParams(
       route.path,
@@ -86,25 +99,57 @@ export class Router {
       throw new Error(`Controller '${route.controller.name}' is not a valid object.`);
     }
 
+    const handler = controllerInstance[ route.handler ];
+
+    if (!isFunctionLike(handler)) {
+      throw new Error(
+        `Method '${String(route.handler)}' not found in controller '${route.controller.name}'.`
+      );
+    }
+
+    const executionContext: ExecutionContext = this.createExecutionContext(
+      controllerInstance,
+      handler,
+      ctx
+    );
+
+    if (!this.checkGuards(executionContext, controllerInstance, handler)) {
+      return responseBuilder(request, 403, {}, { message: "Forbidden resource" });
+    }
+
     const args = this.buildMethodParams(controllerInstance, route.handler, ctx);
 
     try {
-      const handler = controllerInstance[ route.handler ];
-
-      if (!isFunctionLike(handler)) {
-        throw new Error(
-          `Method '${String(route.handler)}' not found in controller '${route.controller.name}'.`
-        );
-      }
-
       const result: unknown = Reflect.apply(handler, controllerInstance, args);
 
       if (isHttpResponse(result)) {
         return result;
       }
 
-      return responseBuilder(request, ctx.response?.status, ctx.response?.headers, result);
+      const responseStatus: number | undefined = Reflect.getMetadata(
+        RESPONSE_STATUS_METADATA,
+        handler
+      );
+
+      return responseBuilder(
+        request,
+        responseStatus ?? ctx.response?.status,
+        ctx.response?.headers,
+        result
+      );
     } catch (err: unknown) {
+      const handledResponse = this.handleException(
+        err,
+        controllerInstance,
+        request,
+        event,
+        responseBuilder
+      );
+
+      if (handledResponse) {
+        return handledResponse;
+      }
+
       let status: number = 500;
       let message: string = String(err);
 
@@ -115,6 +160,162 @@ export class Router {
 
       return responseBuilder(request, status, {}, message);
     }
+  }
+
+  /**
+   * Handles an exception using registered exception handlers.
+   *
+   * @param {unknown} err The error to handle.
+   * @param {any} controllerInstance The controller instance where the error occurred.
+   * @param {HttpRequest} request The HTTP request object.
+   * @param {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event The Apps Script event object.
+   * @param {Function} responseBuilder A function to build an HTTP response.
+   * @returns {HttpResponse | null} The handled response, or null if no handler was found.
+   */
+  private handleException(
+    err: unknown,
+    controllerInstance: any,
+    request: HttpRequest,
+    event: GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost,
+    responseBuilder: (
+      request: HttpRequest,
+      status?: number,
+      headers?: HttpHeaders,
+      data?: unknown
+    ) => HttpResponse
+  ): HttpResponse | null {
+    // 1. Try local handlers in the controller
+    const localHandler = this.findExceptionHandler(err, controllerInstance);
+
+    if (localHandler) {
+      return this.callExceptionHandler(
+        localHandler,
+        controllerInstance,
+        err,
+        request,
+        event,
+        responseBuilder
+      );
+    }
+
+    // 2. Try global advices
+    for (const adviceToken of this._advices) {
+      const adviceInstance = this._resolver.resolve(adviceToken);
+      const globalHandler = this.findExceptionHandler(err, adviceInstance);
+
+      if (globalHandler) {
+        return this.callExceptionHandler(
+          globalHandler,
+          adviceInstance,
+          err,
+          request,
+          event,
+          responseBuilder
+        );
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Finds an exception handler for a given error in a target instance.
+   *
+   * @param {unknown} err The error to handle.
+   * @param {any} instance The instance to search for handlers.
+   * @returns {string | null} The name of the handler method, or null if not found.
+   */
+  private findExceptionHandler(err: unknown, instance: any): string | null {
+    if (!instance) return null;
+
+    const prototype = Object.getPrototypeOf(instance);
+    const propertyNames = Object.getOwnPropertyNames(prototype);
+
+    for (const propertyName of propertyNames) {
+      const method = instance[ propertyName ];
+
+      if (!isFunctionLike(method)) continue;
+
+      const exceptions: Newable<Error>[] | undefined = Reflect.getMetadata(
+        EXCEPTION_HANDLER_METADATA,
+        method
+      );
+
+      if (exceptions && Array.isArray(exceptions)) {
+        for (const exceptionClass of exceptions) {
+          if (err instanceof exceptionClass) {
+            return propertyName;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Calls an exception handler method.
+   *
+   * @param {string} handlerName The name of the handler method.
+   * @param {any} instance The instance containing the handler method.
+   * @param {unknown} err The error to handle.
+   * @param {HttpRequest} request The HTTP request object.
+   * @param {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event The Apps Script event object.
+   * @param {Function} responseBuilder A function to build an HTTP response.
+   * @returns {HttpResponse} The resulting HTTP response.
+   */
+  private callExceptionHandler(
+    handlerName: string,
+    instance: any,
+    err: unknown,
+    request: HttpRequest,
+    event: GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost,
+    responseBuilder: (
+      request: HttpRequest,
+      status?: number,
+      headers?: HttpHeaders,
+      data?: unknown
+    ) => HttpResponse
+  ): HttpResponse {
+    const handler = instance[ handlerName ];
+
+    // TODO: Support argument injection for exception handlers (similar to buildMethodParams)
+    // For now, just pass the error as the first argument.
+    const result = Reflect.apply(handler, instance, [ err, request, event ]);
+
+    if (isHttpResponse(result)) {
+      return result;
+    }
+
+    const responseStatus: number | undefined = Reflect.getMetadata(
+      RESPONSE_STATUS_METADATA,
+      handler
+    );
+
+    return responseBuilder(request, responseStatus, {}, result);
+  }
+
+  /**
+   * Resolves a configuration value by its key.
+   * Supports nested keys (e.g., "app.name").
+   *
+   * @param {string} key The configuration key.
+   * @returns {unknown} The resolved value.
+   */
+  private resolveConfigValue(key: string): unknown {
+    if (!key) return undefined;
+
+    const parts = key.split(".");
+    let current: any = this._config;
+
+    for (const part of parts) {
+      if (current === null || typeof current !== "object") {
+        return undefined;
+      }
+      current = current[ part ];
+    }
+
+    return current;
   }
 
   /**
@@ -153,29 +354,37 @@ export class Router {
     const designParamTypes: Newable[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
 
+    const handler = (target as any)[ propertyKey ];
+
+    const controllerPipes: any[] =
+      Reflect.getMetadata(PIPES_METADATA, targetPrototype.constructor) || [];
+    const methodPipes: any[] = Reflect.getMetadata(PIPES_METADATA, handler) || [];
+    const globalPipes = [ ...controllerPipes, ...methodPipes ];
+
     const args: unknown[] = [];
 
     for (const param of metadata) {
+      let value: unknown;
+
       switch (param.type) {
         case ParamSource.PARAM:
-          args[ param.index ] = param.key ? (ctx.params ?? {})[ param.key ] : ctx.params;
+          value = param.key ? (ctx.params ?? {})[ param.key ] : ctx.params;
           break;
 
         case ParamSource.QUERY:
-          args[ param.index ] = param.key ? (ctx.query ?? {})[ param.key ] : ctx.query;
+          value = param.key ? (ctx.query ?? {})[ param.key ] : ctx.query;
           break;
 
         case ParamSource.BODY:
-          args[ param.index ] = param.key && isRecord(ctx.body) ? ctx.body[ param.key ] : ctx.body;
+          value = param.key && isRecord(ctx.body) ? ctx.body[ param.key ] : ctx.body;
           break;
 
         case ParamSource.EVENT:
-          args[ param.index ] = param.key && isRecord(ctx.event) ? ctx.event[ param.key ] : ctx.event;
+          value = param.key && isRecord(ctx.event) ? ctx.event[ param.key ] : ctx.event;
           break;
 
         case ParamSource.REQUEST:
-          args[ param.index ] =
-            param.key && isRecord(ctx.request) ? ctx.request[ param.key ] : ctx.request;
+          value = param.key && isRecord(ctx.request) ? ctx.request[ param.key ] : ctx.request;
           break;
 
         case ParamSource.HEADERS:
@@ -183,15 +392,18 @@ export class Router {
             const headerKey: string | undefined = Object.keys(ctx.headers).find(
               (k: string) => k.toLowerCase() === param.key!.toLowerCase()
             );
-            args[ param.index ] = headerKey ? ctx.headers[ headerKey ] : undefined;
+            value = headerKey ? ctx.headers[ headerKey ] : undefined;
           } else {
-            args[ param.index ] = ctx.headers;
+            value = ctx.headers;
           }
           break;
 
         case ParamSource.RESPONSE:
-          args[ param.index ] =
-            param.key && isRecord(ctx.response) ? ctx.response[ param.key ] : ctx.response;
+          value = param.key && isRecord(ctx.response) ? ctx.response[ param.key ] : ctx.response;
+          break;
+
+        case ParamSource.VALUE:
+          value = this.resolveConfigValue(param.key as string);
           break;
 
         case ParamSource.INJECT:
@@ -200,17 +412,94 @@ export class Router {
               "token" in param ? param.token : designParamTypes[ param.index ];
 
             if (tokenToResolve) {
-              args[ param.index ] = this._resolver.resolve(tokenToResolve);
+              value = this._resolver.resolve(tokenToResolve);
             } else {
-              args[ param.index ] = undefined;
+              value = undefined;
             }
           } catch {
-            args[ param.index ] = undefined;
+            value = undefined;
           }
           break;
       }
+
+      const pipes = [
+        ...globalPipes,
+        ...("pipes" in param && Array.isArray(param.pipes) ? param.pipes : [])
+      ];
+
+      for (const pipe of pipes) {
+        if (typeof pipe === "function") {
+          try {
+            if (pipe.prototype && pipe.prototype.transform) {
+              const pipeInstance = this._resolver.resolve(pipe);
+              value = pipeInstance.transform(value, {
+                type: param.type,
+                metatype: designParamTypes[ param.index ],
+                data: param.key
+              });
+            } else {
+              value = pipe(value, {
+                type: param.type,
+                metatype: designParamTypes[ param.index ],
+                data: param.key
+              });
+            }
+          } catch (err) {
+            throw err;
+          }
+        }
+      }
+
+      args[ param.index ] = value;
     }
 
     return args;
+  }
+
+  /**
+   * Checks the guards for a given execution context.
+   *
+   * @param {ExecutionContext} context The execution context.
+   * @param {object} instance The controller instance.
+   * @param {Function} handler The handler function.
+   * @returns {boolean} Whether the route can be activated.
+   */
+  private checkGuards(context: ExecutionContext, instance: object, handler: Function): boolean {
+    const controllerGuards: any[] =
+      Reflect.getMetadata(GUARDS_METADATA, instance.constructor) || [];
+    const methodGuards: any[] = Reflect.getMetadata(GUARDS_METADATA, handler) || [];
+
+    const guards = [ ...controllerGuards, ...methodGuards ];
+
+    for (const guard of guards) {
+      const guardInstance: CanActivate =
+        typeof guard === "function" ? this._resolver.resolve(guard) : guard;
+
+      if (!guardInstance.canActivate(context)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Creates an execution context.
+   *
+   * @param {object} instance The controller instance.
+   * @param {Function} handler The handler function.
+   * @param {RouteExecutionContext} ctx The route execution context.
+   * @returns {ExecutionContext} The execution context.
+   */
+  private createExecutionContext(
+    instance: object,
+    handler: Function,
+    ctx: RouteExecutionContext
+  ): ExecutionContext {
+    return {
+      ...ctx,
+      getClass: <T = any>(): T => instance.constructor as any,
+      getHandler: (): Function => handler
+    };
   }
 }
