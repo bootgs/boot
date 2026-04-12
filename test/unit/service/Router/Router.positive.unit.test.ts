@@ -8,7 +8,7 @@ import { HttpController } from "src/controller/decorators";
 import { HttpHeaders, HttpRequest, HttpResponse, RouteMetadata } from "src/domain/types";
 
 describe("Router: Positive", () => {
-  it("should find and call the correct route handler", () => {
+  it("should find and call the correct route handler", async () => {
     @HttpController("/users")
     class UserController {
       @Get("/{id}")
@@ -45,7 +45,7 @@ describe("Router: Positive", () => {
       body: data
     }));
 
-    const response = router.handle(
+    const response = await router.handle(
       mockRequest,
       {} as unknown as GoogleAppsScript.Events.DoGet,
       responseBuilder as unknown as (

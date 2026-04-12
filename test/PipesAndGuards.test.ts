@@ -11,7 +11,7 @@ import { RequestMethod } from "../src/domain/enums";
 import { HttpRequest } from "../src/domain/types";
 
 describe("Pipes and Guards", () => {
-  it("should transform query parameter with ParseNumberPipe", () => {
+  it("should transform query parameter with ParseNumberPipe", async () => {
     @HttpController("/test")
     class TestController {
       @Get("sum")
@@ -50,12 +50,12 @@ describe("Pipes and Guards", () => {
       body: data
     }));
 
-    const result = router.handle(request, {} as any, responseBuilder as any);
+    const result = await router.handle(request, {} as any, responseBuilder as any);
 
     expect(result.body).toBe(30);
   });
 
-  it("should apply method-level pipes with UsePipes", () => {
+  it("should apply method-level pipes with UsePipes", async () => {
     const CustomPipe = (value: any) => `prefix_${value}`;
 
     @HttpController("/pipes")
@@ -92,7 +92,7 @@ describe("Pipes and Guards", () => {
       body: data
     }));
 
-    const result = router.handle(request, {} as any, responseBuilder as any);
+    const result = await router.handle(request, {} as any, responseBuilder as any);
 
     expect(result.body).toBe("prefix_hello");
   });

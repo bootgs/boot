@@ -24,7 +24,7 @@ describe("BootApplication: Positive", () => {
     expect(providers.has("EXISTING")).toBe(true);
   });
 
-  it("should dispatch INSTALL event on onInstall", () => {
+  it("should dispatch INSTALL event on onInstall", async () => {
     const app = new BootApplication({ controllers: [] });
     const dispatchSpy = vi
       .spyOn(
@@ -34,7 +34,7 @@ describe("BootApplication: Positive", () => {
       .mockReturnValue(undefined);
 
     const event = {} as GoogleAppsScript.Events.AddonOnInstall;
-    app.onInstall(event);
+    await app.onInstall(event);
 
     expect(dispatchSpy).toHaveBeenCalledWith(AppsScriptEventType.INSTALL, event);
   });
@@ -49,7 +49,7 @@ describe("BootApplication: Positive", () => {
     expect(apiPrefix).toBe("/api");
   });
 
-  it("should dispatch FORM_SUBMIT event on onFormSubmit", () => {
+  it("should dispatch FORM_SUBMIT event on onFormSubmit", async () => {
     const app = new BootApplication({ controllers: [] });
     const dispatchSpy = vi
       .spyOn(
@@ -59,7 +59,7 @@ describe("BootApplication: Positive", () => {
       .mockReturnValue(undefined);
 
     const event = {} as GoogleAppsScript.Events.FormsOnFormSubmit;
-    app.onFormSubmit(event);
+    await app.onFormSubmit(event);
 
     expect(dispatchSpy).toHaveBeenCalledWith(AppsScriptEventType.FORM_SUBMIT, event);
   });

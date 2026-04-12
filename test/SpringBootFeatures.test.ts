@@ -95,7 +95,7 @@ describe("Spring Boot Features", () => {
     expect(controller.configService.name).toBe("SpringApp");
   });
 
-  it("should inject configuration via @Value in method", () => {
+  it("should inject configuration via @Value in method", async () => {
     const event: any = {
       parameter: {
         path: "/api/test/hello",
@@ -106,13 +106,13 @@ describe("Spring Boot Features", () => {
       queryString: ""
     };
 
-    const response: any = app.doGet(event);
+    const response: any = await app.doGet(event);
     const rawContent = response.getContent();
     const content = JSON.parse(rawContent);
     expect(content.body.message).toBe("Hello from SpringApp");
   });
 
-  it("should handle multiple methods in @RequestMapping", () => {
+  it("should handle multiple methods in @RequestMapping", async () => {
     const eventGet: any = {
       parameter: {
         path: "/api/test/multi",
@@ -123,7 +123,7 @@ describe("Spring Boot Features", () => {
       queryString: ""
     };
 
-    const responseGet: any = app.doGet(eventGet);
+    const responseGet: any = await app.doGet(eventGet);
     expect(JSON.parse(responseGet.getContent()).body.message).toBe("multi");
 
     const eventPost: any = {
@@ -137,11 +137,11 @@ describe("Spring Boot Features", () => {
       postData: { contents: "{}", type: "application/json" }
     };
 
-    const responsePost: any = app.doPost(eventPost);
+    const responsePost: any = await app.doPost(eventPost);
     expect(JSON.parse(responsePost.getContent()).body.message).toBe("multi");
   });
 
-  it("should handle exceptions locally via @ExceptionHandler", () => {
+  it("should handle exceptions locally via @ExceptionHandler", async () => {
     const event: any = {
       parameter: {
         path: "/api/test/local-error",
@@ -152,12 +152,12 @@ describe("Spring Boot Features", () => {
       queryString: ""
     };
 
-    const response: any = app.doGet(event);
+    const response: any = await app.doGet(event);
     const content = JSON.parse(response.getContent());
     expect(content.body.message).toBe("Handled locally: Local error");
   });
 
-  it("should handle exceptions globally via @ControllerAdvice", () => {
+  it("should handle exceptions globally via @ControllerAdvice", async () => {
     const event: any = {
       parameter: {
         path: "/api/test/error",
@@ -168,7 +168,7 @@ describe("Spring Boot Features", () => {
       queryString: ""
     };
 
-    const response: any = app.doGet(event);
+    const response: any = await app.doGet(event);
     const content = JSON.parse(response.getContent());
     expect(content.body.message).toBe("Handled globally: Test error");
   });

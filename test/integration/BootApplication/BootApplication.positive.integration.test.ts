@@ -38,7 +38,7 @@ describe("Integration: BootApplication: Positive", () => {
     createHtmlOutput: vi.fn().mockReturnValue({})
   };
 
-  it("should handle GET request with path and query params", () => {
+  it("should handle GET request with path and query params", async () => {
     const event = {
       parameter: { fields: "name,email" },
       parameters: { fields: ["name,email"] },
@@ -48,7 +48,7 @@ describe("Integration: BootApplication: Positive", () => {
       pathInfo: "api/users/123"
     } as unknown as GoogleAppsScript.Events.DoGet;
 
-    app.doGet(event);
+    await app.doGet(event);
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
     const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[ 0 ][ 0 ];
@@ -62,7 +62,7 @@ describe("Integration: BootApplication: Positive", () => {
     });
   });
 
-  it("should handle POST request with body", () => {
+  it("should handle POST request with body", async () => {
     const data = { name: "John Doe" };
     const event = {
       postData: {
@@ -72,7 +72,7 @@ describe("Integration: BootApplication: Positive", () => {
       pathInfo: "api/users"
     } as unknown as GoogleAppsScript.Events.DoPost;
 
-    app.doPost(event);
+    await app.doPost(event);
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
     const lastCall = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls.length - 1;

@@ -21,14 +21,14 @@ describe("Integration: BootApplication: Negative", () => {
     createHtmlOutput: vi.fn().mockReturnValue({})
   };
 
-  it("should return 404 for unknown route", () => {
+  it("should return 404 for unknown route", async () => {
     const event = {
       pathInfo: "unknown",
       parameter: {},
       parameters: {}
     } as unknown as GoogleAppsScript.Events.DoGet;
 
-    app.doGet(event);
+    await app.doGet(event);
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
     const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[ 0 ][ 0 ];

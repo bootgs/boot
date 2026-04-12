@@ -39,29 +39,29 @@ describe("EventDispatcher: Positive", () => {
     });
   });
 
-  it("should dispatch OnOpen event", () => {
+  it("should dispatch OnOpen event", async () => {
     const mockEvent = { authMode: "LIMITED" } as unknown as GoogleAppsScript.Events.AppsScriptEvent;
-    app.onOpen(mockEvent);
+    await app.onOpen(mockEvent);
 
     expect(controller.onOpenCalled).toBe(true);
     expect(controller.eventData).toEqual(mockEvent);
   });
 
-  it("should dispatch OnEdit event when range matches", () => {
+  it("should dispatch OnEdit event when range matches", async () => {
     const mockEvent = {
       range: {
         getA1Notation: () => "A1"
       }
     } as unknown as GoogleAppsScript.Events.SheetsOnEdit;
-    app.onEdit(mockEvent);
+    await app.onEdit(mockEvent);
     expect(controller.onEditCalled).toBe(true);
   });
 
-  it("should dispatch OnChange event when changeType matches", () => {
+  it("should dispatch OnChange event when changeType matches", async () => {
     const mockEvent = {
       changeType: "INSERT_ROW"
     } as unknown as GoogleAppsScript.Events.SheetsOnChange;
-    app.onChange(mockEvent);
+    await app.onChange(mockEvent);
     expect(controller.onChangeCalled).toBe(true);
   });
 });

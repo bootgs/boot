@@ -51,7 +51,7 @@ export class Router {
    * @param   {HttpRequest} request - The HTTP request object.
    * @param   {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event - The Apps Script event object.
    * @param   {Function} responseBuilder - A function to build an HTTP response.
-   * @returns {HttpResponse} The HTTP response.
+   * @returns {HttpResponse | Promise<HttpResponse>} The HTTP response.
    */
   public handle(
     request: HttpRequest,
@@ -62,7 +62,7 @@ export class Router {
       headers?: HttpHeaders,
       data?: unknown
     ) => HttpResponse
-  ): HttpResponse {
+  ): HttpResponse | Promise<HttpResponse> {
     const requestPathname: string = request.url.pathname;
 
     const route: RouteMetadata | undefined = this._routes.find((route: RouteMetadata): boolean => {
@@ -120,44 +120,126 @@ export class Router {
     try {
       const result: unknown = Reflect.apply(handler, controllerInstance, args);
 
-      if (isHttpResponse(result)) {
-        return result;
+      if (result instanceof Promise) {
+        return result
+          .then((resolvedResult: unknown): HttpResponse | Promise<HttpResponse> => {
+            return this.processResult(resolvedResult, handler, request, ctx, responseBuilder);
+          })
+          .catch((err: unknown): Promise<HttpResponse> => {
+            const handledResponse: HttpResponse | Promise<HttpResponse | null> | null =
+              this.handleException(err, controllerInstance, request, event, responseBuilder);
+
+            if (handledResponse instanceof Promise) {
+              return handledResponse.then(
+                (resolvedHandledResponse: HttpResponse | null): HttpResponse => {
+                  if (resolvedHandledResponse) {
+                    return resolvedHandledResponse;
+                  }
+
+                  return this.createErrorResponse(err, request, responseBuilder);
+                }
+              );
+            }
+
+            if (handledResponse) {
+              return Promise.resolve(handledResponse);
+            }
+
+            return Promise.resolve(this.createErrorResponse(err, request, responseBuilder));
+          });
       }
 
-      const responseStatus: number | undefined = Reflect.getMetadata(
-        RESPONSE_STATUS_METADATA,
-        handler
-      );
-
-      return responseBuilder(
-        request,
-        responseStatus ?? ctx.response?.status,
-        ctx.response?.headers,
-        result
-      );
+      return this.processResult(result, handler, request, ctx, responseBuilder);
     } catch (err: unknown) {
-      const handledResponse: HttpResponse | null = this.handleException(
-        err,
-        controllerInstance,
-        request,
-        event,
-        responseBuilder
-      );
+      const handledResponse: HttpResponse | Promise<HttpResponse | null> | null =
+        this.handleException(err, controllerInstance, request, event, responseBuilder);
+
+      if (handledResponse instanceof Promise) {
+        return handledResponse.then(
+          (resolvedHandledResponse: HttpResponse | null): HttpResponse => {
+            if (resolvedHandledResponse) {
+              return resolvedHandledResponse;
+            }
+
+            return this.createErrorResponse(err, request, responseBuilder);
+          }
+        );
+      }
 
       if (handledResponse) {
         return handledResponse;
       }
 
-      let status: number = 500;
-      let message: string = String(err);
-
-      if (isRecord(err)) {
-        if (isNumber(err.status)) status = err.status;
-        if (isString(err.message)) message = err.message;
-      }
-
-      return responseBuilder(request, status, {}, message);
+      return this.createErrorResponse(err, request, responseBuilder);
     }
+  }
+
+  /**
+   * Processes the result of a controller method.
+   *
+   * @param   {unknown} result - The result of the controller method.
+   * @param   {any} handler - The controller method handler.
+   * @param   {HttpRequest} request - The HTTP request object.
+   * @param   {RouteExecutionContext} ctx - The route execution context.
+   * @param   {Function} responseBuilder - A function to build an HTTP response.
+   * @returns {HttpResponse} The HTTP response.
+   */
+  private processResult(
+    result: unknown,
+    handler: any,
+    request: HttpRequest,
+    ctx: RouteExecutionContext,
+    responseBuilder: (
+      request: HttpRequest,
+      status?: number,
+      headers?: HttpHeaders,
+      data?: unknown
+    ) => HttpResponse
+  ): HttpResponse {
+    if (isHttpResponse(result)) {
+      return result;
+    }
+
+    const responseStatus: number | undefined = Reflect.getMetadata(
+      RESPONSE_STATUS_METADATA,
+      handler
+    );
+
+    return responseBuilder(
+      request,
+      responseStatus ?? ctx.response?.status,
+      ctx.response?.headers,
+      result
+    );
+  }
+
+  /**
+   * Creates an error response from an error object.
+   *
+   * @param   {unknown} err - The error object.
+   * @param   {HttpRequest} request - The HTTP request object.
+   * @param   {Function} responseBuilder - A function to build an HTTP response.
+   * @returns {HttpResponse} The error response.
+   */
+  private createErrorResponse(
+    err: unknown,
+    request: HttpRequest,
+    responseBuilder: (
+      request: HttpRequest,
+      status?: number,
+      headers?: HttpHeaders,
+      data?: unknown
+    ) => HttpResponse
+  ): HttpResponse {
+    let status: number = 500;
+    let message: string = String(err);
+
+    if (isRecord(err)) {
+      if (isNumber(err.status)) status = err.status;
+      if (isString(err.message)) message = err.message;
+    }
+
+    return responseBuilder(request, status, {}, message);
   }
 
   /**
@@ -168,7 +250,7 @@ export class Router {
    * @param   {HttpRequest} request - The HTTP request object.
    * @param   {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event - The Apps Script event object.
    * @param   {Function} responseBuilder - A function to build an HTTP response.
-   * @returns {HttpResponse | null} The handled response, or null if no handler was found.
+   * @returns {HttpResponse | Promise<HttpResponse | null> | null} The handled response, or null if no handler was found.
    */
   private handleException(
     err: unknown,
@@ -181,7 +263,7 @@ export class Router {
       headers?: HttpHeaders,
       data?: unknown
     ) => HttpResponse
-  ): HttpResponse | null {
+  ): HttpResponse | Promise<HttpResponse | null> | null {
     // 1. Try local handlers in the controller
     const localHandler: string | null = this.findExceptionHandler(err, controllerInstance);
 
@@ -264,7 +346,7 @@ export class Router {
    * @param   {HttpRequest} request - The HTTP request object.
    * @param   {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event - The Apps Script event object.
    * @param   {Function} responseBuilder - A function to build an HTTP response.
-   * @returns {HttpResponse} The resulting HTTP response.
+   * @returns {HttpResponse | Promise<HttpResponse>} The resulting HTTP response.
    */
   private callExceptionHandler(
     handlerName: string,
@@ -278,12 +360,27 @@ export class Router {
       headers?: HttpHeaders,
       data?: unknown
     ) => HttpResponse
-  ): HttpResponse {
+  ): HttpResponse | Promise<HttpResponse> {
     const handler = instance[ handlerName ];
 
     // TODO: Support argument injection for exception handlers (similar to buildMethodParams)
     // For now, just pass the error as the first argument.
     const result: unknown = Reflect.apply(handler, instance, [err, request, event]);
+
+    if (result instanceof Promise) {
+      return result.then((resolvedResult: unknown): HttpResponse => {
+        if (isHttpResponse(resolvedResult)) {
+          return resolvedResult;
+        }
+
+        const responseStatus: number | undefined = Reflect.getMetadata(
+          RESPONSE_STATUS_METADATA,
+          handler
+        );
+
+        return responseBuilder(request, responseStatus, {}, resolvedResult);
+      });
+    }
 
     if (isHttpResponse(result)) {
       return result;

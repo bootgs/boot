@@ -31,9 +31,11 @@ export class EventDispatcher {
    *
    * @param   {AppsScriptEventType} eventType - The type of the event to dispatch.
    * @param   {unknown} event - The event object.
-   * @returns {void}
+   * @returns {void | Promise<void>}
    */
-  public dispatch(eventType: AppsScriptEventType, event: unknown): void {
+  public dispatch(eventType: AppsScriptEventType, event: unknown): void | Promise<void> {
+    const promises: Promise<void>[] = [];
+
     for (const controller of this.controllers.keys()) {
       const prototype: Record<string, unknown> = (controller as any).prototype;
 
@@ -68,10 +70,18 @@ export class EventDispatcher {
           const handler: unknown = instance[ propertyName ];
 
           if (isFunctionLike(handler)) {
-            Reflect.apply(handler, instance, args);
+            const result: unknown = Reflect.apply(handler, instance, args);
+
+            if (result instanceof Promise) {
+              promises.push(result);
+            }
           }
         }
       }
+    }
+
+    if (promises.length > 0) {
+      return Promise.all(promises).then((): void => {});
     }
   }
 
@@ -80,9 +90,11 @@ export class EventDispatcher {
    *
    * @param   {string} methodName - The name of the method to dispatch the event to.
    * @param   {unknown} event - The event object.
-   * @returns {void}
+   * @returns {void | Promise<void>}
    */
-  public dispatchByName(methodName: string, event: unknown): void {
+  public dispatchByName(methodName: string, event: unknown): void | Promise<void> {
+    const promises: Promise<void>[] = [];
+
     for (const controller of this.controllers.keys()) {
       const instance: unknown = this.resolver.resolve(controller);
 
@@ -124,10 +136,22 @@ export class EventDispatcher {
       const args: unknown[] = this.buildMethodParams(instance, methodName, event);
 
       try {
-        Reflect.apply(method, instance, args);
+        const result: unknown = Reflect.apply(method, instance, args);
+
+        if (result instanceof Promise) {
+          promises.push(
+            result.catch((err: unknown): void => {
+              console.error("Error:", err instanceof Error ? err.stack : String(err));
+            })
+          );
+        }
       } catch (err: unknown) {
         console.error("Error:", err instanceof Error ? err.stack : String(err));
       }
+    }
+
+    if (promises.length > 0) {
+      return Promise.all(promises).then((): void => {});
     }
   }
 

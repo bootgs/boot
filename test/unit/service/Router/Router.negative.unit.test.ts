@@ -5,7 +5,7 @@ import { HttpStatus, RequestMethod } from "src/domain/enums";
 import { HttpHeaders, HttpRequest, HttpResponse, RouteMetadata } from "src/domain/types";
 
 describe("Router: Negative", () => {
-  it("should return 404 if no route matches", () => {
+  it("should return 404 if no route matches", async () => {
     const mockResolver = { resolve: vi.fn() } as unknown as Resolver;
     const router = new Router(mockResolver, []);
 
@@ -22,7 +22,7 @@ describe("Router: Negative", () => {
       statusText: status === 404 ? "Not Found" : "Error"
     }));
 
-    const response = router.handle(
+    const response = await router.handle(
       mockRequest,
       {} as unknown as GoogleAppsScript.Events.DoGet,
       responseBuilder as unknown as (
@@ -37,7 +37,7 @@ describe("Router: Negative", () => {
     expect((response.body as Record<string, unknown>).message).toContain("Cannot get /unknown");
   });
 
-  it("should return 500 if handler throws error", () => {
+  it("should return 500 if handler throws error", async () => {
     class TestController {
       fail() {
         throw new Error("Boom");
@@ -70,7 +70,7 @@ describe("Router: Negative", () => {
       statusText: "Error"
     }));
 
-    const response = router.handle(
+    const response = await router.handle(
       mockRequest,
       {} as unknown as GoogleAppsScript.Events.DoGet,
       responseBuilder as unknown as (
