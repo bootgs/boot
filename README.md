@@ -606,12 +606,8 @@ export class GlobalExceptionHandler {
 
 ## Contributors
 
-<a href="https://github.com/felipepmdias">
-  <img src="https://github.com/felipepmdias.png" width="50" height="50" style="border-radius: 50%" alt="felipepmdias" />
-</a>
-<a href="https://github.com/kosmo-ds">
-  <img src="https://github.com/kosmo-ds.png" width="50" height="50" style="border-radius: 50%" alt="kosmo-ds" />
-</a>
+<a href="https://github.com/felipepmdias"><img src="https://github.com/felipepmdias.png" width="50" height="50" style="border-radius: 50%;" alt="felipepmdias" /></a>
+<a href="https://github.com/kosmo-ds"><img src="https://github.com/kosmo-ds.png" width="50" height="50" style="border-radius: 50%;" alt="kosmo-ds" /></a>
 
 ## Contributing
 
