@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.6.0](https://github.com/bootgs/boot/compare/v1.5.1...v1.6.0) (2026-04-12)
+
+
+### Features
+
+* **core:** add Guards and Pipes for security and validation ([eb757dd](https://github.com/bootgs/boot/commit/eb757dd45c6d75f3e426cf38ed830011929fdf9d))
+* **core:** implement Spring Boot style decorators and global error handling ([280945d](https://github.com/bootgs/boot/commit/280945d7794c87432507e45b3a0d924152593733))
+* **core:** update BootApplication and core services ([72aadd8](https://github.com/bootgs/boot/commit/72aadd855544534f1fabca794c5b00ae7ef97e3a))
+* **domain:** add ApplicationProperties and update ApplicationConfig ([2a5e16c](https://github.com/bootgs/boot/commit/2a5e16ca2d7d6037f179141c08b03ce47a69291d))
+* **pipes:** add new pipes and refactor existing ones ([05721b5](https://github.com/bootgs/boot/commit/05721b500d999b87b79a6d7a259781b6c0a9a2a3))
+* **validation:** add validation decorators and pipes ([5d04bea](https://github.com/bootgs/boot/commit/5d04bea91b7f5c6a34958a3f8a854b6fe672b892))
+
+
+### Bug Fixes
+
+* **BootApplication:** read apiPrefix directly from config instead of config.config ([3293c1b](https://github.com/bootgs/boot/commit/3293c1b2edcbc393757c98bd9a8abda72b9a3fb6))
+* **core:** improve pipe handling and API prefix logic ([a5aeb03](https://github.com/bootgs/boot/commit/a5aeb03a64eda57681992f2f1cbf3dbbe2fbc2ee))
+* **test:** add eslint-disable for unused-vars in ValidationDecorators ([4015355](https://github.com/bootgs/boot/commit/401535511e819d2deb1a8204138cd76effbdc7c3))
+
 ## [1.5.1](https://github.com/bootgs/boot/compare/v1.5.0...v1.5.1) (2026-03-20)
 
 
