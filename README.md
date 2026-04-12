@@ -509,24 +509,24 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
 
 Pipes can be used to transform data before it reaches your handler:
 
-| Pipe             | Description                        |
-| :--------------- | :--------------------------------- |
-| `ParseNumberPipe`   | Transforms a string to a number. |
-| `ParseFloatPipe` | Transforms a string to a float.    |
-| `ParseBooleanPipe`  | Transforms a string to a boolean.  |
-| `AssertFalsePipe` | Validates that the value is `false`. |
-| `AssertTruePipe` | Validates that the value is `true`. |
-| `EmailPipe` | Validates that the value is a valid email address. |
-| `MaxPipe` | Validates that the value is less than or equal to the specified maximum. |
-| `MinPipe` | Validates that the value is greater than or equal to the specified minimum. |
-| `NegativePipe` | Validates that the value is strictly negative. |
-| `NegativeOrZeroPipe` | Validates that the value is negative or zero. |
-| `NotBlankPipe` | Validates that the value is not blank. |
-| `NotEmptyPipe` | Validates that the value is not empty. |
-| `PatternPipe` | Validates that the value matches the specified regular expression. |
-| `PositivePipe` | Validates that the value is strictly positive. |
-| `PositiveOrZeroPipe` | Validates that the value is positive or zero. |
-| `SizePipe` | Validates that the size of the value is within range. |
+| Pipe                 | Description                                                                 |
+| :------------------- | :-------------------------------------------------------------------------- |
+| `ParseNumberPipe`    | Transforms a string to a number.                                            |
+| `ParseFloatPipe`     | Transforms a string to a float.                                             |
+| `ParseBooleanPipe`   | Transforms a string to a boolean.                                           |
+| `AssertFalsePipe`    | Validates that the value is `false`.                                        |
+| `AssertTruePipe`     | Validates that the value is `true`.                                         |
+| `EmailPipe`          | Validates that the value is a valid email address.                          |
+| `MaxPipe`            | Validates that the value is less than or equal to the specified maximum.    |
+| `MinPipe`            | Validates that the value is greater than or equal to the specified minimum. |
+| `NegativePipe`       | Validates that the value is strictly negative.                              |
+| `NegativeOrZeroPipe` | Validates that the value is negative or zero.                               |
+| `NotBlankPipe`       | Validates that the value is not blank.                                      |
+| `NotEmptyPipe`       | Validates that the value is not empty.                                      |
+| `PatternPipe`        | Validates that the value matches the specified regular expression.          |
+| `PositivePipe`       | Validates that the value is strictly positive.                              |
+| `PositiveOrZeroPipe` | Validates that the value is positive or zero.                               |
+| `SizePipe`           | Validates that the size of the value is within range.                       |
 
 ## Advanced Examples
 
