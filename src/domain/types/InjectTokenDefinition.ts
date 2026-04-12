@@ -7,9 +7,9 @@ import { InjectionToken } from "./InjectionToken";
 export interface InjectTokenDefinition {
 
   /**
-   * The source of the parameter (always `INJECT`).
+   * The source of the parameter (`INJECT` or `VALUE`).
    */
-  type: ParamSource.INJECT;
+  type: ParamSource.INJECT | ParamSource.VALUE;
 
   /**
    * The injection token.

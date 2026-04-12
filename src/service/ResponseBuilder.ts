@@ -1,5 +1,6 @@
 import { HeaderAcceptMimeType, HttpStatus, RequestMethod } from "../domain/enums";
 import { HttpHeaders, HttpRequest, HttpResponse } from "../domain/types";
+import { isEmpty, isString, normalize } from "apps-script-utils";
 
 /**
  * Service for building and wrapping HTTP responses.
@@ -11,15 +12,15 @@ export class ResponseBuilder {
    * @private
    * @readonly
    */
-  private readonly _apiPrefix: string;
+  private readonly _apiPrefix: string | null;
 
   /**
    * Creates a new instance of ResponseBuilder.
    *
-   * @param {string} apiPrefix - The prefix for API routes.
+   * @param {string} [apiPrefix] - The prefix for API routes.
    */
-  constructor(apiPrefix: string = "/api/") {
-    this._apiPrefix = apiPrefix;
+  constructor(apiPrefix?: string | null) {
+    this._apiPrefix = apiPrefix ?? null;
   }
 
   /**
@@ -82,7 +83,17 @@ export class ResponseBuilder {
 
     response.headers[ "Content-Type" ] = mimeType;
 
-    const isApi: boolean = request.url.pathname?.startsWith(this._apiPrefix) || false;
+    const apiPrefix: string | null =
+      isString(this._apiPrefix) && !isEmpty(this._apiPrefix)
+        ? normalize(`/${this._apiPrefix}`)
+        : null;
+
+    const pathname: string | null =
+      isString(request.url.pathname) && !isEmpty(request.url.pathname)
+        ? request.url.pathname
+        : null;
+
+    const isApi: boolean = !!(apiPrefix && pathname && pathname.startsWith(`${apiPrefix}/`));
 
     const result: string = JSON.stringify(isApi ? response : response.body);
 

@@ -1,4 +1,4 @@
-import { isString } from "apps-script-utils";
+import { isEmpty, isString, normalize } from "apps-script-utils";
 import {
   ApplicationConfig,
   AppsScriptMenuProxy,
@@ -33,14 +33,14 @@ export class BootApplication {
    *
    * @param {ApplicationConfig} config - The application configuration.
    */
-  constructor(config: ApplicationConfig) {
-    this._config = config.config || {};
+  constructor(config?: ApplicationConfig) {
+    this._config = config?.config || {};
 
-    (config.controllers || []).forEach(
+    (config?.controllers || []).forEach(
       (c: Newable): Map<Newable, unknown> => this._controllers.set(c, null)
     );
 
-    (config.providers || []).forEach((p: Provider): void => {
+    (config?.providers || []).forEach((p: Provider): void => {
       let token: InjectionToken;
 
       if ("provide" in p) {
@@ -70,7 +70,10 @@ export class BootApplication {
 
     this._requestFactory = new RequestFactory();
 
-    const apiPrefix: string = config.apiPrefix ?? "/api/";
+    const apiPrefix: string | null =
+      isString(config?.apiPrefix) && !isEmpty(config.apiPrefix)
+        ? normalize(`/${config.apiPrefix}`)
+        : null;
 
     this._responseBuilder = new ResponseBuilder(apiPrefix);
 

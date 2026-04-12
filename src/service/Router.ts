@@ -7,6 +7,7 @@ import {
   InjectTokenDefinition,
   Newable,
   ParamDefinition,
+  PipeTransform,
   RouteMetadata
 } from "../domain/types";
 import {
@@ -46,9 +47,9 @@ export class Router {
   /**
    * Handles an incoming HTTP request.
    *
-   * @param {HttpRequest} request The HTTP request object.
-   * @param {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event The Apps Script event object.
-   * @param {Function} responseBuilder A function to build an HTTP response.
+   * @param   {HttpRequest} request - The HTTP request object.
+   * @param   {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event - The Apps Script event object.
+   * @param   {Function} responseBuilder - A function to build an HTTP response.
    * @returns {HttpResponse} The HTTP response.
    */
   public handle(
@@ -125,7 +126,7 @@ export class Router {
         result
       );
     } catch (err: unknown) {
-      const handledResponse = this.handleException(
+      const handledResponse: HttpResponse | null = this.handleException(
         err,
         controllerInstance,
         request,
@@ -152,11 +153,11 @@ export class Router {
   /**
    * Handles an exception using registered exception handlers.
    *
-   * @param {unknown} err The error to handle.
-   * @param {any} controllerInstance The controller instance where the error occurred.
-   * @param {HttpRequest} request The HTTP request object.
-   * @param {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event The Apps Script event object.
-   * @param {Function} responseBuilder A function to build an HTTP response.
+   * @param   {unknown} err - The error to handle.
+   * @param   {any} controllerInstance - The controller instance where the error occurred.
+   * @param   {HttpRequest} request - The HTTP request object.
+   * @param   {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event - The Apps Script event object.
+   * @param   {Function} responseBuilder - A function to build an HTTP response.
    * @returns {HttpResponse | null} The handled response, or null if no handler was found.
    */
   private handleException(
@@ -172,7 +173,7 @@ export class Router {
     ) => HttpResponse
   ): HttpResponse | null {
     // 1. Try local handlers in the controller
-    const localHandler = this.findExceptionHandler(err, controllerInstance);
+    const localHandler: string | null = this.findExceptionHandler(err, controllerInstance);
 
     if (localHandler) {
       return this.callExceptionHandler(
@@ -187,8 +188,9 @@ export class Router {
 
     // 2. Try global advices
     for (const adviceToken of this._advices) {
-      const adviceInstance = this._resolver.resolve(adviceToken);
-      const globalHandler = this.findExceptionHandler(err, adviceInstance);
+      const adviceInstance: unknown = this._resolver.resolve(adviceToken);
+
+      const globalHandler: string | null = this.findExceptionHandler(err, adviceInstance);
 
       if (globalHandler) {
         return this.callExceptionHandler(
@@ -208,18 +210,21 @@ export class Router {
   /**
    * Finds an exception handler for a given error in a target instance.
    *
-   * @param {unknown} err The error to handle.
-   * @param {any} instance The instance to search for handlers.
+   * @param   {unknown} err - The error to handle.
+   * @param   {any} instance - The instance to search for handlers.
    * @returns {string | null} The name of the handler method, or null if not found.
    */
   private findExceptionHandler(err: unknown, instance: any): string | null {
-    if (!instance) return null;
+    if (!instance) {
+      return null;
+    }
 
-    const prototype = Object.getPrototypeOf(instance);
-    const propertyNames = Object.getOwnPropertyNames(prototype);
+    const prototype: any = Object.getPrototypeOf(instance);
+
+    const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
 
     for (const propertyName of propertyNames) {
-      const method = instance[ propertyName ];
+      const method: any = instance[ propertyName ];
 
       if (!isFunctionLike(method)) continue;
 
@@ -243,12 +248,12 @@ export class Router {
   /**
    * Calls an exception handler method.
    *
-   * @param {string} handlerName The name of the handler method.
-   * @param {any} instance The instance containing the handler method.
-   * @param {unknown} err The error to handle.
-   * @param {HttpRequest} request The HTTP request object.
-   * @param {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event The Apps Script event object.
-   * @param {Function} responseBuilder A function to build an HTTP response.
+   * @param   {string} handlerName - The name of the handler method.
+   * @param   {any} instance - The instance containing the handler method.
+   * @param   {unknown} err - The error to handle.
+   * @param   {HttpRequest} request - The HTTP request object.
+   * @param   {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event - The Apps Script event object.
+   * @param   {Function} responseBuilder - A function to build an HTTP response.
    * @returns {HttpResponse} The resulting HTTP response.
    */
   private callExceptionHandler(
@@ -268,7 +273,7 @@ export class Router {
 
     // TODO: Support argument injection for exception handlers (similar to buildMethodParams)
     // For now, just pass the error as the first argument.
-    const result = Reflect.apply(handler, instance, [ err, request, event ]);
+    const result: unknown = Reflect.apply(handler, instance, [ err, request, event ]);
 
     if (isHttpResponse(result)) {
       return result;
@@ -286,19 +291,21 @@ export class Router {
    * Resolves a configuration value by its key.
    * Supports nested keys (e.g., "app.name").
    *
-   * @param {string} key The configuration key.
+   * @param   {string} key - The configuration key.
    * @returns {unknown} The resolved value.
    */
   private resolveConfigValue(key: string): unknown {
     if (!key) return undefined;
 
-    const parts = key.split(".");
+    const parts: string[] = key.split(".");
+
     let current: any = this._config;
 
     for (const part of parts) {
       if (current === null || typeof current !== "object") {
         return undefined;
       }
+
       current = current[ part ];
     }
 
@@ -308,9 +315,9 @@ export class Router {
   /**
    * Builds the parameters for a controller method based on the route execution context.
    *
-   * @param {object} target The target object.
-   * @param {string | symbol} propertyKey The name of the property.
-   * @param {RouteExecutionContext} ctx The route execution context.
+   * @param   {object} target - The target object.
+   * @param   {string | symbol} propertyKey - The name of the property.
+   * @param   {RouteExecutionContext} ctx - The route execution context.
    * @returns {unknown[]} An array of parameters for the method.
    */
   private buildMethodParams(
@@ -334,19 +341,23 @@ export class Router {
     ];
 
     metadata.sort(
-      (a: ParamDefinition | InjectTokenDefinition, b: ParamDefinition | InjectTokenDefinition) =>
-        a.index - b.index
+      (
+        a: ParamDefinition | InjectTokenDefinition,
+        b: ParamDefinition | InjectTokenDefinition
+      ): number => a.index - b.index
     );
 
     const designParamTypes: Newable[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
 
-    const handler = (target as any)[ propertyKey ];
+    const handler: any = (target as any)[ propertyKey ];
 
     const controllerPipes: any[] =
       Reflect.getMetadata(PIPES_METADATA, targetPrototype.constructor) || [];
+
     const methodPipes: any[] = Reflect.getMetadata(PIPES_METADATA, handler) || [];
-    const globalPipes = [ ...controllerPipes, ...methodPipes ];
+
+    const globalPipes: any[] = [ ...controllerPipes, ...methodPipes ];
 
     const args: unknown[] = [];
 
@@ -375,13 +386,16 @@ export class Router {
           break;
 
         case ParamSource.HEADERS:
-          if (param.key && ctx.headers) {
-            const headerKey: string | undefined = Object.keys(ctx.headers).find(
-              (k: string) => k.toLowerCase() === param.key!.toLowerCase()
-            );
-            value = headerKey ? ctx.headers[ headerKey ] : undefined;
-          } else {
-            value = ctx.headers;
+          {
+            if (param.key && ctx.headers) {
+              const headerKey: string | undefined = Object.keys(ctx.headers).find(
+                (k: string): boolean => k.toLowerCase() === param.key!.toLowerCase()
+              );
+
+              value = headerKey ? ctx.headers[ headerKey ] : undefined;
+            } else {
+              value = ctx.headers;
+            }
           }
           break;
 
@@ -390,50 +404,64 @@ export class Router {
           break;
 
         case ParamSource.VALUE:
-          value = this.resolveConfigValue(param.key as string);
+          {
+            const valueKey: string | undefined =
+              "key" in param ? param.key : "token" in param ? (param.token as string) : undefined;
+
+            value = this.resolveConfigValue(valueKey as string);
+          }
           break;
 
         case ParamSource.INJECT:
-          try {
-            const tokenToResolve: InjectionToken | undefined =
-              "token" in param ? param.token : designParamTypes[ param.index ];
+          {
+            try {
+              const tokenToResolve: InjectionToken | undefined =
+                "token" in param ? param.token : designParamTypes[ param.index ];
 
-            if (tokenToResolve) {
-              value = this._resolver.resolve(tokenToResolve);
-            } else {
+              if (tokenToResolve) {
+                value = this._resolver.resolve(tokenToResolve);
+              } else {
+                value = undefined;
+              }
+            } catch {
               value = undefined;
             }
-          } catch {
-            value = undefined;
           }
           break;
       }
 
-      const pipes = [
+      const pipes: any[] = [
         ...globalPipes,
         ...("pipes" in param && Array.isArray(param.pipes) ? param.pipes : [])
       ];
 
       for (const pipe of pipes) {
-        if (typeof pipe === "function") {
-          try {
+        try {
+          if (typeof pipe === "function") {
             if (pipe.prototype && pipe.prototype.transform) {
-              const pipeInstance = this._resolver.resolve(pipe);
+              const pipeInstance = this._resolver.resolve<PipeTransform>(pipe);
+
               value = pipeInstance.transform(value, {
                 type: param.type,
                 metatype: designParamTypes[ param.index ],
-                data: param.key
+                data: "key" in param ? param.key : undefined
               });
             } else {
               value = pipe(value, {
                 type: param.type,
                 metatype: designParamTypes[ param.index ],
-                data: param.key
+                data: "key" in param ? param.key : undefined
               });
             }
-          } catch (err) {
-            throw err;
+          } else if (pipe && typeof pipe.transform === "function") {
+            value = (pipe as PipeTransform).transform(value, {
+              type: param.type,
+              metatype: designParamTypes[ param.index ],
+              data: "key" in param ? param.key : undefined
+            });
           }
+        } catch (err) {
+          throw err;
         }
       }
 
