@@ -94,7 +94,8 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
 
 - **Decorator-based Routing**: Intuitive mapping of HTTP and Apps Script events (GET, POST, etc.).
 - **Spring Boot & NestJS Patterns**: Familiar decorators like `@RequestMapping`, `@Autowired`, `@Value`.
-- **Pipes & Validation**: Transform and validate incoming data with `@UsePipes` and built-in pipes (e.g., `ParseIntPipe`).
+- **Validation**: Declarative parameter validation using Spring Boot-style decorators like `@Min`, `@Max`, `@Email`, etc.
+- **Pipes & Validation**: Transform and validate incoming data with `@UsePipes` and built-in pipes (e.g., `ParseNumberPipe`).
 - **Global Error Handling**: Centralized exception management using `@ControllerAdvice` and `@ExceptionHandler`.
 - **Dependency Injection**: Fully-featured DI for better decoupling and testability.
 - **Type Safety**: Built with TypeScript for a robust development experience.
@@ -431,6 +432,74 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td><code>ParameterDecorator</code></td>
       <td>Alias for <code>@Query()</code>.</td>
     </tr>
+    <tr>
+      <td colspan="3" align="center"><b>Validation Decorators (Spring Boot style)</b></td>
+    </tr>
+    <tr>
+      <td><code>@AssertFalse()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is <code>false</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@AssertTrue()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is <code>true</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@Email()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is a valid email address.</td>
+    </tr>
+    <tr>
+      <td><code>@Max(value: number)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is less than or equal to the specified maximum.</td>
+    </tr>
+    <tr>
+      <td><code>@Min(value: number)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is greater than or equal to the specified minimum.</td>
+    </tr>
+    <tr>
+      <td><code>@Negative()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is strictly negative.</td>
+    </tr>
+    <tr>
+      <td><code>@NegativeOrZero()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is negative or zero.</td>
+    </tr>
+    <tr>
+      <td><code>@NotBlank()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is not null and contains at least one non-whitespace character.</td>
+    </tr>
+    <tr>
+      <td><code>@NotEmpty()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is not null and not empty (works for strings, arrays, and objects).</td>
+    </tr>
+    <tr>
+      <td><code>@Pattern(regexp: string | RegExp)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value matches the specified regular expression.</td>
+    </tr>
+    <tr>
+      <td><code>@Positive()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is strictly positive.</td>
+    </tr>
+    <tr>
+      <td><code>@PositiveOrZero()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is positive or zero.</td>
+    </tr>
+    <tr>
+      <td><code>@Size(options: { min?: number, max?: number })</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the size of the value is between the specified minimum and maximum.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -440,11 +509,24 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
 
 Pipes can be used to transform data before it reaches your handler:
 
-| Pipe | Description |
-| :--- | :--- |
-| `ParseIntPipe` | Transforms a string to an integer. |
-| `ParseFloatPipe` | Transforms a string to a float. |
-| `ParseBoolPipe` | Transforms a string to a boolean. |
+| Pipe             | Description                        |
+| :--------------- | :--------------------------------- |
+| `ParseNumberPipe`   | Transforms a string to a number. |
+| `ParseFloatPipe` | Transforms a string to a float.    |
+| `ParseBooleanPipe`  | Transforms a string to a boolean.  |
+| `AssertFalsePipe` | Validates that the value is `false`. |
+| `AssertTruePipe` | Validates that the value is `true`. |
+| `EmailPipe` | Validates that the value is a valid email address. |
+| `MaxPipe` | Validates that the value is less than or equal to the specified maximum. |
+| `MinPipe` | Validates that the value is greater than or equal to the specified minimum. |
+| `NegativePipe` | Validates that the value is strictly negative. |
+| `NegativeOrZeroPipe` | Validates that the value is negative or zero. |
+| `NotBlankPipe` | Validates that the value is not blank. |
+| `NotEmptyPipe` | Validates that the value is not empty. |
+| `PatternPipe` | Validates that the value matches the specified regular expression. |
+| `PositivePipe` | Validates that the value is strictly positive. |
+| `PositiveOrZeroPipe` | Validates that the value is positive or zero. |
+| `SizePipe` | Validates that the size of the value is within range. |
 
 ## Advanced Examples
 
@@ -453,13 +535,13 @@ Pipes can be used to transform data before it reaches your handler:
 Transform parameters with pipes:
 
 ```TypeScript
-import {Get, RestController, Query, ParseIntPipe} from "bootgs";
+import {Get, RestController, Query, ParseNumberPipe} from "bootgs";
 
 @RestController("users")
 export class UserController {
 
     @Get("details")
-    getUserDetails(@Query("id", ParseIntPipe) id: number): object {
+    getUserDetails(@Query("id", ParseNumberPipe) id: number): object {
         return {
             userId: id,
             message: "Success!"
