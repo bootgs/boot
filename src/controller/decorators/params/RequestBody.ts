@@ -9,12 +9,15 @@ import { Body } from "../../../controller/decorators/params";
  * @returns {ParameterDecorator} A parameter decorator.
  *
  * @example
- * ```typescript
- * import { Post, RequestBody } from "bootgs";
+ * ```TypeScript
+ * import { Post, RequestBody, RestController } from "bootgs";
  *
- * @Post("/users")
- * create(@RequestBody() user: any) {
- *   return user;
+ * @RestController("/users")
+ * class UsersController {
+ *   @Post()
+ *   create(@RequestBody() user: any) {
+ *     return user;
+ *   }
  * }
  * ```
  */

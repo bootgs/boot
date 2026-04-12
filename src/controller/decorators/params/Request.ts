@@ -8,12 +8,15 @@ import { createParamDecorator } from "../../../repository";
  * @returns {ParameterDecorator} A parameter decorator.
  *
  * @example
- * ```typescript
- * import { Get, Request, HttpRequest } from "bootgs";
+ * ```TypeScript
+ * import { Get, Request, HttpRequest, RestController } from "bootgs";
  *
- * @Get()
- * findAll(@Request() request: HttpRequest) {
- *   return { path: request.url.path };
+ * @RestController("/users")
+ * class UsersController {
+ *   @Get()
+ *   findAll(@Request() request: HttpRequest) {
+ *     return { path: request.url.path };
+ *   }
  * }
  * ```
  */

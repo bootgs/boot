@@ -8,9 +8,14 @@ import { createHttpDecorator } from "../../../repository";
  * @returns {MethodDecorator} A method decorator.
  *
  * @example
- * ```typescript
- * @HeadMapping('/users')
- * checkUsers() {}
+ * ```TypeScript
+ * import { RestController, Head } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @HeadMapping('/check')
+ *   checkUsers() {}
+ * }
  * ```
  */
 export const HeadMapping = createHttpDecorator(RequestMethod.HEAD);

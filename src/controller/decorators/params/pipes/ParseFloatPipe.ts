@@ -4,12 +4,15 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
  * Pipe for parsing input as floating-point numbers.
  *
  * @example
- * ```typescript
- * import { Get, Query, ParseFloatPipe } from "bootgs";
+ * ```TypeScript
+ * import { Get, Query, ParseFloatPipe, RestController } from "bootgs";
  *
- * @Get("/calculate")
- * calculate(@Query("value", ParseFloatPipe) value: number) {
- *   return { value };
+ * @RestController("/users")
+ * class UsersController {
+ *   @Get("/calculate")
+ *   calculate(@Query("value", ParseFloatPipe) value: number) {
+ *     return { value };
+ *   }
  * }
  * ```
  */

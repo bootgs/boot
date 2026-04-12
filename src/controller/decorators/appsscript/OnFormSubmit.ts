@@ -5,12 +5,12 @@ import { createAppsScriptDecorator } from "../../../repository";
  * Decorator for handling Google Apps Script onFormSubmit events.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { OnFormSubmit, Event } from "bootgs";
  *
  * @OnFormSubmit()
- * onFormSubmit(@Event() e: GoogleAppsScript.Events.SheetsOnFormSubmit) {
- *   Logger.log(`Form submitted by: ${e.authMode}`);
+ * onFormSubmit(@Event() event: GoogleAppsScript.Events.SheetsOnFormSubmit) {
+ *   Logger.log(`Form submitted by: ${event.authMode}`);
  * }
  * ```
  */

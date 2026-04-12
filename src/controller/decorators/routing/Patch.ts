@@ -8,12 +8,15 @@ import { createHttpDecorator } from "../../../repository";
  * @returns {MethodDecorator} A method decorator.
  *
  * @example
- * ```typescript
- * import { Patch, Body, Param } from "bootgs";
+ * ```TypeScript
+ * import { RestController, Patch, Body, Param } from "bootgs";
  *
- * @Patch("/users/:id")
- * partialUpdate(@Param("id") id: string, @Body() partialUser: any) {
- *   return { id, ...partialUser };
+ * @RestController("/users")
+ * class UsersController {
+ *   @Patch("/{id}")
+ *   partialUpdate(@Param("id") id: string, @Body() partialUser: any) {
+ *     return { id, ...partialUser };
+ *   }
  * }
  * ```
  */

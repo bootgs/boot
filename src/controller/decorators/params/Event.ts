@@ -8,13 +8,16 @@ import { createParamDecorator } from "../../../repository";
  * @returns {ParameterDecorator} A parameter decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { OnOpen, Event } from "bootgs";
  *
  * @OnOpen()
- * onOpen(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {
+ * onOpen(@Event() event: GoogleAppsScript.Events.AppsScriptEvent) {
  *   const ui = SpreadsheetApp.getUi();
- *   ui.createMenu("Custom Menu").addItem("Action", "handler").addToUi();
+ *
+ *   ui.createMenu("Custom Menu")
+ *    .addItem("Action", "handler")
+ *    .addToUi();
  * }
  * ```
  */

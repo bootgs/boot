@@ -8,12 +8,15 @@ import { createHttpDecorator } from "../../../repository";
  * @returns {MethodDecorator} A method decorator.
  *
  * @example
- * ```typescript
- * import { Head } from "bootgs";
+ * ```TypeScript
+ * import { RestController, Head } from "bootgs";
  *
- * @Head("/users")
- * checkUsers() {
- *   // ...
+ * @RestController("/users")
+ * class UsersController {
+ *   @Head("/check")
+ *   checkUsers() {
+ *     // ...
+ *   }
  * }
  * ```
  */

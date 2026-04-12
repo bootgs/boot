@@ -8,12 +8,12 @@ import { createHttpDecorator } from "../../../repository";
  * @returns {MethodDecorator} A method decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Delete, Param, RestController } from "bootgs";
  *
  * @RestController("/users")
  * class UsersController {
- *   @Delete("/:id")
+ *   @Delete("/{id}")
  *   remove(@Param("id") id: string) {
  *     return { deleted: true, id };
  *   }

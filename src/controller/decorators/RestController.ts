@@ -4,7 +4,7 @@ import { HttpController } from "../../controller/decorators";
  * Decorator that marks a class as a REST controller.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { RestController, Get, Param } from "bootgs";
  *
  * @RestController("/users")

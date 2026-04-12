@@ -6,7 +6,7 @@ import { ENTITY_WATERMARK } from "../../domain/constants";
  * @returns {ClassDecorator} A class decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Entity } from "bootgs";
  *
  * @Entity()

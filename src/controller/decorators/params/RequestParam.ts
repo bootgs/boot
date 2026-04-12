@@ -9,12 +9,15 @@ import { Query } from "../../../controller/decorators/params";
  * @returns {ParameterDecorator} A parameter decorator.
  *
  * @example
- * ```typescript
- * import { Get, RequestParam, ParseIntPipe } from "bootgs";
+ * ```TypeScript
+ * import { Get, RequestParam, ParseIntPipe, RestController } from "bootgs";
  *
- * @Get("/users")
- * findAll(@RequestParam("page", ParseIntPipe) page: number) {
- *   return { page };
+ * @RestController("/users")
+ * class UsersController {
+ *   @Get()
+ *   findAll(@RequestParam("page", ParseIntPipe) page: number) {
+ *     return { page };
+ *   }
  * }
  * ```
  */

@@ -8,12 +8,12 @@ import { createParamDecorator } from "../../../repository";
  * @returns {ParameterDecorator} A parameter decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Get, Param, ParseIntPipe, RestController } from "bootgs";
  *
  * @RestController("/users")
  * class UsersController {
- *   @Get("/:id")
+ *   @Get("/{id}")
  *   getUser(@Param("id", ParseIntPipe) id: number) {
  *     return { id };
  *   }

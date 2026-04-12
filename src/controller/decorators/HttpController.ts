@@ -7,7 +7,7 @@ import { Controller } from "../../controller/decorators";
  * @returns {ClassDecorator} A class decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { HttpController, Get } from "bootgs";
  *
  * @HttpController("/users")

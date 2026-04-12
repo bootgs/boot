@@ -29,16 +29,16 @@ export interface RequestMappingOptions {
  * @returns {ClassDecorator & MethodDecorator} A decorator.
  *
  * @example
- * ```typescript
- * import { RequestMapping, RequestMethod } from "bootgs";
+ * ```TypeScript
+ * import { RestController, RequestMapping, RequestMethod } from "bootgs";
  *
- * @RequestMapping({ path: "/users", method: RequestMethod.GET })
- * findAll() {
- *   return [];
+ * @RestController("/users")
+ * class UsersController {
+ *   @RequestMapping({ path: "/find", method: RequestMethod.GET })
+ *   findAll() {
+ *     return [];
+ *   }
  * }
- *
- * @RequestMapping("/users")
- * class UserController {}
  * ```
  */
 export function RequestMapping(

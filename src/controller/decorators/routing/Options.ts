@@ -8,12 +8,15 @@ import { createHttpDecorator } from "../../../repository";
  * @returns {MethodDecorator} A method decorator.
  *
  * @example
- * ```typescript
- * import { Options } from "bootgs";
+ * ```TypeScript
+ * import { RestController, Options } from "bootgs";
  *
- * @Options("/users")
- * getUsersOptions() {
- *   // ...
+ * @RestController("/users")
+ * class UsersController {
+ *   @Options()
+ *   getUsersOptions() {
+ *     // ...
+ *   }
  * }
  * ```
  */

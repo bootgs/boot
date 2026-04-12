@@ -6,7 +6,7 @@ import { Injectable } from "../../controller/decorators";
  * @returns {ClassDecorator} A class decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Service, Injectable } from "bootgs";
  *
  * @Service()

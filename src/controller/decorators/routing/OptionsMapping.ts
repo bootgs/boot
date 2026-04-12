@@ -8,9 +8,16 @@ import { createHttpDecorator } from "../../../repository";
  * @returns {MethodDecorator} A method decorator.
  *
  * @example
- * ```typescript
- * @OptionsMapping('/users')
- * getOptions() {}
+ * ```TypeScript
+ * import { RestController, OptionsMapping } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @OptionsMapping()
+ *   getUsersOptions() {
+ *     // ...
+ *   }
+ * }
  * ```
  */
 export const OptionsMapping = createHttpDecorator(RequestMethod.OPTIONS);

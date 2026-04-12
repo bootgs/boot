@@ -5,12 +5,12 @@ import { createAppsScriptDecorator } from "../../../repository";
  * Decorator for handling Google Apps Script onEdit events.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { OnEdit, Event } from "bootgs";
  *
  * @OnEdit()
- * onEdit(@Event() e: GoogleAppsScript.Events.SheetsOnEdit) {
- *   Logger.log(`Range ${e.range.getA1Notation()} edited`);
+ * onEdit(@Event() event: GoogleAppsScript.Events.SheetsOnEdit) {
+ *   Logger.log(`Range ${event.range.getA1Notation()} edited`);
  * }
  * ```
  */

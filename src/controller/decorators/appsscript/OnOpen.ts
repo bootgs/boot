@@ -5,11 +5,11 @@ import { createAppsScriptDecorator } from "../../../repository";
  * Decorator for handling Google Apps Script onOpen events.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { OnOpen, Event } from "bootgs";
  *
  * @OnOpen()
- * onOpen(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {
+ * onOpen(@Event() event: GoogleAppsScript.Events.AppsScriptEvent) {
  *   Logger.log("Application opened");
  * }
  * ```

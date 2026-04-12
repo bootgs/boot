@@ -7,7 +7,7 @@ import { PIPES_METADATA } from "../../../domain/constants";
  * @returns {MethodDecorator & ClassDecorator} A decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { UsePipes, Post, Body, HttpController, PipeTransform, ArgumentMetadata } from "bootgs";
  *
  * class CustomPipe implements PipeTransform {

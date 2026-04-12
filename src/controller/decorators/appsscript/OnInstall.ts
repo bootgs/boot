@@ -5,11 +5,11 @@ import { createAppsScriptDecorator } from "../../../repository";
  * Decorator for handling Google Apps Script onInstall events.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { OnInstall, Event } from "bootgs";
  *
  * @OnInstall()
- * onInstall(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {
+ * onInstall(@Event() event: GoogleAppsScript.Events.AppsScriptEvent) {
  *   Logger.log("Application installed");
  * }
  * ```

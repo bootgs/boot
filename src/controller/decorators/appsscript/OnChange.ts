@@ -5,12 +5,12 @@ import { createAppsScriptDecorator } from "../../../repository";
  * Decorator for handling Google Apps Script onChange events.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { OnChange, Event } from "bootgs";
  *
  * @OnChange()
- * onChange(@Event() e: GoogleAppsScript.Events.SheetsOnChange) {
- *   Logger.log(`Sheet changed: ${e.changeType}`);
+ * onChange(@Event() event: GoogleAppsScript.Events.SheetsOnChange) {
+ *   Logger.log(`Sheet changed: ${event.changeType}`);
  * }
  * ```
  */

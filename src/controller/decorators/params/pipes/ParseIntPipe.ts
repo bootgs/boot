@@ -4,12 +4,15 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
  * Pipe for parsing input as integers.
  *
  * @example
- * ```typescript
- * import { Get, Param, ParseIntPipe } from "bootgs";
+ * ```TypeScript
+ * import { Get, Param, ParseIntPipe, RestController } from "bootgs";
  *
- * @Get("/users/:id")
- * getUser(@Param("id", ParseIntPipe) id: number) {
- *   return { id };
+ * @RestController("/users")
+ * class UsersController {
+ *   @Get("/{id}")
+ *   getUser(@Param("id", ParseIntPipe) id: number) {
+ *     return { id };
+ *   }
  * }
  * ```
  */

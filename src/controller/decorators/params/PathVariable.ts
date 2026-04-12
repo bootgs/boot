@@ -9,12 +9,15 @@ import { Param } from "../../../controller/decorators/params";
  * @returns {ParameterDecorator} A parameter decorator.
  *
  * @example
- * ```typescript
- * import { Get, PathVariable, ParseIntPipe } from "bootgs";
+ * ```TypeScript
+ * import { Get, Param, ParseIntPipe, RestController } from "bootgs";
  *
- * @Get("/users/:id")
- * getUser(@PathVariable("id", ParseIntPipe) id: number) {
- *   return { id };
+ * @RestController("/users")
+ * class UsersController {
+ *   @Get("/{id}")
+ *   getUser(@Param("id", ParseIntPipe) id: number) {
+ *     return { id };
+ *   }
  * }
  * ```
  */

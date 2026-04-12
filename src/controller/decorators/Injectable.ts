@@ -6,7 +6,7 @@ import { INJECTABLE_WATERMARK } from "../../domain/constants";
  * @returns {ClassDecorator} A class decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Injectable } from "bootgs";
  *
  * @Injectable()

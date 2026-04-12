@@ -20,7 +20,7 @@ export interface ControllerOptions {
  * @returns {ClassDecorator} A class decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Controller, Get } from "bootgs";
  *
  * @Controller("http", { basePath: "/api" })

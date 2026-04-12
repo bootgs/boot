@@ -9,7 +9,7 @@ import { Inject } from "../../controller/decorators";
  * @returns {ParameterDecorator & PropertyDecorator} A decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Service, Autowired } from "bootgs";
  * import { MyProvider } from "./MyProvider";
  *

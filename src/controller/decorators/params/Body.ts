@@ -8,7 +8,7 @@ import { createParamDecorator } from "../../../repository";
  * @returns {ParameterDecorator} A parameter decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Post, Body, RestController } from "bootgs";
  *
  * @RestController("/users")

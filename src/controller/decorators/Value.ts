@@ -10,7 +10,7 @@ import { assignParamMetadata } from "../../repository";
  * @returns {ParameterDecorator} A parameter decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Service, Value } from "bootgs";
  *
  * @Service()

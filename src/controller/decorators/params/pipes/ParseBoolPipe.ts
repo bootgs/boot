@@ -4,12 +4,15 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
  * Pipe for parsing input as boolean.
  *
  * @example
- * ```typescript
- * import { Get, Query, ParseBoolPipe } from "bootgs";
+ * ```TypeScript
+ * import { Get, Query, ParseBoolPipe, RestController } from "bootgs";
  *
- * @Get("/search")
- * search(@Query("active", ParseBoolPipe) active: boolean) {
- *   return { active };
+ * @RestController("/users")
+ * class UsersController {
+ *   @Get("/search")
+ *   search(@Query("active", ParseBoolPipe) active: boolean) {
+ *     return { active };
+ *   }
  * }
  * ```
  */

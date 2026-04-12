@@ -9,7 +9,7 @@ import { assignInjectMetadata } from "../../repository";
  * @returns {ParameterDecorator} A parameter decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Service, Inject } from "bootgs";
  *
  * @Service()

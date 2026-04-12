@@ -8,7 +8,7 @@ import { Newable } from "../../domain/types";
  * @returns {MethodDecorator} A method decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { ExceptionHandler, ResponseStatus } from "bootgs";
  *
  * @ExceptionHandler(Error)

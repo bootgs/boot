@@ -7,7 +7,7 @@ import { RESPONSE_STATUS_METADATA } from "../../domain/constants";
  * @returns {MethodDecorator} A method decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { Post, ResponseStatus } from "bootgs";
  *
  * @Post("/users")

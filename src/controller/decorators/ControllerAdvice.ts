@@ -7,7 +7,7 @@ import { CONTROLLER_ADVICE_WATERMARK, INJECTABLE_WATERMARK } from "../../domain/
  * @returns {ClassDecorator} A class decorator.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { ControllerAdvice, ExceptionHandler } from "bootgs";
  *
  * @ControllerAdvice()
@@ -30,7 +30,7 @@ export function ControllerAdvice(): ClassDecorator {
  * Alias for `@ControllerAdvice()`.
  *
  * @example
- * ```typescript
+ * ```TypeScript
  * import { RestControllerAdvice } from "bootgs";
  *
  * @RestControllerAdvice()

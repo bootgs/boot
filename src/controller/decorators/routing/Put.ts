@@ -8,12 +8,15 @@ import { createHttpDecorator } from "../../../repository";
  * @returns {MethodDecorator} A method decorator.
  *
  * @example
- * ```typescript
- * import { Put, Body, Param } from "bootgs";
+ * ```TypeScript
+ * import { RestController, Put, Body, Param } from "bootgs";
  *
- * @Put("/users/:id")
- * update(@Param("id") id: string, @Body() user: any) {
- *   return { id, ...user };
+ * @RestController("/users")
+ * class UsersController {
+ *   @Put("/{id}")
+ *   update(@Param("id") id: string, @Body() user: any) {
+ *     return { id, ...user };
+ *   }
  * }
  * ```
  */
