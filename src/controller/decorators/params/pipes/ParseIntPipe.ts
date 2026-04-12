@@ -1,28 +1,28 @@
 import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
 
 /**
- * Pipe for parsing input as numbers.
+ * Pipe for parsing input as integers.
  *
  * @example
  * ```TypeScript
- * import { Get, Param, ParseNumberPipe, RestController } from "bootgs";
+ * import { Get, Query, ParseIntPipe, RestController } from "bootgs";
  *
  * @RestController("/users")
  * class UsersController {
- *   @Get("/{identifier}")
- *   getUser(@Param("identifier", ParseNumberPipe) identifier: number) {
- *     return { identifier };
+ *   @Get("/search")
+ *   search(@Query("id", ParseIntPipe) id: number) {
+ *     return { id };
  *   }
  * }
  * ```
  */
-export class ParseNumberPipe implements PipeTransform<string | number, number> {
+export class ParseIntPipe implements PipeTransform<string | number, number> {
   /**
-   * Transforms the input value to a number.
+   * Transforms the input value to an integer.
    *
    * @param   {string | number} value - The value to transform.
    * @param   {ArgumentMetadata} metadata - The argument metadata.
-   * @returns {number} The parsed number.
+   * @returns {number} The parsed integer.
    */
   public transform(
     value: string | number | Array<string | number>,
@@ -42,6 +42,14 @@ export class ParseNumberPipe implements PipeTransform<string | number, number> {
       );
     }
 
-    return Number(value);
+    const result: number = parseInt(String(value), 10);
+
+    if (isNaN(result)) {
+      throw new Error(
+        `Validation failed (numeric string is expected${metadata.data ? ` for "${metadata.data}"` : ""})`
+      );
+    }
+
+    return result;
   }
 }

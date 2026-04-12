@@ -20,17 +20,26 @@ export class ParseFloatPipe implements PipeTransform<string | number, number> {
   /**
    * Transforms the input value to a float.
    *
-   * @param {string | number} value The value to transform.
-   * @param {ArgumentMetadata} metadata The argument metadata.
+   * @param   {string | number} value - The value to transform.
+   * @param   {ArgumentMetadata} metadata - The argument metadata.
    * @returns {number} The parsed float.
    */
-  public transform(value: string | number, metadata: ArgumentMetadata): number {
+  public transform(
+    value: string | number | Array<string | number>,
+    metadata: ArgumentMetadata
+  ): number {
+    if (Array.isArray(value)) {
+      value = value[ 0 ];
+    }
+
     const isNumeric: boolean =
       (typeof value === "number" || (typeof value === "string" && value.trim() !== "")) &&
       !isNaN(Number(value));
 
     if (!isNumeric) {
-      throw new Error(`Validation failed (number string is expected for "${metadata.data}")`);
+      throw new Error(
+        `Validation failed (numeric string is expected${metadata.data ? ` for "${metadata.data}"` : ""})`
+      );
     }
 
     return parseFloat(String(value));
