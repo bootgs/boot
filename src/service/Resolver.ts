@@ -1,5 +1,10 @@
 import { isFunctionLike } from "apps-script-utils";
-import { ApplicationProperties, InjectionToken, InjectTokenDefinition, Newable } from "../domain/types";
+import {
+  ApplicationProperties,
+  InjectionToken,
+  InjectTokenDefinition,
+  Newable
+} from "../domain/types";
 import { ParamSource } from "../domain/enums";
 import { PARAMTYPES_METADATA } from "../domain/constants";
 import { getInjectionTokens } from "../repository";
