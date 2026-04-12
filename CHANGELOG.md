@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.1](https://github.com/bootgs/boot/compare/v1.7.0...v1.7.1) (2026-04-12)
+
+
+### Bug Fixes
+
+* readme ([80bc9aa](https://github.com/bootgs/boot/commit/80bc9aaa5d4c00c6fb947b4e2c4831fda7a63c94))
+* readme ([39c4d81](https://github.com/bootgs/boot/commit/39c4d8113af9c2a1fb72d0b448b94af82993b786))
+
 ## [1.7.0](https://github.com/bootgs/boot/compare/v1.6.0...v1.7.0) (2026-04-12)
 
 
