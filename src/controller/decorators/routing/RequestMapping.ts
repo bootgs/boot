@@ -1,4 +1,8 @@
-import { CONTROLLER_OPTIONS_METADATA, METHOD_METADATA, PATH_METADATA } from "../../../domain/constants";
+import {
+  CONTROLLER_OPTIONS_METADATA,
+  METHOD_METADATA,
+  PATH_METADATA
+} from "../../../domain/constants";
 import { RequestMethod } from "../../../domain/enums";
 
 /**

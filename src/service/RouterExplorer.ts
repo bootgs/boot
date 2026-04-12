@@ -16,10 +16,9 @@ export class RouterExplorer {
    * Explores the registered controllers and extracts route metadata.
    *
    * @param   {Map<Newable, unknown>} controllers - The registered controllers.
-   * @param   {string} [apiPrefix] - The prefix for API routes.
    * @returns {RouteMetadata[]} An array of extracted route metadata.
    */
-  public explore(controllers: Map<Newable, unknown>, apiPrefix?: string | null): RouteMetadata[] {
+  public explore(controllers: Map<Newable, unknown>): RouteMetadata[] {
     const routes: RouteMetadata[] = [];
 
     for (const controller of controllers.keys()) {
@@ -61,14 +60,14 @@ export class RouterExplorer {
         if (routePath && requestMethods) {
           const methods: RequestMethod[] = Array.isArray(requestMethods)
             ? requestMethods
-            : [ requestMethods ];
+            : [requestMethods];
 
           for (const method of methods) {
             routes.push({
               controller,
               handler: propertyName,
               method,
-              path: decodeURI(normalize(`/${apiPrefix ?? ""}/${basePath}/${routePath}`))
+              path: decodeURI(normalize(`/${basePath}/${routePath}`))
             });
           }
         }

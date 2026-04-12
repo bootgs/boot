@@ -40,13 +40,13 @@ export class ResponseBuilder {
   ): HttpResponse {
     const resolvedStatus: HttpStatus =
       status ??
-      ([ RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS ].includes(request.method)
+      ([RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS].includes(request.method)
         ? HttpStatus.OK
         : HttpStatus.CREATED);
 
     const statusText: string = ((): string => {
       const entry: [string, HttpStatus] | undefined = Object.entries(HttpStatus).find(
-        ([ , value ]: [string, unknown]): boolean => value === resolvedStatus
+        ([, value]: [string, unknown]): boolean => value === resolvedStatus
       ) as [string, HttpStatus] | undefined;
 
       return entry ? entry[ 0 ] : "UNKNOWN_STATUS";

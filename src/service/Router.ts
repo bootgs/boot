@@ -17,7 +17,7 @@ import {
   PIPES_METADATA,
   RESPONSE_STATUS_METADATA
 } from "../domain/constants";
-import { ParamSource } from "../domain/enums";
+import { HttpStatus, ParamSource } from "../domain/enums";
 import { RouteExecutionContext } from "../domain/entities";
 import { getInjectionTokens } from "../repository";
 import { PathMatcher, Resolver } from "../service";
@@ -27,7 +27,7 @@ import { isHttpResponse, isRecord } from "../shared/utils";
  * Router service for handling HTTP requests and dispatching them to controllers.
  */
 export class Router {
-  private readonly pathMatcher = new PathMatcher();
+  private readonly pathMatcher: PathMatcher = new PathMatcher();
 
   /**
    * Creates a new instance of Router.
@@ -41,7 +41,8 @@ export class Router {
     private readonly _resolver: Resolver,
     private readonly _routes: RouteMetadata[],
     private readonly _advices: InjectionToken[] = [],
-    private readonly _config: Record<string, any> = {}
+    private readonly _config: Record<string, any> = {},
+    private readonly _apiPrefix: string | null = null
   ) {}
 
   /**
@@ -62,15 +63,24 @@ export class Router {
       data?: unknown
     ) => HttpResponse
   ): HttpResponse {
-    const route: RouteMetadata | undefined = this._routes.find(
-      (r: RouteMetadata) =>
-        r.method === request.method && this.pathMatcher.match(r.path, request.url.pathname)
-    );
+    const requestPathname: string = request.url.pathname;
+
+    const route: RouteMetadata | undefined = this._routes.find((route: RouteMetadata): boolean => {
+      const routeMethod: string = String(route.method).toLowerCase().trim();
+
+      const requestMethod: string = String(request.method).toLowerCase().trim();
+
+      if (routeMethod !== requestMethod) {
+        return false;
+      }
+
+      return this.pathMatcher.match(route.path, requestPathname);
+    });
 
     if (!route) {
       return responseBuilder(
         request,
-        404,
+        HttpStatus.NOT_FOUND,
         {},
         { message: `Cannot ${request.method} ${request.url.pathname}` }
       );
@@ -80,7 +90,7 @@ export class Router {
 
     const params: Record<string, string> = this.pathMatcher.extractParams(
       route.path,
-      request.url.pathname
+      requestPathname
     );
 
     const ctx: RouteExecutionContext = {
@@ -273,7 +283,7 @@ export class Router {
 
     // TODO: Support argument injection for exception handlers (similar to buildMethodParams)
     // For now, just pass the error as the first argument.
-    const result: unknown = Reflect.apply(handler, instance, [ err, request, event ]);
+    const result: unknown = Reflect.apply(handler, instance, [err, request, event]);
 
     if (isHttpResponse(result)) {
       return result;
@@ -357,9 +367,19 @@ export class Router {
 
     const methodPipes: any[] = Reflect.getMetadata(PIPES_METADATA, handler) || [];
 
-    const globalPipes: any[] = [ ...controllerPipes, ...methodPipes ];
+    const globalPipes: any[] = [...controllerPipes, ...methodPipes];
 
-    const args: unknown[] = [];
+    const args: unknown[] = new Array(
+      Math.max(
+        handler.length,
+        designParamTypes.length,
+        metadata.length > 0
+          ? Math.max(
+              ...metadata.map((m: ParamDefinition | InjectTokenDefinition): number => m.index)
+            ) + 1
+          : 0
+      )
+    );
 
     for (const param of metadata) {
       let value: unknown;

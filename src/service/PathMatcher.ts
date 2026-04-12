@@ -19,6 +19,7 @@ export class PathMatcher {
       if (part.startsWith("{") && part.endsWith("}")) {
         return true;
       }
+
       return part === actParts[ i ];
     });
   }

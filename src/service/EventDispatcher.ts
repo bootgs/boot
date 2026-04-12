@@ -164,7 +164,19 @@ export class EventDispatcher {
     const designParamTypes: Newable[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
 
-    const args: unknown[] = [];
+    const handler: any = (target as any)[ propertyKey ];
+
+    const args: unknown[] = new Array(
+      Math.max(
+        handler.length,
+        designParamTypes.length,
+        metadata.length > 0
+          ? Math.max(
+              ...metadata.map((m: ParamDefinition | InjectTokenDefinition): number => m.index)
+            ) + 1
+          : 0
+      )
+    );
 
     for (const param of metadata) {
       switch (param.type) {
@@ -226,7 +238,7 @@ export class EventDispatcher {
 
           const ranges: (string | RegExp)[] = Array.isArray(options.range)
             ? options.range
-            : [ options.range ];
+            : [options.range];
 
           return ranges.some((r: string | RegExp) =>
             isRegExp(r) ? r.test(eventRangeA1) : eventRangeA1 === r
@@ -250,7 +262,7 @@ export class EventDispatcher {
 
           const formIds: string[] = Array.isArray(options.formId)
             ? options.formId
-            : [ options.formId ];
+            : [options.formId];
 
           return formIds.some((id: string) => eventFormId === id);
         }
@@ -270,7 +282,7 @@ export class EventDispatcher {
 
           const changeTypes: string[] = Array.isArray(options.changeType)
             ? options.changeType
-            : [ options.changeType ];
+            : [options.changeType];
 
           return changeTypes.some((type: string) => eventChangeType === type);
         }

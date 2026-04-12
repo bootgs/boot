@@ -1,6 +1,7 @@
 import { isEmpty, isString, normalize } from "apps-script-utils";
 import {
   ApplicationConfig,
+  ApplicationProperties,
   AppsScriptMenuProxy,
   HttpHeaders,
   HttpRequest,
@@ -18,14 +19,54 @@ import { isControllerAdvice } from "../shared/utils";
  * Main application class for bootstrapping and handling Google Apps Script events.
  */
 export class BootApplication {
+  /**
+   * Application controller map, mapping their constructors to instances.
+   */
   private readonly _controllers: Map<Newable, unknown> = new Map<Newable, unknown>();
+
+  /**
+   * Application provider map used for dependency injection.
+   */
   private readonly _providers: Map<InjectionToken, unknown> = new Map<InjectionToken, unknown>();
-  private readonly _config: Record<string, any>;
+
+  /**
+   * Application configuration properties.
+   */
+  private readonly _config: ApplicationProperties;
+
+  /**
+   * Global prefix for all API routes.
+   */
+  private readonly _apiPrefix: string | undefined;
+
+  /**
+   * List of tokens for controller advices (e.g., exception handlers).
+   */
   private readonly _advices: InjectionToken[] = [];
+
+  /**
+   * Resolver for resolving dependencies and obtaining class instances.
+   */
   private readonly _resolver: Resolver;
+
+  /**
+   * Router for managing request routing.
+   */
   private readonly _router: Router;
+
+  /**
+   * Factory for creating HTTP request objects from Google Apps Script events.
+   */
   private readonly _requestFactory: RequestFactory;
+
+  /**
+   * HTTP response builder for sending responses to the client.
+   */
   private readonly _responseBuilder: ResponseBuilder;
+
+  /**
+   * Event dispatcher for handling and distributing internal application events.
+   */
   private readonly _eventDispatcher: EventDispatcher;
 
   /**
@@ -34,31 +75,31 @@ export class BootApplication {
    * @param {ApplicationConfig} config - The application configuration.
    */
   constructor(config?: ApplicationConfig) {
-    this._config = config?.config || {};
+    this._config = config?.config ?? {};
 
     (config?.controllers || []).forEach(
       (c: Newable): Map<Newable, unknown> => this._controllers.set(c, null)
     );
 
-    (config?.providers || []).forEach((p: Provider): void => {
+    (config?.providers || []).forEach((provider: Provider): void => {
       let token: InjectionToken;
 
-      if ("provide" in p) {
-        token = p.provide;
-        if ("useValue" in p) {
-          this._providers.set(p.provide, p.useValue);
-        } else if ("useClass" in p) {
-          this._providers.set(p.provide, null); // Will be resolved later
-        } else if ("useFactory" in p) {
+      if ("provide" in provider) {
+        token = provider.provide;
+        if ("useValue" in provider) {
+          this._providers.set(provider.provide, provider.useValue);
+        } else if ("useClass" in provider) {
+          this._providers.set(provider.provide, null); // Will be resolved later
+        } else if ("useFactory" in provider) {
           // TODO: implement factory providers
-          this._providers.set(p.provide, null);
-        } else if ("useExisting" in p) {
+          this._providers.set(provider.provide, null);
+        } else if ("useExisting" in provider) {
           // TODO: implement existing providers
-          this._providers.set(p.provide, null);
+          this._providers.set(provider.provide, null);
         }
       } else {
-        token = p;
-        this._providers.set(p, null);
+        token = provider;
+        this._providers.set(provider, null);
       }
 
       if (isControllerAdvice(token)) {
@@ -70,18 +111,20 @@ export class BootApplication {
 
     this._requestFactory = new RequestFactory();
 
-    const apiPrefix: string | null =
-      isString(config?.apiPrefix) && !isEmpty(config.apiPrefix)
-        ? normalize(`/${config.apiPrefix}`)
-        : null;
+    const apiPrefix: string =
+      isString(config?.config?.apiPrefix) && !isEmpty(config.config.apiPrefix)
+        ? normalize(`/${config.config.apiPrefix}/`)
+        : "/api";
+
+    this._apiPrefix = apiPrefix;
 
     this._responseBuilder = new ResponseBuilder(apiPrefix);
 
     const explorer: RouterExplorer = new RouterExplorer();
 
-    const routes: RouteMetadata[] = explorer.explore(this._controllers, apiPrefix);
+    const routes: RouteMetadata[] = explorer.explore(this._controllers);
 
-    this._router = new Router(this._resolver, routes, this._advices, this._config);
+    this._router = new Router(this._resolver, routes, this._advices, this._config, apiPrefix);
 
     this._eventDispatcher = new EventDispatcher(this._resolver, this._controllers);
   }
@@ -95,7 +138,7 @@ export class BootApplication {
     const handler: () => AppsScriptMenuProxy = (): AppsScriptMenuProxy => proxy;
 
     const proxy: AppsScriptMenuProxy = new Proxy(handler, {
-      get: (target, prop, receiver) => {
+      get: (target, prop, receiver: any): any => {
         if (!isString(prop)) {
           return Reflect.get(target, prop, receiver);
         }
@@ -108,11 +151,11 @@ export class BootApplication {
           return Reflect.get(target, prop, receiver);
         }
 
-        return (event: GoogleAppsScript.Events.AppsScriptEvent) => {
+        return (event: GoogleAppsScript.Events.AppsScriptEvent): void => {
           return this._eventDispatcher.dispatchByName(prop, event);
         };
       },
-      apply: (target, thisArg, argArray) => {
+      apply: (target, thisArg: any, argArray): any => {
         return Reflect.apply(target, thisArg, argArray);
       }
     }) as unknown as AppsScriptMenuProxy;

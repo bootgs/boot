@@ -10,12 +10,12 @@ import { Query } from "../../../controller/decorators/params";
  *
  * @example
  * ```TypeScript
- * import { Get, RequestParam, ParseIntPipe, RestController } from "bootgs";
+ * import { Get, RequestParam, ParseNumberPipe, RestController } from "bootgs";
  *
  * @RestController("/users")
  * class UsersController {
  *   @Get()
- *   findAll(@RequestParam("page", ParseIntPipe) page: number) {
+ *   findAll(@RequestParam("page", ParseNumberPipe) page: number) {
  *     return { page };
  *   }
  * }

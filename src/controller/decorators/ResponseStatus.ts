@@ -1,4 +1,5 @@
 import { RESPONSE_STATUS_METADATA } from "../../domain/constants";
+import { HttpStatus } from "src/domain";
 
 /**
  * Decorator that sets the HTTP status code for the response.
@@ -8,16 +9,16 @@ import { RESPONSE_STATUS_METADATA } from "../../domain/constants";
  *
  * @example
  * ```TypeScript
- * import { Post, ResponseStatus } from "bootgs";
+ * import { Post, ResponseStatus, HttpStatus } from "bootgs";
  *
  * @Post("/users")
- * @ResponseStatus(201)
+ * @ResponseStatus(HttpStatus.CREATED)
  * create() {
  *   return { created: true };
  * }
  * ```
  */
-export function ResponseStatus(status: number): MethodDecorator {
+export function ResponseStatus(status: HttpStatus): MethodDecorator {
   return (
     _target: object,
     _propertyKey: string | symbol,

@@ -44,7 +44,7 @@ export class RequestFactory {
     const rawPathname: string =
       event?.pathInfo || event?.parameter?.path || event?.parameter?.pathname || "/";
 
-    const pathname: string = normalize(rawPathname);
+    const pathname: string = decodeURI(normalize(rawPathname).trim());
 
     const search: string | undefined = ((params: string | undefined): string | undefined =>
       isString(params) && params.length > 0 ? `?${params}` : undefined)(event?.queryString);

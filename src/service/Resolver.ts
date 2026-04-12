@@ -1,5 +1,5 @@
 import { isFunctionLike } from "apps-script-utils";
-import { InjectionToken, InjectTokenDefinition, Newable } from "../domain/types";
+import { ApplicationProperties, InjectionToken, InjectTokenDefinition, Newable } from "../domain/types";
 import { ParamSource } from "../domain/enums";
 import { PARAMTYPES_METADATA } from "../domain/constants";
 import { getInjectionTokens } from "../repository";
@@ -19,7 +19,7 @@ export class Resolver {
   constructor(
     private readonly _controllers: Map<InjectionToken, unknown>,
     private readonly _providers: Map<InjectionToken, unknown>,
-    private readonly _config: Record<string, any> = {}
+    private readonly _config: ApplicationProperties = {}
   ) {}
 
   /**
@@ -86,19 +86,9 @@ export class Resolver {
             `[Resolve ERROR]: Invalid injection token at index ${i} of '${target.name}'. Expected a class constructor or a registered token.`
           );
         }
-
-        const tokenName: string = isFunctionLike(tokenToResolve)
-          ? tokenToResolve.name
-          : String(tokenToResolve);
-
-        throw new Error(
-          `[Resolve ERROR]: '${tokenName}' is not registered as a provider or controller.`
-        );
       }
 
-      deps[ i ] = isFunctionLike(tokenToResolve)
-        ? this.resolve(tokenToResolve)
-        : this._providers.get(tokenToResolve);
+      deps[ i ] = this.resolve(tokenToResolve);
     }
 
     const instance: T = Reflect.construct(target, deps);
@@ -107,10 +97,6 @@ export class Resolver {
       this._controllers.set(target, instance);
     } else if (isInjectable(target)) {
       this._providers.set(target, instance);
-    } else {
-      console.warn(
-        `[Resolve ERROR]: '${target.name}' is not registered as a provider or controller.`
-      );
     }
 
     return instance;
@@ -120,19 +106,21 @@ export class Resolver {
    * Resolves a configuration value by its key.
    * Supports nested keys (e.g., "app.name").
    *
-   * @param {string} key The configuration key.
+   * @param   {string} key The configuration key.
    * @returns {unknown} The resolved value.
    */
   private resolveConfigValue(key: string): unknown {
     if (!key) return undefined;
 
-    const parts = key.split(".");
-    let current: any = this._config;
+    const parts: string[] = key.split(".");
+
+    let current: ApplicationProperties = this._config;
 
     for (const part of parts) {
       if (current === null || typeof current !== "object") {
         return undefined;
       }
+
       current = current[ part ];
     }
 
