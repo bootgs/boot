@@ -65,6 +65,10 @@ export class SheetController {
 Bootstrap your application by creating an `App` instance and delegating the standard Apps Script entry points (`doGet`,
 `doPost`) to it.
 
+#### Synchronous Application
+
+Use `App` for synchronous execution:
+
 ```TypeScript
 import {App} from "bootgs";
 import {SheetController} from "./SheetController";
@@ -87,6 +91,35 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
         controllers: [SheetController]
     });
     return app.doPost(event);
+}
+```
+
+#### Asynchronous Application
+
+Use `AsyncApp` when you need to handle asynchronous operations (e.g., `UrlFetchApp` promises or other async tasks) in your controllers:
+
+```TypeScript
+import {AsyncApp} from "bootgs";
+import {SheetController} from "./SheetController";
+
+/**
+ * Global entry point for GET requests.
+ */
+export async function doGet(event: GoogleAppsScript.Events.DoGet) {
+    const app = AsyncApp.create({
+        controllers: [SheetController]
+    });
+    return await app.doGet(event);
+}
+
+/**
+ * Global entry point for POST requests.
+ */
+export async function doPost(event: GoogleAppsScript.Events.DoPost) {
+    const app = AsyncApp.create({
+        controllers: [SheetController]
+    });
+    return await app.doPost(event);
 }
 ```
 
@@ -570,6 +603,15 @@ export class GlobalExceptionHandler {
     }
 }
 ```
+
+## Contributors
+
+<a href="https://github.com/felipepmdias">
+  <img src="https://github.com/felipepmdias.png" width="50" height="50" style="border-radius: 50%" alt="felipepmdias" />
+</a>
+<a href="https://github.com/kosmo-ds">
+  <img src="https://github.com/kosmo-ds.png" width="50" height="50" style="border-radius: 50%" alt="kosmo-ds" />
+</a>
 
 ## Contributing
 
