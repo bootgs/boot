@@ -4,18 +4,17 @@ import type { Linter } from "eslint";
  * Google Apps Script environment settings.
  */
 const config: Linter.Config = {
-  files: [ "src/**/*.{js,mjs,cjs,ts,jsx,tsx}" ],
+  files: ["src/**/*.{js,mjs,cjs,ts,jsx,tsx}"],
   rules: {
     "no-restricted-globals": [
       "error",
       {
         name: "setTimeout",
-        message:
-          "Use Utilities.sleep for synchronous pauses. Async timers are not supported in GAS."
+        message: "Use Utilities.sleep for synchronous pauses. timers are not supported in GAS."
       },
-      { name: "setInterval", message: "Async timers are not supported in GAS." },
-      { name: "clearTimeout", message: "Async timers are not supported in GAS." },
-      { name: "clearInterval", message: "Async timers are not supported in GAS." },
+      { name: "setInterval", message: "timers are not supported in GAS." },
+      { name: "clearTimeout", message: "timers are not supported in GAS." },
+      { name: "clearInterval", message: "timers are not supported in GAS." },
       { name: "fetch", message: "Use UrlFetchApp.fetch instead." },
       { name: "atob", message: "Use Utilities.base64Decode instead." },
       { name: "btoa", message: "Use Utilities.base64Encode instead." },

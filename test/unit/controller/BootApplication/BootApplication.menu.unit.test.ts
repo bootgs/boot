@@ -9,7 +9,7 @@ describe("BootApplication: Menu Handling", () => {
     expect(typeof Reflect.getMetadata).toBe("function");
   });
 
-  it("should call controller method via menu proxy", async () => {
+  it("should call controller method via menu proxy", () => {
     const handlerSpy = vi.fn();
 
     @HttpController()
@@ -20,22 +20,20 @@ describe("BootApplication: Menu Handling", () => {
     }
 
     const app = new BootApplication({
-      controllers: [ TestController ],
+      controllers: [TestController],
       providers: []
     });
 
-    const menu = app.onMenu();
+    const menu = app.onMenu;
     const action = menu.testMethod;
     expect(typeof action).toBe("function");
 
-    const result = action({} as any);
-    expect(result).toBeInstanceOf(Promise);
-    await result;
+    action({} as any);
 
     expect(handlerSpy).toHaveBeenCalled();
   });
 
-  it("should pass event to controller method via menu proxy with @Event decorator", async () => {
+  it("should pass event to controller method via menu proxy with @Event decorator", () => {
     let capturedEvent: unknown = null;
 
     @HttpController()
@@ -46,14 +44,14 @@ describe("BootApplication: Menu Handling", () => {
     }
 
     const app = new BootApplication({
-      controllers: [ TestController ],
+      controllers: [TestController],
       providers: []
     });
 
-    const menu = app.onMenu();
+    const menu = app.onMenu;
     const event = { source: "menu" };
 
-    await menu.testMethod(event as any);
+    menu.testMethod(event as any);
 
     expect(capturedEvent).toBe(event);
   });

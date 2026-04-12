@@ -65,6 +65,10 @@ export class SheetController {
 Bootstrap your application by creating an `App` instance and delegating the standard Apps Script entry points (`doGet`,
 `doPost`) to it.
 
+#### Synchronous Application
+
+Use `App` for synchronous execution:
+
 ```TypeScript
 import {App} from "bootgs";
 import {SheetController} from "./SheetController";
@@ -90,10 +94,43 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
 }
 ```
 
+#### Asynchronous Application
+
+Use `AsyncApp` when you need to handle asynchronous operations (e.g., `UrlFetchApp` promises or other async tasks) in your controllers:
+
+```TypeScript
+import {AsyncApp} from "bootgs";
+import {SheetController} from "./SheetController";
+
+/**
+ * Global entry point for GET requests.
+ */
+export async function doGet(event: GoogleAppsScript.Events.DoGet) {
+    const app = AsyncApp.create({
+        controllers: [SheetController]
+    });
+    return await app.doGet(event);
+}
+
+/**
+ * Global entry point for POST requests.
+ */
+export async function doPost(event: GoogleAppsScript.Events.DoPost) {
+    const app = AsyncApp.create({
+        controllers: [SheetController]
+    });
+    return await app.doPost(event);
+}
+```
+
 ## Features
 
-- **Decorator-based Routing**: Intuitive mapping of HTTP and Apps Script events.
-- **Dependency Injection**: Decouple your components for better testability.
+- **Decorator-based Routing**: Intuitive mapping of HTTP and Apps Script events (GET, POST, etc.).
+- **Spring Boot & NestJS Patterns**: Familiar decorators like `@RequestMapping`, `@Autowired`, `@Value`.
+- **Validation**: Declarative parameter validation using Spring Boot-style decorators like `@Min`, `@Max`, `@Email`, etc.
+- **Pipes & Validation**: Transform and validate incoming data with `@UsePipes` and built-in pipes (e.g., `ParseNumberPipe`).
+- **Global Error Handling**: Centralized exception management using `@ControllerAdvice` and `@ExceptionHandler`.
+- **Dependency Injection**: Fully-featured DI for better decoupling and testability.
 - **Type Safety**: Built with TypeScript for a robust development experience.
 - **Modern Architecture**: Inspired by frameworks like NestJS and Spring Boot.
 
@@ -118,9 +155,19 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td>Marks a class as a general-purpose controller.</td>
     </tr>
     <tr>
+      <td><code>@RequestMapping(path?: string, method?: RequestMethod | RequestMethod[])</code></td>
+      <td><code>ClassDecorator & MethodDecorator</code></td>
+      <td>Maps a specific request path onto a controller or a handler method.</td>
+    </tr>
+    <tr>
       <td><code>@HttpController(basePath?: string)</code></td>
       <td><code>ClassDecorator</code></td>
       <td>Marks a class as an HTTP request controller. Default base path is <code>/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@ControllerAdvice()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a global exception handler and data binder.</td>
     </tr>
     <tr>
       <td><code>@SheetController(sheetName?: string | string[] | RegExp)</code></td>
@@ -164,6 +211,11 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td><code>@RestController(basePath?: string)</code></td>
       <td><code>ClassDecorator</code></td>
       <td>Alias for <code>@HttpController()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@RestControllerAdvice()</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Alias for <code>@ControllerAdvice()</code>.</td>
     </tr>
     <tr>
       <td><code>@SheetsController(sheetName?: string | string[] | RegExp)</code></td>
@@ -237,6 +289,11 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td colspan="3" align="center"><b>HTTP Methods</b></td>
     </tr>
     <tr>
+      <td><code>@RequestMapping(path?: string, method?: RequestMethod | RequestMethod[])</code></td>
+      <td><code>ClassDecorator & MethodDecorator</code></td>
+      <td>Maps a specific request path onto a controller or a handler method.</td>
+    </tr>
+    <tr>
       <td><code>@Get(path?: string)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP GET requests. Default path is <code>/</code>.</td>
@@ -270,6 +327,24 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td><code>@Options(path?: string)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP OPTIONS requests.</td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center"><b>Error Handling & Security</b></td>
+    </tr>
+    <tr>
+      <td><code>@ExceptionHandler(value?: Newable | Newable[])</code></td>
+      <td><code>MethodDecorator</code></td>
+      <td>Annotation for handling exceptions in specific handler classes and/or handler methods.</td>
+    </tr>
+    <tr>
+      <td><code>@ResponseStatus(value: number)</code></td>
+      <td><code>MethodDecorator & ClassDecorator</code></td>
+      <td>Marks a method or exception class with the status code that should be returned.</td>
+    </tr>
+    <tr>
+      <td><code>@UsePipes(...pipes: any[])</code></td>
+      <td><code>MethodDecorator & ClassDecorator</code></td>
+      <td>Specifies the pipes to be used for a controller or method.</td>
     </tr>
     <tr>
       <td colspan="3" align="center"><b>Aliases</b></td>
@@ -343,19 +418,19 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td>Injects request headers or a specific header value.</td>
     </tr>
     <tr>
-      <td><code>@Body(key?: string)</code></td>
+      <td><code>@Body(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
-      <td>Injects the full request body or a specific key.</td>
+      <td>Injects the full request body or a specific key. Supports transformation pipes.</td>
     </tr>
     <tr>
-      <td><code>@Param(key?: string)</code></td>
+      <td><code>@Param(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
-      <td>Injects values from URL path parameters.</td>
+      <td>Injects values from URL path parameters. Supports transformation pipes.</td>
     </tr>
     <tr>
-      <td><code>@Query(key?: string)</code></td>
+      <td><code>@Query(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
-      <td>Injects values from URL query parameters.</td>
+      <td>Injects values from URL query parameters. Supports transformation pipes.</td>
     </tr>
     <tr>
       <td><code>@Inject(token: any)</code></td>
@@ -363,27 +438,180 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td>Explicitly specifies an injection token for a dependency.</td>
     </tr>
     <tr>
+      <td><code>@Value(key: string)</code></td>
+      <td><code>ParameterDecorator & PropertyDecorator</code></td>
+      <td>Injects a value from the application configuration.</td>
+    </tr>
+    <tr>
       <td colspan="3" align="center"><b>Aliases</b></td>
     </tr>
     <tr>
-      <td><code>@RequestBody(key?: string)</code></td>
+      <td><code>@Autowired(token?: any)</code></td>
+      <td><code>ParameterDecorator & PropertyDecorator</code></td>
+      <td>Alias for <code>@Inject()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@RequestBody(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
       <td>Alias for <code>@Body()</code>.</td>
     </tr>
     <tr>
-      <td><code>@PathVariable(key?: string)</code></td>
+      <td><code>@PathVariable(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
       <td>Alias for <code>@Param()</code>.</td>
     </tr>
     <tr>
-      <td><code>@RequestParam(key?: string)</code></td>
+      <td><code>@RequestParam(key?: string, ...pipes: any[])</code></td>
       <td><code>ParameterDecorator</code></td>
       <td>Alias for <code>@Query()</code>.</td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center"><b>Validation Decorators (Spring Boot style)</b></td>
+    </tr>
+    <tr>
+      <td><code>@AssertFalse()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is <code>false</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@AssertTrue()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is <code>true</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@Email()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is a valid email address.</td>
+    </tr>
+    <tr>
+      <td><code>@Max(value: number)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is less than or equal to the specified maximum.</td>
+    </tr>
+    <tr>
+      <td><code>@Min(value: number)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is greater than or equal to the specified minimum.</td>
+    </tr>
+    <tr>
+      <td><code>@Negative()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is strictly negative.</td>
+    </tr>
+    <tr>
+      <td><code>@NegativeOrZero()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is negative or zero.</td>
+    </tr>
+    <tr>
+      <td><code>@NotBlank()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is not null and contains at least one non-whitespace character.</td>
+    </tr>
+    <tr>
+      <td><code>@NotEmpty()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is not null and not empty (works for strings, arrays, and objects).</td>
+    </tr>
+    <tr>
+      <td><code>@Pattern(regexp: string | RegExp)</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value matches the specified regular expression.</td>
+    </tr>
+    <tr>
+      <td><code>@Positive()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is strictly positive.</td>
+    </tr>
+    <tr>
+      <td><code>@PositiveOrZero()</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the value is positive or zero.</td>
+    </tr>
+    <tr>
+      <td><code>@Size(options: { min?: number, max?: number })</code></td>
+      <td><code>ParameterDecorator</code></td>
+      <td>Validates that the size of the value is between the specified minimum and maximum.</td>
     </tr>
   </tbody>
 </table>
 
 </details>
+
+### Built-in Pipes
+
+Pipes can be used to transform data before it reaches your handler:
+
+| Pipe                 | Description                                                                 |
+| :------------------- | :-------------------------------------------------------------------------- |
+| `ParseNumberPipe`    | Transforms a string to a number.                                            |
+| `ParseFloatPipe`     | Transforms a string to a float.                                             |
+| `ParseBooleanPipe`   | Transforms a string to a boolean.                                           |
+| `AssertFalsePipe`    | Validates that the value is `false`.                                        |
+| `AssertTruePipe`     | Validates that the value is `true`.                                         |
+| `EmailPipe`          | Validates that the value is a valid email address.                          |
+| `MaxPipe`            | Validates that the value is less than or equal to the specified maximum.    |
+| `MinPipe`            | Validates that the value is greater than or equal to the specified minimum. |
+| `NegativePipe`       | Validates that the value is strictly negative.                              |
+| `NegativeOrZeroPipe` | Validates that the value is negative or zero.                               |
+| `NotBlankPipe`       | Validates that the value is not blank.                                      |
+| `NotEmptyPipe`       | Validates that the value is not empty.                                      |
+| `PatternPipe`        | Validates that the value matches the specified regular expression.          |
+| `PositivePipe`       | Validates that the value is strictly positive.                              |
+| `PositiveOrZeroPipe` | Validates that the value is positive or zero.                               |
+| `SizePipe`           | Validates that the size of the value is within range.                       |
+
+## Advanced Examples
+
+### Pipes
+
+Transform parameters with pipes:
+
+```TypeScript
+import {Get, RestController, Query, ParseNumberPipe} from "bootgs";
+
+@RestController("users")
+export class UserController {
+
+    @Get("details")
+    getUserDetails(@Query("id", ParseNumberPipe) id: number): object {
+        return {
+            userId: id,
+            message: "Success!"
+        };
+    }
+}
+```
+
+### Global Error Handling
+
+Use `@ControllerAdvice` to handle exceptions globally across the whole application:
+
+```TypeScript
+import {ControllerAdvice, ExceptionHandler, ResponseStatus} from "bootgs";
+
+@ControllerAdvice()
+export class GlobalExceptionHandler {
+
+    @ExceptionHandler(Error)
+    @ResponseStatus(500)
+    handleError(error: Error): object {
+        return {
+            status: "Error",
+            message: error.message
+        };
+    }
+}
+```
+
+## Contributors
+
+<a href="https://github.com/felipepmdias">
+  <img src="https://github.com/felipepmdias.png" width="50" height="50" style="border-radius: 50%" alt="felipepmdias" />
+</a>
+<a href="https://github.com/kosmo-ds">
+  <img src="https://github.com/kosmo-ds.png" width="50" height="50" style="border-radius: 50%" alt="kosmo-ds" />
+</a>
 
 ## Contributing
 

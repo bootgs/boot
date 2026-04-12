@@ -13,7 +13,7 @@ describe("BootApplication: Positive", () => {
 
     const app = new BootApplication({
       controllers: [],
-      providers: [ ClassProvider, valueProvider, classProvider, factoryProvider, existingProvider ]
+      providers: [ClassProvider, valueProvider, classProvider, factoryProvider, existingProvider]
     });
 
     const providers = (app as unknown as { _providers: Map<unknown, unknown> })._providers;
@@ -28,11 +28,10 @@ describe("BootApplication: Positive", () => {
     const app = new BootApplication({ controllers: [] });
     const dispatchSpy = vi
       .spyOn(
-        (app as unknown as { _eventDispatcher: { dispatch: () => Promise<void> } })
-          ._eventDispatcher,
+        (app as unknown as { _eventDispatcher: { dispatch: () => void } })._eventDispatcher,
         "dispatch"
       )
-      .mockResolvedValue(undefined);
+      .mockReturnValue(undefined);
 
     const event = {} as GoogleAppsScript.Events.AddonOnInstall;
     await app.onInstall(event);
@@ -40,15 +39,24 @@ describe("BootApplication: Positive", () => {
     expect(dispatchSpy).toHaveBeenCalledWith(AppsScriptEventType.INSTALL, event);
   });
 
+  it("should use custom apiPrefix when provided in config", () => {
+    const app = new BootApplication({
+      controllers: [],
+      apiPrefix: "/api"
+    });
+
+    const apiPrefix = (app as unknown as { _apiPrefix: string })._apiPrefix;
+    expect(apiPrefix).toBe("/api");
+  });
+
   it("should dispatch FORM_SUBMIT event on onFormSubmit", async () => {
     const app = new BootApplication({ controllers: [] });
     const dispatchSpy = vi
       .spyOn(
-        (app as unknown as { _eventDispatcher: { dispatch: () => Promise<void> } })
-          ._eventDispatcher,
+        (app as unknown as { _eventDispatcher: { dispatch: () => void } })._eventDispatcher,
         "dispatch"
       )
-      .mockResolvedValue(undefined);
+      .mockReturnValue(undefined);
 
     const event = {} as GoogleAppsScript.Events.FormsOnFormSubmit;
     await app.onFormSubmit(event);

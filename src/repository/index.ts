@@ -1,4 +1,5 @@
 export * from "./MetadataRepository";
+export * from "./addParamPipe";
 export * from "./assignInjectMetadata";
 export * from "./assignParamMetadata";
 export * from "./createAppsScriptDecorator";

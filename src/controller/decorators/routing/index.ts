@@ -12,3 +12,4 @@ export * from "./Post";
 export * from "./PostMapping";
 export * from "./Put";
 export * from "./PutMapping";
+export * from "./RequestMapping";

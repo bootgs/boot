@@ -8,3 +8,4 @@ export * from "./Request";
 export * from "./RequestBody";
 export * from "./RequestParam";
 export * from "./Response";
+export * from "./pipes";

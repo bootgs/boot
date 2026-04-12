@@ -11,8 +11,8 @@ describe("Integration: BootApplication: Boundary", () => {
     createHtmlOutput: vi.fn().mockReturnValue({})
   };
 
-  it("should handle empty event without crashing", async () => {
+  it("should handle empty event without crashing", () => {
     const event = {} as unknown as GoogleAppsScript.Events.DoGet;
-    await expect(app.doGet(event)).resolves.toBeDefined();
+    expect(app.doGet(event)).toBeDefined();
   });
 });

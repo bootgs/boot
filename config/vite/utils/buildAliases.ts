@@ -16,7 +16,7 @@ export function buildAliases(rootDir: string): AliasOptions {
           .filter((dirent) => !dirent.name.startsWith("."))
           .map((dirent) => {
             const name = dirent.name.replace(/\.ts$/, "");
-            return [ name, join(rootDir, dirent.name) ];
+            return [name, join(rootDir, dirent.name)];
           })
       )
     : {};

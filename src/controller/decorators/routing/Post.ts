@@ -6,5 +6,18 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @param   {string} [path] - Route path (optional).
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```TypeScript
+ * import { Post, Body, RestController } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @Post()
+ *   create(@Body() user: any) {
+ *     return user;
+ *   }
+ * }
+ * ```
  */
 export const Post = createHttpDecorator(RequestMethod.POST);

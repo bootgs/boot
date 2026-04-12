@@ -1,5 +1,6 @@
 export * from "./AppsScriptMenuProxy";
 export * from "./ApplicationConfig";
+export * from "./ApplicationProperties";
 export * from "./ClassProvider";
 export * from "./ErrorResponse";
 export * from "./ExistingProvider";
@@ -13,6 +14,7 @@ export * from "./Newable";
 export * from "./ParamDefinition";
 export * from "./ParsedUrl";
 export * from "./ParsedUrlQuery";
+export * from "./PipeTransform";
 export * from "./Provider";
 export * from "./RouteMetadata";
 export * from "./ValueProvider";

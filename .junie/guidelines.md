@@ -52,7 +52,7 @@ setup file.
 
 #### Test Example
 
-```typescript
+```TypeScript
 import "reflect-metadata";
 import { describe, expect, it } from "vitest";
 import { HttpController } from "../src/decorators";

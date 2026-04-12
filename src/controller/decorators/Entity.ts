@@ -4,9 +4,20 @@ import { ENTITY_WATERMARK } from "../../domain/constants";
  * Decorator that marks a class as an entity.
  *
  * @returns {ClassDecorator} A class decorator.
+ *
+ * @example
+ * ```TypeScript
+ * import { Entity } from "bootgs";
+ *
+ * @Entity()
+ * class User {
+ *   id: string;
+ *   name: string;
+ * }
+ * ```
  */
 export function Entity(): ClassDecorator {
-  return (target: object) => {
+  return (target: object): void => {
     // In a GAS context, this might be used to map classes to Spreadsheet ranges or other storage.
     // For now, it serves as a semantic marker.
     Reflect.defineMetadata(ENTITY_WATERMARK, true, target);

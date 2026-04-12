@@ -1,3 +1,5 @@
+import { HttpStatus } from "../domain";
+
 /**
  * Base exception class for all exceptions in the application.
  *
@@ -7,9 +9,10 @@
 export class AppException extends Error {
   constructor(
     public readonly message: string,
-    public readonly status: number = 500
+    public readonly status: number = HttpStatus.INTERNAL_SERVER_ERROR
   ) {
     super(message);
+
     this.name = "AppException";
   }
 }

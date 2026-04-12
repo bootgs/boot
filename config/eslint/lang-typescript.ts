@@ -8,7 +8,7 @@ import globals from "globals";
  * @see https://typescript-eslint.io/rules/
  */
 const config: Linter.Config = {
-  files: [ "**/*.{js,mjs,cjs,ts,jsx,tsx}" ],
+  files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
   languageOptions: {
     parser,
     globals: {

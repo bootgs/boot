@@ -17,7 +17,7 @@ describe("createParamDecorator: positive", () => {
 
     const metadata = Reflect.getMetadata(PARAM_DEFINITIONS_METADATA, Test.prototype, "method");
     expect(metadata).toEqual({
-      [ `${type}:0` ]: { type, key, index: 0 }
+      [`${type}:0`]: { type, key, index: 0 }
     });
   });
 
@@ -33,7 +33,7 @@ describe("createParamDecorator: positive", () => {
 
     const metadata = Reflect.getMetadata(PARAM_DEFINITIONS_METADATA, Test);
     expect(metadata).toEqual({
-      [ `${type}:0` ]: { type, key, index: 0 }
+      [`${type}:0`]: { type, key, index: 0 }
     });
   });
 });

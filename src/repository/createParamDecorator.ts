@@ -10,16 +10,26 @@ import { assignParamMetadata } from "../repository";
  * @returns {Function} A function that returns a parameter decorator.
  */
 export function createParamDecorator(type: ParamSource) {
-  return (key?: string): ParameterDecorator => {
-    return (target, propertyKey, parameterIndex) => {
-      const metadataTarget = target;
+  return (key?: string, ...pipes: any[]): ParameterDecorator => {
+    return (
+      target: object,
+      propertyKey: string | symbol | undefined,
+      parameterIndex: number
+    ): void => {
+      const metadataTarget: object = target;
 
       const existing: Record<string, ParamDefinition> =
         (propertyKey
           ? Reflect.getMetadata(PARAM_DEFINITIONS_METADATA, metadataTarget, propertyKey)
           : Reflect.getMetadata(PARAM_DEFINITIONS_METADATA, metadataTarget)) || {};
 
-      const updated = assignParamMetadata(existing, parameterIndex, type, key);
+      const updated: Record<string, ParamDefinition> = assignParamMetadata(
+        existing,
+        parameterIndex,
+        type,
+        key,
+        pipes
+      );
 
       if (propertyKey) {
         Reflect.defineMetadata(PARAM_DEFINITIONS_METADATA, updated, metadataTarget, propertyKey);

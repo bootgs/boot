@@ -26,7 +26,7 @@ describe("EventDispatcher: Extra", () => {
     }
     const instance = new TestController();
     vi.mocked(resolver.resolve).mockReturnValue(instance);
-    dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
+    dispatcher = new EventDispatcher(resolver, new Map([[TestController, null]]));
 
     await dispatcher.dispatch(AppsScriptEventType.EDIT, { range: { getA1Notation: () => "A10" } });
     expect(instance.called).toBe(true);
@@ -46,7 +46,7 @@ describe("EventDispatcher: Extra", () => {
     }
     const instance = new TestController();
     vi.mocked(resolver.resolve).mockReturnValue(instance);
-    dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
+    dispatcher = new EventDispatcher(resolver, new Map([[TestController, null]]));
 
     await dispatcher.dispatch(AppsScriptEventType.EDIT, { range: {} }); // Missing getA1Notation
     expect(instance.called).toBe(false);
@@ -62,7 +62,7 @@ describe("EventDispatcher: Extra", () => {
     }
     const instance = new TestController();
     vi.mocked(resolver.resolve).mockReturnValue(instance);
-    dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
+    dispatcher = new EventDispatcher(resolver, new Map([[TestController, null]]));
 
     await dispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, {
       source: { getId: () => "FORM_1" }
@@ -86,7 +86,7 @@ describe("EventDispatcher: Extra", () => {
     }
     const instance = new TestController();
     vi.mocked(resolver.resolve).mockReturnValue(instance);
-    dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
+    dispatcher = new EventDispatcher(resolver, new Map([[TestController, null]]));
 
     await dispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, { source: {} }); // Missing getId
     expect(instance.called).toBe(false);
@@ -102,7 +102,7 @@ describe("EventDispatcher: Extra", () => {
     }
     const instance = new TestController();
     vi.mocked(resolver.resolve).mockReturnValue(instance);
-    dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
+    dispatcher = new EventDispatcher(resolver, new Map([[TestController, null]]));
 
     await dispatcher.dispatch(AppsScriptEventType.CHANGE, {}); // Missing changeType
     expect(instance.called).toBe(false);
@@ -125,7 +125,7 @@ describe("EventDispatcher: Extra", () => {
       return null;
     });
 
-    dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
+    dispatcher = new EventDispatcher(resolver, new Map([[TestController, null]]));
 
     await dispatcher.dispatch(AppsScriptEventType.EDIT, {
       range: { getA1Notation: () => "A1" }
@@ -147,7 +147,7 @@ describe("EventDispatcher: Extra", () => {
       throw new Error("Resolve failed");
     });
 
-    dispatcher = new EventDispatcher(resolver, new Map([ [ TestController, null ] ]));
+    dispatcher = new EventDispatcher(resolver, new Map([[TestController, null]]));
 
     await dispatcher.dispatch(AppsScriptEventType.EDIT, {
       range: { getA1Notation: () => "A1" }

@@ -6,5 +6,15 @@ import { createParamDecorator } from "../../../repository";
  *
  * @param   {string} [key] - The name of a header to extract.
  * @returns {ParameterDecorator} A parameter decorator.
+ *
+ * @example
+ * ```TypeScript
+ * import { Get, Headers } from "bootgs";
+ *
+ * @Get()
+ * findAll(@Headers("User-Agent") agent: string) {
+ *   return { agent };
+ * }
+ * ```
  */
 export const Headers = createParamDecorator(ParamSource.HEADERS);

@@ -6,6 +6,7 @@ import {
   PATH_METADATA
 } from "../domain/constants";
 import { Newable, RouteMetadata } from "../domain/types";
+import { RequestMethod } from "../domain/enums";
 
 /**
  * Explorer for identifying routes in controllers.
@@ -14,7 +15,7 @@ export class RouterExplorer {
   /**
    * Explores the registered controllers and extracts route metadata.
    *
-   * @param {Map<Newable, unknown>} controllers The registered controllers.
+   * @param   {Map<Newable, unknown>} controllers - The registered controllers.
    * @returns {RouteMetadata[]} An array of extracted route metadata.
    */
   public explore(controllers: Map<Newable, unknown>): RouteMetadata[] {
@@ -24,38 +25,51 @@ export class RouterExplorer {
       const controllerType: string | null =
         Reflect.getMetadata(CONTROLLER_TYPE_METADATA, controller) || null;
 
-      const isHttpController = controllerType === "http";
+      const isHttpController: boolean = controllerType === "http";
 
       if (!isHttpController) {
         continue;
       }
 
-      const controllerOptions = Reflect.getMetadata(CONTROLLER_OPTIONS_METADATA, controller) || {};
+      const controllerOptions: Record<string, unknown> =
+        Reflect.getMetadata(CONTROLLER_OPTIONS_METADATA, controller) || {};
 
-      const basePath = controllerOptions.basePath || "/";
+      const basePath: string = (controllerOptions.basePath as string) || "/";
 
-      const prototype = controller.prototype;
+      const prototype: Record<string, unknown> = (controller as any).prototype;
 
-      const propertyNames = Object.getOwnPropertyNames(prototype);
+      const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
 
       for (const propertyName of propertyNames) {
         if (propertyName === "constructor") {
           continue;
         }
 
-        const methodHandler = prototype[ propertyName ];
+        const methodHandler: unknown = prototype[propertyName];
 
-        const routePath = Reflect.getMetadata(PATH_METADATA, methodHandler);
+        const routePath: string | undefined = Reflect.getMetadata(
+          PATH_METADATA,
+          methodHandler as object
+        );
 
-        const requestMethod = Reflect.getMetadata(METHOD_METADATA, methodHandler);
+        const requestMethods: RequestMethod | RequestMethod[] | undefined = Reflect.getMetadata(
+          METHOD_METADATA,
+          methodHandler as object
+        );
 
-        if (routePath && requestMethod) {
-          routes.push({
-            controller,
-            handler: propertyName,
-            method: requestMethod,
-            path: decodeURI(normalize(`/${basePath}/${routePath}`))
-          });
+        if (routePath && requestMethods) {
+          const methods: RequestMethod[] = Array.isArray(requestMethods)
+            ? requestMethods
+            : [requestMethods];
+
+          for (const method of methods) {
+            routes.push({
+              controller,
+              handler: propertyName,
+              method,
+              path: decodeURI(normalize(`/${basePath}/${routePath}`))
+            });
+          }
         }
       }
     }

@@ -19,14 +19,14 @@ describe("EventDispatcher: Boundary", () => {
   beforeEach(() => {
     controller = new TestEventController();
     app = BootApplicationFactory.create({
-      controllers: [ TestEventController ],
-      providers: [ { provide: TestEventController, useValue: controller } ]
+      controllers: [TestEventController],
+      providers: [{ provide: TestEventController, useValue: controller }]
     });
   });
 
   it("should not throw error and not dispatch when event range is missing", async () => {
     const mockEvent = {} as unknown as GoogleAppsScript.Events.SheetsOnEdit;
-    await expect(app.onEdit(mockEvent)).resolves.toBeUndefined();
+    expect(await app.onEdit(mockEvent)).toBeUndefined();
     expect(controller.onEditCalled).toBe(false);
   });
 });

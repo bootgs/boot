@@ -4,6 +4,11 @@ import { FactoryProvider } from "./FactoryProvider";
 import { Newable } from "./Newable";
 import { ValueProvider } from "./ValueProvider";
 
+/**
+ * Type representing a provider definition.
+ *
+ * @template T - The type of the instance provided.
+ */
 export type Provider<T = unknown> =
   | Newable<T>
   | ValueProvider<T>

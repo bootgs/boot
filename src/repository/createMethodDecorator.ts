@@ -7,9 +7,24 @@ import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA } from "../domai
  * This interface defines event-specific filters for `onEdit`, `onFormSubmit`, and `onChange` handlers.
  */
 export interface AppsScriptOptions {
+  /**
+   * The type of Apps Script event.
+   */
   eventType: AppsScriptEventType;
+
+  /**
+   * Range or ranges to monitor (for edit events).
+   */
   range?: string | string[] | RegExp;
+
+  /**
+   * Form ID or IDs to monitor (for form submit events).
+   */
   formId?: string | string[];
+
+  /**
+   * Change type or types to monitor (for change events).
+   */
   changeType?:
     | GoogleAppsScript.Events.SheetsOnChangeChangeType
     | GoogleAppsScript.Events.SheetsOnChangeChangeType[];
@@ -18,9 +33,9 @@ export interface AppsScriptOptions {
 /**
  * A factory function that creates a method decorator for Google Apps Script event handlers.
  *
- * @param   eventType - The specific type of Apps Script event to handle.
- * @param   options - Optional filters for the event.
- * @returns A method decorator.
+ * @param   {AppsScriptEventType} eventType - The specific type of Apps Script event to handle.
+ * @param   {Omit<AppsScriptOptions, "eventType">} options - Optional filters for the event.
+ * @returns {MethodDecorator} A method decorator.
  */
 export function createMethodDecorator(
   eventType: AppsScriptEventType,

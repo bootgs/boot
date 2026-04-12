@@ -6,5 +6,18 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @param   {string} [path] - Route path (optional).
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```TypeScript
+ * import { GetMapping, Param, RestController } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @GetMapping("/{id}")
+ *   findOne(@Param("id") id: string) {
+ *     return { id };
+ *   }
+ * }
+ * ```
  */
 export const GetMapping = createHttpDecorator(RequestMethod.GET);

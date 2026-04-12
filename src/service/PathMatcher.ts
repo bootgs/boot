@@ -7,18 +7,20 @@ export class PathMatcher {
    * @returns {boolean} `true` if the paths match, otherwise `false`.
    */
   public match(template: string, actual: string): boolean {
-    const tplParts = template.split("/").filter(Boolean);
-    const actParts = actual.split("/").filter(Boolean);
+    const tplParts: string[] = template.split("/").filter(Boolean);
+
+    const actParts: string[] = actual.split("/").filter(Boolean);
 
     if (tplParts.length !== actParts.length) {
       return false;
     }
 
-    return tplParts.every((part, i) => {
+    return tplParts.every((part: string, i: number) => {
       if (part.startsWith("{") && part.endsWith("}")) {
         return true;
       }
-      return part === actParts[ i ];
+
+      return part === actParts[i];
     });
   }
 
@@ -30,14 +32,17 @@ export class PathMatcher {
    * @returns {Record<string, string>} An object containing the extracted path parameters.
    */
   public extractParams(template: string, actual: string): Record<string, string> {
-    const tplParts = template.split("/").filter(Boolean);
-    const actParts = actual.split("/").filter(Boolean);
+    const tplParts: string[] = template.split("/").filter(Boolean);
+
+    const actParts: string[] = actual.split("/").filter(Boolean);
+
     const params: Record<string, string> = {};
 
-    tplParts.forEach((part, i) => {
+    tplParts.forEach((part: string, i: number): void => {
       if (part.startsWith("{") && part.endsWith("}")) {
-        const paramName = part.slice(1, -1);
-        params[ paramName ] = actParts[ i ];
+        const paramName: string = part.slice(1, -1);
+
+        params[paramName] = actParts[i];
       }
     });
 

@@ -1,10 +1,28 @@
 import { HeaderAcceptMimeType, HttpStatus, RequestMethod } from "../domain/enums";
 import { HttpHeaders, HttpRequest, HttpResponse } from "../domain/types";
+import { isEmpty, isString, normalize } from "apps-script-utils";
 
 /**
  * Service for building and wrapping HTTP responses.
  */
 export class ResponseBuilder {
+  /**
+   * The prefix for API routes.
+   *
+   * @private
+   * @readonly
+   */
+  private readonly _apiPrefix: string | null;
+
+  /**
+   * Creates a new instance of ResponseBuilder.
+   *
+   * @param {string} [apiPrefix] - The prefix for API routes.
+   */
+  constructor(apiPrefix?: string | null) {
+    this._apiPrefix = apiPrefix ?? null;
+  }
+
   /**
    * Creates a structured HttpResponse object.
    *
@@ -20,19 +38,21 @@ export class ResponseBuilder {
     headers: HttpHeaders | undefined = {},
     data: unknown = null
   ): HttpResponse {
-    const resolvedStatus =
+    const resolvedStatus: HttpStatus =
       status ??
-      ([ RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS ].includes(request.method)
+      ([RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS].includes(request.method)
         ? HttpStatus.OK
         : HttpStatus.CREATED);
 
-    const statusText = ((): string => {
-      const entry = Object.entries(HttpStatus).find(([ , value ]) => value === resolvedStatus);
+    const statusText: string = ((): string => {
+      const entry: [string, HttpStatus] | undefined = Object.entries(HttpStatus).find(
+        ([, value]: [string, unknown]): boolean => value === resolvedStatus
+      ) as [string, HttpStatus] | undefined;
 
-      return entry ? entry[ 0 ] : "UNKNOWN_STATUS";
+      return entry ? entry[0] : "UNKNOWN_STATUS";
     })();
 
-    const ok = resolvedStatus >= 200 && resolvedStatus < 300;
+    const ok: boolean = resolvedStatus >= 200 && resolvedStatus < 300;
 
     return {
       headers,
@@ -53,36 +73,54 @@ export class ResponseBuilder {
   public wrap(
     request: HttpRequest,
     response: HttpResponse
-  ): string | GoogleAppsScript.Content.TextOutput | GoogleAppsScript.HTML.HtmlOutput {
-    const acceptHeader = request.headers?.Accept;
-    const mimeType =
-      Object.values(HeaderAcceptMimeType).find((v) => v === acceptHeader) ||
-      HeaderAcceptMimeType.HTML;
+  ): GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string {
+    const acceptHeader: string | undefined = request.headers?.Accept;
 
-    response.headers[ "Content-Type" ] = mimeType;
+    const mimeType: HeaderAcceptMimeType =
+      Object.values(HeaderAcceptMimeType).find(
+        (v: HeaderAcceptMimeType): boolean => v === acceptHeader
+      ) || HeaderAcceptMimeType.HTML;
 
-    const isApi = request.url.pathname?.startsWith("/api/") || false;
+    response.headers["Content-Type"] = mimeType;
 
-    const result = JSON.stringify(isApi ? response : response.body);
+    const apiPrefix: string | null =
+      isString(this._apiPrefix) && !isEmpty(this._apiPrefix)
+        ? normalize(`/${this._apiPrefix}`)
+        : null;
+
+    const pathname: string | null =
+      isString(request.url.pathname) && !isEmpty(request.url.pathname)
+        ? request.url.pathname
+        : null;
+
+    const isApi: boolean = !!(apiPrefix && pathname && pathname.startsWith(`${apiPrefix}/`));
+
+    const result: string = JSON.stringify(isApi ? response : response.body);
 
     switch (mimeType) {
-      case HeaderAcceptMimeType.GOOGLE_JSON:
+      case HeaderAcceptMimeType.GOOGLE_JSON: {
         return result;
+      }
 
-      case HeaderAcceptMimeType.GOOGLE_TEXT:
+      case HeaderAcceptMimeType.GOOGLE_TEXT: {
         return result;
+      }
 
-      case HeaderAcceptMimeType.JSON:
+      case HeaderAcceptMimeType.JSON: {
         return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
+      }
 
-      case HeaderAcceptMimeType.TEXT:
+      case HeaderAcceptMimeType.TEXT: {
         return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.TEXT);
+      }
 
-      case HeaderAcceptMimeType.HTML:
+      case HeaderAcceptMimeType.HTML: {
         return HtmlService.createHtmlOutput(result);
+      }
 
-      default:
+      default: {
         return HtmlService.createHtmlOutput(result);
+      }
     }
   }
 }

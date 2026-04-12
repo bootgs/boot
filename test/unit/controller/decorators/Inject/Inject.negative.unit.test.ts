@@ -12,15 +12,16 @@ class FaultyController {
   constructor(@Inject(UnregisteredService) public service: UnregisteredService) {}
 }
 
-describe("Inject Decorator: Negative", () => {
-  it("should throw error when injecting an unregistered provider", () => {
+describe("Inject Decorator: Auto-resolution", () => {
+  it("should resolve unregistered provider when injected as a class", () => {
     const app = BootApplicationFactory.create({
-      controllers: [ FaultyController ],
+      controllers: [FaultyController],
       providers: []
     });
 
-    expect(() =>
-      (app as unknown as { _resolver: Resolver })._resolver.resolve(FaultyController)
-    ).toThrow(/'UnregisteredService' is not registered/);
+    const instance = (app as unknown as { _resolver: Resolver })._resolver.resolve(
+      FaultyController
+    );
+    expect(instance.service).toBeInstanceOf(UnregisteredService);
   });
 });

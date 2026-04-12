@@ -7,17 +7,35 @@ import { assignInjectMetadata } from "../../repository";
  *
  * @param   {Newable | string | symbol} [token] - The injection token that the DI container will use to resolve the dependency.
  * @returns {ParameterDecorator} A parameter decorator.
+ *
+ * @example
+ * ```TypeScript
+ * import { Service, Inject } from "bootgs";
+ *
+ * @Service()
+ * class MyService {
+ *   constructor(@Inject("MY_TOKEN") private readonly myDependency: any) {}
+ * }
+ * ```
  */
 export function Inject(token?: Newable | string | symbol): ParameterDecorator {
-  return (target, propertyKey, parameterIndex) => {
-    const metadataTarget = target;
+  return (
+    target: object,
+    propertyKey: string | symbol | undefined,
+    parameterIndex: number
+  ): void => {
+    const metadataTarget: object = target;
 
     const existing: Record<string, InjectTokenDefinition> =
       (propertyKey
         ? Reflect.getMetadata(INJECT_TOKENS_METADATA, metadataTarget, propertyKey)
         : Reflect.getMetadata(INJECT_TOKENS_METADATA, metadataTarget)) || {};
 
-    const updatedTokens = assignInjectMetadata(existing, parameterIndex, token);
+    const updatedTokens: Record<string, InjectTokenDefinition> = assignInjectMetadata(
+      existing,
+      parameterIndex,
+      token
+    );
 
     if (propertyKey) {
       Reflect.defineMetadata(INJECT_TOKENS_METADATA, updatedTokens, metadataTarget, propertyKey);

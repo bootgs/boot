@@ -1,55 +1,19 @@
 import { isString } from "apps-script-utils";
-import { ApplicationConfig, AppsScriptMenuProxy, InjectionToken, Newable } from "../domain/types";
+import { ApplicationConfig, AppsScriptMenuProxy, HttpResponse } from "../domain/types";
 import { AppsScriptEventType, RequestMethod } from "../domain/enums";
-import { EventDispatcher, RequestFactory, Resolver, ResponseBuilder, Router, RouterExplorer } from "../service";
+import { BaseBootApplication } from "./BaseBootApplication";
 
 /**
- * Main application class for bootstrapping and handling Google Apps Script events.
+ * Synchronous application class for bootstrapping and handling Google Apps Script events.
  */
-export class BootApplication {
-  private readonly _controllers = new Map<Newable, unknown>();
-  private readonly _providers = new Map<InjectionToken, unknown>();
-  private readonly _resolver: Resolver;
-  private readonly _router: Router;
-  private readonly _requestFactory = new RequestFactory();
-  private readonly _responseBuilder = new ResponseBuilder();
-  private readonly _eventDispatcher: EventDispatcher;
-
+export class BootApplication extends BaseBootApplication {
   /**
    * Creates a new instance of BootApplication.
    *
-   * @param {ApplicationConfig} config The application configuration.
+   * @param {ApplicationConfig} config - The application configuration.
    */
-  constructor(config: ApplicationConfig) {
-    (config.controllers || []).forEach((c) => this._controllers.set(c, null));
-
-    (config.providers || []).forEach((p) => {
-      if ("provide" in p) {
-        if ("useValue" in p) {
-          this._providers.set(p.provide, p.useValue);
-        } else if ("useClass" in p) {
-          this._providers.set(p.provide, null); // Will be resolved later
-        } else if ("useFactory" in p) {
-          // TODO: implement factory providers
-          this._providers.set(p.provide, null);
-        } else if ("useExisting" in p) {
-          // TODO: implement existing providers
-          this._providers.set(p.provide, null);
-        }
-      } else {
-        this._providers.set(p, null);
-      }
-    });
-
-    this._resolver = new Resolver(this._controllers, this._providers);
-
-    const explorer = new RouterExplorer();
-
-    const routes = explorer.explore(this._controllers);
-
-    this._router = new Router(this._resolver, routes);
-
-    this._eventDispatcher = new EventDispatcher(this._resolver, this._controllers);
+  public constructor(config?: ApplicationConfig) {
+    super(config);
   }
 
   /**
@@ -58,10 +22,10 @@ export class BootApplication {
    * @returns {AppsScriptMenuProxy} A Proxy object.
    */
   public get onMenu(): AppsScriptMenuProxy {
-    const handler = () => proxy;
+    const handler: () => AppsScriptMenuProxy = (): AppsScriptMenuProxy => proxy;
 
-    const proxy = new Proxy(handler, {
-      get: (target, prop, receiver) => {
+    const proxy: AppsScriptMenuProxy = new Proxy(handler, {
+      get: (target, prop, receiver: any): any => {
         if (!isString(prop)) {
           return Reflect.get(target, prop, receiver);
         }
@@ -74,11 +38,11 @@ export class BootApplication {
           return Reflect.get(target, prop, receiver);
         }
 
-        return (event: GoogleAppsScript.Events.AppsScriptEvent) => {
+        return (event: GoogleAppsScript.Events.AppsScriptEvent): void | Promise<void> => {
           return this._eventDispatcher.dispatchByName(prop, event);
         };
       },
-      apply: (target, thisArg, argArray) => {
+      apply: (target, thisArg: any, argArray): any => {
         return Reflect.apply(target, thisArg, argArray);
       }
     }) as unknown as AppsScriptMenuProxy;
@@ -89,95 +53,90 @@ export class BootApplication {
   /**
    * Handles Google Apps Script doGet events.
    *
-   * @param {GoogleAppsScript.Events.DoGet} event The doGet event object.
-   * @returns {Promise<GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput>} The response object.
+   * @param   {GoogleAppsScript.Events.DoGet} event - The doGet event object.
+   * @returns {GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string} The response object or string.
    */
-  public async doGet(event: GoogleAppsScript.Events.DoGet) {
-    return this.handleHttpRequest(RequestMethod.GET, event);
+  public doGet(
+    event: GoogleAppsScript.Events.DoGet
+  ): GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string {
+    const { request, response } = this.handleHttpRequestInternal(RequestMethod.GET, event);
+
+    if (response instanceof Promise) {
+      return response.then((res: HttpResponse): any =>
+        this._responseBuilder.wrap(request, res)
+      ) as unknown as any;
+    }
+
+    return this._responseBuilder.wrap(request, response);
   }
 
   /**
    * Handles Google Apps Script doPost events.
    *
-   * @param {GoogleAppsScript.Events.DoPost} event The doPost event object.
-   * @returns {Promise<GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput>} The response object.
+   * @param   {GoogleAppsScript.Events.DoPost} event - The doPost event object.
+   * @returns {GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string} The response object or string.
    */
-  public async doPost(event: GoogleAppsScript.Events.DoPost) {
-    return this.handleHttpRequest(RequestMethod.POST, event);
+  public doPost(
+    event: GoogleAppsScript.Events.DoPost
+  ): GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string {
+    const { request, response } = this.handleHttpRequestInternal(RequestMethod.POST, event);
+
+    if (response instanceof Promise) {
+      return response.then((res: HttpResponse): any =>
+        this._responseBuilder.wrap(request, res)
+      ) as unknown as any;
+    }
+
+    return this._responseBuilder.wrap(request, response);
   }
 
   /**
    * Handles Google Apps Script onInstall events.
    *
-   * @param {GoogleAppsScript.Events.AddonOnInstall} event The onInstall event object.
-   * @returns {Promise<void>}
+   * @param   {GoogleAppsScript.Events.AddonOnInstall} event - The onInstall event object.
+   * @returns {void | Promise<void>}
    */
-  public async onInstall(event: GoogleAppsScript.Events.AddonOnInstall) {
-    await this._eventDispatcher.dispatch(AppsScriptEventType.INSTALL, event);
+  public onInstall(event: GoogleAppsScript.Events.AddonOnInstall): void | Promise<void> {
+    return this._eventDispatcher.dispatch(AppsScriptEventType.INSTALL, event);
   }
 
   /**
    * Handles Google Apps Script onOpen events.
    *
-   * @param {GoogleAppsScript.Events.AppsScriptEvent} event The onOpen event object.
-   * @returns {Promise<void>}
+   * @param   {GoogleAppsScript.Events.AppsScriptEvent} event - The onOpen event object.
+   * @returns {void | Promise<void>}
    */
-  public async onOpen(event: GoogleAppsScript.Events.AppsScriptEvent) {
-    await this._eventDispatcher.dispatch(AppsScriptEventType.OPEN, event);
+  public onOpen(event: GoogleAppsScript.Events.AppsScriptEvent): void | Promise<void> {
+    return this._eventDispatcher.dispatch(AppsScriptEventType.OPEN, event);
   }
 
   /**
    * Handles Google Apps Script onEdit events.
    *
-   * @param {GoogleAppsScript.Events.SheetsOnEdit} event The onEdit event object.
-   * @returns {Promise<void>}
+   * @param   {GoogleAppsScript.Events.SheetsOnEdit} event - The onEdit event object.
+   * @returns {void | Promise<void>}
    */
-  public async onEdit(event: GoogleAppsScript.Events.SheetsOnEdit) {
-    await this._eventDispatcher.dispatch(AppsScriptEventType.EDIT, event);
+  public onEdit(event: GoogleAppsScript.Events.SheetsOnEdit): void | Promise<void> {
+    return this._eventDispatcher.dispatch(AppsScriptEventType.EDIT, event);
   }
-
-  // TODO: onSelectionChange
-  // public async onSelectionChange(event: GoogleAppsScript.Events.SheetsOnSelectionChange) {
-  //   await this.eventDispatcher.dispatch(AppsScriptEventType.SELECTION_CHANGE, event);
-  // }
 
   /**
    * Handles Google Apps Script onChange events.
    *
-   * @param {GoogleAppsScript.Events.SheetsOnChange} event The onChange event object.
-   * @returns {Promise<void>}
+   * @param   {GoogleAppsScript.Events.SheetsOnChange} event - The onChange event object.
+   * @returns {void | Promise<void>}
    */
-  public async onChange(event: GoogleAppsScript.Events.SheetsOnChange) {
-    await this._eventDispatcher.dispatch(AppsScriptEventType.CHANGE, event);
+  public onChange(event: GoogleAppsScript.Events.SheetsOnChange): void | Promise<void> {
+    return this._eventDispatcher.dispatch(AppsScriptEventType.CHANGE, event);
   }
 
   /**
    * Handles Google Apps Script onFormSubmit events.
    *
-   * @param {GoogleAppsScript.Events.FormsOnFormSubmit} event The onFormSubmit event object.
-   * @returns {Promise<void>}
+   * @param   {GoogleAppsScript.Events.FormsOnFormSubmit} event - The onFormSubmit event object.
+   * @returns {void | Promise<void>}
    */
-  public async onFormSubmit(event: GoogleAppsScript.Events.FormsOnFormSubmit) {
-    await this._eventDispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, event);
-  }
-
-  /**
-   * Handles incoming HTTP requests and routes them to the appropriate controller.
-   *
-   * @param {RequestMethod} method The HTTP method (GET or POST).
-   * @param {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event The Apps Script event object.
-   * @returns {Promise<GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput>} The response object.
-   */
-  private async handleHttpRequest(
-    method: RequestMethod,
-    event: GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost
-  ) {
-    const request = this._requestFactory.create(method, event);
-
-    const response = await this._router.handle(request, event, (req, status, headers, data) =>
-      this._responseBuilder.create(req, status, headers, data)
-    );
-
-    return this._responseBuilder.wrap(request, response);
+  public onFormSubmit(event: GoogleAppsScript.Events.FormsOnFormSubmit): void | Promise<void> {
+    return this._eventDispatcher.dispatch(AppsScriptEventType.FORM_SUBMIT, event);
   }
 }

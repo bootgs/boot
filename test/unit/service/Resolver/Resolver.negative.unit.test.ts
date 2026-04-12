@@ -5,7 +5,7 @@ import { Inject, Injectable } from "src/controller/decorators";
 import { InjectionToken } from "src/domain/types";
 
 describe("Resolver: Negative", () => {
-  it("should throw error if dependency is not registered", () => {
+  it("should resolve dependency even if it is not registered (as long as it's a class)", () => {
     class UnregisteredService {}
     @Injectable()
     class MainService {
@@ -16,7 +16,8 @@ describe("Resolver: Negative", () => {
     providers.set(MainService, null);
     const resolver = new Resolver(new Map(), providers);
 
-    expect(() => resolver.resolve(MainService)).toThrow(/is not registered/);
+    const instance = resolver.resolve(MainService);
+    expect(instance.dep).toBeInstanceOf(UnregisteredService);
   });
 
   it("should throw error if dependency token is missing (e.g. interface without @Inject)", () => {

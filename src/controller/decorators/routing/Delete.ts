@@ -6,5 +6,18 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @param   {string} [path] - Route path (optional).
  * @returns {MethodDecorator} A method decorator.
+ *
+ * @example
+ * ```TypeScript
+ * import { Delete, Param, RestController } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @Delete("/{id}")
+ *   remove(@Param("id") id: string) {
+ *     return { deleted: true, id };
+ *   }
+ * }
+ * ```
  */
 export const Delete = createHttpDecorator(RequestMethod.DELETE);

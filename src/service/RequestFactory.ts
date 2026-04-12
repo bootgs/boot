@@ -25,7 +25,8 @@ export class RequestFactory {
         }
 
         try {
-          const parsed = JSON.parse(input.trim());
+          const parsed: unknown = JSON.parse(input.trim());
+
           return isRecord(parsed) ? (parsed as HttpHeaders) : null;
         } catch (err: unknown) {
           console.warn("Failed to parse JSON:", err);
@@ -34,18 +35,19 @@ export class RequestFactory {
         return null;
       })(event?.parameter?.headers) || {};
 
-    const methodParam = event?.parameter?.method?.toLowerCase();
+    const methodParam: string | undefined = event?.parameter?.method?.toLowerCase();
 
-    const method = Object.values(RequestMethod).find((v) => v === methodParam) || methodRequest;
+    const method: RequestMethod =
+      Object.values(RequestMethod).find((v: RequestMethod): boolean => v === methodParam) ||
+      methodRequest;
 
-    const rawPathname =
+    const rawPathname: string =
       event?.pathInfo || event?.parameter?.path || event?.parameter?.pathname || "/";
 
-    const pathname = normalize(rawPathname);
+    const pathname: string = decodeURI(normalize(rawPathname).trim());
 
-    const search = ((params) => (isString(params) && params.length > 0 ? `?${params}` : undefined))(
-      event?.queryString
-    );
+    const search: string | undefined = ((params: string | undefined): string | undefined =>
+      isString(params) && params.length > 0 ? `?${params}` : undefined)(event?.queryString);
 
     const url: ParsedUrl = {
       pathname,
@@ -54,7 +56,7 @@ export class RequestFactory {
       query: event?.parameters ?? {}
     };
 
-    const rawBody = [
+    const rawBody: string | null = [
       RequestMethod.POST,
       RequestMethod.PUT,
       RequestMethod.PATCH,
@@ -65,13 +67,13 @@ export class RequestFactory {
         : null
       : null;
 
-    const body = ((): unknown => {
+    const body: unknown = ((): unknown => {
       if (!isString(rawBody)) {
         return rawBody;
       }
 
-      const contentType =
-        headers[ "Content-Type" ] || ("postData" in event ? event?.postData?.type : undefined) || "";
+      const contentType: string =
+        headers["Content-Type"] || ("postData" in event ? event?.postData?.type : undefined) || "";
 
       if (contentType.includes("application/json")) {
         try {

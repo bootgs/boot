@@ -1,7 +1,6 @@
 # Exceptions Layer
 
-Этот слой содержит классы ошибок и механизмы их обработки.
+This layer contains error classes and their handling mechanisms.
 
-- `app.exception.ts`: Базовый класс для исключений приложения.
-- `http.exception.ts`: Исключения, специфичные для HTTP.
-- `decorators/`: Декораторы для обработки ошибок (например, `@Catch`).
+- `AppException.ts`: Base class for application exceptions.
+- `HttpException.ts`: HTTP-specific exceptions.

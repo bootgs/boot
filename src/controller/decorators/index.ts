@@ -1,6 +1,7 @@
 export * from "./appsscript";
 export * from "./params";
 export * from "./routing";
+export * from "./validation";
 
 export * from "./Controller";
 export * from "./Entity";
@@ -10,3 +11,8 @@ export * from "./Injectable";
 export * from "./Repository";
 export * from "./RestController";
 export * from "./Service";
+export * from "./Autowired";
+export * from "./ResponseStatus";
+export * from "./ControllerAdvice";
+export * from "./ExceptionHandler";
+export * from "./Value";

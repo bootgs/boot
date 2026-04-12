@@ -4,10 +4,10 @@ import { InjectionToken, InjectTokenDefinition } from "../domain/types";
 /**
  * Updates or adds metadata for the injection tokens of a specific function parameter (argument) based on its index and token.
  *
- * @param   existing - The existing injection tokens metadata.
- * @param   index - The index of the parameter in the function's argument list.
- * @param   [token] - The injection token for this parameter.
- * @returns The updated injection tokens metadata.
+ * @param   {Record<string, InjectTokenDefinition>} existing - The existing injection tokens metadata.
+ * @param   {number} index - The index of the parameter in the function's argument list.
+ * @param   {InjectionToken} [token] - The injection token for this parameter.
+ * @returns {Record<string, InjectTokenDefinition>} The updated injection tokens metadata.
  */
 export function assignInjectMetadata(
   existing: Record<string, InjectTokenDefinition>,
@@ -18,6 +18,6 @@ export function assignInjectMetadata(
 
   return {
     ...existing,
-    [ `${type}:${index}` ]: { type, token, index }
+    [`${type}:${index}`]: { type, token, index }
   };
 }

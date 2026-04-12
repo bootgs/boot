@@ -14,7 +14,7 @@ class UserController {
 
 describe("Integration: BootApplication: Negative", () => {
   const app = BootApplicationFactory.create({
-    controllers: [ UserController ]
+    controllers: [UserController]
   });
 
   (global as unknown as Record<string, unknown>).HtmlService = {
@@ -31,7 +31,7 @@ describe("Integration: BootApplication: Negative", () => {
     await app.doGet(event);
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
-    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[ 0 ][ 0 ];
+    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[0][0];
     const responseBody = JSON.parse(callArgs as string);
     expect(responseBody).toEqual({ error: { message: "Cannot get /unknown" } });
   });
