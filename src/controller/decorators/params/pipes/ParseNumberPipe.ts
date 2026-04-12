@@ -5,23 +5,23 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
  *
  * @example
  * ```TypeScript
- * import { Get, Param, ParseIntPipe, RestController } from "bootgs";
+ * import { Get, Param, ParseNumberPipe, RestController } from "bootgs";
  *
  * @RestController("/users")
  * class UsersController {
  *   @Get("/{id}")
- *   getUser(@Param("id", ParseIntPipe) id: number) {
+ *   getUser(@Param("id", ParseNumberPipe) id: number) {
  *     return { id };
  *   }
  * }
  * ```
  */
-export class ParseIntPipe implements PipeTransform<string | number, number> {
+export class ParseNumberPipe implements PipeTransform<string | number, number> {
   /**
    * Transforms the input value to an integer.
    *
-   * @param {string | number} value The value to transform.
-   * @param {ArgumentMetadata} metadata The argument metadata.
+   * @param   {string | number} value - The value to transform.
+   * @param   {ArgumentMetadata} metadata - The argument metadata.
    * @returns {number} The parsed integer.
    */
   public transform(value: string | number, metadata: ArgumentMetadata): number {

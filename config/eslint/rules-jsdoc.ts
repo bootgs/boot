@@ -7,7 +7,7 @@ import jsdoc from "eslint-plugin-jsdoc";
  * @see {@link https://www.npmjs.com/package/eslint-plugin-jsdoc eslint-plugin-jsdoc}
  */
 const config: Linter.Config = {
-  files: [ "**/*.{js,mjs,cjs,ts,jsx,tsx}" ],
+  files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
   plugins: {
     jsdoc
   },

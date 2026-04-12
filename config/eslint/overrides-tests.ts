@@ -4,7 +4,7 @@ import type { Linter } from "eslint";
  * Overrides for test files.
  */
 const config: Linter.Config = {
-  files: [ "test/**/*.ts" ],
+  files: ["test/**/*.ts"],
   rules: {
     /**
      * Disallows usage of the `any` type.

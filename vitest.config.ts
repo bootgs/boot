@@ -1,5 +1,11 @@
 import { defineConfig } from "vitest/config";
-import { type BuildOptions, getAppVersion, getBuildOptions, resolveConfig, testConfig } from "./config/vite";
+import {
+  type BuildOptions,
+  getAppVersion,
+  getBuildOptions,
+  resolveConfig,
+  testConfig
+} from "./config/vite";
 import { ConfigEnv } from "vite";
 
 /**

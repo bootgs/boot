@@ -7,7 +7,7 @@ import type { Linter } from "eslint";
  * @see {@link https://eslint.org/docs/latest/rules/ ESLint rules}
  */
 const config: Linter.Config = {
-  files: [ "**/*.{js,mjs,cjs}" ],
+  files: ["**/*.{js,mjs,cjs}"],
   ...js.configs.recommended
 };
 

@@ -8,18 +8,18 @@ import type { Linter } from "eslint";
  */
 const config: Array<Linter.Config> = [
   {
-    files: [ "**/*.json" ],
-    ignores: [ "**/tsconfig.json", "**/tsconfig.*.json" ],
+    files: ["**/*.json"],
+    ignores: ["**/tsconfig.json", "**/tsconfig.*.json"],
     language: "json/json",
     ...json.configs.recommended
   },
   {
-    files: [ "**/*.jsonc", "**/tsconfig.json", "**/tsconfig.*.json" ],
+    files: ["**/*.jsonc", "**/tsconfig.json", "**/tsconfig.*.json"],
     language: "json/jsonc",
     ...json.configs.recommended
   },
   {
-    files: [ "**/*.json5" ],
+    files: ["**/*.json5"],
     language: "json/json5",
     ...json.configs.recommended
   }
