@@ -24,20 +24,6 @@ describe("BootApplication: Positive", () => {
     expect(providers.has("EXISTING")).toBe(true);
   });
 
-  it("should initialize ResponseBuilder with apiPrefix from config", () => {
-    const apiPrefix = "/custom-api/";
-    const app = new BootApplication({
-      controllers: [],
-      config: {
-        apiPrefix: "custom-api"
-      }
-    });
-
-    const responseBuilder = (app as unknown as { _responseBuilder: { _apiPrefix: string } })
-      ._responseBuilder;
-    expect(responseBuilder._apiPrefix).toBe("/custom-api");
-  });
-
   it("should dispatch INSTALL event on onInstall", () => {
     const app = new BootApplication({ controllers: [] });
     const dispatchSpy = vi
@@ -51,6 +37,16 @@ describe("BootApplication: Positive", () => {
     app.onInstall(event);
 
     expect(dispatchSpy).toHaveBeenCalledWith(AppsScriptEventType.INSTALL, event);
+  });
+
+  it("should use custom apiPrefix when provided in config", () => {
+    const app = new BootApplication({
+      controllers: [],
+      apiPrefix: "/api"
+    });
+
+    const apiPrefix = (app as unknown as { _apiPrefix: string })._apiPrefix;
+    expect(apiPrefix).toBe("/api");
   });
 
   it("should dispatch FORM_SUBMIT event on onFormSubmit", () => {
