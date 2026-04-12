@@ -12,7 +12,14 @@ import {
   RouteMetadata
 } from "../domain/types";
 import { AppsScriptEventType, RequestMethod } from "../domain/enums";
-import { EventDispatcher, RequestFactory, Resolver, ResponseBuilder, Router, RouterExplorer } from "../service";
+import {
+  EventDispatcher,
+  RequestFactory,
+  Resolver,
+  ResponseBuilder,
+  Router,
+  RouterExplorer
+} from "../service";
 import { isControllerAdvice } from "../shared/utils";
 
 /**
