@@ -7,8 +7,14 @@ import { Injectable } from "../../controller/decorators";
  *
  * @example
  * ```typescript
+ * import { Repository } from "bootgs";
+ *
  * @Repository()
- * class MyRepository {}
+ * class UserRepository {
+ *   save(user: any) {
+ *     return user;
+ *   }
+ * }
  * ```
  */
 export function Repository(): ClassDecorator {

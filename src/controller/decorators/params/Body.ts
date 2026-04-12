@@ -9,11 +9,20 @@ import { createParamDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @Post()
- * create(@Body() dto: CreateDto) {}
+ * import { Post, Body, RestController } from "bootgs";
  *
- * @Post()
- * createField(@Body('name') name: string) {}
+ * @RestController("/users")
+ * class UsersController {
+ *   @Post()
+ *   create(@Body() user: any) {
+ *     return user;
+ *   }
+ *
+ *   @Post("/name")
+ *   createField(@Body("name") name: string) {
+ *     return { name };
+ *   }
+ * }
  * ```
  */
 export const Body = createParamDecorator(ParamSource.BODY);

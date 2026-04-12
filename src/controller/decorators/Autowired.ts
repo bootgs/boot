@@ -10,9 +10,13 @@ import { Inject } from "../../controller/decorators";
  *
  * @example
  * ```typescript
+ * import { Service, Autowired } from "bootgs";
+ * import { MyProvider } from "./MyProvider";
+ *
+ * @Service()
  * class MyService {
  *   @Autowired()
- *   private readonly provider: any;
+ *   private readonly provider: MyProvider;
  * }
  * ```
  */

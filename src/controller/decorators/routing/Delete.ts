@@ -9,8 +9,15 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @Delete('/users/:id')
- * deleteUser(@PathVariable('id') id: string) {}
+ * import { Delete, Param, RestController } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @Delete("/:id")
+ *   remove(@Param("id") id: string) {
+ *     return { deleted: true, id };
+ *   }
+ * }
  * ```
  */
 export const Delete = createHttpDecorator(RequestMethod.DELETE);

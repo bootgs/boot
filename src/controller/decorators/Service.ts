@@ -7,8 +7,14 @@ import { Injectable } from "../../controller/decorators";
  *
  * @example
  * ```typescript
+ * import { Service, Injectable } from "bootgs";
+ *
  * @Service()
- * class MyService {}
+ * class UsersService {
+ *   findAll() {
+ *     return [];
+ *   }
+ * }
  * ```
  */
 export function Service(): ClassDecorator {

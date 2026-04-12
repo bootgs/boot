@@ -7,8 +7,13 @@ import { ENTITY_WATERMARK } from "../../domain/constants";
  *
  * @example
  * ```typescript
+ * import { Entity } from "bootgs";
+ *
  * @Entity()
- * class User {}
+ * class User {
+ *   id: string;
+ *   name: string;
+ * }
  * ```
  */
 export function Entity(): ClassDecorator {

@@ -10,8 +10,12 @@ import { Body } from "../../../controller/decorators/params";
  *
  * @example
  * ```typescript
- * @Post()
- * create(@RequestBody() dto: CreateDto) {}
+ * import { Post, RequestBody } from "bootgs";
+ *
+ * @Post("/users")
+ * create(@RequestBody() user: any) {
+ *   return user;
+ * }
  * ```
  */
 export const RequestBody = Body;

@@ -6,8 +6,12 @@ import { createAppsScriptDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
+ * import { OnOpen, Event } from "bootgs";
+ *
  * @OnOpen()
- * onOpen(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {}
+ * onOpen(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {
+ *   Logger.log("Application opened");
+ * }
  * ```
  */
 export const OnOpen = createAppsScriptDecorator(AppsScriptEventType.OPEN);

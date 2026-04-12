@@ -21,8 +21,15 @@ export interface ControllerOptions {
  *
  * @example
  * ```typescript
- * @Controller('http', { basePath: '/api' })
- * class MyController {}
+ * import { Controller, Get } from "bootgs";
+ *
+ * @Controller("http", { basePath: "/api" })
+ * class MyController {
+ *   @Get()
+ *   findAll() {
+ *     return [];
+ *   }
+ * }
  * ```
  */
 export function Controller(type: string, options: ControllerOptions = {}): ClassDecorator {

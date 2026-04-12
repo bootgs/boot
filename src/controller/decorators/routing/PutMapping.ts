@@ -9,8 +9,12 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @PutMapping('/users/:id')
- * updateUser(@PathVariable('id') id: string, @Body() dto: UpdateUserDto) {}
+ * import { PutMapping, Body, Param } from "bootgs";
+ *
+ * @PutMapping("/users/:id")
+ * update(@Param("id") id: string, @Body() user: any) {
+ *   return { id, ...user };
+ * }
  * ```
  */
 export const PutMapping = createHttpDecorator(RequestMethod.PUT);

@@ -9,8 +9,13 @@ import { createParamDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
+ * import { OnOpen, Event } from "bootgs";
+ *
  * @OnOpen()
- * onOpen(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {}
+ * onOpen(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {
+ *   const ui = SpreadsheetApp.getUi();
+ *   ui.createMenu("Custom Menu").addItem("Action", "handler").addToUi();
+ * }
  * ```
  */
 export const Event = createParamDecorator(ParamSource.EVENT);

@@ -9,8 +9,13 @@ import { createParamDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
+ * import { Get, Response, HttpResponse } from "bootgs";
+ *
  * @Get()
- * get(@Response() res: any) {}
+ * findAll(@Response() response: HttpResponse) {
+ *   response.status = 200;
+ *   return "success";
+ * }
  * ```
  */
 export const Response = createParamDecorator(ParamSource.RESPONSE);

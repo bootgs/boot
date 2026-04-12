@@ -7,8 +7,12 @@ import { INJECTABLE_WATERMARK } from "../../domain/constants";
  *
  * @example
  * ```typescript
+ * import { Injectable } from "bootgs";
+ *
  * @Injectable()
- * class MyProvider {}
+ * class MyService {
+ *   doSomething() {}
+ * }
  * ```
  */
 export function Injectable(): ClassDecorator {

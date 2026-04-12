@@ -11,8 +11,11 @@ import { assignParamMetadata } from "../../repository";
  *
  * @example
  * ```typescript
+ * import { Service, Value } from "bootgs";
+ *
+ * @Service()
  * class MyService {
- *   constructor(@Value('app.name') private readonly appName: string) {}
+ *   constructor(@Value("app.name") private readonly appName: string) {}
  * }
  * ```
  */

@@ -30,10 +30,14 @@ export interface RequestMappingOptions {
  *
  * @example
  * ```typescript
- * @RequestMapping({ path: '/users', method: RequestMethod.GET })
- * getUsers() {}
+ * import { RequestMapping, RequestMethod } from "bootgs";
  *
- * @RequestMapping('/users')
+ * @RequestMapping({ path: "/users", method: RequestMethod.GET })
+ * findAll() {
+ *   return [];
+ * }
+ *
+ * @RequestMapping("/users")
  * class UserController {}
  * ```
  */

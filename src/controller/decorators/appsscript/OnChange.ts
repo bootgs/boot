@@ -6,8 +6,12 @@ import { createAppsScriptDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
+ * import { OnChange, Event } from "bootgs";
+ *
  * @OnChange()
- * onChange(@Event() e: GoogleAppsScript.Events.SheetsOnChange) {}
+ * onChange(@Event() e: GoogleAppsScript.Events.SheetsOnChange) {
+ *   Logger.log(`Sheet changed: ${e.changeType}`);
+ * }
  * ```
  */
 export const OnChange = createAppsScriptDecorator(AppsScriptEventType.CHANGE);

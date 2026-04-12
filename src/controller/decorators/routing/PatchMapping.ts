@@ -9,8 +9,12 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @PatchMapping('/users/:id')
- * patchUser(@PathVariable('id') id: string, @Body() dto: Partial<UpdateUserDto>) {}
+ * import { PatchMapping, Body, Param } from "bootgs";
+ *
+ * @PatchMapping("/users/:id")
+ * partialUpdate(@Param("id") id: string, @Body() partialUser: any) {
+ *   return { id, ...partialUser };
+ * }
  * ```
  */
 export const PatchMapping = createHttpDecorator(RequestMethod.PATCH);

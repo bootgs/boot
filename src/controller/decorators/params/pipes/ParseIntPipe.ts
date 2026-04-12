@@ -5,8 +5,12 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
  *
  * @example
  * ```typescript
- * @Get('/:id')
- * getUser(@Param('id', ParseIntPipe) id: number) {}
+ * import { Get, Param, ParseIntPipe } from "bootgs";
+ *
+ * @Get("/users/:id")
+ * getUser(@Param("id", ParseIntPipe) id: number) {
+ *   return { id };
+ * }
  * ```
  */
 export class ParseIntPipe implements PipeTransform<string | number, number> {

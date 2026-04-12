@@ -5,8 +5,12 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
  *
  * @example
  * ```typescript
- * @Get()
- * get(@Query('active', ParseBoolPipe) active: boolean) {}
+ * import { Get, Query, ParseBoolPipe } from "bootgs";
+ *
+ * @Get("/search")
+ * search(@Query("active", ParseBoolPipe) active: boolean) {
+ *   return { active };
+ * }
  * ```
  */
 export class ParseBoolPipe implements PipeTransform<string | boolean, boolean> {

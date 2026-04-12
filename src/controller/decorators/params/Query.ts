@@ -9,8 +9,15 @@ import { createParamDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @Get()
- * getUsers(@Query('search') search: string) {}
+ * import { Get, Query, ParseIntPipe, RestController } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @Get()
+ *   findAll(@Query("page", ParseIntPipe) page: number) {
+ *     return { page };
+ *   }
+ * }
  * ```
  */
 export const Query = createParamDecorator(ParamSource.QUERY);

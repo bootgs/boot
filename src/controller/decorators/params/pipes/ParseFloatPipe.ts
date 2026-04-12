@@ -5,8 +5,12 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
  *
  * @example
  * ```typescript
- * @Get()
- * get(@Query('price', ParseFloatPipe) price: number) {}
+ * import { Get, Query, ParseFloatPipe } from "bootgs";
+ *
+ * @Get("/calculate")
+ * calculate(@Query("value", ParseFloatPipe) value: number) {
+ *   return { value };
+ * }
  * ```
  */
 export class ParseFloatPipe implements PipeTransform<string | number, number> {

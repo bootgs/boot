@@ -10,8 +10,12 @@ import { Query } from "../../../controller/decorators/params";
  *
  * @example
  * ```typescript
- * @Get()
- * getUsers(@RequestParam('search') search: string) {}
+ * import { Get, RequestParam, ParseIntPipe } from "bootgs";
+ *
+ * @Get("/users")
+ * findAll(@RequestParam("page", ParseIntPipe) page: number) {
+ *   return { page };
+ * }
  * ```
  */
 export const RequestParam = Query;

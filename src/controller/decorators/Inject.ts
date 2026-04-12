@@ -10,8 +10,11 @@ import { assignInjectMetadata } from "../../repository";
  *
  * @example
  * ```typescript
+ * import { Service, Inject } from "bootgs";
+ *
+ * @Service()
  * class MyService {
- *   constructor(@Inject('MyProvider') private readonly provider: any) {}
+ *   constructor(@Inject("MY_TOKEN") private readonly myDependency: any) {}
  * }
  * ```
  */

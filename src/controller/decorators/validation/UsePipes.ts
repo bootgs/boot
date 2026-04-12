@@ -8,9 +8,22 @@ import { PIPES_METADATA } from "../../../domain/constants";
  *
  * @example
  * ```typescript
- * @UsePipes(new ValidationPipe())
- * @Post()
- * create(@Body() dto: CreateDto) {}
+ * import { UsePipes, Post, Body, HttpController, PipeTransform, ArgumentMetadata } from "bootgs";
+ *
+ * class CustomPipe implements PipeTransform {
+ *   transform(value: any, metadata: ArgumentMetadata) {
+ *     return `processed_${value}`;
+ *   }
+ * }
+ *
+ * @HttpController("/users")
+ * class UsersController {
+ *   @UsePipes(CustomPipe)
+ *   @Post()
+ *   create(@Body() user: any) {
+ *     return user;
+ *   }
+ * }
  * ```
  */
 export function UsePipes(...pipes: any[]): MethodDecorator & ClassDecorator {

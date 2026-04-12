@@ -8,9 +8,13 @@ import { RESPONSE_STATUS_METADATA } from "../../domain/constants";
  *
  * @example
  * ```typescript
- * @Get('/users')
- * @ResponseStatus(200)
- * getUsers() {}
+ * import { Post, ResponseStatus } from "bootgs";
+ *
+ * @Post("/users")
+ * @ResponseStatus(201)
+ * create() {
+ *   return { created: true };
+ * }
  * ```
  */
 export function ResponseStatus(status: number): MethodDecorator {

@@ -6,8 +6,12 @@ import { createAppsScriptDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
+ * import { OnInstall, Event } from "bootgs";
+ *
  * @OnInstall()
- * onInstall(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {}
+ * onInstall(@Event() e: GoogleAppsScript.Events.AppsScriptEvent) {
+ *   Logger.log("Application installed");
+ * }
  * ```
  */
 export const OnInstall = createAppsScriptDecorator(AppsScriptEventType.INSTALL);

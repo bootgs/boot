@@ -9,9 +9,12 @@ import { Newable } from "../../domain/types";
  *
  * @example
  * ```typescript
- * @ExceptionHandler(UserNotFoundException)
- * handleUserNotFound(exception: UserNotFoundException) {
- *   return { message: exception.message };
+ * import { ExceptionHandler, ResponseStatus } from "bootgs";
+ *
+ * @ExceptionHandler(Error)
+ * @ResponseStatus(500)
+ * handleError(error: Error) {
+ *   return { message: error.message };
  * }
  * ```
  */

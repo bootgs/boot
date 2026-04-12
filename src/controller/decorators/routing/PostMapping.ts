@@ -9,8 +9,15 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @PostMapping('/users')
- * createUser(@Body() dto: CreateUserDto) {}
+ * import { PostMapping, Body, RestController } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @PostMapping()
+ *   create(@Body() user: any) {
+ *     return user;
+ *   }
+ * }
  * ```
  */
 export const PostMapping = createHttpDecorator(RequestMethod.POST);

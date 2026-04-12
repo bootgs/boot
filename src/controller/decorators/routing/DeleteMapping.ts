@@ -9,8 +9,12 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @DeleteMapping('/users/:id')
- * deleteUser(@PathVariable('id') id: string) {}
+ * import { DeleteMapping, Param } from "bootgs";
+ *
+ * @DeleteMapping("/users/:id")
+ * remove(@Param("id") id: string) {
+ *   return { deleted: true, id };
+ * }
  * ```
  */
 export const DeleteMapping = createHttpDecorator(RequestMethod.DELETE);

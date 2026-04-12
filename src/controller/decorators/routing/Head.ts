@@ -9,8 +9,12 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @Head('/users')
- * checkUsers() {}
+ * import { Head } from "bootgs";
+ *
+ * @Head("/users")
+ * checkUsers() {
+ *   // ...
+ * }
  * ```
  */
 export const Head = createHttpDecorator(RequestMethod.HEAD);

@@ -9,8 +9,12 @@ import { createParamDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
+ * import { Get, Headers } from "bootgs";
+ *
  * @Get()
- * get(@Headers('Authorization') auth: string) {}
+ * findAll(@Headers("User-Agent") agent: string) {
+ *   return { agent };
+ * }
  * ```
  */
 export const Headers = createParamDecorator(ParamSource.HEADERS);

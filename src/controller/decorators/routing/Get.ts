@@ -9,8 +9,15 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @Get('/users')
- * getUsers() {}
+ * import { Get, Param, RestController } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @Get("/:id")
+ *   findOne(@Param("id") id: string) {
+ *     return { id };
+ *   }
+ * }
  * ```
  */
 export const Get = createHttpDecorator(RequestMethod.GET);

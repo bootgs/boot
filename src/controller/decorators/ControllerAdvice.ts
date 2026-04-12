@@ -8,6 +8,8 @@ import { CONTROLLER_ADVICE_WATERMARK, INJECTABLE_WATERMARK } from "../../domain/
  *
  * @example
  * ```typescript
+ * import { ControllerAdvice, ExceptionHandler } from "bootgs";
+ *
  * @ControllerAdvice()
  * class GlobalExceptionHandler {
  *   @ExceptionHandler(Error)
@@ -29,6 +31,8 @@ export function ControllerAdvice(): ClassDecorator {
  *
  * @example
  * ```typescript
+ * import { RestControllerAdvice } from "bootgs";
+ *
  * @RestControllerAdvice()
  * class GlobalExceptionHandler {}
  * ```

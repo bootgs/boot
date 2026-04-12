@@ -10,8 +10,12 @@ import { Param } from "../../../controller/decorators/params";
  *
  * @example
  * ```typescript
- * @Get('/:id')
- * getUser(@PathVariable('id') id: string) {}
+ * import { Get, PathVariable, ParseIntPipe } from "bootgs";
+ *
+ * @Get("/users/:id")
+ * getUser(@PathVariable("id", ParseIntPipe) id: number) {
+ *   return { id };
+ * }
  * ```
  */
 export const PathVariable = Param;

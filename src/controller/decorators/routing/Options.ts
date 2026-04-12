@@ -9,8 +9,12 @@ import { createHttpDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @Options('/users')
- * getOptions() {}
+ * import { Options } from "bootgs";
+ *
+ * @Options("/users")
+ * getUsersOptions() {
+ *   // ...
+ * }
  * ```
  */
 export const Options = createHttpDecorator(RequestMethod.OPTIONS);

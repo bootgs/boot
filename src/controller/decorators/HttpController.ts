@@ -8,8 +8,15 @@ import { Controller } from "../../controller/decorators";
  *
  * @example
  * ```typescript
- * @HttpController('/api')
- * class MyController {}
+ * import { HttpController, Get } from "bootgs";
+ *
+ * @HttpController("/users")
+ * class UserController {
+ *   @Get()
+ *   findAll() {
+ *     return [];
+ *   }
+ * }
  * ```
  */
 export function HttpController(basePath: string = "/"): ClassDecorator {

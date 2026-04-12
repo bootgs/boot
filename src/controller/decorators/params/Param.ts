@@ -9,8 +9,15 @@ import { createParamDecorator } from "../../../repository";
  *
  * @example
  * ```typescript
- * @Get('/:id')
- * getUser(@Param('id') id: string) {}
+ * import { Get, Param, ParseIntPipe, RestController } from "bootgs";
+ *
+ * @RestController("/users")
+ * class UsersController {
+ *   @Get("/:id")
+ *   getUser(@Param("id", ParseIntPipe) id: number) {
+ *     return { id };
+ *   }
+ * }
  * ```
  */
 export const Param = createParamDecorator(ParamSource.PARAM);
