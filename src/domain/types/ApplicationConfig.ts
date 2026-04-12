@@ -1,3 +1,4 @@
+import { ApplicationProperties } from "./ApplicationProperties";
 import { Newable } from "./Newable";
 import { Provider } from "./Provider";
 
@@ -19,12 +20,12 @@ export interface ApplicationConfig {
   /**
    * The prefix for API routes.
    *
-   * @default "/api/"
+   * @default "/api"
    */
-  apiPrefix?: string;
+  apiPrefix?: string | null;
 
   /**
    * Application configuration properties.
    */
-  config?: Record<string, any>;
+  config?: ApplicationProperties;
 }

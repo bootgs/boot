@@ -1,5 +1,6 @@
 export * from "./AppsScriptMenuProxy";
 export * from "./ApplicationConfig";
+export * from "./ApplicationProperties";
 export * from "./ClassProvider";
 export * from "./ErrorResponse";
 export * from "./ExistingProvider";
