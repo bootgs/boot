@@ -18,14 +18,24 @@ export function assignParamMetadata(
   key?: string,
   pipes?: any[]
 ): Record<string, ParamDefinition> {
+  const pendingKey: string = `__pending_pipes__:${index}`;
+  const pending: ParamDefinition | undefined = existing[ pendingKey ];
+  const updatedPipes: any[] = [...(pending?.pipes || []), ...(pipes || [])];
+
   const definition: ParamDefinition = { type, key, index };
 
-  if (pipes && pipes.length > 0) {
-    definition.pipes = pipes;
+  if (updatedPipes.length > 0) {
+    definition.pipes = updatedPipes;
   }
 
-  return {
+  const result: Record<string, ParamDefinition> = {
     ...existing,
     [ `${type}:${index}` ]: definition
   };
+
+  if (pending) {
+    delete result[ pendingKey ];
+  }
+
+  return result;
 }
