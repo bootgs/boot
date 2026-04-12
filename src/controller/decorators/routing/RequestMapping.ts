@@ -9,7 +9,6 @@ import { RequestMethod } from "../../../domain/enums";
  * Interface representing RequestMapping options.
  */
 export interface RequestMappingOptions {
-
   /**
    * The path for the route.
    */

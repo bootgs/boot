@@ -26,7 +26,7 @@ export class ParseStringPipe implements PipeTransform<unknown, string> {
    */
   public transform(value: unknown, _metadata: ArgumentMetadata): string {
     if (Array.isArray(value)) {
-      value = value[ 0 ];
+      value = value[0];
     }
 
     if (value === null || value === undefined) {

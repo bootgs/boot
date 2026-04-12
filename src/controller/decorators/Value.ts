@@ -51,7 +51,7 @@ export function Value(key: string): ParameterDecorator {
 
       const updatedTokens: Record<string, InjectTokenDefinition> = {
         ...existing,
-        [ `${ParamSource.INJECT}:${parameterIndex}` ]: {
+        [`${ParamSource.INJECT}:${parameterIndex}`]: {
           type: ParamSource.VALUE,
           token: key,
           index: parameterIndex

@@ -25,12 +25,12 @@ describe("Validation Decorators", () => {
       TestController.prototype,
       "method"
     );
-    const paramDef = metadata[ "QUERY:0" ];
+    const paramDef = metadata["QUERY:0"];
 
     expect(paramDef).toBeDefined();
     expect(paramDef.pipes).toHaveLength(2);
-    expect(paramDef.pipes[ 0 ]).toBeInstanceOf(MaxPipe);
-    expect(paramDef.pipes[ 1 ]).toBeInstanceOf(MinPipe);
+    expect(paramDef.pipes[0]).toBeInstanceOf(MaxPipe);
+    expect(paramDef.pipes[1]).toBeInstanceOf(MinPipe);
   });
 
   describe("Pipes", () => {

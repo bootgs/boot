@@ -46,7 +46,7 @@ export class EventDispatcher {
           continue;
         }
 
-        const methodHandler: unknown = prototype[ propertyName ];
+        const methodHandler: unknown = prototype[propertyName];
 
         const eventMetadata: AppsScriptEventType | undefined = Reflect.getMetadata(
           APPSSCRIPT_EVENT_METADATA,
@@ -67,7 +67,7 @@ export class EventDispatcher {
 
           const args: unknown[] = this.buildMethodParams(instance, propertyName, event);
 
-          const handler: unknown = instance[ propertyName ];
+          const handler: unknown = instance[propertyName];
 
           if (isFunctionLike(handler)) {
             const result: unknown = Reflect.apply(handler, instance, args);
@@ -110,7 +110,7 @@ export class EventDispatcher {
 
       while (currentProto && currentProto !== Object.prototype) {
         Object.getOwnPropertyNames(currentProto).forEach((name: string): void => {
-          if (name !== "constructor" && isFunctionLike(currentProto![ name ])) {
+          if (name !== "constructor" && isFunctionLike(currentProto![name])) {
             methodNames.push(name);
           }
         });
@@ -121,7 +121,7 @@ export class EventDispatcher {
         continue;
       }
 
-      const method: unknown = instance[ methodName ];
+      const method: unknown = instance[methodName];
 
       if (!isFunctionLike(method)) {
         console.warn(
@@ -188,7 +188,7 @@ export class EventDispatcher {
     const designParamTypes: Newable[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
 
-    const handler: any = (target as any)[ propertyKey ];
+    const handler: any = (target as any)[propertyKey];
 
     const args: unknown[] = new Array(
       Math.max(
@@ -205,21 +205,21 @@ export class EventDispatcher {
     for (const param of metadata) {
       switch (param.type) {
         case ParamSource.EVENT:
-          args[ param.index ] = param.key && isRecord(event) ? event[ param.key ] : event;
+          args[param.index] = param.key && isRecord(event) ? event[param.key] : event;
           break;
 
         case ParamSource.INJECT:
           try {
             const tokenToResolve: InjectionToken | undefined =
-              "token" in param ? param.token : designParamTypes[ param.index ];
+              "token" in param ? param.token : designParamTypes[param.index];
 
             if (tokenToResolve) {
-              args[ param.index ] = this.resolver.resolve(tokenToResolve);
+              args[param.index] = this.resolver.resolve(tokenToResolve);
             } else {
-              args[ param.index ] = undefined;
+              args[param.index] = undefined;
             }
           } catch {
-            args[ param.index ] = undefined;
+            args[param.index] = undefined;
           }
           break;
       }

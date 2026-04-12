@@ -29,7 +29,7 @@ export class ParseBooleanPipe implements PipeTransform<string | boolean, boolean
     metadata: ArgumentMetadata
   ): boolean {
     if (Array.isArray(value)) {
-      value = value[ 0 ];
+      value = value[0];
     }
 
     if (value === true || value === "true" || value === 1 || value === "1") {

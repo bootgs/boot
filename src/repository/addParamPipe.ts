@@ -30,16 +30,16 @@ export function addParamPipe(
   if (keys.length > 0) {
     // Add to all existing definitions for this index
     for (const key of keys) {
-      const definition: ParamDefinition = existing[ key ];
+      const definition: ParamDefinition = existing[key];
       definition.pipes = [...(definition.pipes || []), pipe];
     }
   } else {
     // Create a temporary definition for this index if none exists yet
     // Use a special prefix so it can be picked up by later decorators
     const tempKey: string = `__pending_pipes__:${index}`;
-    const definition: ParamDefinition = (existing[ tempKey ] as any) || { index, pipes: [] };
+    const definition: ParamDefinition = (existing[tempKey] as any) || { index, pipes: [] };
     definition.pipes = [...(definition.pipes || []), pipe];
-    existing[ tempKey ] = definition as any;
+    existing[tempKey] = definition as any;
   }
 
   if (propertyKey) {

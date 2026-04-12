@@ -29,7 +29,7 @@ export class ParseNumberPipe implements PipeTransform<string | number, number> {
     metadata: ArgumentMetadata
   ): number {
     if (Array.isArray(value)) {
-      value = value[ 0 ];
+      value = value[0];
     }
 
     const isNumeric: boolean =

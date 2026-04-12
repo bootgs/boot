@@ -51,7 +51,7 @@ describe("Integration: BootApplication: Positive", () => {
     await app.doGet(event);
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
-    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[ 0 ][ 0 ];
+    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[0][0];
     const responseBody = JSON.parse(callArgs as string);
     expect(responseBody).toEqual({
       ok: true,
@@ -76,7 +76,7 @@ describe("Integration: BootApplication: Positive", () => {
 
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
     const lastCall = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls.length - 1;
-    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[ lastCall ][ 0 ];
+    const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[lastCall][0];
     const responseBody = JSON.parse(callArgs as string);
     expect(responseBody).toEqual({
       ok: true,

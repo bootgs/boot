@@ -107,4 +107,5 @@ nodelinter.config.json
 CHANGELOG-*.md
 *.mdx
 trivy_report*
+.output.txt
 !/.gitignore

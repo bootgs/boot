@@ -54,6 +54,6 @@ describe("RouterExplorer: Positive", () => {
     const routes = explorer.explore(controllers);
 
     expect(routes).toHaveLength(1);
-    expect(routes[ 0 ].path).toBe("/api/v1/users");
+    expect(routes[0].path).toBe("/api/v1/users");
   });
 });

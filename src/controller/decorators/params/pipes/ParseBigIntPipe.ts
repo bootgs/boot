@@ -29,7 +29,7 @@ export class ParseBigIntPipe implements PipeTransform<string | number | bigint, 
     metadata: ArgumentMetadata
   ): bigint {
     if (Array.isArray(value)) {
-      value = value[ 0 ];
+      value = value[0];
     }
 
     try {

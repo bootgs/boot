@@ -49,7 +49,7 @@ export class ResponseBuilder {
         ([, value]: [string, unknown]): boolean => value === resolvedStatus
       ) as [string, HttpStatus] | undefined;
 
-      return entry ? entry[ 0 ] : "UNKNOWN_STATUS";
+      return entry ? entry[0] : "UNKNOWN_STATUS";
     })();
 
     const ok: boolean = resolvedStatus >= 200 && resolvedStatus < 300;
@@ -81,7 +81,7 @@ export class ResponseBuilder {
         (v: HeaderAcceptMimeType): boolean => v === acceptHeader
       ) || HeaderAcceptMimeType.HTML;
 
-    response.headers[ "Content-Type" ] = mimeType;
+    response.headers["Content-Type"] = mimeType;
 
     const apiPrefix: string | null =
       isString(this._apiPrefix) && !isEmpty(this._apiPrefix)

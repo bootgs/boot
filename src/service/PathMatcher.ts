@@ -20,7 +20,7 @@ export class PathMatcher {
         return true;
       }
 
-      return part === actParts[ i ];
+      return part === actParts[i];
     });
   }
 
@@ -42,7 +42,7 @@ export class PathMatcher {
       if (part.startsWith("{") && part.endsWith("}")) {
         const paramName: string = part.slice(1, -1);
 
-        params[ paramName ] = actParts[ i ];
+        params[paramName] = actParts[i];
       }
     });
 

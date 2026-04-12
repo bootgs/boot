@@ -4,7 +4,6 @@
  * @see https://developers.google.com/apps-script/reference/content/mime-type
  */
 export enum HeaderAcceptMimeType {
-
   /**
    * Special type for returning a JSON string directly (without TextOutput).
    * Used for internal Google Apps Script purposes.

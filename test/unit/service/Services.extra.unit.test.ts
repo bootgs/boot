@@ -39,7 +39,7 @@ describe("Services: Extra Coverage (RequestFactory & RouterExplorer)", () => {
       const routes = explorer.explore(new Map([[TestController, null]]));
 
       expect(routes.length).toBe(1);
-      expect(routes[ 0 ].path).toBe("/test");
+      expect(routes[0].path).toBe("/test");
     });
   });
 });

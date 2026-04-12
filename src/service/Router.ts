@@ -107,7 +107,7 @@ export class Router {
       throw new Error(`Controller '${route.controller.name}' is not a valid object.`);
     }
 
-    const handler = controllerInstance[ route.handler ];
+    const handler = controllerInstance[route.handler];
 
     if (!isFunctionLike(handler)) {
       throw new Error(
@@ -316,7 +316,7 @@ export class Router {
     const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
 
     for (const propertyName of propertyNames) {
-      const method: any = instance[ propertyName ];
+      const method: any = instance[propertyName];
 
       if (!isFunctionLike(method)) continue;
 
@@ -361,7 +361,7 @@ export class Router {
       data?: unknown
     ) => HttpResponse
   ): HttpResponse | Promise<HttpResponse> {
-    const handler = instance[ handlerName ];
+    const handler = instance[handlerName];
 
     // TODO: Support argument injection for exception handlers (similar to buildMethodParams)
     // For now, just pass the error as the first argument.
@@ -413,7 +413,7 @@ export class Router {
         return undefined;
       }
 
-      current = current[ part ];
+      current = current[part];
     }
 
     return current;
@@ -457,7 +457,7 @@ export class Router {
     const designParamTypes: Newable[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
 
-    const handler: any = (target as any)[ propertyKey ];
+    const handler: any = (target as any)[propertyKey];
 
     const controllerPipes: any[] =
       Reflect.getMetadata(PIPES_METADATA, targetPrototype.constructor) || [];
@@ -483,23 +483,23 @@ export class Router {
 
       switch (param.type) {
         case ParamSource.PARAM:
-          value = param.key ? (ctx.params ?? {})[ param.key ] : ctx.params;
+          value = param.key ? (ctx.params ?? {})[param.key] : ctx.params;
           break;
 
         case ParamSource.QUERY:
-          value = param.key ? (ctx.query ?? {})[ param.key ] : ctx.query;
+          value = param.key ? (ctx.query ?? {})[param.key] : ctx.query;
           break;
 
         case ParamSource.BODY:
-          value = param.key && isRecord(ctx.body) ? ctx.body[ param.key ] : ctx.body;
+          value = param.key && isRecord(ctx.body) ? ctx.body[param.key] : ctx.body;
           break;
 
         case ParamSource.EVENT:
-          value = param.key && isRecord(ctx.event) ? ctx.event[ param.key ] : ctx.event;
+          value = param.key && isRecord(ctx.event) ? ctx.event[param.key] : ctx.event;
           break;
 
         case ParamSource.REQUEST:
-          value = param.key && isRecord(ctx.request) ? ctx.request[ param.key ] : ctx.request;
+          value = param.key && isRecord(ctx.request) ? ctx.request[param.key] : ctx.request;
           break;
 
         case ParamSource.HEADERS:
@@ -509,7 +509,7 @@ export class Router {
                 (k: string): boolean => k.toLowerCase() === param.key!.toLowerCase()
               );
 
-              value = headerKey ? ctx.headers[ headerKey ] : undefined;
+              value = headerKey ? ctx.headers[headerKey] : undefined;
             } else {
               value = ctx.headers;
             }
@@ -517,7 +517,7 @@ export class Router {
           break;
 
         case ParamSource.RESPONSE:
-          value = param.key && isRecord(ctx.response) ? ctx.response[ param.key ] : ctx.response;
+          value = param.key && isRecord(ctx.response) ? ctx.response[param.key] : ctx.response;
           break;
 
         case ParamSource.VALUE:
@@ -533,7 +533,7 @@ export class Router {
           {
             try {
               const tokenToResolve: InjectionToken | undefined =
-                "token" in param ? param.token : designParamTypes[ param.index ];
+                "token" in param ? param.token : designParamTypes[param.index];
 
               if (tokenToResolve) {
                 value = this._resolver.resolve(tokenToResolve);
@@ -560,20 +560,20 @@ export class Router {
 
               value = pipeInstance.transform(value, {
                 type: param.type,
-                metatype: designParamTypes[ param.index ],
+                metatype: designParamTypes[param.index],
                 data: "key" in param ? param.key : undefined
               });
             } else {
               value = pipe(value, {
                 type: param.type,
-                metatype: designParamTypes[ param.index ],
+                metatype: designParamTypes[param.index],
                 data: "key" in param ? param.key : undefined
               });
             }
           } else if (pipe && typeof pipe.transform === "function") {
             value = (pipe as PipeTransform).transform(value, {
               type: param.type,
-              metatype: designParamTypes[ param.index ],
+              metatype: designParamTypes[param.index],
               data: "key" in param ? param.key : undefined
             });
           }
@@ -582,7 +582,7 @@ export class Router {
         }
       }
 
-      args[ param.index ] = value;
+      args[param.index] = value;
     }
 
     return args;

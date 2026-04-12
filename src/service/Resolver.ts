@@ -68,16 +68,16 @@ export class Resolver {
     for (let i: number = 0; i < deps.length; i++) {
       const paramKey: string = `${ParamSource.INJECT}:${i}`;
 
-      const injectDefinition: InjectTokenDefinition | undefined = explicitInjectTokens[ paramKey ];
+      const injectDefinition: InjectTokenDefinition | undefined = explicitInjectTokens[paramKey];
 
       if (injectDefinition && injectDefinition.type === ParamSource.VALUE) {
-        deps[ i ] = this.resolveConfigValue(injectDefinition.token as string);
+        deps[i] = this.resolveConfigValue(injectDefinition.token as string);
         continue;
       }
 
       const tokenToResolve: InjectionToken | undefined = injectDefinition
         ? injectDefinition.token
-        : designParamTypes[ i ];
+        : designParamTypes[i];
 
       if (!tokenToResolve) {
         throw new Error(
@@ -93,7 +93,7 @@ export class Resolver {
         }
       }
 
-      deps[ i ] = this.resolve(tokenToResolve);
+      deps[i] = this.resolve(tokenToResolve);
     }
 
     const instance: T = Reflect.construct(target, deps);
@@ -126,7 +126,7 @@ export class Resolver {
         return undefined;
       }
 
-      current = current[ part ];
+      current = current[part];
     }
 
     return current;
