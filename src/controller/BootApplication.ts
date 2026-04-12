@@ -119,8 +119,8 @@ export class BootApplication {
     this._requestFactory = new RequestFactory();
 
     const apiPrefix: string =
-      isString(config?.config?.apiPrefix) && !isEmpty(config.config.apiPrefix)
-        ? normalize(`/${config.config.apiPrefix}/`)
+      isString(config?.apiPrefix) && !isEmpty(config.apiPrefix)
+        ? normalize(`/${config.apiPrefix}/`)
         : "/api";
 
     this._apiPrefix = apiPrefix;
