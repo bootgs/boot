@@ -13,7 +13,7 @@ describe("BootApplication: Positive", () => {
 
     const app = new BootApplication({
       controllers: [],
-      providers: [ ClassProvider, valueProvider, classProvider, factoryProvider, existingProvider ]
+      providers: [ClassProvider, valueProvider, classProvider, factoryProvider, existingProvider]
     });
 
     const providers = (app as unknown as { _providers: Map<unknown, unknown> })._providers;
@@ -28,12 +28,14 @@ describe("BootApplication: Positive", () => {
     const apiPrefix = "/custom-api/";
     const app = new BootApplication({
       controllers: [],
-      apiPrefix
+      config: {
+        apiPrefix: "custom-api"
+      }
     });
 
     const responseBuilder = (app as unknown as { _responseBuilder: { _apiPrefix: string } })
       ._responseBuilder;
-    expect(responseBuilder._apiPrefix).toBe(apiPrefix);
+    expect(responseBuilder._apiPrefix).toBe("/custom-api");
   });
 
   it("should dispatch INSTALL event on onInstall", () => {

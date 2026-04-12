@@ -42,7 +42,7 @@ describe("RouterExplorer: Positive", () => {
   });
 
   it("should respect apiPrefix when exploring routes", () => {
-    @HttpController("/users")
+    @HttpController("/api/v1/users")
     class UserController {
       @Get()
       findAll() {}
@@ -51,8 +51,7 @@ describe("RouterExplorer: Positive", () => {
     const controllers = new Map<Newable, unknown>();
     controllers.set(UserController, null);
 
-    const apiPrefix = "/api/v1/";
-    const routes = explorer.explore(controllers, apiPrefix);
+    const routes = explorer.explore(controllers);
 
     expect(routes).toHaveLength(1);
     expect(routes[ 0 ].path).toBe("/api/v1/users");

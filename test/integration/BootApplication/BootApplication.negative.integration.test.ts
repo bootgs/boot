@@ -14,7 +14,7 @@ class UserController {
 
 describe("Integration: BootApplication: Negative", () => {
   const app = BootApplicationFactory.create({
-    controllers: [ UserController ]
+    controllers: [UserController]
   });
 
   (global as unknown as Record<string, unknown>).HtmlService = {

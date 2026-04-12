@@ -45,7 +45,7 @@ class GlobalExceptionHandler {
   }
 }
 
-@RequestMapping("/test")
+@RequestMapping("/api/test")
 @RestController()
 class TestController {
   constructor(@Autowired(ConfigService) public configService: ConfigService) {}
@@ -56,7 +56,7 @@ class TestController {
     return { message: greeting + " from " + this.configService.name };
   }
 
-  @RequestMapping({ path: "/multi", method: [ RequestMethod.GET, RequestMethod.POST ] })
+  @RequestMapping({ path: "/multi", method: [RequestMethod.GET, RequestMethod.POST] })
   multi() {
     return { message: "multi" };
   }
@@ -79,15 +79,15 @@ class TestController {
 
 describe("Spring Boot Features", () => {
   const app = new BootApplication({
-    controllers: [ TestController ],
-    providers: [ ConfigService, GlobalExceptionHandler ],
+    controllers: [TestController],
+    providers: [ConfigService, GlobalExceptionHandler],
     config: {
       app: {
         name: "SpringApp"
       },
-      greeting: "Hello"
-    },
-    apiPrefix: "/api"
+      greeting: "Hello",
+      apiPrefix: "api"
+    }
   });
 
   it("should inject configuration via @Value in constructor", () => {

@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { HttpController } from "../src/controller/decorators";
 import { Get } from "../src/controller/decorators/routing";
 import { Query } from "../src/controller/decorators/params";
-import { ParseIntPipe } from "../src/controller/decorators/params/pipes";
+import { ParseNumberPipe } from "../src/controller/decorators/params/pipes";
 import { UsePipes } from "../src/controller/decorators/validation";
 import { Router } from "../src/service/Router";
 import { Resolver } from "../src/service/Resolver";
@@ -11,16 +11,16 @@ import { RequestMethod } from "../src/domain/enums";
 import { HttpRequest } from "../src/domain/types";
 
 describe("Pipes and Guards", () => {
-  it("should transform query parameter with ParseIntPipe", () => {
+  it("should transform query parameter with ParseNumberPipe", () => {
     @HttpController("/test")
     class TestController {
       @Get("sum")
-      getSum(@Query("a", ParseIntPipe) a: number, @Query("b", ParseIntPipe) b: number) {
+      getSum(@Query("a", ParseNumberPipe) a: number, @Query("b", ParseNumberPipe) b: number) {
         return a + b;
       }
     }
 
-    const controllers = new Map<any, any>([ [ TestController, null ] ]);
+    const controllers = new Map<any, any>([[TestController, null]]);
     const providers = new Map<any, any>();
     const resolver = new Resolver(controllers, providers);
     const routes = [
@@ -55,7 +55,6 @@ describe("Pipes and Guards", () => {
     expect(result.body).toBe(30);
   });
 
-
   it("should apply method-level pipes with UsePipes", () => {
     const CustomPipe = (value: any) => `prefix_${value}`;
 
@@ -68,7 +67,7 @@ describe("Pipes and Guards", () => {
       }
     }
 
-    const controllers = new Map<any, any>([ [ PipeController, null ] ]);
+    const controllers = new Map<any, any>([[PipeController, null]]);
     const resolver = new Resolver(controllers, new Map());
     const routes = [
       {

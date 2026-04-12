@@ -5,7 +5,7 @@ import { BootApplicationFactory } from "src/controller";
 import { Get, Post } from "src/controller/decorators/routing";
 import { HttpController } from "src/controller/decorators";
 
-@HttpController("/users")
+@HttpController("api/users")
 class UserController {
   @Get("/{id}")
   getUser(@Param("id") id: string, @Query("fields") fields: string) {
@@ -20,7 +20,7 @@ class UserController {
 
 describe("Integration: BootApplication: Positive", () => {
   const app = BootApplicationFactory.create({
-    controllers: [ UserController ]
+    controllers: [UserController]
   });
 
   // Mock ContentService and HtmlService
@@ -41,7 +41,7 @@ describe("Integration: BootApplication: Positive", () => {
   it("should handle GET request with path and query params", () => {
     const event = {
       parameter: { fields: "name,email" },
-      parameters: { fields: [ "name,email" ] },
+      parameters: { fields: ["name,email"] },
       contextPath: "",
       contentLength: -1,
       queryString: "fields=name,email",
@@ -58,7 +58,7 @@ describe("Integration: BootApplication: Positive", () => {
       status: 200,
       statusText: "OK",
       headers: { "Content-Type": "text/html" },
-      body: { id: "123", fields: [ "name,email" ], method: "GET" }
+      body: { id: "123", fields: ["name,email"], method: "GET" }
     });
   });
 

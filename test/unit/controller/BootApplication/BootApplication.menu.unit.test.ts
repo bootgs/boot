@@ -20,7 +20,7 @@ describe("BootApplication: Menu Handling", () => {
     }
 
     const app = new BootApplication({
-      controllers: [ TestController ],
+      controllers: [TestController],
       providers: []
     });
 
@@ -44,7 +44,7 @@ describe("BootApplication: Menu Handling", () => {
     }
 
     const app = new BootApplication({
-      controllers: [ TestController ],
+      controllers: [TestController],
       providers: []
     });
 

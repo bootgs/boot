@@ -14,8 +14,8 @@ class StringTokenController {
 describe("Inject Decorator: Boundary", () => {
   it("should correctly inject dependency using a string token", () => {
     const app = BootApplicationFactory.create({
-      controllers: [ StringTokenController ],
-      providers: [ { provide: STRING_TOKEN, useValue: "token_value" } ]
+      controllers: [StringTokenController],
+      providers: [{ provide: STRING_TOKEN, useValue: "token_value" }]
     });
 
     const instance = (app as unknown as { _resolver: Resolver })._resolver.resolve(
