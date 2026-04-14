@@ -5,6 +5,7 @@ import { RequestMethod } from "../../domain/enums";
  * Interface representing metadata for a route.
  */
 export interface RouteMetadata {
+
   /**
    * The controller class.
    */

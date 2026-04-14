@@ -2,6 +2,7 @@
  * Interface representing an error response.
  */
 export interface ErrorResponse {
+
   /**
    * The timestamp of the error.
    */

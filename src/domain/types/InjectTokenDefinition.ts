@@ -5,6 +5,7 @@ import { InjectionToken } from "./InjectionToken";
  * Interface representing an injection token definition.
  */
 export interface InjectTokenDefinition {
+
   /**
    * The source of the parameter (`INJECT` or `VALUE`).
    */

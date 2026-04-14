@@ -4,6 +4,7 @@ import { HttpHeaders, HttpRequest, HttpResponse, ParsedUrlQuery } from "../../do
  * Execution context for a route handler.
  */
 export interface RouteExecutionContext {
+
   /**
    * The Google Apps Script event.
    */

@@ -4,6 +4,7 @@
  * @see https://developers.google.com/apps-script/guides/triggers
  */
 export enum AppsScriptEventType {
+
   /**
    * Triggered when an add-on is installed.
    *
