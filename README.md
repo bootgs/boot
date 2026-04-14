@@ -604,6 +604,10 @@ export class GlobalExceptionHandler {
 }
 ```
 
+## Recommended Utilities
+
+For enhanced development with Google Apps Script, we recommend using [apps-script-utils](https://github.com/MaksymStoianov/apps-script-utils), a collection of utility functions and classes that complement this framework.
+
 ## Contributors
 
 <a href="https://github.com/felipepmdias"><img src="https://github.com/felipepmdias.png" width="50" height="50" style="border-radius: 50%;" alt="felipepmdias" /></a>
