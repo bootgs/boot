@@ -2,6 +2,7 @@
  * Directory paths used in the build process.
  */
 export type BuildPaths = {
+
   /**
    * Project root directory.
    */
