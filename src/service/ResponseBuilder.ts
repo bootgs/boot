@@ -68,7 +68,7 @@ export class ResponseBuilder {
    *
    * @param   {HttpRequest} request - The structured request object.
    * @param   {HttpResponse} response - The structured response object to be wrapped.
-   * @returns {string | GoogleAppsScript.Content.TextOutput | GoogleAppsScript.HTML.HtmlOutput} A value that Apps Script can return directly to the client.
+   * @returns {GoogleAppsScript.Content.TextOutput | GoogleAppsScript.HTML.HtmlOutput | string} A value that Apps Script can return directly to the client.
    */
   public wrap(
     request: HttpRequest,
