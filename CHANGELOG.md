@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.0](https://github.com/bootgs/boot/compare/v1.7.1...v1.8.0) (2026-04-14)
+
+
+### Features
+
+* **core:** update services, decorators and repository logic ([bd1ba46](https://github.com/bootgs/boot/commit/bd1ba46eb7dc8189acec0ef2761459fe35bf5e4a))
+* **domain:** update domain entities, types and enums ([e81d5ce](https://github.com/bootgs/boot/commit/e81d5ce5b9048f4824be66ab3f0cc8b0ac19d344))
+
 ## [1.7.1](https://github.com/bootgs/boot/compare/v1.7.0...v1.7.1) (2026-04-12)
 
 
