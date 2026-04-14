@@ -14,12 +14,6 @@ const config: Linter.Config = {
     "object-curly-spacing": ["warn", "always"],
 
     /**
-     * Requires spacing inside computed properties.
-     * @see {@link https://eslint.org/docs/latest/rules/computed-property-spacing computed-property-spacing}
-     */
-    "computed-property-spacing": ["warn", "always"],
-
-    /**
      * Requires a blank line between constants and blocks.
      * @see {@link https://eslint.org/docs/latest/rules/padding-line-between-statements padding-line-between-statements}
      */

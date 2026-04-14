@@ -30,9 +30,10 @@ export class Resolver {
   /**
    * Resolves a dependency by its injection token.
    *
-   * @param   {InjectionToken<T>} token - The injection token.
-   * @returns {T} The resolved instance.
-   * @throws  {Error} If the dependency cannot be resolved.
+   * @template T
+   * @param    {InjectionToken<T>} token - The injection token.
+   * @returns  {T} The resolved instance.
+   * @throws   {Error} If the dependency cannot be resolved.
    */
   public resolve<T>(token: InjectionToken<T>): T {
     if (this._controllers.has(token)) {
@@ -111,7 +112,7 @@ export class Resolver {
    * Resolves a configuration value by its key.
    * Supports nested keys (e.g., "app.name").
    *
-   * @param   {string} key The configuration key.
+   * @param   {string} key - The configuration key.
    * @returns {unknown} The resolved value.
    */
   private resolveConfigValue(key: string): unknown {

@@ -6,6 +6,7 @@ import { RequestMethod } from "../../domain/enums";
  * Interface representing an HTTP request.
  */
 export interface HttpRequest {
+
   /**
    * HTTP request headers.
    */
