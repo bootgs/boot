@@ -97,7 +97,7 @@ export class Router {
       throw new Error(`Controller '${route.controller.name}' is not a valid object.`);
     }
 
-    const handler = controllerInstance[route.handler];
+    const handler: any = controllerInstance[route.handler];
 
     if (!isFunctionLike(handler)) {
       throw new Error(
@@ -125,7 +125,7 @@ export class Router {
       response: responseBuilder(request, undefined, {}, null, route.produce, isResponseBody)
     };
 
-    const args = this.buildMethodParams(controllerInstance, route.handler, ctx);
+    const args: unknown[] = this.buildMethodParams(controllerInstance, route.handler, ctx);
 
     try {
       const result: unknown = Reflect.apply(handler, controllerInstance, args);
@@ -246,25 +246,26 @@ export class Router {
       return result;
     }
 
+    const isResponseBody: boolean = !!(
+      Reflect.getMetadata(RESPONSE_BODY_METADATA, handler) ||
+      (controllerInstance &&
+        Reflect.getMetadata(RESPONSE_BODY_METADATA, controllerInstance.constructor))
+    );
+
     if (isResponseEntity(result)) {
       return responseBuilder(
         request,
         result.getStatusCode(),
         result.getHeaders(),
         result.getBody(),
-        result.getProduces() || produce
+        result.getProduces() || produce,
+        isResponseBody
       );
     }
 
     const responseStatus: number | undefined = Reflect.getMetadata(
       RESPONSE_STATUS_METADATA,
       handler
-    );
-
-    const isResponseBody: boolean = !!(
-      Reflect.getMetadata(RESPONSE_BODY_METADATA, handler) ||
-      (controllerInstance &&
-        Reflect.getMetadata(RESPONSE_BODY_METADATA, controllerInstance.constructor))
     );
 
     return responseBuilder(
@@ -329,11 +330,11 @@ export class Router {
       status?: number,
       headers?: HttpHeaders,
       data?: unknown,
-      produce?: ContentMimeType
+      produce?: ContentMimeType,
+      isResponseBody?: boolean
     ) => HttpResponse,
     produce?: ContentMimeType
   ): HttpResponse | Promise<HttpResponse | null> | null {
-    // 1. Try local handlers in the controller
     const localHandler: string | null = this.findExceptionHandler(err, controllerInstance);
 
     if (localHandler) {
@@ -348,7 +349,6 @@ export class Router {
       );
     }
 
-    // 2. Try global advices
     for (const adviceToken of this._advices) {
       const adviceInstance: unknown = this._resolver.resolve(adviceToken);
 
@@ -435,7 +435,7 @@ export class Router {
     ) => HttpResponse,
     produce?: ContentMimeType
   ): HttpResponse | Promise<HttpResponse> {
-    const handler = instance[handlerName];
+    const handler: any = instance[handlerName];
 
     const isResponseBody: boolean = !!(
       Reflect.getMetadata(RESPONSE_BODY_METADATA, handler) ||
@@ -451,7 +451,7 @@ export class Router {
       handler
     );
 
-    const resolvedProduce = produceFromHandler || produce;
+    const resolvedProduce: ContentMimeType | undefined = produceFromHandler || produce;
 
     if (result instanceof Promise) {
       return result.then((resolvedResult: unknown): HttpResponse => {

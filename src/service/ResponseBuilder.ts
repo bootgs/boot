@@ -82,7 +82,7 @@ export class ResponseBuilder {
       return response.body;
     }
 
-    const target = this.prepareTarget(response, isInternal);
+    const target: unknown = this.prepareTarget(response, isInternal);
 
     const content: string = this.serialize(
       target,
@@ -108,7 +108,7 @@ export class ResponseBuilder {
    * @private
    */
   private prepareTarget(response: HttpResponse, isInternal: boolean): unknown {
-    if (isInternal || response.isResponseBody) {
+    if (isInternal || !response.isResponseBody) {
       if (isHtmlOutput(response.body) || isTextOutput(response.body)) {
         return {
           ...response,

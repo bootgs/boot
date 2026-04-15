@@ -1,5 +1,5 @@
 import { isString } from "apps-script-utils";
-import { ApplicationConfig, AppsScriptMenuProxy } from "../domain/types";
+import { ApplicationConfig, AppsScriptMenuProxy, HttpRequest, HttpResponse } from "../domain/types";
 import { AppsScriptEventType, RequestMethod } from "../domain/enums";
 import { BaseBootApplication } from "./BaseBootApplication";
 
@@ -59,8 +59,12 @@ export class AsyncBootApplication extends BaseBootApplication {
   public async doGet(
     event: GoogleAppsScript.Events.DoGet
   ): Promise<GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string> {
-    const { request, response } = this.handleHttpRequestInternal(RequestMethod.GET, event);
-    const resolvedResponse = response instanceof Promise ? await response : response;
+    const {
+      request,
+      response
+    }: { request: HttpRequest; response: HttpResponse | Promise<HttpResponse> } =
+      this.handleHttpRequestInternal(RequestMethod.GET, event);
+    const resolvedResponse: HttpResponse = response instanceof Promise ? await response : response;
     return this._responseBuilder.wrap(request, resolvedResponse);
   }
 
@@ -73,8 +77,12 @@ export class AsyncBootApplication extends BaseBootApplication {
   public async doPost(
     event: GoogleAppsScript.Events.DoPost
   ): Promise<GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string> {
-    const { request, response } = this.handleHttpRequestInternal(RequestMethod.POST, event);
-    const resolvedResponse = response instanceof Promise ? await response : response;
+    const {
+      request,
+      response
+    }: { request: HttpRequest; response: HttpResponse | Promise<HttpResponse> } =
+      this.handleHttpRequestInternal(RequestMethod.POST, event);
+    const resolvedResponse: HttpResponse = response instanceof Promise ? await response : response;
     return this._responseBuilder.wrap(request, resolvedResponse);
   }
 

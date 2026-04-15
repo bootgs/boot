@@ -9,6 +9,7 @@ import {
  * Interface representing controller options.
  */
 export interface ControllerOptions {
+
   /**
    * The base path for all routes in the controller.
    */

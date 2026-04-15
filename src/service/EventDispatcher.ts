@@ -183,7 +183,12 @@ export class EventDispatcher {
       ...Object.values(rawInjectMetadata)
     ];
 
-    metadata.sort((a, b): number => a.index - b.index);
+    metadata.sort(
+      (
+        a: ParamDefinition | InjectTokenDefinition,
+        b: ParamDefinition | InjectTokenDefinition
+      ): number => a.index - b.index
+    );
 
     const designParamTypes: Newable[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
