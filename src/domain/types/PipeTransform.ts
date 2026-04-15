@@ -5,7 +5,6 @@ import { Newable } from "./Newable";
  * Interface representing the argument metadata passed to the transform method.
  */
 export interface ArgumentMetadata {
-
   /**
    * Source of the parameter.
    */
@@ -26,7 +25,6 @@ export interface ArgumentMetadata {
  * Interface representing a pipe transform.
  */
 export interface PipeTransform<T = any, R = any> {
-
   /**
    * Transforms the input value.
    *

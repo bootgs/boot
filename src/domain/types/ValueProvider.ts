@@ -4,7 +4,6 @@ import { InjectionToken } from "./InjectionToken";
  * Interface representing a value provider.
  */
 export interface ValueProvider<T = unknown> {
-
   /**
    * The injection token.
    */

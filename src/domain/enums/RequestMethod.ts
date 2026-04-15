@@ -2,7 +2,6 @@
  * Enum of HTTP request methods.
  */
 export enum RequestMethod {
-
   /**
    * GET method.
    */

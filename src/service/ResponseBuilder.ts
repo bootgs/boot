@@ -1,6 +1,6 @@
 import { HeaderAcceptMimeType, HttpStatus, RequestMethod } from "../domain/enums";
 import { HttpHeaders, HttpRequest, HttpResponse } from "../domain/types";
-import { isEmpty, isString, normalize } from "apps-script-utils";
+import { isEmpty, isHtmlOutput, isString, isTextOutput, normalize } from "apps-script-utils";
 
 /**
  * Service for building and wrapping HTTP responses.
@@ -59,7 +59,7 @@ export class ResponseBuilder {
       ok,
       status: resolvedStatus,
       statusText,
-      body: ok ? data : { error: data }
+      body: ok || isHtmlOutput(data) || isTextOutput(data) ? data : { error: data }
     };
   }
 
@@ -74,6 +74,10 @@ export class ResponseBuilder {
     request: HttpRequest,
     response: HttpResponse
   ): GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string {
+    if (isHtmlOutput(response.body) || isTextOutput(response.body)) {
+      return response.body;
+    }
+
     const acceptHeader: string | undefined = request.headers?.Accept;
 
     const mimeType: HeaderAcceptMimeType =
