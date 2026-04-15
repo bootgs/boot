@@ -16,7 +16,7 @@ import { AssertTruePipe } from "../src/controller/decorators/validation/pipes/As
 describe("Validation Decorators", () => {
   it("should add validation pipes to metadata (Min/Max)", () => {
     class TestController {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+       
       method(@Query("id") @Min(1) @Max(10) id: number) {}
     }
 

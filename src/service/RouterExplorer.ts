@@ -37,47 +37,54 @@ export class RouterExplorer {
 
       const basePath: string = (controllerOptions.basePath as string) || "/";
 
-      const prototype: Record<string, unknown> = (controller as any).prototype;
+      let prototype: object = (controller as any).prototype;
+      const visitedMethods: Set<string> = new Set<string>();
 
-      const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
+      while (prototype && prototype !== Object.prototype) {
+        const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
 
-      for (const propertyName of propertyNames) {
-        if (propertyName === "constructor") {
-          continue;
-        }
+        for (const propertyName of propertyNames) {
+          if (propertyName === "constructor" || visitedMethods.has(propertyName)) {
+            continue;
+          }
 
-        const methodHandler: unknown = prototype[propertyName];
+          visitedMethods.add(propertyName);
 
-        const routePath: string | undefined = Reflect.getMetadata(
-          PATH_METADATA,
-          methodHandler as object
-        );
+          const methodHandler: unknown = (prototype as any)[propertyName];
 
-        const requestMethods: RequestMethod | RequestMethod[] | undefined = Reflect.getMetadata(
-          METHOD_METADATA,
-          methodHandler as object
-        );
+          const routePath: string | undefined = Reflect.getMetadata(
+            PATH_METADATA,
+            methodHandler as object
+          );
 
-        const produce: ContentMimeType | undefined = Reflect.getMetadata(
-          PRODUCE_METADATA,
-          methodHandler as object
-        );
+          const requestMethods: RequestMethod | RequestMethod[] | undefined = Reflect.getMetadata(
+            METHOD_METADATA,
+            methodHandler as object
+          );
 
-        if (routePath && requestMethods) {
-          const methods: RequestMethod[] = Array.isArray(requestMethods)
-            ? requestMethods
-            : [requestMethods];
+          const produce: ContentMimeType | undefined = Reflect.getMetadata(
+            PRODUCE_METADATA,
+            methodHandler as object
+          );
 
-          for (const method of methods) {
-            routes.push({
-              controller,
-              handler: propertyName,
-              method,
-              path: decodeURI(normalize(`/${basePath}/${routePath}`)),
-              produce
-            });
+          if (routePath && requestMethods) {
+            const methods: RequestMethod[] = Array.isArray(requestMethods)
+              ? requestMethods
+              : [requestMethods];
+
+            for (const method of methods) {
+              routes.push({
+                controller,
+                handler: propertyName,
+                method,
+                path: decodeURI(normalize(`/${basePath}/${routePath}`)),
+                produce
+              });
+            }
           }
         }
+
+        prototype = Object.getPrototypeOf(prototype);
       }
     }
 
