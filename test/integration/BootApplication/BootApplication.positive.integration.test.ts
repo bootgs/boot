@@ -2,9 +2,9 @@ import "reflect-metadata";
 import { describe, expect, it, vi } from "vitest";
 import { Body, Param, Query } from "src/controller/decorators/params";
 import { BootApplicationFactory } from "src/controller";
-import { Get, Post } from "src/controller/decorators/routing";
-import { HttpController } from "src/controller/decorators";
+import { Get, HttpController, Post, ResponseBody } from "src/controller/decorators";
 
+@ResponseBody()
 @HttpController("api/users")
 class UserController {
   @Get("/{id}")
@@ -58,7 +58,8 @@ describe("Integration: BootApplication: Positive", () => {
       status: 200,
       statusText: "OK",
       headers: { "Content-Type": "text/html" },
-      body: { id: "123", fields: ["name,email"], method: "GET" }
+      body: { id: "123", fields: ["name,email"], method: "GET" },
+      isResponseBody: true
     });
   });
 
@@ -83,7 +84,8 @@ describe("Integration: BootApplication: Positive", () => {
       status: 201,
       statusText: "CREATED",
       headers: { "Content-Type": "text/html" },
-      body: { name: "John Doe", method: "POST" }
+      body: { name: "John Doe", method: "POST" },
+      isResponseBody: true
     });
   });
 });

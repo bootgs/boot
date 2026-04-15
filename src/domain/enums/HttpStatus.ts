@@ -43,17 +43,17 @@ export enum HttpStatus {
   NON_AUTHORITATIVE_INFORMATION = 203,
 
   /**
-   * No Content (204).
+   * No ContentMimeType (204).
    */
   NO_CONTENT = 204,
 
   /**
-   * Reset Content (205).
+   * Reset ContentMimeType (205).
    */
   RESET_CONTENT = 205,
 
   /**
-   * Partial Content (206).
+   * Partial ContentMimeType (206).
    */
   PARTIAL_CONTENT = 206,
 
@@ -68,7 +68,7 @@ export enum HttpStatus {
   ALREADY_REPORTED = 208,
 
   /**
-   * Content Different (210).
+   * ContentMimeType Different (210).
    */
   CONTENT_DIFFERENT = 210,
 

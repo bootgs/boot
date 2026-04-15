@@ -15,13 +15,16 @@ import {
   PARAM_DEFINITIONS_METADATA,
   PARAMTYPES_METADATA,
   PIPES_METADATA,
+  PRODUCE_METADATA,
+  RESPONSE_BODY_METADATA,
   RESPONSE_STATUS_METADATA
 } from "../domain/constants";
-import { HttpStatus, ParamSource } from "../domain/enums";
+import { ContentMimeType, HttpStatus, ParamSource } from "../domain/enums";
 import { RouteExecutionContext } from "../domain/entities";
 import { getInjectionTokens } from "../repository";
-import { PathMatcher, Resolver } from "../service";
-import { isHttpResponse, isRecord } from "../shared/utils";
+import { PathMatcher } from "./PathMatcher";
+import { Resolver } from "./Resolver";
+import { isHttpResponse, isRecord, isResponseEntity } from "../shared/utils";
 
 /**
  * Router service for handling HTTP requests and dispatching them to controllers.
@@ -60,7 +63,9 @@ export class Router {
       request: HttpRequest,
       status?: number,
       headers?: HttpHeaders,
-      data?: unknown
+      data?: unknown,
+      produce?: ContentMimeType,
+      isResponseBody?: boolean
     ) => HttpResponse
   ): HttpResponse | Promise<HttpResponse> {
     const requestPathname: string = request.url.pathname;
@@ -88,21 +93,6 @@ export class Router {
 
     const controllerInstance: any = this._resolver.resolve(route.controller);
 
-    const params: Record<string, string> = this.pathMatcher.extractParams(
-      route.path,
-      requestPathname
-    );
-
-    const ctx: RouteExecutionContext = {
-      event,
-      params,
-      query: request.url.query,
-      request,
-      headers: request.headers,
-      body: request.body,
-      response: responseBuilder(request, undefined, {}, null)
-    };
-
     if (!isRecord(controllerInstance)) {
       throw new Error(`Controller '${route.controller.name}' is not a valid object.`);
     }
@@ -115,6 +105,26 @@ export class Router {
       );
     }
 
+    const params: Record<string, string> = this.pathMatcher.extractParams(
+      route.path,
+      requestPathname
+    );
+
+    const isResponseBody: boolean = !!(
+      Reflect.getMetadata(RESPONSE_BODY_METADATA, handler) ||
+      Reflect.getMetadata(RESPONSE_BODY_METADATA, route.controller)
+    );
+
+    const ctx: RouteExecutionContext = {
+      event,
+      params,
+      query: request.url.query,
+      request,
+      headers: request.headers,
+      body: request.body,
+      response: responseBuilder(request, undefined, {}, null, route.produce, isResponseBody)
+    };
+
     const args = this.buildMethodParams(controllerInstance, route.handler, ctx);
 
     try {
@@ -123,11 +133,26 @@ export class Router {
       if (result instanceof Promise) {
         return result
           .then((resolvedResult: unknown): HttpResponse | Promise<HttpResponse> => {
-            return this.processResult(resolvedResult, handler, request, ctx, responseBuilder);
+            return this.processResult(
+              resolvedResult,
+              handler,
+              request,
+              ctx,
+              responseBuilder,
+              route.produce,
+              controllerInstance
+            );
           })
           .catch((err: unknown): Promise<HttpResponse> => {
             const handledResponse: HttpResponse | Promise<HttpResponse | null> | null =
-              this.handleException(err, controllerInstance, request, event, responseBuilder);
+              this.handleException(
+                err,
+                controllerInstance,
+                request,
+                event,
+                responseBuilder,
+                route.produce
+              );
 
             if (handledResponse instanceof Promise) {
               return handledResponse.then(
@@ -136,7 +161,7 @@ export class Router {
                     return resolvedHandledResponse;
                   }
 
-                  return this.createErrorResponse(err, request, responseBuilder);
+                  return this.createErrorResponse(err, request, responseBuilder, route.produce);
                 }
               );
             }
@@ -145,14 +170,31 @@ export class Router {
               return Promise.resolve(handledResponse);
             }
 
-            return Promise.resolve(this.createErrorResponse(err, request, responseBuilder));
+            return Promise.resolve(
+              this.createErrorResponse(err, request, responseBuilder, route.produce)
+            );
           });
       }
 
-      return this.processResult(result, handler, request, ctx, responseBuilder);
+      return this.processResult(
+        result,
+        handler,
+        request,
+        ctx,
+        responseBuilder,
+        route.produce,
+        controllerInstance
+      );
     } catch (err: unknown) {
       const handledResponse: HttpResponse | Promise<HttpResponse | null> | null =
-        this.handleException(err, controllerInstance, request, event, responseBuilder);
+        this.handleException(
+          err,
+          controllerInstance,
+          request,
+          event,
+          responseBuilder,
+          route.produce
+        );
 
       if (handledResponse instanceof Promise) {
         return handledResponse.then(
@@ -161,7 +203,7 @@ export class Router {
               return resolvedHandledResponse;
             }
 
-            return this.createErrorResponse(err, request, responseBuilder);
+            return this.createErrorResponse(err, request, responseBuilder, route.produce);
           }
         );
       }
@@ -170,7 +212,7 @@ export class Router {
         return handledResponse;
       }
 
-      return this.createErrorResponse(err, request, responseBuilder);
+      return this.createErrorResponse(err, request, responseBuilder, route.produce);
     }
   }
 
@@ -193,11 +235,25 @@ export class Router {
       request: HttpRequest,
       status?: number,
       headers?: HttpHeaders,
-      data?: unknown
-    ) => HttpResponse
+      data?: unknown,
+      produce?: ContentMimeType,
+      isResponseBody?: boolean
+    ) => HttpResponse,
+    produce?: ContentMimeType,
+    controllerInstance?: any
   ): HttpResponse {
     if (isHttpResponse(result)) {
       return result;
+    }
+
+    if (isResponseEntity(result)) {
+      return responseBuilder(
+        request,
+        result.getStatusCode(),
+        result.getHeaders(),
+        result.getBody(),
+        result.getProduces() || produce
+      );
     }
 
     const responseStatus: number | undefined = Reflect.getMetadata(
@@ -205,11 +261,19 @@ export class Router {
       handler
     );
 
+    const isResponseBody: boolean = !!(
+      Reflect.getMetadata(RESPONSE_BODY_METADATA, handler) ||
+      (controllerInstance &&
+        Reflect.getMetadata(RESPONSE_BODY_METADATA, controllerInstance.constructor))
+    );
+
     return responseBuilder(
       request,
       responseStatus ?? ctx.response?.status,
       ctx.response?.headers,
-      result
+      result,
+      produce,
+      isResponseBody
     );
   }
 
@@ -228,8 +292,11 @@ export class Router {
       request: HttpRequest,
       status?: number,
       headers?: HttpHeaders,
-      data?: unknown
-    ) => HttpResponse
+      data?: unknown,
+      produce?: ContentMimeType,
+      isResponseBody?: boolean
+    ) => HttpResponse,
+    produce?: ContentMimeType
   ): HttpResponse {
     let status: number = 500;
     let message: string = String(err);
@@ -239,7 +306,7 @@ export class Router {
       if (isString(err.message)) message = err.message;
     }
 
-    return responseBuilder(request, status, {}, message);
+    return responseBuilder(request, status, {}, message, produce);
   }
 
   /**
@@ -261,8 +328,10 @@ export class Router {
       request: HttpRequest,
       status?: number,
       headers?: HttpHeaders,
-      data?: unknown
-    ) => HttpResponse
+      data?: unknown,
+      produce?: ContentMimeType
+    ) => HttpResponse,
+    produce?: ContentMimeType
   ): HttpResponse | Promise<HttpResponse | null> | null {
     // 1. Try local handlers in the controller
     const localHandler: string | null = this.findExceptionHandler(err, controllerInstance);
@@ -274,7 +343,8 @@ export class Router {
         err,
         request,
         event,
-        responseBuilder
+        responseBuilder,
+        produce
       );
     }
 
@@ -291,7 +361,8 @@ export class Router {
           err,
           request,
           event,
-          responseBuilder
+          responseBuilder,
+          produce
         );
       }
     }
@@ -358,14 +429,29 @@ export class Router {
       request: HttpRequest,
       status?: number,
       headers?: HttpHeaders,
-      data?: unknown
-    ) => HttpResponse
+      data?: unknown,
+      produce?: ContentMimeType,
+      isResponseBody?: boolean
+    ) => HttpResponse,
+    produce?: ContentMimeType
   ): HttpResponse | Promise<HttpResponse> {
     const handler = instance[handlerName];
+
+    const isResponseBody: boolean = !!(
+      Reflect.getMetadata(RESPONSE_BODY_METADATA, handler) ||
+      Reflect.getMetadata(RESPONSE_BODY_METADATA, instance.constructor)
+    );
 
     // TODO: Support argument injection for exception handlers (similar to buildMethodParams)
     // For now, just pass the error as the first argument.
     const result: unknown = Reflect.apply(handler, instance, [err, request, event]);
+
+    const produceFromHandler: ContentMimeType | undefined = Reflect.getMetadata(
+      PRODUCE_METADATA,
+      handler
+    );
+
+    const resolvedProduce = produceFromHandler || produce;
 
     if (result instanceof Promise) {
       return result.then((resolvedResult: unknown): HttpResponse => {
@@ -373,12 +459,30 @@ export class Router {
           return resolvedResult;
         }
 
+        if (isResponseEntity(resolvedResult)) {
+          return responseBuilder(
+            request,
+            resolvedResult.getStatusCode(),
+            resolvedResult.getHeaders(),
+            resolvedResult.getBody(),
+            resolvedResult.getProduces() || resolvedProduce,
+            isResponseBody
+          );
+        }
+
         const responseStatus: number | undefined = Reflect.getMetadata(
           RESPONSE_STATUS_METADATA,
           handler
         );
 
-        return responseBuilder(request, responseStatus, {}, resolvedResult);
+        return responseBuilder(
+          request,
+          responseStatus,
+          {},
+          resolvedResult,
+          resolvedProduce,
+          isResponseBody
+        );
       });
     }
 
@@ -386,12 +490,23 @@ export class Router {
       return result;
     }
 
+    if (isResponseEntity(result)) {
+      return responseBuilder(
+        request,
+        result.getStatusCode(),
+        result.getHeaders(),
+        result.getBody(),
+        result.getProduces() || resolvedProduce,
+        isResponseBody
+      );
+    }
+
     const responseStatus: number | undefined = Reflect.getMetadata(
       RESPONSE_STATUS_METADATA,
       handler
     );
 
-    return responseBuilder(request, responseStatus, {}, result);
+    return responseBuilder(request, responseStatus, {}, result, resolvedProduce, isResponseBody);
   }
 
   /**

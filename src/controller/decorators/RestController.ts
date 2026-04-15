@@ -1,7 +1,11 @@
-import { HttpController } from "../../controller/decorators";
+import { HttpController } from "./HttpController";
+import { ResponseBody } from "./ResponseBody";
 
 /**
  * Decorator that marks a class as a REST controller.
+ *
+ * @param   {string} [path] - The base path for all routes in the controller.
+ * @returns {ClassDecorator} A decorator.
  *
  * @example
  * ```TypeScript
@@ -16,4 +20,9 @@ import { HttpController } from "../../controller/decorators";
  * }
  * ```
  */
-export const RestController = HttpController;
+export function RestController(path?: string): ClassDecorator {
+  return (target: object): void => {
+    HttpController(path)(target as any);
+    ResponseBody()(target as any);
+  };
+}

@@ -1,5 +1,5 @@
 import { HttpHeaders } from "./HttpHeaders";
-import { HttpStatus } from "../../domain/enums";
+import { ContentMimeType, HttpStatus } from "../../domain/enums";
 
 /**
  * Interface representing an HTTP response.
@@ -29,4 +29,14 @@ export interface HttpResponse {
    * Response body content.
    */
   body: unknown;
+
+  /**
+   * The produced MIME type.
+   */
+  produce?: ContentMimeType;
+
+  /**
+   * Indicates whether the response should be serialized directly into the response body.
+   */
+  isResponseBody?: boolean;
 }

@@ -9,6 +9,7 @@ import {
   Injectable,
   RequestMapping,
   RequestMethod,
+  ResponseBody,
   ResponseStatus,
   RestController,
   Value
@@ -38,6 +39,7 @@ class ConfigService {
 }
 
 @ControllerAdvice()
+@ResponseBody()
 class GlobalExceptionHandler {
   @ExceptionHandler(Error)
   handleError(err: Error) {

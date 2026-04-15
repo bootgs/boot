@@ -1,5 +1,5 @@
 import { Newable } from "./Newable";
-import { RequestMethod } from "../../domain/enums";
+import { ContentMimeType, RequestMethod } from "../../domain/enums";
 
 /**
  * Interface representing metadata for a route.
@@ -24,4 +24,9 @@ export interface RouteMetadata {
    * The route path.
    */
   path: string;
+
+  /**
+   * The produced MIME type.
+   */
+  produce?: ContentMimeType;
 }

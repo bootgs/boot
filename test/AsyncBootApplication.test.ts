@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { describe, expect, it, vi } from "vitest";
-import { AsyncBootApplication, Get, HttpController } from "../src";
+import { AsyncBootApplication, Get, HttpController, ResponseBody } from "../src";
 
 // Mock Google Apps Script services
 global.HtmlService = {
@@ -22,6 +22,7 @@ global.ContentService = {
 
 describe("AsyncBootApplication", () => {
   it("should handle async controller method and return Promise", async () => {
+    @ResponseBody()
     @HttpController("/api")
     class TestController {
       @Get("/test")
@@ -51,6 +52,7 @@ describe("AsyncBootApplication", () => {
   });
 
   it("should handle sync controller method and still return Promise (as it is async method)", async () => {
+    @ResponseBody()
     @HttpController("/api")
     class TestController {
       @Get("/test")

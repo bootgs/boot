@@ -10,7 +10,7 @@ import {
   Provider,
   RouteMetadata
 } from "../domain/types";
-import { RequestMethod } from "../domain/enums";
+import { ContentMimeType, RequestMethod } from "../domain/enums";
 import {
   EventDispatcher,
   RequestFactory,
@@ -155,8 +155,11 @@ export abstract class BaseBootApplication {
         req: HttpRequest,
         status: number | undefined,
         headers: HttpHeaders | undefined,
-        data: unknown
-      ): HttpResponse => this._responseBuilder.create(req, status, headers, data)
+        data: unknown,
+        produce?: ContentMimeType,
+        isResponseBody?: boolean
+      ): HttpResponse =>
+        this._responseBuilder.create(req, status, headers, data, produce, isResponseBody)
     );
 
     return { request, response };
