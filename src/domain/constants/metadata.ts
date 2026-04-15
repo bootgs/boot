@@ -67,3 +67,13 @@ export const RESPONSE_STATUS_METADATA: string = "custom:response_status";
  * Metadata key for storing exception handlers.
  */
 export const EXCEPTION_HANDLER_METADATA: string = "custom:exception_handlers";
+
+/**
+ * Metadata key for storing produced MIME type.
+ */
+export const PRODUCE_METADATA: string = "custom:produce";
+
+/**
+ * Metadata key for storing response body flag.
+ */
+export const RESPONSE_BODY_METADATA: string = "custom:response_body";

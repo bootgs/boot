@@ -3,10 +3,11 @@ import {
   CONTROLLER_OPTIONS_METADATA,
   CONTROLLER_TYPE_METADATA,
   METHOD_METADATA,
-  PATH_METADATA
+  PATH_METADATA,
+  PRODUCE_METADATA
 } from "../domain/constants";
 import { Newable, RouteMetadata } from "../domain/types";
-import { RequestMethod } from "../domain/enums";
+import { ContentMimeType, RequestMethod } from "../domain/enums";
 
 /**
  * Explorer for identifying routes in controllers.
@@ -57,6 +58,11 @@ export class RouterExplorer {
           methodHandler as object
         );
 
+        const produce: ContentMimeType | undefined = Reflect.getMetadata(
+          PRODUCE_METADATA,
+          methodHandler as object
+        );
+
         if (routePath && requestMethods) {
           const methods: RequestMethod[] = Array.isArray(requestMethods)
             ? requestMethods
@@ -67,7 +73,8 @@ export class RouterExplorer {
               controller,
               handler: propertyName,
               method,
-              path: decodeURI(normalize(`/${basePath}/${routePath}`))
+              path: decodeURI(normalize(`/${basePath}/${routePath}`)),
+              produce
             });
           }
         }

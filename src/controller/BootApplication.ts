@@ -1,5 +1,5 @@
 import { isString } from "apps-script-utils";
-import { ApplicationConfig, AppsScriptMenuProxy, HttpResponse } from "../domain/types";
+import { ApplicationConfig, AppsScriptMenuProxy, HttpRequest, HttpResponse } from "../domain/types";
 import { AppsScriptEventType, RequestMethod } from "../domain/enums";
 import { BaseBootApplication } from "./BaseBootApplication";
 
@@ -59,7 +59,11 @@ export class BootApplication extends BaseBootApplication {
   public doGet(
     event: GoogleAppsScript.Events.DoGet
   ): GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string {
-    const { request, response } = this.handleHttpRequestInternal(RequestMethod.GET, event);
+    const {
+      request,
+      response
+    }: { request: HttpRequest; response: HttpResponse | Promise<HttpResponse> } =
+      this.handleHttpRequestInternal(RequestMethod.GET, event);
 
     if (response instanceof Promise) {
       return response.then((res: HttpResponse): any =>
@@ -79,7 +83,11 @@ export class BootApplication extends BaseBootApplication {
   public doPost(
     event: GoogleAppsScript.Events.DoPost
   ): GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string {
-    const { request, response } = this.handleHttpRequestInternal(RequestMethod.POST, event);
+    const {
+      request,
+      response
+    }: { request: HttpRequest; response: HttpResponse | Promise<HttpResponse> } =
+      this.handleHttpRequestInternal(RequestMethod.POST, event);
 
     if (response instanceof Promise) {
       return response.then((res: HttpResponse): any =>

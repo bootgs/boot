@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ResponseBuilder } from "src/service";
-import { HeaderAcceptMimeType, HttpStatus, RequestMethod } from "src/domain/enums";
+import { ContentMimeType, HttpStatus, RequestMethod } from "src/domain/enums";
 import { HttpRequest } from "src/domain/types";
 
 describe("ResponseBuilder: Extra", () => {
@@ -19,35 +19,24 @@ describe("ResponseBuilder: Extra", () => {
     };
   });
 
-  it("should return string for GOOGLE_JSON and GOOGLE_TEXT", () => {
-    const response = { headers: {}, body: { foo: "bar" }, status: 200, ok: true, statusText: "OK" };
-
-    const reqJson = {
-      method: RequestMethod.GET,
-      headers: { Accept: HeaderAcceptMimeType.GOOGLE_JSON },
-      url: {}
-    } as unknown as HttpRequest;
-    expect(builder.wrap(reqJson, response)).toBe(JSON.stringify(response.body));
-
-    const reqText = {
-      method: RequestMethod.GET,
-      headers: { Accept: HeaderAcceptMimeType.GOOGLE_TEXT },
-      url: {}
-    } as unknown as HttpRequest;
-    expect(builder.wrap(reqText, response)).toBe(JSON.stringify(response.body));
-  });
-
   it("should use ContentService for TEXT mime type", () => {
-    const response = { headers: {}, body: "plain text", status: 200, ok: true, statusText: "OK" };
+    const response = {
+      headers: {},
+      body: "plain text",
+      status: 200,
+      ok: true,
+      statusText: "OK",
+      produce: ContentMimeType.TEXT
+    };
     const request = {
       method: RequestMethod.GET,
-      headers: { Accept: HeaderAcceptMimeType.TEXT },
+      headers: {},
       url: {}
     } as unknown as HttpRequest;
 
     builder.wrap(request, response);
     expect(vi.mocked(global.ContentService).createTextOutput).toHaveBeenCalledWith(
-      JSON.stringify(response.body)
+      JSON.stringify(response)
     );
   });
 
@@ -55,7 +44,7 @@ describe("ResponseBuilder: Extra", () => {
     const response = { headers: {}, body: "some body", status: 200, ok: true, statusText: "OK" };
     const request = {
       method: RequestMethod.GET,
-      headers: { Accept: "unknown/type" },
+      headers: {},
       url: {}
     } as unknown as HttpRequest;
 

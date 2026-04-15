@@ -16,3 +16,4 @@ export * from "./ResponseStatus";
 export * from "./ControllerAdvice";
 export * from "./ExceptionHandler";
 export * from "./Value";
+export * from "./ResponseBody";

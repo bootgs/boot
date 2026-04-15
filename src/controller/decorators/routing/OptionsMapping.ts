@@ -1,10 +1,10 @@
 import { RequestMethod } from "../../../domain/enums";
-import { createHttpDecorator } from "../../../repository";
+import { createHttpDecorator, HttpDecoratorOptions } from "../../../repository";
 
 /**
  * Route handler decorator for HTTP OPTIONS requests.
  *
- * @param   {string} [path] - Route path (optional).
+ * @param   {string | HttpDecoratorOptions} [options] - Route path or options (optional).
  * @returns {MethodDecorator} A method decorator.
  *
  * @example

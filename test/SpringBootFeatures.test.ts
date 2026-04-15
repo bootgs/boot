@@ -9,6 +9,7 @@ import {
   Injectable,
   RequestMapping,
   RequestMethod,
+  ResponseBody,
   ResponseStatus,
   RestController,
   Value
@@ -38,6 +39,7 @@ class ConfigService {
 }
 
 @ControllerAdvice()
+@ResponseBody()
 class GlobalExceptionHandler {
   @ExceptionHandler(Error)
   handleError(err: Error) {
@@ -109,7 +111,7 @@ describe("Spring Boot Features", () => {
     const response: any = await app.doGet(event);
     const rawContent = response.getContent();
     const content = JSON.parse(rawContent);
-    expect(content.body.message).toBe("Hello from SpringApp");
+    expect(content.message).toBe("Hello from SpringApp");
   });
 
   it("should handle multiple methods in @RequestMapping", async () => {
@@ -124,7 +126,7 @@ describe("Spring Boot Features", () => {
     };
 
     const responseGet: any = await app.doGet(eventGet);
-    expect(JSON.parse(responseGet.getContent()).body.message).toBe("multi");
+    expect(JSON.parse(responseGet.getContent()).message).toBe("multi");
 
     const eventPost: any = {
       parameter: {
@@ -138,7 +140,7 @@ describe("Spring Boot Features", () => {
     };
 
     const responsePost: any = await app.doPost(eventPost);
-    expect(JSON.parse(responsePost.getContent()).body.message).toBe("multi");
+    expect(JSON.parse(responsePost.getContent()).message).toBe("multi");
   });
 
   it("should handle exceptions locally via @ExceptionHandler", async () => {
@@ -154,7 +156,7 @@ describe("Spring Boot Features", () => {
 
     const response: any = await app.doGet(event);
     const content = JSON.parse(response.getContent());
-    expect(content.body.message).toBe("Handled locally: Local error");
+    expect(content.message).toBe("Handled locally: Local error");
   });
 
   it("should handle exceptions globally via @ControllerAdvice", async () => {
@@ -170,6 +172,6 @@ describe("Spring Boot Features", () => {
 
     const response: any = await app.doGet(event);
     const content = JSON.parse(response.getContent());
-    expect(content.body.message).toBe("Handled globally: Test error");
+    expect(content.message).toBe("Handled globally: Test error");
   });
 });

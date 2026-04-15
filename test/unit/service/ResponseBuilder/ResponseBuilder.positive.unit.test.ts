@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ResponseBuilder } from "src/service";
-import { HeaderAcceptMimeType, HttpStatus, RequestMethod } from "src/domain/enums";
+import { ContentMimeType, HttpStatus, RequestMethod } from "src/domain/enums";
 import { HttpRequest } from "src/domain/types";
 
 describe("ResponseBuilder: Positive", () => {
@@ -52,11 +52,16 @@ describe("ResponseBuilder: Positive", () => {
   });
 
   describe("wrap", () => {
-    it("should wrap as JSON if Accept header is application/json", () => {
-      const req = { ...mockRequest, headers: { Accept: HeaderAcceptMimeType.JSON } } as HttpRequest;
-      const res = builder.create(req, HttpStatus.OK, {}, { foo: "bar" });
+    it("should wrap as JSON if produce is set to JSON", () => {
+      const res = builder.create(
+        mockRequest,
+        HttpStatus.OK,
+        {},
+        { foo: "bar" },
+        ContentMimeType.JSON
+      );
 
-      builder.wrap(req, res);
+      builder.wrap(mockRequest, res);
       expect(vi.mocked(global.ContentService).createTextOutput).toHaveBeenCalled();
     });
 

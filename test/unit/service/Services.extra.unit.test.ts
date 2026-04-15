@@ -7,7 +7,7 @@ import { HttpController } from "src/controller/decorators";
 
 describe("Services: Extra Coverage (RequestFactory & RouterExplorer)", () => {
   describe("RequestFactory", () => {
-    it("should fallback to postData.type if Content-Type header is missing", () => {
+    it("should fallback to postData.type if ContentMimeType-Type header is missing", () => {
       const factory = new RequestFactory();
       const event = {
         parameter: {},

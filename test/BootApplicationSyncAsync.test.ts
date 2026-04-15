@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { describe, expect, it, vi } from "vitest";
-import { BootApplication, Get, HttpController } from "../src";
+import { BootApplication, Get, HttpController, ResponseBody } from "../src";
 
 // Mock Google Apps Script services
 global.HtmlService = {
@@ -22,6 +22,7 @@ global.ContentService = {
 
 describe("BootApplication", () => {
   it("should handle sync controller method and return result synchronously", () => {
+    @ResponseBody()
     @HttpController("/api")
     class TestController {
       @Get("/test")
@@ -46,10 +47,11 @@ describe("BootApplication", () => {
     const result: any = app.doGet(event);
     expect(result).not.toBeInstanceOf(Promise);
     const content = JSON.parse(result.getContent());
-    expect(content.body.message).toBe("sync");
+    expect(content.message).toBe("sync");
   });
 
   it("should handle async controller method and return Promise synchronously (but it won't be resolved)", () => {
+    @ResponseBody()
     @HttpController("/api")
     class TestController {
       @Get("/test")

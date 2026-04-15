@@ -1,9 +1,10 @@
 import {
   CONTROLLER_OPTIONS_METADATA,
   METHOD_METADATA,
-  PATH_METADATA
+  PATH_METADATA,
+  PRODUCE_METADATA
 } from "../../../domain/constants";
-import { RequestMethod } from "../../../domain/enums";
+import { ContentMimeType, RequestMethod } from "../../../domain/enums";
 
 /**
  * Interface representing RequestMapping options.
@@ -24,6 +25,11 @@ export interface RequestMappingOptions {
    * The HTTP method(s) for the route.
    */
   method?: RequestMethod | RequestMethod[];
+
+  /**
+   * The MIME type(s) that the route produces.
+   */
+  produces?: ContentMimeType | ContentMimeType[];
 }
 
 /**
@@ -54,6 +60,9 @@ export function RequestMapping(
   const method: RequestMethod | RequestMethod[] | undefined =
     typeof options === "object" ? options?.method : undefined;
 
+  const produces: ContentMimeType | ContentMimeType[] | undefined =
+    typeof options === "object" ? options?.produces : undefined;
+
   return (
     target: object,
     _propertyKey?: string | symbol,
@@ -64,6 +73,14 @@ export function RequestMapping(
 
       if (method) {
         Reflect.defineMetadata(METHOD_METADATA, method, descriptor.value);
+      }
+
+      if (produces) {
+        Reflect.defineMetadata(
+          PRODUCE_METADATA,
+          Array.isArray(produces) ? produces[0] : produces,
+          descriptor.value
+        );
       }
     } else {
       const existingOptions: Record<string, any> =
