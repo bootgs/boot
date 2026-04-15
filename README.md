@@ -236,8 +236,8 @@ Use this when building Sidebars, Modals, or Add-ons.
 **Example (Client-side JS):**
 
 ```javascript
-const path = '/api/users/123';
-const method = 'GET';
+const path = "/api/users/123";
+const method = "GET";
 const headers = JSON.stringify({
   "X-Request-Source": "internal"
 });
@@ -259,14 +259,14 @@ const event = {
 };
 
 google.script.run
-  .withSuccessHandler(response => {
+  .withSuccessHandler((response) => {
     // Parse the optimized string response
-    const result = typeof response === 'string' ? JSON.parse(response) : response;
-    
+    const result = typeof response === "string" ? JSON.parse(response) : response;
+
     console.log("Status:", result.status);
     console.log("Data:", result.body);
   })
-  .doGet(event); 
+  .doGet(event);
 ```
 
 #### 2. External Usage (Web App URL)
@@ -281,7 +281,9 @@ Use this when accessing the script via a direct link, a webhook, or a third-part
 The framework automatically handles your controller's return value based on whether the `@ResponseBody` decorator is used (note that `@RestController` applies this by default):
 
 #### A. Default Wrapper (No `@ResponseBody`)
+
 If the controller method is not marked with `@ResponseBody`, the framework returns a full HTTP-like payload:
+
 ```json
 {
   "status": 200,
@@ -293,6 +295,7 @@ If the controller method is not marked with `@ResponseBody`, the framework retur
 ```
 
 #### B. Direct Context (`@ResponseBody`)
+
 If the method is marked with `@ResponseBody`, the framework bypasses the payload wrapper and returns only the data directly.
 
 > [!TIP]

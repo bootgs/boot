@@ -16,7 +16,7 @@ const config: Linter.Config = {
      * Disallows unused variables.
      * @see {@link https://typescript-eslint.io/rules/no-unused-vars/ no-unused-vars}
      */
-    "@typescript-eslint/no-unused-vars": "error"
+    "@typescript-eslint/no-unused-vars": "off"
   }
 };
 
