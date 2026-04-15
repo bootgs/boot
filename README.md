@@ -126,7 +126,8 @@ export async function doPost(event: GoogleAppsScript.Events.DoPost) {
 ## Features
 
 - **Decorator-based Routing**: Intuitive mapping of HTTP and Apps Script events (GET, POST, etc.).
-- **Spring Boot & NestJS Patterns**: Familiar decorators like `@RequestMapping`, `@Autowired`, `@Value`.
+- **Spring Boot & NestJS Patterns**: Familiar decorators like `@RequestMapping`, `@RestController`, `@ResponseBody`, and the `ResponseEntity` class.
+- **Flexible Responses**: Full control over HTTP status codes, headers, and MIME types using `ResponseEntity`.
 - **Validation**: Declarative parameter validation using Spring Boot-style decorators like `@Min`, `@Max`, `@Email`, etc.
 - **Pipes & Validation**: Transform and validate incoming data with `@UsePipes` and built-in pipes (e.g., `ParseNumberPipe`).
 - **Global Error Handling**: Centralized exception management using `@ControllerAdvice` and `@ExceptionHandler`.
@@ -163,6 +164,16 @@ export async function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td><code>@HttpController(basePath?: string)</code></td>
       <td><code>ClassDecorator</code></td>
       <td>Marks a class as an HTTP request controller. Default base path is <code>/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>@RestController(basePath?: string)</code></td>
+      <td><code>ClassDecorator</code></td>
+      <td>Marks a class as a REST controller. Automatically applies <code>@ResponseBody</code> to all handler methods.</td>
+    </tr>
+    <tr>
+      <td><code>@ResponseBody()</code></td>
+      <td><code>ClassDecorator & MethodDecorator</code></td>
+      <td>Indicates that the return value should be bound to the response body.</td>
     </tr>
     <tr>
       <td><code>@ControllerAdvice()</code></td>
@@ -206,21 +217,6 @@ export async function doPost(event: GoogleAppsScript.Events.DoPost) {
     </tr>
     <tr>
       <td colspan="3" align="center"><b>Aliases</b></td>
-    </tr>
-    <tr>
-      <td><code>@RestController(basePath?: string)</code></td>
-      <td><code>ClassDecorator</code></td>
-      <td>Alias for <code>@HttpController()</code>.</td>
-    </tr>
-    <tr>
-      <td><code>@RestControllerAdvice()</code></td>
-      <td><code>ClassDecorator</code></td>
-      <td>Alias for <code>@ControllerAdvice()</code>.</td>
-    </tr>
-    <tr>
-      <td><code>@SheetsController(sheetName?: string | string[] | RegExp)</code></td>
-      <td><code>ClassDecorator</code></td>
-      <td>Alias for <code>@SheetController()</code>.</td>
     </tr>
     <tr>
       <td><code>@DocsController()</code></td>
@@ -294,37 +290,37 @@ export async function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td>Maps a specific request path onto a controller or a handler method.</td>
     </tr>
     <tr>
-      <td><code>@Get(path?: string)</code></td>
+      <td><code>@Get(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP GET requests. Default path is <code>/</code>.</td>
     </tr>
     <tr>
-      <td><code>@Post(path?: string)</code></td>
+      <td><code>@Post(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP POST requests.</td>
     </tr>
     <tr>
-      <td><code>@Put(path?: string)</code></td>
+      <td><code>@Put(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP PUT requests.</td>
     </tr>
     <tr>
-      <td><code>@Patch(path?: string)</code></td>
+      <td><code>@Patch(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP PATCH requests.</td>
     </tr>
     <tr>
-      <td><code>@Delete(path?: string)</code></td>
+      <td><code>@Delete(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP DELETE requests.</td>
     </tr>
     <tr>
-      <td><code>@Head(path?: string)</code></td>
+      <td><code>@Head(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP HEAD requests.</td>
     </tr>
     <tr>
-      <td><code>@Options(path?: string)</code></td>
+      <td><code>@Options(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Maps a method to handle HTTP OPTIONS requests.</td>
     </tr>
@@ -350,37 +346,37 @@ export async function doPost(event: GoogleAppsScript.Events.DoPost) {
       <td colspan="3" align="center"><b>Aliases</b></td>
     </tr>
     <tr>
-      <td><code>@GetMapping(path?: string)</code></td>
+      <td><code>@GetMapping(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Alias for <code>@Get()</code>.</td>
     </tr>
     <tr>
-      <td><code>@PostMapping(path?: string)</code></td>
+      <td><code>@PostMapping(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Alias for <code>@Post()</code>.</td>
     </tr>
     <tr>
-      <td><code>@PutMapping(path?: string)</code></td>
+      <td><code>@PutMapping(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Alias for <code>@Put()</code>.</td>
     </tr>
     <tr>
-      <td><code>@PatchMapping(path?: string)</code></td>
+      <td><code>@PatchMapping(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Alias for <code>@Patch()</code>.</td>
     </tr>
     <tr>
-      <td><code>@DeleteMapping(path?: string)</code></td>
+      <td><code>@DeleteMapping(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Alias for <code>@Delete()</code>.</td>
     </tr>
     <tr>
-      <td><code>@HeadMapping(path?: string)</code></td>
+      <td><code>@HeadMapping(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Alias for <code>@Head()</code>.</td>
     </tr>
     <tr>
-      <td><code>@OptionsMapping(path?: string)</code></td>
+      <td><code>@OptionsMapping(options?: string | HttpDecoratorOptions)</code></td>
       <td><code>MethodDecorator</code></td>
       <td>Alias for <code>@Options()</code>.</td>
     </tr>
@@ -560,6 +556,59 @@ Pipes can be used to transform data before it reaches your handler:
 | `PositivePipe`       | Validates that the value is strictly positive.                              |
 | `PositiveOrZeroPipe` | Validates that the value is positive or zero.                               |
 | `SizePipe`           | Validates that the size of the value is within range.                       |
+
+## Controlling the Response
+
+### ResponseEntity
+
+The `ResponseEntity` class provides a flexible way to build full HTTP responses, including status codes, headers, and MIME types.
+
+```TypeScript
+import { Get, RestController, ResponseEntity, HttpStatus, ContentMimeType, Param } from "bootgs";
+
+@RestController("users")
+export class UserController {
+
+    @Get("{id}")
+    getUser(@Param("id") id: string): ResponseEntity {
+        const user = { id, name: "John Doe" };
+
+        if (!user) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok()
+            .header("X-Custom-Header", "Value")
+            .body(user);
+    }
+
+    @Get({ path: "export", produces: ContentMimeType.CSV })
+    exportData(): ResponseEntity<string> {
+        const csvData = "id,name\n1,John Doe";
+        return ResponseEntity.ok(csvData);
+    }
+}
+```
+
+### ResponseBody
+
+The `@ResponseBody` decorator indicates that the return value of a method should be bound directly to the response body, bypassing the default framework wrapper (which normally includes `status`, `ok`, and `body` fields in the JSON response).
+
+Note: `@RestController` automatically applies `@ResponseBody` to all its methods.
+
+```TypeScript
+import { Get, HttpController, ResponseBody } from "bootgs";
+
+@HttpController("raw")
+export class RawController {
+
+    @Get("data")
+    @ResponseBody()
+    getRawData(): object {
+        return { message: "This will be returned as the root JSON object" };
+    }
+}
+```
 
 ## Advanced Examples
 
