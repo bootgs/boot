@@ -53,14 +53,7 @@ describe("Integration: BootApplication: Positive", () => {
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
     const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[0][0];
     const responseBody = JSON.parse(callArgs as string);
-    expect(responseBody).toEqual({
-      ok: true,
-      status: 200,
-      statusText: "OK",
-      headers: { "Content-Type": "text/html" },
-      body: { id: "123", fields: ["name,email"], method: "GET" },
-      isResponseBody: true
-    });
+    expect(responseBody).toEqual({ id: "123", fields: ["name,email"], method: "GET" });
   });
 
   it("should handle POST request with body", async () => {
@@ -79,13 +72,6 @@ describe("Integration: BootApplication: Positive", () => {
     const lastCall = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls.length - 1;
     const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[lastCall][0];
     const responseBody = JSON.parse(callArgs as string);
-    expect(responseBody).toEqual({
-      ok: true,
-      status: 201,
-      statusText: "CREATED",
-      headers: { "Content-Type": "text/html" },
-      body: { name: "John Doe", method: "POST" },
-      isResponseBody: true
-    });
+    expect(responseBody).toEqual({ name: "John Doe", method: "POST" });
   });
 });

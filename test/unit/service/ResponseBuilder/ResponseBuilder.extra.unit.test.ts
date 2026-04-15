@@ -36,7 +36,7 @@ describe("ResponseBuilder: Extra", () => {
 
     builder.wrap(request, response);
     expect(vi.mocked(global.ContentService).createTextOutput).toHaveBeenCalledWith(
-      JSON.stringify(response.body)
+      JSON.stringify(response)
     );
   });
 

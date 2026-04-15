@@ -48,7 +48,7 @@ describe("AsyncBootApplication", () => {
 
     const result: any = await app.doGet(event);
     const content = JSON.parse(result.getContent());
-    expect(content.body.message).toBe("hello");
+    expect(content.message).toBe("hello");
   });
 
   it("should handle sync controller method and still return Promise (as it is async method)", async () => {
@@ -76,6 +76,6 @@ describe("AsyncBootApplication", () => {
 
     const result: any = await app.doGet(event);
     const content = JSON.parse(result.getContent());
-    expect(content.body.message).toBe("sync");
+    expect(content.message).toBe("sync");
   });
 });

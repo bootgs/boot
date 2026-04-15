@@ -33,6 +33,7 @@ describe("Integration: BootApplication: Negative", () => {
     expect(global.HtmlService.createHtmlOutput).toHaveBeenCalled();
     const callArgs = vi.mocked(global.HtmlService.createHtmlOutput).mock.calls[0][0];
     const responseBody = JSON.parse(callArgs as string);
-    expect(responseBody).toEqual({ error: { message: "Cannot get /unknown" } });
+    expect(responseBody.body).toEqual({ error: { message: "Cannot get /unknown" } });
+    expect(responseBody.status).toBe(404);
   });
 });
