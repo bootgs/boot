@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.9.0](https://github.com/bootgs/boot/compare/v1.8.0...v1.9.0) (2026-04-15)
+
+
+### Features
+
+* **core:** core logic and service improvements ([00e6e0c](https://github.com/bootgs/boot/commit/00e6e0c13244b82d36c4322737510352dc4ca693))
+* **core:** introduce ResponseEntity, ResponseBody and produces support ([b13fb1b](https://github.com/bootgs/boot/commit/b13fb1b61fa3b91dd9ffa57525ebc8ec1768e05e))
+* **service:** add support for Apps Script output types in ResponseBuilder and cleanup ([db2f912](https://github.com/bootgs/boot/commit/db2f912550963e5516cfd41336784dc42d10aae7))
+
 ## [1.8.0](https://github.com/bootgs/boot/compare/v1.7.1...v1.8.0) (2026-04-14)
 
 
