@@ -37,46 +37,54 @@ export class EventDispatcher {
     const promises: Promise<void>[] = [];
 
     for (const controller of this.controllers.keys()) {
-      const prototype: Record<string, unknown> = (controller as any).prototype;
+      const processedMethods: Set<string> = new Set<string>();
 
-      const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
+      let prototype: object = (controller as any).prototype;
 
-      for (const propertyName of propertyNames) {
-        if (propertyName === "constructor") {
-          continue;
-        }
+      while (prototype && prototype !== Object.prototype) {
+        const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
 
-        const methodHandler: unknown = prototype[propertyName];
-
-        const eventMetadata: AppsScriptEventType | undefined = Reflect.getMetadata(
-          APPSSCRIPT_EVENT_METADATA,
-          methodHandler as object
-        );
-
-        const options: Record<string, unknown> | undefined = Reflect.getMetadata(
-          APPSSCRIPT_OPTIONS_METADATA,
-          methodHandler as object
-        );
-
-        if (eventMetadata === eventType && this.checkFilters(eventType, event, options)) {
-          const instance: unknown = this.resolver.resolve(controller);
-
-          if (!isRecord(instance)) {
+        for (const propertyName of propertyNames) {
+          if (propertyName === "constructor" || processedMethods.has(propertyName)) {
             continue;
           }
 
-          const args: unknown[] = this.buildMethodParams(instance, propertyName, event);
+          processedMethods.add(propertyName);
 
-          const handler: unknown = instance[propertyName];
+          const methodHandler: unknown = (prototype as any)[propertyName];
 
-          if (isFunctionLike(handler)) {
-            const result: unknown = Reflect.apply(handler, instance, args);
+          const eventMetadata: AppsScriptEventType | undefined = Reflect.getMetadata(
+            APPSSCRIPT_EVENT_METADATA,
+            methodHandler as object
+          );
 
-            if (result instanceof Promise) {
-              promises.push(result);
+          const options: Record<string, unknown> | undefined = Reflect.getMetadata(
+            APPSSCRIPT_OPTIONS_METADATA,
+            methodHandler as object
+          );
+
+          if (eventMetadata === eventType && this.checkFilters(eventType, event, options)) {
+            const instance: unknown = this.resolver.resolve(controller);
+
+            if (!isRecord(instance)) {
+              continue;
+            }
+
+            const args: unknown[] = this.buildMethodParams(instance, propertyName, event);
+
+            const handler: unknown = instance[propertyName];
+
+            if (isFunctionLike(handler)) {
+              const result: unknown = Reflect.apply(handler, instance, args);
+
+              if (result instanceof Promise) {
+                promises.push(result);
+              }
             }
           }
         }
+
+        prototype = Object.getPrototypeOf(prototype);
       }
     }
 

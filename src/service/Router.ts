@@ -382,27 +382,38 @@ export class Router {
       return null;
     }
 
-    const prototype: any = Object.getPrototypeOf(instance);
+    let prototype: any = Object.getPrototypeOf(instance);
+    const visitedMethods: Set<string> = new Set<string>();
 
-    const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
+    while (prototype && prototype !== Object.prototype) {
+      const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
 
-    for (const propertyName of propertyNames) {
-      const method: any = instance[propertyName];
+      for (const propertyName of propertyNames) {
+        if (propertyName === "constructor" || visitedMethods.has(propertyName)) {
+          continue;
+        }
 
-      if (!isFunctionLike(method)) continue;
+        visitedMethods.add(propertyName);
 
-      const exceptions: Newable<Error>[] | undefined = Reflect.getMetadata(
-        EXCEPTION_HANDLER_METADATA,
-        method
-      );
+        const method: any = instance[propertyName];
 
-      if (exceptions && Array.isArray(exceptions)) {
-        for (const exceptionClass of exceptions) {
-          if (err instanceof exceptionClass) {
-            return propertyName;
+        if (!isFunctionLike(method)) continue;
+
+        const exceptions: Newable<Error>[] | undefined = Reflect.getMetadata(
+          EXCEPTION_HANDLER_METADATA,
+          method
+        );
+
+        if (exceptions && Array.isArray(exceptions)) {
+          for (const exceptionClass of exceptions) {
+            if (err instanceof exceptionClass) {
+              return propertyName;
+            }
           }
         }
       }
+
+      prototype = Object.getPrototypeOf(prototype);
     }
 
     return null;
