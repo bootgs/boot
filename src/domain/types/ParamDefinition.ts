@@ -4,6 +4,7 @@ import { ParamSource } from "../../domain/enums";
  * Interface representing a parameter definition.
  */
 export interface ParamDefinition {
+
   /**
    * The source of the parameter.
    */

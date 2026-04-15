@@ -7,6 +7,7 @@ import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA } from "../domai
  * This interface defines event-specific filters for `onEdit`, `onFormSubmit`, and `onChange` handlers.
  */
 export interface AppsScriptOptions {
+
   /**
    * The type of Apps Script event.
    */

@@ -12,7 +12,7 @@ export function getInjectionTokens(
   target: object,
   propertyKey?: string | symbol
 ): Record<string, InjectTokenDefinition> {
-  const metadataTarget = target;
+  const metadataTarget: object = target;
 
   if (propertyKey) {
     return Reflect.getMetadata(INJECT_TOKENS_METADATA, metadataTarget, propertyKey) || {};

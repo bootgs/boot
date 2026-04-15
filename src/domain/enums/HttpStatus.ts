@@ -2,6 +2,7 @@
  * Enum of HTTP status codes.
  */
 export enum HttpStatus {
+
   /**
    * Continue (100).
    */
@@ -43,17 +44,17 @@ export enum HttpStatus {
   NON_AUTHORITATIVE_INFORMATION = 203,
 
   /**
-   * No ContentMimeType (204).
+   * No Content (204).
    */
   NO_CONTENT = 204,
 
   /**
-   * Reset ContentMimeType (205).
+   * Reset Content (205).
    */
   RESET_CONTENT = 205,
 
   /**
-   * Partial ContentMimeType (206).
+   * Partial Content (206).
    */
   PARTIAL_CONTENT = 206,
 
@@ -68,7 +69,7 @@ export enum HttpStatus {
   ALREADY_REPORTED = 208,
 
   /**
-   * ContentMimeType Different (210).
+   * Content Different (210).
    */
   CONTENT_DIFFERENT = 210,
 

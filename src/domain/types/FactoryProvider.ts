@@ -4,6 +4,7 @@ import { InjectionToken } from "./InjectionToken";
  * Interface representing a factory provider.
  */
 export interface FactoryProvider<T = unknown> {
+
   /**
    * The injection token.
    */

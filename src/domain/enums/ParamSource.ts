@@ -2,6 +2,7 @@
  * Enum of parameter sources for method handlers.
  */
 export enum ParamSource {
+
   /**
    * Path parameters.
    */
