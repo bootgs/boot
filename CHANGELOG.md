@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/bootgs/boot/compare/v1.9.0...v1.9.1) (2026-04-15)
+
+
+### Bug Fixes
+
+* resolve route inheritance issues in controllers (fixes [#100](https://github.com/bootgs/boot/issues/100)) ([ef293c0](https://github.com/bootgs/boot/commit/ef293c0dcb1c4530b5b8159d482e3e3b9c6964b7))
+
 ## [1.9.0](https://github.com/bootgs/boot/compare/v1.8.0...v1.9.0) (2026-04-15)
 
 
