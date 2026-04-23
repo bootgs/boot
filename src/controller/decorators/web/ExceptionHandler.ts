@@ -1,5 +1,5 @@
-import { EXCEPTION_HANDLER_METADATA } from "../../domain/constants";
-import { Newable } from "../../domain/types";
+import { EXCEPTION_HANDLER_METADATA } from "../../../domain/constants";
+import { Newable } from "../../../domain/types";
 
 /**
  * Decorator that marks a method as an exception handler.

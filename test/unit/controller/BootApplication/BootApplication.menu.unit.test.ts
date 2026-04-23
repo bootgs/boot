@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { describe, expect, it, vi } from "vitest";
 import { BootApplication } from "../../../../src/controller/BootApplication";
-import { HttpController } from "../../../../src/controller/decorators/HttpController";
+import { HttpController } from "../../../../src/controller/decorators/controller/HttpController";
 import { Event } from "../../../../src/controller/decorators/params/Event";
 
 describe("BootApplication: Menu Handling", () => {

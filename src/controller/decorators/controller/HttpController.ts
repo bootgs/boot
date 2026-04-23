@@ -1,4 +1,4 @@
-import { Controller } from "../../controller/decorators";
+import { Controller } from "./Controller";
 
 /**
  * Decorator that marks a class as an HTTP controller.

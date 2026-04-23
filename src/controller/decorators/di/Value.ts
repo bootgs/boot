@@ -1,7 +1,7 @@
-import { INJECT_TOKENS_METADATA, PARAM_DEFINITIONS_METADATA } from "../../domain/constants";
-import { ParamSource } from "../../domain/enums";
-import { InjectTokenDefinition, ParamDefinition } from "../../domain/types";
-import { assignParamMetadata } from "../../repository";
+import { INJECT_TOKENS_METADATA, PARAM_DEFINITIONS_METADATA } from "../../../domain/constants";
+import { ParamSource } from "../../../domain/enums";
+import { InjectTokenDefinition, ParamDefinition } from "../../../domain/types";
+import { assignParamMetadata } from "../../../repository";
 
 /**
  * Decorator that injects a configuration value.

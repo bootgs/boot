@@ -1,5 +1,5 @@
 import { HttpController } from "./HttpController";
-import { ResponseBody } from "./ResponseBody";
+import { ResponseBody } from "../web/ResponseBody";
 
 /**
  * Decorator that marks a class as a REST controller.

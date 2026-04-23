@@ -1,4 +1,4 @@
-import { RESPONSE_BODY_METADATA } from "../../domain/constants";
+import { RESPONSE_BODY_METADATA } from "../../../domain/constants";
 
 /**
  * Decorator that tells the controller that the return object should be serialized

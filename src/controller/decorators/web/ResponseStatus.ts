@@ -1,4 +1,4 @@
-import { RESPONSE_STATUS_METADATA } from "../../domain/constants";
+import { RESPONSE_STATUS_METADATA } from "../../../domain/constants";
 import { HttpStatus } from "src/domain";
 
 /**

@@ -1,4 +1,4 @@
-import { CONTROLLER_ADVICE_WATERMARK, INJECTABLE_WATERMARK } from "../../domain/constants";
+import { CONTROLLER_ADVICE_WATERMARK, INJECTABLE_WATERMARK } from "../../../domain/constants";
 
 /**
  * Decorator that marks a class as a controller advice.
