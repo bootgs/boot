@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.10.0](https://github.com/bootgs/boot/compare/v1.9.2...v1.10.0) (2026-04-23)
+
+
+### Features
+
+* **decorators:** add @SheetController, @DocController, @SlideController, @FormController and their aliases
+
+
+### Refactor
+
+* **decorators:** logically group decorators into subdirectories (controller, di, web)
+
+
+## [1.9.2](https://github.com/bootgs/boot/compare/v1.9.1...v1.9.2) (2026-04-15)
+
+
+### Bug Fixes
+
+* fix npm publish without build
+
 ## [1.9.1](https://github.com/bootgs/boot/compare/v1.9.0...v1.9.1) (2026-04-15)
 
 
