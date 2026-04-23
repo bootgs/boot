@@ -614,6 +614,10 @@ export class Router {
 
         case ParamSource.QUERY:
           value = param.key ? (ctx.query ?? {})[param.key] : ctx.query;
+
+          if (param.key && Array.isArray(value) && value.length === 1) {
+            value = value[0];
+          }
           break;
 
         case ParamSource.BODY:
