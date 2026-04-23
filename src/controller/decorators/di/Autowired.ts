@@ -1,4 +1,4 @@
-import { Inject } from "../../controller/decorators";
+import { Inject } from "./Inject";
 
 /**
  * Decorator that marks a constructor parameter or property as being autowired.

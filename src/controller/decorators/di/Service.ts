@@ -1,4 +1,4 @@
-import { Injectable } from "../../controller/decorators";
+import { Injectable } from "./Injectable";
 
 /**
  * Decorator that marks a class as a service.

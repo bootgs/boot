@@ -16,7 +16,6 @@ import { AssertTruePipe } from "../src/controller/decorators/validation/pipes/As
 describe("Validation Decorators", () => {
   it("should add validation pipes to metadata (Min/Max)", () => {
     class TestController {
-       
       method(@Query("id") @Min(1) @Max(10) id: number) {}
     }
 

@@ -26,4 +26,24 @@ describe("@Controller: Positive", () => {
 
     expect(Reflect.getMetadata(CONTROLLER_OPTIONS_METADATA, TestController)).toEqual({});
   });
+
+  it("should work without parameters", () => {
+    @Controller()
+    class TestController {}
+
+    expect(Reflect.getMetadata(CONTROLLER_WATERMARK, TestController)).toBe(true);
+    expect(Reflect.getMetadata(CONTROLLER_TYPE_METADATA, TestController)).toBeUndefined();
+    expect(Reflect.getMetadata(CONTROLLER_OPTIONS_METADATA, TestController)).toEqual({});
+  });
+
+  it("should work with only options", () => {
+    const options = { basePath: "/api" };
+
+    @Controller(options)
+    class TestController {}
+
+    expect(Reflect.getMetadata(CONTROLLER_WATERMARK, TestController)).toBe(true);
+    expect(Reflect.getMetadata(CONTROLLER_TYPE_METADATA, TestController)).toBeUndefined();
+    expect(Reflect.getMetadata(CONTROLLER_OPTIONS_METADATA, TestController)).toEqual(options);
+  });
 });
