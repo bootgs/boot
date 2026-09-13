@@ -77,5 +77,8 @@
   "dependencies": {
     "apps-script-utils": "^1.9.0",
     "reflect-metadata": "^0.2.2"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
   }
 }
