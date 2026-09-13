@@ -462,34 +462,29 @@ If the method is marked with `@ResponseBody`, the framework bypasses the payload
   </thead>
   <tbody>
     <tr>
-      <td><code>@Install()</code></td>
+      <td><code>@OnInstall(options?: object)</code></td>
       <td><code>MethodDecorator</code></td>
-      <td>Handles <a href="https://developers.google.com/apps-script/guides/triggers#oninstalle"><code>onInstall</code></a> event.</td>
+      <td>Handles the <a href="https://developers.google.com/apps-script/guides/triggers#oninstalle"><code>onInstall</code></a> event.</td>
     </tr>
     <tr>
-      <td><code>@Open()</code></td>
+      <td><code>@OnOpen(options?: object)</code></td>
       <td><code>MethodDecorator</code></td>
-      <td>Handles <a href="https://developers.google.com/apps-script/guides/triggers#onopene"><code>onOpen</code></a> event.</td>
+      <td>Handles the <a href="https://developers.google.com/apps-script/guides/triggers#onopene"><code>onOpen</code></a> event.</td>
     </tr>
     <tr>
-      <td><code>@Edit(...range?: (string | RegExp | string[])[])</code></td>
+      <td><code>@OnEdit(options?: { range?: string | RegExp | (string | RegExp)[] })</code></td>
       <td><code>MethodDecorator</code></td>
-      <td>Handles <a href="https://developers.google.com/apps-script/guides/triggers#onedite"><code>onEdit</code></a> event. Filter by A1-notation, sheet name, or RegExp.</td>
+      <td>Handles the <a href="https://developers.google.com/apps-script/guides/triggers#onedite"><code>onEdit</code></a> event. When <code>range</code> is set, the handler runs only if the edited range's A1 notation equals the given string or matches the <code>RegExp</code>.</td>
     </tr>
     <tr>
-      <td><code>@Change(changeType?: SheetsOnChangeChangeType | SheetsOnChangeChangeType[])</code></td>
+      <td><code>@OnChange(options?: { changeType?: string | string[] })</code></td>
       <td><code>MethodDecorator</code></td>
-      <td>Handles <code>onChange</code> event. Filter by <code>SheetsOnChangeChangeType</code>.</td>
+      <td>Handles the <code>onChange</code> event. When <code>changeType</code> is set, the handler runs only for the listed change types (e.g. <code>"INSERT_ROW"</code>, <code>"EDIT"</code>).</td>
     </tr>
     <tr>
-      <td><code>@SelectionChange()</code></td>
+      <td><code>@OnFormSubmit(options?: { formId?: string | string[] })</code></td>
       <td><code>MethodDecorator</code></td>
-      <td>Handles <a href="https://developers.google.com/apps-script/guides/triggers#onselectionchangee"><code>onSelectionChange</code></a> event.</td>
-    </tr>
-    <tr>
-      <td><code>@FormSubmit(...formId?: (string | string[])[])</code></td>
-      <td><code>MethodDecorator</code></td>
-      <td>Handles <code>onFormSubmit</code> event. Filter by one or more form IDs.</td>
+      <td>Handles the <code>onFormSubmit</code> event. When <code>formId</code> is set, the handler runs only for submissions from the listed form IDs.</td>
     </tr>
     <tr>
       <td colspan="3" align="center"><b>HTTP Methods</b></td>
