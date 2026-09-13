@@ -32,27 +32,30 @@ aid in code organization.
 
 ## AI Agent Skills
 
-Working with an AI coding agent (Claude Code, Gemini CLI, Cursor, etc.)? The **[bootgs/skills](https://github.com/bootgs/skills)** repository provides a set of [Agent Skills](https://github.com/bootgs/skills) that teach it how to scaffold, structure, and validate **Boot.gs** applications, plus a set of framework-agnostic skills for Google Apps Script development in general.
+Working with an AI coding agent (Claude Code, Gemini CLI, Cursor, etc.)? The
+**[bootgs/skills](https://github.com/bootgs/skills)** repository provides a set
+of [Agent Skills](https://github.com/bootgs/skills) that teach it how to scaffold, structure, and validate **Boot.gs**
+applications, plus a set of framework-agnostic skills for Google Apps Script development in general.
 
-| Skill | Description |
-|---|---|
-| `bootgs-quickstart` | Project scaffolding with TypeScript config and entry points |
-| `bootgs-architecture` | Controller/Service/Repository layering patterns |
-| `bootgs-validation` | Parameter validation decorators and custom pipes |
-| `bootgs-client` | Virtual Transport Layer client implementation |
-| `bootgs-openapi` | Automatic OpenAPI 3.0 spec generation |
-| `apps-script-triggers` | Event handling and quota management |
-| `apps-script-services` | Safe usage of `SpreadsheetApp`, `PropertiesService`, etc. |
-| `apps-script-ui` | Menus, dialogs, sidebars, and UI patterns |
-| `apps-script-clasp-workflow` | CLI deployment and versioning |
-| `apps-script-utils` | Guard/utility library functions |
-| `apps-script-marketplace-publish` | Add-on Marketplace compliance auditing |
+| Skill                             | Description                                                 |
+|-----------------------------------|-------------------------------------------------------------|
+| `bootgs-quickstart`               | Project scaffolding with TypeScript config and entry points |
+| `bootgs-architecture`             | Controller/Service/Repository layering patterns             |
+| `bootgs-validation`               | Parameter validation decorators and custom pipes            |
+| `bootgs-client`                   | Virtual Transport Layer client implementation               |
+| `bootgs-openapi`                  | Automatic OpenAPI 3.0 spec generation                       |
+| `apps-script-triggers`            | Event handling and quota management                         |
+| `apps-script-services`            | Safe usage of `SpreadsheetApp`, `PropertiesService`, etc.   |
+| `apps-script-ui`                  | Menus, dialogs, sidebars, and UI patterns                   |
+| `apps-script-clasp-workflow`      | CLI deployment and versioning                               |
+| `apps-script-utils`               | Guard/utility library functions                             |
+| `apps-script-marketplace-publish` | Add-on Marketplace compliance auditing                      |
 
 Skills activate automatically based on agent context and user prompts — no manual invocation needed once installed.
 
 **Claude Code:**
 
-```
+```bash
 /plugin marketplace add bootgs/skills
 /plugin install bootgs@bootgs-skills
 /plugin install apps-script@bootgs-skills
@@ -102,7 +105,8 @@ export class SheetController {
 
 ### 2. Initialize the Application
 
-Bootstrap your application by creating an `App` instance and delegating the standard Apps Script entry points (`doGet`, `doPost`) to it.
+Bootstrap your application by creating an `App` instance and delegating the standard Apps Script entry points (`doGet`,
+`doPost`) to it.
 
 > [!IMPORTANT]
 > The framework requires that you delegate these global entry points so it can intercept and route the incoming events.
@@ -138,10 +142,12 @@ export function doPost(event: GoogleAppsScript.Events.DoPost) {
 
 #### Asynchronous Application
 
-Use `AsyncApp` when you need to handle asynchronous operations (e.g., `UrlFetchApp` promises or other async tasks) in your controllers:
+Use `AsyncApp` when you need to handle asynchronous operations (e.g., `UrlFetchApp` promises or other async tasks) in
+your controllers:
 
 > [!TIP]
-> Only use `AsyncApp` if your controller methods are `async` or return a `Promise`. For standard synchronous tasks, the regular `App` is more lightweight.
+> Only use `AsyncApp` if your controller methods are `async` or return a `Promise`. For standard synchronous tasks, the
+regular `App` is more lightweight.
 
 ```TypeScript
 import {AsyncApp} from "bootgs";
@@ -171,10 +177,13 @@ export async function doPost(event: GoogleAppsScript.Events.DoPost) {
 ## Features
 
 - **Decorator-based Routing**: Intuitive mapping of HTTP and Apps Script events (GET, POST, etc.).
-- **Spring Boot & NestJS Patterns**: Familiar decorators like `@RequestMapping`, `@RestController`, `@ResponseBody`, and the `ResponseEntity` class.
+- **Spring Boot & NestJS Patterns**: Familiar decorators like `@RequestMapping`, `@RestController`, `@ResponseBody`, and
+  the `ResponseEntity` class.
 - **Flexible Responses**: Full control over HTTP status codes, headers, and MIME types using `ResponseEntity`.
-- **Validation**: Declarative parameter validation using Spring Boot-style decorators like `@Min`, `@Max`, `@Email`, etc.
-- **Pipes & Validation**: Transform and validate incoming data with `@UsePipes` and built-in pipes (e.g., `ParseNumberPipe`).
+- **Validation**: Declarative parameter validation using Spring Boot-style decorators like `@Min`, `@Max`, `@Email`,
+  etc.
+- **Pipes & Validation**: Transform and validate incoming data with `@UsePipes` and built-in pipes (e.g.,
+  `ParseNumberPipe`).
 - **Global Error Handling**: Centralized exception management using `@ControllerAdvice` and `@ExceptionHandler`.
 - **Dependency Injection**: Fully-featured DI for better decoupling and testability.
 - **Type Safety**: Built with TypeScript for a robust development experience.
@@ -182,9 +191,12 @@ export async function doPost(event: GoogleAppsScript.Events.DoPost) {
 
 ## Calling the API (Virtual Transport Layer)
 
-The primary goal of **Boot.gs** is to ensure your code remains environment-agnostic. It should function identically whether it’s triggered via `doGet`/`doPost` or `google.script.run`.
+The primary goal of **Boot.gs** is to ensure your code remains environment-agnostic. It should function identically
+whether it’s triggered via `doGet`/`doPost` or `google.script.run`.
 
-Since Google Apps Script (GAS) has certain constraints on headers and routing, the framework implements a **Virtual Transport Layer**. This layer "tucks" your request metadata (like the HTTP method and path) into parameters so the framework handles the routing for you seamlessly.
+Since Google Apps Script (GAS) has certain constraints on headers and routing, the framework implements a **Virtual
+Transport Layer**. This layer "tucks" your request metadata (like the HTTP method and path) into parameters so the
+framework handles the routing for you seamlessly.
 
 ### Virtual Request Parameters
 
@@ -196,11 +208,16 @@ To simulate a standard HTTP request, you pass these key parameters to the framew
 
 > [!CAUTION]
 > Never pass sensitive secrets in the `headers` object via query parameters!
-> Since the Virtual Transport Layer passes all request metadata (including headers) via URL query parameters, you must never include sensitive information like API keys or Bearer tokens inside the `headers` object when calling the script via its Web App URL. URLs (and their query strings) are frequently logged in plain text. For sensitive data, always use the payload body of a `POST` request.
+> Since the Virtual Transport Layer passes all request metadata (including headers) via URL query parameters, you must
+never include sensitive information like API keys or Bearer tokens inside the `headers` object when calling the script
+via its Web App URL. URLs (and their query strings) are frequently logged in plain text. For sensitive data, always use
+the payload body of a `POST` request.
 
 ### Supported Response Types (MIME Types)
 
-The framework supports a variety of output formats. You can specify the desired format using the `produces` property in the `@RequestMapping` decorator (or its aliases like `@Get`, `@Post`) or by returning a `ResponseEntity` with a specific MIME type.
+The framework supports a variety of output formats. You can specify the desired format using the `produces` property in
+the `@RequestMapping` decorator (or its aliases like `@Get`, `@Post`) or by returning a `ResponseEntity` with a specific
+MIME type.
 
 <table width="100%">
   <thead>
@@ -271,7 +288,8 @@ The framework supports a variety of output formats. You can specify the desired 
 Use this when building Sidebars, Modals, or Add-ons.
 
 > [!TIP]
-> To receive a raw string (which is faster and easier to parse in client-side JS), include the `X-Request-Source: internal` header in your request.
+> To receive a raw string (which is faster and easier to parse in client-side JS), include the
+`X-Request-Source: internal` header in your request.
 
 **Example (Client-side JS):**
 
@@ -279,46 +297,48 @@ Use this when building Sidebars, Modals, or Add-ons.
 const path = "/api/users/123";
 const method = "GET";
 const headers = JSON.stringify({
-  "X-Request-Source": "internal"
+    "X-Request-Source": "internal"
 });
 
 // Constructing the Virtual Transport Event
 const event = {
-  pathInfo: path,
-  parameter: {
-    method,
-    pathname: path,
-    headers
-  },
-  parameters: {
-    method: [method],
-    pathname: [path],
-    headers: [headers]
-  },
-  queryString: `method=${method}&pathname=${encodeURIComponent(path)}&headers=${encodeURIComponent(headers)}`
+    pathInfo: path,
+    parameter: {
+        method,
+        pathname: path,
+        headers
+    },
+    parameters: {
+        method: [method],
+        pathname: [path],
+        headers: [headers]
+    },
+    queryString: `method=${method}&pathname=${encodeURIComponent(path)}&headers=${encodeURIComponent(headers)}`
 };
 
 google.script.run
-  .withSuccessHandler((response) => {
-    // Parse the optimized string response
-    const result = typeof response === "string" ? JSON.parse(response) : response;
+    .withSuccessHandler((response) => {
+        // Parse the optimized string response
+        const result = typeof response === "string" ? JSON.parse(response) : response;
 
-    console.log("Status:", result.status);
-    console.log("Data:", result.body);
-  })
-  .doGet(event);
+        console.log("Status:", result.status);
+        console.log("Data:", result.body);
+    })
+    .doGet(event);
 ```
 
 #### 2. External Usage (Web App URL)
 
-Use this when accessing the script via a direct link, a webhook, or a third-party service. This returns a standard GAS `TextOutput` or `HtmlOutput`.
+Use this when accessing the script via a direct link, a webhook, or a third-party service. This returns a standard GAS
+`TextOutput` or `HtmlOutput`.
 
 **Example Request URL:**
 `https://script.google.com/.../exec?method=GET&pathname=%2Fapi%2Fusers%2F123`
 
 ### Response Wrapping Logic
 
-The framework automatically handles your controller's return value based on whether the `@ResponseBody` decorator is used (note that `@RestController` applies this by default):
+The framework automatically handles your controller's return value based on whether the `@ResponseBody` decorator is
+used (note that `@RestController` applies this by default):
 
 #### A. Default Wrapper (No `@ResponseBody`)
 
@@ -329,18 +349,26 @@ If the controller method is not marked with `@ResponseBody`, the framework retur
   "status": 200,
   "statusText": "OK",
   "ok": true,
-  "headers": { "Content-Type": "application/json" },
-  "body": { "id": 123, "name": "John Doe" }
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "id": 123,
+    "name": "John Doe"
+  }
 }
 ```
 
 #### B. Direct Context (`@ResponseBody`)
 
-If the method is marked with `@ResponseBody`, the framework bypasses the payload wrapper and returns only the data directly.
+If the method is marked with `@ResponseBody`, the framework bypasses the payload wrapper and returns only the data
+directly.
 
 > [!TIP]
 > **Custom Axios Adapter**
-> Building those `google.script.run` payloads manually can be tedious. A custom Axios adapter specifically for GAS Web Apps is currently in development. It will completely abstract the virtual transport layer, allowing you to use standard `axios.get()` or `axios.post()` in your frontend.
+> Building those `google.script.run` payloads manually can be tedious. A custom Axios adapter specifically for GAS Web
+Apps is currently in development. It will completely abstract the virtual transport layer, allowing you to use standard
+`axios.get()` or `axios.post()` in your frontend.
 
 > [!NOTE]
 > Added full support for XML, RSS, and other MIME types as requested!
@@ -822,17 +850,18 @@ Pipes can be used to transform data before it reaches your handler:
 
 ### ResponseEntity
 
-The `ResponseEntity` class provides a flexible way to build full HTTP responses, including status codes, headers, and MIME types.
+The `ResponseEntity` class provides a flexible way to build full HTTP responses, including status codes, headers, and
+MIME types.
 
 ```TypeScript
-import { Get, RestController, ResponseEntity, HttpStatus, ContentMimeType, Param } from "bootgs";
+import {Get, RestController, ResponseEntity, HttpStatus, ContentMimeType, Param} from "bootgs";
 
 @RestController("users")
 export class UserController {
 
     @Get("{id}")
     getUser(@Param("id") id: string): ResponseEntity {
-        const user = { id, name: "John Doe" };
+        const user = {id, name: "John Doe"};
 
         if (!user) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -843,7 +872,7 @@ export class UserController {
             .body(user);
     }
 
-    @Get({ path: "export", produces: ContentMimeType.CSV })
+    @Get({path: "export", produces: ContentMimeType.CSV})
     exportData(): ResponseEntity<string> {
         const csvData = "id,name\n1,John Doe";
         return ResponseEntity.ok(csvData);
@@ -853,13 +882,15 @@ export class UserController {
 
 ### ResponseBody
 
-The `@ResponseBody` decorator indicates that the return value of a method should be bound directly to the response body, bypassing the default framework wrapper (which normally includes `status`, `ok`, and `body` fields in the JSON response).
+The `@ResponseBody` decorator indicates that the return value of a method should be bound directly to the response body,
+bypassing the default framework wrapper (which normally includes `status`, `ok`, and `body` fields in the JSON
+response).
 
 > [!NOTE]
 > `@RestController` automatically applies `@ResponseBody` to all its methods.
 
 ```TypeScript
-import { Get, HttpController, ResponseBody } from "bootgs";
+import {Get, HttpController, ResponseBody} from "bootgs";
 
 @HttpController("raw")
 export class RawController {
@@ -867,7 +898,7 @@ export class RawController {
     @Get("data")
     @ResponseBody()
     getRawData(): object {
-        return { message: "This will be returned as the root JSON object" };
+        return {message: "This will be returned as the root JSON object"};
     }
 }
 ```
@@ -918,7 +949,9 @@ export class GlobalExceptionHandler {
 ## Recommended
 
 > [!TIP]
-> For enhanced development with Google Apps Script, we recommend using [apps-script-utils](https://github.com/MaksymStoianov/apps-script-utils), a collection of utility functions and classes that complement this framework.
+> For enhanced development with Google Apps Script, we recommend
+using [apps-script-utils](https://github.com/MaksymStoianov/apps-script-utils), a collection of utility functions and
+classes that complement this framework.
 
 ## Contributors
 
