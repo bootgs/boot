@@ -4,7 +4,6 @@ import { ParsedUrlQuery } from "./ParsedUrlQuery";
  * Interface representing a parsed URL.
  */
 export interface ParsedUrl {
-
   /**
    * The pathname part of the URL.
    */

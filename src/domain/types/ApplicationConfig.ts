@@ -6,7 +6,6 @@ import { Provider } from "./Provider";
  * Interface representing application configuration.
  */
 export interface ApplicationConfig {
-
   /**
    * List of controller classes.
    */

@@ -4,7 +4,6 @@
  * @see https://developers.google.com/apps-script/reference/content/mime-type
  */
 export enum ContentMimeType {
-
   /**
    * ATOM MIME type.
    *

@@ -5,7 +5,6 @@ import { ContentMimeType, HttpStatus } from "../../domain/enums";
  * Interface representing an HTTP response.
  */
 export interface HttpResponse {
-
   /**
    * HTTP response headers.
    */

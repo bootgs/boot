@@ -5,7 +5,6 @@ import { ContentMimeType, RequestMethod } from "../domain/enums";
  * Options for HTTP decorators.
  */
 export interface HttpDecoratorOptions {
-
   /**
    * The path for the route.
    */

@@ -5,7 +5,6 @@ import { Newable } from "./Newable";
  * Interface representing a class provider.
  */
 export interface ClassProvider<T = unknown> {
-
   /**
    * The injection token.
    */

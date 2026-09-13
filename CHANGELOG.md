@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.10.0](https://github.com/bootgs/boot/compare/v1.9.1...v1.10.0) (2026-08-19)
+
+
+### Features
+
+* **decorators:** add @SheetController, @DocController, @SlideController, @FormController and their aliases ([33afa37](https://github.com/bootgs/boot/commit/33afa37193672f77c21167f79e59bb2980819a01))
+* **router:** handle single-value query parameters automatically ([f1c416f](https://github.com/bootgs/boot/commit/f1c416f3fcc41a095ca87fbb0439942aa4d6a565))
+
+
+### Bug Fixes
+
+* readme ([2254d00](https://github.com/bootgs/boot/commit/2254d00c64d2dd3847f04bce6dd2a914c8562434))
+
 ## [1.10.0](https://github.com/bootgs/boot/compare/v1.9.2...v1.10.0) (2026-04-23)
 
 

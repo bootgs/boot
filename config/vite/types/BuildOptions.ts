@@ -6,7 +6,6 @@ import { BuildPaths } from "./BuildPaths";
  * Extends Vite's `ConfigEnv` with project-specific paths and flags.
  */
 export interface BuildOptions extends ConfigEnv {
-
   /**
    * Project paths.
    */

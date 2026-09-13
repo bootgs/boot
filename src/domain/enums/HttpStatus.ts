@@ -2,7 +2,6 @@
  * Enum of HTTP status codes.
  */
 export enum HttpStatus {
-
   /**
    * Continue (100).
    */
