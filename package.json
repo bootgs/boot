@@ -19,7 +19,8 @@
     "test:unit": "vitest run test/unit",
     "test:integration": "vitest run test/integration",
     "test:cov": "npx vitest run --coverage",
-    "build": "rm -rf dist/* && tsc -b --force"
+    "build": "rm -rf dist/* && tsc -b --force",
+    "docs:check-i18n": "node scripts/check-readme-translations.mjs"
   },
   "repository": {
     "type": "git",
