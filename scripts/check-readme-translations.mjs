@@ -30,8 +30,18 @@ const LANGUAGES = [
   { code: "fr", label: "Français" },
   { code: "es", label: "Español" },
   { code: "pt", label: "Português" },
+  { code: "it", label: "Italiano" },
+  { code: "nl", label: "Nederlands" },
+  { code: "pl", label: "Polski" },
+  { code: "cs", label: "Čeština" },
+  { code: "tr", label: "Türkçe" },
+  { code: "ar", label: "العربية" },
+  { code: "id", label: "Bahasa Indonesia" },
+  { code: "vi", label: "Tiếng Việt" },
   { code: "ja", label: "日本語" },
-  { code: "zh", label: "中文" }
+  { code: "ko", label: "한국어" },
+  { code: "zh", label: "简体中文" },
+  { code: "zh-TW", label: "繁體中文" }
 ];
 
 /**
