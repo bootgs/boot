@@ -14,7 +14,7 @@ Third-party software
 The published npm package depends on, but does not bundle, the following
 packages. Each is distributed under its own licence:
 
-  - apps-script-utils (https://github.com/bootgs/apps-script-utils)
+  - @bootgs/utils (https://github.com/bootgs/utils)
     Copyright Maksym Stoianov, Apache License 2.0
   - reflect-metadata (https://github.com/microsoft/reflect-metadata)
     Copyright Microsoft Corporation, Apache License 2.0

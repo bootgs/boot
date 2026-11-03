@@ -136,7 +136,7 @@ See [AI Agent Skills](docs/guide/ai-agent-skills.md) for the full list and for G
 
 > [!TIP]
 > For enhanced development with Google Apps Script, we recommend using
-> [apps-script-utils](https://github.com/MaksymStoianov/apps-script-utils), a collection of utility functions and
+> [@bootgs/utils](https://github.com/bootgs/utils), a collection of utility functions and
 > classes that complement this framework.
 
 ## Contributors

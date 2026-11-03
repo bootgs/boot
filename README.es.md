@@ -141,7 +141,7 @@ La lista completa y la instalación para Gemini CLI y `npx skills` están en
 ## Recomendado
 
 > [!TIP]
-> Para desarrollar con más comodidad en Google Apps Script, recomendamos [apps-script-utils](https://github.com/MaksymStoianov/apps-script-utils),
+> Para desarrollar con más comodidad en Google Apps Script, recomendamos [@bootgs/utils](https://github.com/bootgs/utils),
 > una colección de funciones y clases utilitarias que complementan este framework.
 
 ## Colaboradores

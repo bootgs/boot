@@ -90,6 +90,6 @@ describe("Example Test", () => {
 
 #### Dependency Management
 
-The project has a dependency on `apps-script-utils` from a GitHub repository:
-`"apps-script-utils": "github:MaksymStoianov/apps-script-utils#main"`
-Ensure you have network access to GitHub when installing dependencies.
+The project depends on the utility library from npm: `apps-script-utils` today, renamed to
+`@bootgs/utils` (https://github.com/bootgs/utils); the dependency switches to the new name with its
+first release.

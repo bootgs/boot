@@ -128,7 +128,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ## 推荐
 
 > [!TIP]
-> 为了更顺畅地进行 Google Apps Script 开发，推荐使用 [apps-script-utils](https://github.com/MaksymStoianov/apps-script-utils)，它是一组与本框架相辅相成的工具函数和类。
+> 为了更顺畅地进行 Google Apps Script 开发，推荐使用 [@bootgs/utils](https://github.com/bootgs/utils)，它是一组与本框架相辅相成的工具函数和类。
 
 ## 贡献者
 
