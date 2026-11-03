@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { isString } from "apps-script-utils";
 import { ApplicationConfig, AppsScriptMenuProxy, HttpRequest, HttpResponse } from "../domain/types";
 import { AppsScriptEventType, RequestMethod } from "../domain/enums";

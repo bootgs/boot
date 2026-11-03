@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 /**
  * A Proxy object that can be used to handle Google Apps Script menu actions.
  */

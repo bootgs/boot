@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { AppsScriptEventType } from "../domain/enums";
 import { APPSSCRIPT_EVENT_METADATA, APPSSCRIPT_OPTIONS_METADATA } from "../domain/constants";
 

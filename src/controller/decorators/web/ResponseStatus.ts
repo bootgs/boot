@@ -1,5 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
 import { RESPONSE_STATUS_METADATA } from "../../../domain/constants";
-import { HttpStatus } from "src/domain";
+import { HttpStatus } from "../../../domain/enums";
 
 /**
  * Decorator that sets the HTTP status code for the response.

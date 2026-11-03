@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { HttpHeaders } from "./HttpHeaders";
 import { ParsedUrl } from "./ParsedUrl";
 import { RequestMethod } from "../../domain/enums";

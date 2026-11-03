@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { isString, normalize } from "apps-script-utils";
 import { HttpHeaders, HttpRequest, ParsedUrl } from "../domain/types";
 import { RequestMethod } from "../domain/enums";
