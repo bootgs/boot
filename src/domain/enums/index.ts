@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 export * from "./AppsScriptEventType";
 export * from "./ContentMimeType";
 export * from "./HttpStatus";

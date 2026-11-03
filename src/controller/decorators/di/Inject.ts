@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { INJECT_TOKENS_METADATA } from "../../../domain/constants";
 import { InjectTokenDefinition, Newable } from "../../../domain/types";
 import { assignInjectMetadata } from "../../../repository";

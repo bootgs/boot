@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { ParamSource } from "../../../domain/enums";
 import { createParamDecorator } from "../../../repository";
 

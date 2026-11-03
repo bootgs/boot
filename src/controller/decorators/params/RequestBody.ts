@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { Body } from "../../../controller/decorators/params";
 
 /**

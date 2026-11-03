@@ -1,0 +1,36 @@
+Boot.gs (bootgs)
+Boot Framework for Google Apps Script(TM) projects
+Copyright 2025-2026 Maksym Stoianov
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes software developed by Maksym Stoianov
+(https://maksymstoianov.com) and contributors to https://github.com/bootgs/boot.
+
+-------------------------------------------------------------------------------
+Third-party software
+-------------------------------------------------------------------------------
+
+The published npm package depends on, but does not bundle, the following
+packages. Each is distributed under its own licence:
+
+  - apps-script-utils (https://github.com/bootgs/apps-script-utils)
+    Copyright Maksym Stoianov, Apache License 2.0
+  - reflect-metadata (https://github.com/microsoft/reflect-metadata)
+    Copyright Microsoft Corporation, Apache License 2.0
+
+-------------------------------------------------------------------------------
+Artwork
+-------------------------------------------------------------------------------
+
+The banner images in docs/assets/images (banner-*.JPG) are the work of
+Daryna Mikhailenko (https://darynamikhailenko.com), who holds the copyright
+in them. They are NOT covered by the Apache License 2.0 and are not part of
+the npm package. Terms of reuse: docs/assets/images/README.md.
+
+-------------------------------------------------------------------------------
+Trademarks
+-------------------------------------------------------------------------------
+
+Google Apps Script is a trademark of Google LLC. This project is not
+affiliated with, endorsed by or sponsored by Google LLC. See TRADEMARKS.md.

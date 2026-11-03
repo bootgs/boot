@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { ClassProvider } from "./ClassProvider";
 import { ExistingProvider } from "./ExistingProvider";
 import { FactoryProvider } from "./FactoryProvider";
