@@ -74,7 +74,7 @@
     "@vitest/coverage-v8": "^4.1.12",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jsdoc": "^62.5.2",
+    "eslint-plugin-jsdoc": "^65.4.2",
     "husky": "^9.1.7",
     "prettier": "^3.8.0",
     "typescript": "^5.9.3",
