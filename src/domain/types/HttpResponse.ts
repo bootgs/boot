@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { HttpHeaders } from "./HttpHeaders";
 import { ContentMimeType, HttpStatus } from "../../domain/enums";
 

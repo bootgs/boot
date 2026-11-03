@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { HttpResponse } from "../../domain/types";
 import { isRecord } from "./isRecord";
 

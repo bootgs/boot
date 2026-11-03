@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { isFunctionLike, isNumber, isString } from "apps-script-utils";
 import {
   HttpHeaders,

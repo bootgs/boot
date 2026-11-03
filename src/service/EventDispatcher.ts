@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import {
   APPSSCRIPT_EVENT_METADATA,
   APPSSCRIPT_OPTIONS_METADATA,

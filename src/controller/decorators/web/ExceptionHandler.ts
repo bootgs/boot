@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { EXCEPTION_HANDLER_METADATA } from "../../../domain/constants";
 import { Newable } from "../../../domain/types";
 

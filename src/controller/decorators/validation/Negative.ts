@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { addParamPipe } from "../../../repository";
 import { NegativePipe } from "./pipes/NegativePipe";
 

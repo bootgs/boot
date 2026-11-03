@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { INJECT_TOKENS_METADATA, PARAM_DEFINITIONS_METADATA } from "../../../domain/constants";
 import { ParamSource } from "../../../domain/enums";
 import { InjectTokenDefinition, ParamDefinition } from "../../../domain/types";
