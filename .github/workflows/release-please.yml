@@ -5,6 +5,12 @@ on:
   push:
     branches:
       - main
+  # Publishes an existing release by hand (for example v1.10.0, released before this job existed).
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to publish to npm, e.g. v1.10.0"
+        required: true
 
 permissions:
   contents: write
@@ -15,15 +21,59 @@ name: release-please
 
 jobs:
   release-please:
-    if: github.server_url == 'https://github.com' && github.actor != 'github-actions[bot]'
+    if: github.event_name == 'push' && github.server_url == 'https://github.com' && github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 8
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
 
     steps:
       - name: release-please-action
+        id: release
         uses: googleapis/release-please-action@v4.4.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
 #          versioning-strategy: auto
 #          changelog-path: CHANGELOG.md
+
+  # npm trusted publishing (OIDC): no npm token is stored in GitHub. Needs a trusted publisher on
+  # npmjs.com → bootgs → Settings → Trusted publishing: GitHub Actions, bootgs/boot,
+  # workflow release-please.yml, environment npm.
+  publish:
+    needs: release-please
+    if: >-
+      always() && github.server_url == 'https://github.com' &&
+      ((github.event_name == 'push' && needs.release-please.outputs.release_created == 'true') ||
+      github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || needs.release-please.outputs.tag_name }}
+
+      - name: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: install
+        run: npm ci
+
+      - name: build
+        run: npm run build
+
+      - name: test
+        run: npm test
+
+      - name: publish
+        run: npm publish --provenance --access public
