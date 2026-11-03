@@ -1,4 +1,8 @@
 # https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+#
+# Minor and patch updates arrive grouped, one pull request per ecosystem and week.
+# Major versions are not proposed automatically: they usually need code or config changes
+# (e.g. TypeScript, ESLint, Vitest majors) and are done deliberately, one at a time.
 
 version: 2
 
@@ -8,13 +12,22 @@ updates:
     target-branch: develop
     schedule:
       interval: weekly
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
     commit-message:
       prefix: "chore(deps)"
       prefix-development: "chore(deps-dev)"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - version-update:semver-major
     groups:
       dev-dependencies:
         dependency-type: development
+        update-types:
+          - minor
+          - patch
+      production-dependencies:
+        dependency-type: production
         update-types:
           - minor
           - patch
@@ -26,3 +39,11 @@ updates:
       interval: weekly
     commit-message:
       prefix: "ci"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - version-update:semver-major
+    groups:
+      github-actions:
+        patterns:
+          - "*"
