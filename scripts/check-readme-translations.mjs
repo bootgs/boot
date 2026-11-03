@@ -7,6 +7,10 @@
  * `###` headings as README.md, and that its translation note names the
  * current package.json version. README.md itself must carry the switcher too.
  *
+ * A right-to-left translation wraps its prose in `<div dir="rtl" ...>` blocks.
+ * Those wrapper lines are skipped when looking for the note, and the headings
+ * inside them still count, since they stay `##`/`###` lines of their own.
+ *
  * Usage: npm run docs:check-i18n
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -50,6 +54,18 @@ function switcherLine(current) {
   return LANGUAGES.map(({ code, label }) =>
     code === current ? `**${label}**` : `[${label}](${fileName(code)})`
   ).join(" | ");
+}
+
+/**
+ * Tells whether a line only opens or closes a right-to-left wrapper block.
+ *
+ * @param {string} line File line.
+ * @returns {boolean} True for `<div dir="rtl" ...>` and `</div>` lines.
+ */
+function isRtlWrapper(line) {
+  const trimmed = line.trim();
+
+  return /^<div\b[^>]*\bdir="rtl"[^>]*>$/.test(trimmed) || trimmed === "</div>";
 }
 
 /**
@@ -103,7 +119,9 @@ for (const { code } of LANGUAGES.filter((language) => language.code)) {
   } else {
     let index = switcherIndex + 1;
 
-    while (index < lines.length && lines[index].trim() === "") index++;
+    while (index < lines.length && (lines[index].trim() === "" || isRtlWrapper(lines[index]))) {
+      index++;
+    }
 
     const note = [];
 
