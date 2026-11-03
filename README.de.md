@@ -142,7 +142,7 @@ Die vollständige Liste und die Installation für Gemini CLI und `npx skills` fi
 ## Empfehlung
 
 > [!TIP]
-> Für komfortablere Entwicklung mit Google Apps Script empfehlen wir [apps-script-utils](https://github.com/MaksymStoianov/apps-script-utils),
+> Für komfortablere Entwicklung mit Google Apps Script empfehlen wir [@bootgs/utils](https://github.com/bootgs/utils),
 > eine Sammlung von Hilfsfunktionen und Klassen, die dieses Framework ergänzen.
 
 ## Mitwirkende

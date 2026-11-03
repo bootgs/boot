@@ -128,7 +128,7 @@ AI コーディングエージェント（Claude Code、Gemini CLI、Cursor な�
 ## おすすめ
 
 > [!TIP]
-> Google Apps Script での開発をより快適にするために、このフレームワークを補完するユーティリティ関数とクラスのコレクション [apps-script-utils](https://github.com/MaksymStoianov/apps-script-utils) をおすすめします。
+> Google Apps Script での開発をより快適にするために、このフレームワークを補完するユーティリティ関数とクラスのコレクション [@bootgs/utils](https://github.com/bootgs/utils) をおすすめします。
 
 ## コントリビューター
 

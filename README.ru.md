@@ -140,7 +140,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ## Рекомендуем
 
 > [!TIP]
-> Для более удобной разработки на Google Apps Script рекомендуем [apps-script-utils](https://github.com/MaksymStoianov/apps-script-utils) —
+> Для более удобной разработки на Google Apps Script рекомендуем [@bootgs/utils](https://github.com/bootgs/utils) —
 > набор служебных функций и классов, дополняющих этот фреймворк.
 
 ## Участники
