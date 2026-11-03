@@ -20,7 +20,7 @@
     "test:unit": "vitest run test/unit",
     "test:integration": "vitest run test/integration",
     "test:cov": "npx vitest run --coverage",
-    "build": "rm -rf dist/* && tsc -b --force",
+    "build": "rm -rf dist/* && tsc -b --force && node scripts/fix-esm-specifiers.mjs dist",
     "docs:check-i18n": "node scripts/check-readme-translations.mjs"
   },
   "repository": {
@@ -44,6 +44,14 @@
   },
   "license": "Apache-2.0",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bugs": {
     "url": "https://github.com/bootgs/boot/issues"
   },
