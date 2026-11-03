@@ -31,10 +31,22 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          REPO: ${{ github.repository }}
         # Skips merge commits and bot authors (Dependabot, GitHub Actions, release-please).
+        # Release PRs (develop → main of this repository) are not checked again: every commit
+        # was checked by the pull request that brought it into develop, and develop also holds
+        # commits from before the DCO was introduced.
         shell: bash
         run: |
           set -euo pipefail
+
+          if [ "$BASE_REF" = "main" ] && [ "$HEAD_REF" = "develop" ] && [ "$HEAD_REPO" = "$REPO" ]; then
+            echo "Release pull request (develop → main): commits were checked when they entered develop."
+            exit 0
+          fi
 
           range="$(git merge-base "$BASE_SHA" "$HEAD_SHA")..$HEAD_SHA"
 
