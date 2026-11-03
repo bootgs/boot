@@ -22,6 +22,7 @@ Great that you are here and you want to contribute to **Boot.gs**!
       - [1. General Requirements](#1-general-requirements)
       - [2. PR Specific Requirements](#2-pr-specific-requirements)
     - [Test Suite](#test-suite)
+    - [README Translations](#readme-translations)
   - [Roadmap](#roadmap)
   - [License](#license)
 
@@ -176,6 +177,18 @@ The project uses [Vitest](https://vitest.dev/) for testing.
   ```bash
   npm run dev
   ```
+
+### README Translations
+
+`README.md` (English) is the source of truth; `README.<lang>.md` files in the repository root are AI-assisted
+translations of it. When you change `README.md`, update the translations in the same pull request (or say in the PR
+that they need an update): keep the same `##`/`###` headings, the language switcher line and the version in the
+translation note in sync with `package.json`. Translate prose only — code, API names, commands and links stay as they
+are, and links to `docs/` keep pointing to the English guides. Check the result with:
+
+```bash
+npm run docs:check-i18n
+```
 
 ## Roadmap
 
