@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,17 +8,17 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | **日本語** | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | **日本語** | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> この翻訳は、バージョン 1.10.0 の [README.md](README.md) をもとに AI の支援を受けて作成されました。正式な内容は英語版の README です。修正の提案を歓迎します。詳しくは [CONTRIBUTING.md](CONTRIBUTING.md) をご覧ください。
+> この翻訳は、バージョン 1.10.0 の [README.md](../../README.md) をもとに AI の支援を受けて作成されました。正式な内容は英語版の README です。修正の提案を歓迎します。詳しくは [CONTRIBUTING.md](../../CONTRIBUTING.md) をご覧ください。
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -100,19 +100,19 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 }
 ```
 
-`doPost` や非同期の `AsyncApp` を含む完全な手順は、[Quick Start ガイド](docs/guide/quick-start.md)（英語）をご覧ください。
+`doPost` や非同期の `AsyncApp` を含む完全な手順は、[Quick Start ガイド](../guide/quick-start.md)（英語）をご覧ください。
 
 ## ドキュメント
 
 詳細なガイドは英語で提供されています。
 
-- [Quick Start](docs/guide/quick-start.md): 同期 `App` と非同期 `AsyncApp` のセットアップ。
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): リクエストパラメーター、MIME タイプ、`google.script.run` と Web アプリ URL からの呼び出し、レスポンスのラップ。
-- [Decorators](docs/guide/decorators.md): クラス・メソッド・パラメーターのデコレーター、バリデーション、組み込み pipes。
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` と `@ResponseBody`。
-- [Advanced Examples](docs/guide/examples.md): pipes とグローバルなエラー処理。
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): スキルの一覧とインストール方法。
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): アーキテクチャの比較。
+- [Quick Start](../guide/quick-start.md): 同期 `App` と非同期 `AsyncApp` のセットアップ。
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): リクエストパラメーター、MIME タイプ、`google.script.run` と Web アプリ URL からの呼び出し、レスポンスのラップ。
+- [Decorators](../guide/decorators.md): クラス・メソッド・パラメーターのデコレーター、バリデーション、組み込み pipes。
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` と `@ResponseBody`。
+- [Advanced Examples](../guide/examples.md): pipes とグローバルなエラー処理。
+- [AI Agent Skills](../guide/ai-agent-skills.md): スキルの一覧とインストール方法。
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): アーキテクチャの比較。
 
 ## AI エージェント向けスキル
 
@@ -123,7 +123,7 @@ AI コーディングエージェント（Claude Code、Gemini CLI、Cursor な�
 /plugin install bootgs@bootgs-skills
 ```
 
-スキルの一覧と、Gemini CLI や `npx skills` でのインストール方法は [AI Agent Skills](docs/guide/ai-agent-skills.md) をご覧ください。
+スキルの一覧と、Gemini CLI や `npx skills` でのインストール方法は [AI Agent Skills](../guide/ai-agent-skills.md) をご覧ください。
 
 ## おすすめ
 
@@ -137,15 +137,15 @@ AI コーディングエージェント（Claude Code、Gemini CLI、Cursor な�
 
 ## コントリビューション
 
-コントリビューションを歓迎します！行動規範とプルリクエストの手順については [コントリビューションガイド](CONTRIBUTING.md) をご覧ください。脆弱性の報告は [セキュリティポリシー](SECURITY.md) に従ってください。
+コントリビューションを歓迎します！行動規範とプルリクエストの手順については [コントリビューションガイド](../../CONTRIBUTING.md) をご覧ください。脆弱性の報告は [セキュリティポリシー](../../SECURITY.md) に従ってください。
 
 ## ロードマップ
 
-今後のリリース予定は [ロードマップ](ROADMAP.md) をご覧ください。
+今後のリリース予定は [ロードマップ](../../ROADMAP.md) をご覧ください。
 
 ## 変更履歴
 
-変更点と更新内容の詳細は [CHANGELOG](CHANGELOG.md) を参照してください。
+変更点と更新内容の詳細は [CHANGELOG](../../CHANGELOG.md) を参照してください。
 
 ## サポート
 
@@ -153,7 +153,7 @@ AI コーディングエージェント（Claude Code、Gemini CLI、Cursor な�
 
 ## ライセンス
 
-このプロジェクトは [Apache-2.0 ライセンス](LICENSE) の下で公開されています。
+このプロジェクトは [Apache-2.0 ライセンス](../../LICENSE) の下で公開されています。
 
 ---
 

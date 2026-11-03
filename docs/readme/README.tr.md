@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,17 +8,17 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | **Türkçe** | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | **Türkçe** | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Bu çeviri, 1.10.0 sürümü için [README.md](README.md) dosyasından yapay zekâ desteğiyle hazırlanmıştır. Referans sürüm İngilizce README'dir. Düzeltmelerinizi bekliyoruz: [CONTRIBUTING.md](CONTRIBUTING.md) dosyasına bakın.
+> Bu çeviri, 1.10.0 sürümü için [README.md](../../README.md) dosyasından yapay zekâ desteğiyle hazırlanmıştır. Referans sürüm İngilizce README'dir. Düzeltmelerinizi bekliyoruz: [CONTRIBUTING.md](../../CONTRIBUTING.md) dosyasına bakın.
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -109,20 +109,20 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ```
 
 `doPost` ve asenkron `AsyncApp` dahil olmak üzere adım adım anlatımın tamamı
-[Quick Start kılavuzunda](docs/guide/quick-start.md) (İngilizce) yer alır.
+[Quick Start kılavuzunda](../guide/quick-start.md) (İngilizce) yer alır.
 
 ## Dokümantasyon
 
 Ayrıntılı kılavuzlar İngilizce olarak mevcuttur:
 
-- [Quick Start](docs/guide/quick-start.md): senkron `App` ve asenkron `AsyncApp` kurulumu.
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): istek parametreleri, MIME
+- [Quick Start](../guide/quick-start.md): senkron `App` ve asenkron `AsyncApp` kurulumu.
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): istek parametreleri, MIME
   türleri, `google.script.run` ve Web App URL'si üzerinden çağrılar, yanıtların sarmalanması.
-- [Decorators](docs/guide/decorators.md): sınıf, metot ve parametre dekoratörleri, doğrulama ve yerleşik pipe'lar.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` ve `@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): pipe'lar ve genel hata yönetimi.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): skill'lerin tam listesi ve kurulum seçenekleri.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): mimari karşılaştırması.
+- [Decorators](../guide/decorators.md): sınıf, metot ve parametre dekoratörleri, doğrulama ve yerleşik pipe'lar.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` ve `@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): pipe'lar ve genel hata yönetimi.
+- [AI Agent Skills](../guide/ai-agent-skills.md): skill'lerin tam listesi ve kurulum seçenekleri.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): mimari karşılaştırması.
 
 ## Yapay zekâ ajanları için skill'ler
 
@@ -136,7 +136,7 @@ bağımsız skill'ler sunar.
 /plugin install bootgs@bootgs-skills
 ```
 
-Tam liste ile Gemini CLI ve `npx skills` üzerinden kurulum için [AI Agent Skills](docs/guide/ai-agent-skills.md)
+Tam liste ile Gemini CLI ve `npx skills` üzerinden kurulum için [AI Agent Skills](../guide/ai-agent-skills.md)
 sayfasına bakın.
 
 ## Önerilenler
@@ -153,16 +153,16 @@ sayfasına bakın.
 ## Katkıda bulunma
 
 Katkılarınızı memnuniyetle karşılıyoruz! Davranış kuralları ve pull request gönderme süreci hakkında ayrıntılar için
-[katkı kılavuzumuza](CONTRIBUTING.md) bakın. Bir güvenlik açığı bildirmek için [güvenlik politikasını](SECURITY.md)
+[katkı kılavuzumuza](../../CONTRIBUTING.md) bakın. Bir güvenlik açığı bildirmek için [güvenlik politikasını](../../SECURITY.md)
 izleyin.
 
 ## Yol haritası
 
-Gelecek sürümlerde neler planladığımızı görmek için [yol haritamıza](ROADMAP.md) göz atın.
+Gelecek sürümlerde neler planladığımızı görmek için [yol haritamıza](../../ROADMAP.md) göz atın.
 
 ## Değişiklik günlüğü
 
-Değişikliklerin ve güncellemelerin ayrıntılı listesi için [CHANGELOG](CHANGELOG.md) dosyasına bakın.
+Değişikliklerin ve güncellemelerin ayrıntılı listesi için [CHANGELOG](../../CHANGELOG.md) dosyasına bakın.
 
 ## Destek
 
@@ -172,7 +172,7 @@ yarıyorsa onu [GitHub Sponsors](https://github.com/sponsors/MaksymStoianov) vey
 
 ## Lisans
 
-Bu proje [Apache-2.0 lisansı](LICENSE) ile lisanslanmıştır.
+Bu proje [Apache-2.0 lisansı](../../LICENSE) ile lisanslanmıştır.
 
 ---
 

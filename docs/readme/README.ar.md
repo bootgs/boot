@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,11 +8,11 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | **العربية** | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | **العربية** | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
 <div dir="rtl" lang="ar">
 
-> أُعدّت هذه الترجمة بمساعدة الذكاء الاصطناعي انطلاقًا من [README.md](README.md) للإصدار 1.10.0. ملف README الإنجليزي هو النسخة المرجعية. نرحّب بالتصحيحات: راجع [CONTRIBUTING.md](CONTRIBUTING.md).
+> أُعدّت هذه الترجمة بمساعدة الذكاء الاصطناعي انطلاقًا من [README.md](../../README.md) للإصدار 1.10.0. ملف README الإنجليزي هو النسخة المرجعية. نرحّب بالتصحيحات: راجع [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
@@ -20,9 +20,9 @@
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -124,20 +124,20 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 <div dir="rtl" lang="ar">
 
 الشرح الكامل، بما في ذلك `doPost` والتطبيق غير المتزامن `AsyncApp`، موجود في
-[دليل Quick Start](docs/guide/quick-start.md) (بالإنجليزية).
+[دليل Quick Start](../guide/quick-start.md) (بالإنجليزية).
 
 ## التوثيق
 
 الأدلة التفصيلية متاحة باللغة الإنجليزية:
 
-- [Quick Start](docs/guide/quick-start.md): إعداد `App` (متزامن) و`AsyncApp` (غير متزامن).
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): معاملات الطلب، وأنواع MIME،
+- [Quick Start](../guide/quick-start.md): إعداد `App` (متزامن) و`AsyncApp` (غير متزامن).
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): معاملات الطلب، وأنواع MIME،
   والاستدعاء عبر `google.script.run` وعنوان URL لتطبيق الويب، وتغليف الاستجابات.
-- [Decorators](docs/guide/decorators.md): مزخرفات الفئات والتوابع والمعاملات، والتحقق، والأنابيب المدمجة.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` و`@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): الأنابيب والمعالجة الشاملة للأخطاء.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): القائمة الكاملة للمهارات وخيارات التثبيت.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): مقارنة بين البنى المعمارية.
+- [Decorators](../guide/decorators.md): مزخرفات الفئات والتوابع والمعاملات، والتحقق، والأنابيب المدمجة.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` و`@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): الأنابيب والمعالجة الشاملة للأخطاء.
+- [AI Agent Skills](../guide/ai-agent-skills.md): القائمة الكاملة للمهارات وخيارات التثبيت.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): مقارنة بين البنى المعمارية.
 
 ## مهارات وكلاء الذكاء الاصطناعي
 
@@ -154,7 +154,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 
 <div dir="rtl" lang="ar">
 
-القائمة الكاملة وطريقة التثبيت عبر Gemini CLI و`npx skills` موجودة في [AI Agent Skills](docs/guide/ai-agent-skills.md).
+القائمة الكاملة وطريقة التثبيت عبر Gemini CLI و`npx skills` موجودة في [AI Agent Skills](../guide/ai-agent-skills.md).
 
 ## موصى به
 
@@ -173,16 +173,16 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 
 ## المساهمة
 
-نرحّب بالمساهمات! راجع [إرشادات المساهمة](CONTRIBUTING.md) للاطلاع على قواعد السلوك وطريقة إرسال طلبات الدمج
-(pull requests). للإبلاغ عن ثغرة أمنية، اتبع [سياسة الأمان](SECURITY.md).
+نرحّب بالمساهمات! راجع [إرشادات المساهمة](../../CONTRIBUTING.md) للاطلاع على قواعد السلوك وطريقة إرسال طلبات الدمج
+(pull requests). للإبلاغ عن ثغرة أمنية، اتبع [سياسة الأمان](../../SECURITY.md).
 
 ## خارطة الطريق
 
-اطّلع على [خارطة الطريق](ROADMAP.md) لمعرفة ما نخطط له في الإصدارات القادمة.
+اطّلع على [خارطة الطريق](../../ROADMAP.md) لمعرفة ما نخطط له في الإصدارات القادمة.
 
 ## سجل التغييرات
 
-للاطلاع على قائمة مفصّلة بالتغييرات والتحديثات، راجع [CHANGELOG](CHANGELOG.md).
+للاطلاع على قائمة مفصّلة بالتغييرات والتحديثات، راجع [CHANGELOG](../../CHANGELOG.md).
 
 ## الدعم
 
@@ -192,7 +192,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 
 ## الترخيص
 
-هذا المشروع مرخّص بموجب [ترخيص Apache-2.0](LICENSE).
+هذا المشروع مرخّص بموجب [ترخيص Apache-2.0](../../LICENSE).
 
 ---
 

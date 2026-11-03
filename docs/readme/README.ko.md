@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,17 +8,17 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | **한국어** | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | **한국어** | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> 이 번역은 버전 1.10.0의 [README.md](README.md)를 바탕으로 AI의 도움을 받아 작성되었습니다. 기준이 되는 버전은 영어 README입니다. 수정 제안을 환영합니다. 자세한 내용은 [CONTRIBUTING.md](CONTRIBUTING.md)를 참고하세요.
+> 이 번역은 버전 1.10.0의 [README.md](../../README.md)를 바탕으로 AI의 도움을 받아 작성되었습니다. 기준이 되는 버전은 영어 README입니다. 수정 제안을 환영합니다. 자세한 내용은 [CONTRIBUTING.md](../../CONTRIBUTING.md)를 참고하세요.
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -100,19 +100,19 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 }
 ```
 
-`doPost`와 비동기 `AsyncApp`을 포함한 전체 안내는 [Quick Start 가이드](docs/guide/quick-start.md)(영어)에서 확인할 수 있습니다.
+`doPost`와 비동기 `AsyncApp`을 포함한 전체 안내는 [Quick Start 가이드](../guide/quick-start.md)(영어)에서 확인할 수 있습니다.
 
 ## 문서
 
 자세한 가이드는 영어로 제공됩니다.
 
-- [Quick Start](docs/guide/quick-start.md): 동기 `App`과 비동기 `AsyncApp` 설정.
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): 요청 매개변수, MIME 타입, `google.script.run` 및 웹 앱 URL을 통한 호출, 응답 래핑.
-- [Decorators](docs/guide/decorators.md): 클래스, 메서드, 매개변수 데코레이터, 유효성 검사와 내장 파이프.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity`와 `@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): 파이프와 전역 오류 처리.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): 전체 스킬 목록과 설치 방법.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): 아키텍처 비교.
+- [Quick Start](../guide/quick-start.md): 동기 `App`과 비동기 `AsyncApp` 설정.
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): 요청 매개변수, MIME 타입, `google.script.run` 및 웹 앱 URL을 통한 호출, 응답 래핑.
+- [Decorators](../guide/decorators.md): 클래스, 메서드, 매개변수 데코레이터, 유효성 검사와 내장 파이프.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity`와 `@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): 파이프와 전역 오류 처리.
+- [AI Agent Skills](../guide/ai-agent-skills.md): 전체 스킬 목록과 설치 방법.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): 아키텍처 비교.
 
 ## AI 에이전트용 스킬
 
@@ -123,7 +123,7 @@ AI 코딩 에이전트(Claude Code, Gemini CLI, Cursor 등)를 사용하고 계�
 /plugin install bootgs@bootgs-skills
 ```
 
-전체 목록과 Gemini CLI 및 `npx skills`를 이용한 설치 방법은 [AI Agent Skills](docs/guide/ai-agent-skills.md)를 참고하세요.
+전체 목록과 Gemini CLI 및 `npx skills`를 이용한 설치 방법은 [AI Agent Skills](../guide/ai-agent-skills.md)를 참고하세요.
 
 ## 추천
 
@@ -137,15 +137,15 @@ AI 코딩 에이전트(Claude Code, Gemini CLI, Cursor 등)를 사용하고 계�
 
 ## 기여하기
 
-기여를 환영합니다! 행동 강령과 풀 리퀘스트 제출 절차는 [기여 가이드](CONTRIBUTING.md)를 참고하세요. 취약점을 신고하려면 [보안 정책](SECURITY.md)을 따라 주세요.
+기여를 환영합니다! 행동 강령과 풀 리퀘스트 제출 절차는 [기여 가이드](../../CONTRIBUTING.md)를 참고하세요. 취약점을 신고하려면 [보안 정책](../../SECURITY.md)을 따라 주세요.
 
 ## 로드맵
 
-향후 릴리스 계획은 [로드맵](ROADMAP.md)에서 확인하세요.
+향후 릴리스 계획은 [로드맵](../../ROADMAP.md)에서 확인하세요.
 
 ## 변경 이력
 
-변경 사항과 업데이트의 자세한 목록은 [CHANGELOG](CHANGELOG.md)를 참고하세요.
+변경 사항과 업데이트의 자세한 목록은 [CHANGELOG](../../CHANGELOG.md)를 참고하세요.
 
 ## 지원
 
@@ -153,7 +153,7 @@ AI 코딩 에이전트(Claude Code, Gemini CLI, Cursor 등)를 사용하고 계�
 
 ## 라이선스
 
-이 프로젝트는 [Apache-2.0 라이선스](LICENSE)에 따라 배포됩니다.
+이 프로젝트는 [Apache-2.0 라이선스](../../LICENSE)에 따라 배포됩니다.
 
 ---
 

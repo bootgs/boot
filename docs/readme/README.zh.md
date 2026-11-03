@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,17 +8,17 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | **简体中文** | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | **简体中文** | [繁體中文](README.zh-TW.md)
 
-> 本译文在 AI 辅助下根据 1.10.0 版本的 [README.md](README.md) 翻译而成，内容以英文版 README 为准。欢迎提出修改建议，详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+> 本译文在 AI 辅助下根据 1.10.0 版本的 [README.md](../../README.md) 翻译而成，内容以英文版 README 为准。欢迎提出修改建议，详见 [CONTRIBUTING.md](../../CONTRIBUTING.md)。
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -100,19 +100,19 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 }
 ```
 
-包含 `doPost` 和异步 `AsyncApp` 的完整步骤，请参阅 [Quick Start 指南](docs/guide/quick-start.md)（英文）。
+包含 `doPost` 和异步 `AsyncApp` 的完整步骤，请参阅 [Quick Start 指南](../guide/quick-start.md)（英文）。
 
 ## 文档
 
 详细指南目前提供英文版：
 
-- [Quick Start](docs/guide/quick-start.md)：同步 `App` 与异步 `AsyncApp` 的配置。
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md)：请求参数、MIME 类型、通过 `google.script.run` 和 Web 应用 URL 调用、响应包装。
-- [Decorators](docs/guide/decorators.md)：类、方法和参数装饰器，校验与内置 pipes。
-- [Controlling the Response](docs/guide/responses.md)：`ResponseEntity` 与 `@ResponseBody`。
-- [Advanced Examples](docs/guide/examples.md)：pipes 与全局错误处理。
-- [AI Agent Skills](docs/guide/ai-agent-skills.md)：完整的技能列表与安装方式。
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md)：架构对比。
+- [Quick Start](../guide/quick-start.md)：同步 `App` 与异步 `AsyncApp` 的配置。
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md)：请求参数、MIME 类型、通过 `google.script.run` 和 Web 应用 URL 调用、响应包装。
+- [Decorators](../guide/decorators.md)：类、方法和参数装饰器，校验与内置 pipes。
+- [Controlling the Response](../guide/responses.md)：`ResponseEntity` 与 `@ResponseBody`。
+- [Advanced Examples](../guide/examples.md)：pipes 与全局错误处理。
+- [AI Agent Skills](../guide/ai-agent-skills.md)：完整的技能列表与安装方式。
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md)：架构对比。
 
 ## AI 智能体技能
 
@@ -123,7 +123,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 /plugin install bootgs@bootgs-skills
 ```
 
-完整列表以及 Gemini CLI 和 `npx skills` 的安装方式，请参阅 [AI Agent Skills](docs/guide/ai-agent-skills.md)。
+完整列表以及 Gemini CLI 和 `npx skills` 的安装方式，请参阅 [AI Agent Skills](../guide/ai-agent-skills.md)。
 
 ## 推荐
 
@@ -137,15 +137,15 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 
 ## 参与贡献
 
-欢迎贡献！行为准则和提交 pull request 的流程请参阅 [贡献指南](CONTRIBUTING.md)。如需报告安全漏洞，请遵循 [安全策略](SECURITY.md)。
+欢迎贡献！行为准则和提交 pull request 的流程请参阅 [贡献指南](../../CONTRIBUTING.md)。如需报告安全漏洞，请遵循 [安全策略](../../SECURITY.md)。
 
 ## 路线图
 
-查看 [路线图](ROADMAP.md)，了解后续版本的计划。
+查看 [路线图](../../ROADMAP.md)，了解后续版本的计划。
 
 ## 更新日志
 
-详细的变更与更新列表请参阅 [CHANGELOG](CHANGELOG.md)。
+详细的变更与更新列表请参阅 [CHANGELOG](../../CHANGELOG.md)。
 
 ## 支持
 
@@ -153,7 +153,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 
 ## 许可证
 
-本项目基于 [Apache-2.0 许可证](LICENSE) 发布。
+本项目基于 [Apache-2.0 许可证](../../LICENSE) 发布。
 
 ---
 

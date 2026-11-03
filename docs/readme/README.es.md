@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,18 +8,18 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | **Español** | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | **Español** | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Esta traducción se preparó con ayuda de IA a partir de [README.md](README.md) para la versión 1.10.0. La versión en
-> inglés del README es la de referencia. Las correcciones son bienvenidas: consulta [CONTRIBUTING.md](CONTRIBUTING.md).
+> Esta traducción se preparó con ayuda de IA a partir de [README.md](../../README.md) para la versión 1.10.0. La versión en
+> inglés del README es la de referencia. Las correcciones son bienvenidas: consulta [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -109,20 +109,20 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ```
 
 El recorrido completo, incluidos `doPost` y la aplicación asíncrona `AsyncApp`, está en la
-[guía Quick Start](docs/guide/quick-start.md) (en inglés).
+[guía Quick Start](../guide/quick-start.md) (en inglés).
 
 ## Documentación
 
 Las guías detalladas están disponibles en inglés:
 
-- [Quick Start](docs/guide/quick-start.md): configuración de `App` (síncrona) y `AsyncApp` (asíncrona).
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): parámetros de la petición, tipos
+- [Quick Start](../guide/quick-start.md): configuración de `App` (síncrona) y `AsyncApp` (asíncrona).
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): parámetros de la petición, tipos
   MIME, llamadas mediante `google.script.run` y la URL de la aplicación web, envoltura de respuestas.
-- [Decorators](docs/guide/decorators.md): decoradores de clase, método y parámetro, validación y pipes integrados.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` y `@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): pipes y gestión global de errores.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): lista completa de skills y opciones de instalación.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): comparación de arquitecturas.
+- [Decorators](../guide/decorators.md): decoradores de clase, método y parámetro, validación y pipes integrados.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` y `@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): pipes y gestión global de errores.
+- [AI Agent Skills](../guide/ai-agent-skills.md): lista completa de skills y opciones de instalación.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): comparación de arquitecturas.
 
 ## Skills para agentes de IA
 
@@ -136,7 +136,7 @@ estructurar y validar aplicaciones **Boot.gs**, además de skills genéricas par
 ```
 
 La lista completa y la instalación para Gemini CLI y `npx skills` están en
-[AI Agent Skills](docs/guide/ai-agent-skills.md).
+[AI Agent Skills](../guide/ai-agent-skills.md).
 
 ## Recomendado
 
@@ -151,17 +151,17 @@ La lista completa y la instalación para Gemini CLI y `npx skills` están en
 
 ## Cómo contribuir
 
-¡Las contribuciones son bienvenidas! Consulta la [guía de contribución](CONTRIBUTING.md) para conocer el código de
+¡Las contribuciones son bienvenidas! Consulta la [guía de contribución](../../CONTRIBUTING.md) para conocer el código de
 conducta y el proceso para enviar pull requests. Para informar de una vulnerabilidad, sigue la
-[política de seguridad](SECURITY.md).
+[política de seguridad](../../SECURITY.md).
 
 ## Hoja de ruta
 
-Consulta la [hoja de ruta](ROADMAP.md) para ver lo que está previsto en las próximas versiones.
+Consulta la [hoja de ruta](../../ROADMAP.md) para ver lo que está previsto en las próximas versiones.
 
 ## Registro de cambios
 
-La lista detallada de cambios y actualizaciones está en el [CHANGELOG](CHANGELOG.md).
+La lista detallada de cambios y actualizaciones está en el [CHANGELOG](../../CHANGELOG.md).
 
 ## Apoyo
 
@@ -171,7 +171,7 @@ te resulta útil, puedes apoyarlo a través de [GitHub Sponsors](https://github.
 
 ## Licencia
 
-Este proyecto se distribuye bajo la [licencia Apache-2.0](LICENSE).
+Este proyecto se distribuye bajo la [licencia Apache-2.0](../../LICENSE).
 
 ---
 
