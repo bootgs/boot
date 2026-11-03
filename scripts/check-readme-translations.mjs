@@ -7,6 +7,10 @@
  * `###` headings as README.md, and that its translation note names the
  * current package.json version. README.md itself must carry the switcher too.
  *
+ * A right-to-left translation wraps its prose in `<div dir="rtl" ...>` blocks.
+ * Those wrapper lines are skipped when looking for the note, and the headings
+ * inside them still count, since they stay `##`/`###` lines of their own.
+ *
  * Usage: npm run docs:check-i18n
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -26,8 +30,18 @@ const LANGUAGES = [
   { code: "fr", label: "Français" },
   { code: "es", label: "Español" },
   { code: "pt", label: "Português" },
+  { code: "it", label: "Italiano" },
+  { code: "nl", label: "Nederlands" },
+  { code: "pl", label: "Polski" },
+  { code: "cs", label: "Čeština" },
+  { code: "tr", label: "Türkçe" },
+  { code: "ar", label: "العربية" },
+  { code: "id", label: "Bahasa Indonesia" },
+  { code: "vi", label: "Tiếng Việt" },
   { code: "ja", label: "日本語" },
-  { code: "zh", label: "中文" }
+  { code: "ko", label: "한국어" },
+  { code: "zh", label: "简体中文" },
+  { code: "zh-TW", label: "繁體中文" }
 ];
 
 /**
@@ -50,6 +64,18 @@ function switcherLine(current) {
   return LANGUAGES.map(({ code, label }) =>
     code === current ? `**${label}**` : `[${label}](${fileName(code)})`
   ).join(" | ");
+}
+
+/**
+ * Tells whether a line only opens or closes a right-to-left wrapper block.
+ *
+ * @param {string} line File line.
+ * @returns {boolean} True for `<div dir="rtl" ...>` and `</div>` lines.
+ */
+function isRtlWrapper(line) {
+  const trimmed = line.trim();
+
+  return /^<div\b[^>]*\bdir="rtl"[^>]*>$/.test(trimmed) || trimmed === "</div>";
 }
 
 /**
@@ -103,7 +129,9 @@ for (const { code } of LANGUAGES.filter((language) => language.code)) {
   } else {
     let index = switcherIndex + 1;
 
-    while (index < lines.length && lines[index].trim() === "") index++;
+    while (index < lines.length && (lines[index].trim() === "" || isRtlWrapper(lines[index]))) {
+      index++;
+    }
 
     const note = [];
 
