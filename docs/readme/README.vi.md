@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,17 +8,17 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | **Tiếng Việt** | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | **Tiếng Việt** | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Bản dịch này được chuẩn bị với sự hỗ trợ của AI từ [README.md](README.md) cho phiên bản 1.10.0. README tiếng Anh là phiên bản tham chiếu. Mọi góp ý chỉnh sửa đều được hoan nghênh: xem [CONTRIBUTING.md](CONTRIBUTING.md).
+> Bản dịch này được chuẩn bị với sự hỗ trợ của AI từ [README.md](../../README.md) cho phiên bản 1.10.0. README tiếng Anh là phiên bản tham chiếu. Mọi góp ý chỉnh sửa đều được hoan nghênh: xem [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -108,20 +108,20 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ```
 
 Hướng dẫn đầy đủ, bao gồm `doPost` và ứng dụng bất đồng bộ `AsyncApp`, có trong
-[hướng dẫn Quick Start](docs/guide/quick-start.md) (bằng tiếng Anh).
+[hướng dẫn Quick Start](../guide/quick-start.md) (bằng tiếng Anh).
 
 ## Tài liệu
 
 Các hướng dẫn chi tiết hiện có bằng tiếng Anh:
 
-- [Quick Start](docs/guide/quick-start.md): thiết lập `App` (đồng bộ) và `AsyncApp` (bất đồng bộ).
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): tham số yêu cầu, kiểu MIME, lệnh
+- [Quick Start](../guide/quick-start.md): thiết lập `App` (đồng bộ) và `AsyncApp` (bất đồng bộ).
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): tham số yêu cầu, kiểu MIME, lệnh
   gọi qua `google.script.run` và URL của Web App, bao gói phản hồi.
-- [Decorators](docs/guide/decorators.md): decorator cho lớp, phương thức và tham số, xác thực và các pipe dựng sẵn.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` và `@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): pipe và xử lý lỗi toàn cục.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): danh sách đầy đủ các skill và các cách cài đặt.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): so sánh kiến trúc.
+- [Decorators](../guide/decorators.md): decorator cho lớp, phương thức và tham số, xác thực và các pipe dựng sẵn.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` và `@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): pipe và xử lý lỗi toàn cục.
+- [AI Agent Skills](../guide/ai-agent-skills.md): danh sách đầy đủ các skill và các cách cài đặt.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): so sánh kiến trúc.
 
 ## Skill cho tác tử AI
 
@@ -136,7 +136,7 @@ Google Apps Script.
 ```
 
 Danh sách đầy đủ và cách cài đặt cho Gemini CLI và `npx skills` có tại
-[AI Agent Skills](docs/guide/ai-agent-skills.md).
+[AI Agent Skills](../guide/ai-agent-skills.md).
 
 ## Đề xuất
 
@@ -151,16 +151,16 @@ Danh sách đầy đủ và cách cài đặt cho Gemini CLI và `npx skills` c�
 
 ## Đóng góp
 
-Chúng tôi luôn hoan nghênh các đóng góp! Vui lòng xem [hướng dẫn đóng góp](CONTRIBUTING.md) để biết về quy tắc ứng xử
-và quy trình gửi pull request. Để báo cáo lỗ hổng bảo mật, hãy làm theo [chính sách bảo mật](SECURITY.md).
+Chúng tôi luôn hoan nghênh các đóng góp! Vui lòng xem [hướng dẫn đóng góp](../../CONTRIBUTING.md) để biết về quy tắc ứng xử
+và quy trình gửi pull request. Để báo cáo lỗ hổng bảo mật, hãy làm theo [chính sách bảo mật](../../SECURITY.md).
 
 ## Lộ trình
 
-Xem [lộ trình](ROADMAP.md) để biết những gì đã được lên kế hoạch cho các phiên bản sắp tới.
+Xem [lộ trình](../../ROADMAP.md) để biết những gì đã được lên kế hoạch cho các phiên bản sắp tới.
 
 ## Nhật ký thay đổi
 
-Danh sách chi tiết các thay đổi và cập nhật có trong [CHANGELOG](CHANGELOG.md).
+Danh sách chi tiết các thay đổi và cập nhật có trong [CHANGELOG](../../CHANGELOG.md).
 
 ## Hỗ trợ
 
@@ -170,7 +170,7 @@ bạn có thể ủng hộ qua [GitHub Sponsors](https://github.com/sponsors/Mak
 
 ## Giấy phép
 
-Dự án này được cấp phép theo [giấy phép Apache-2.0](LICENSE).
+Dự án này được cấp phép theo [giấy phép Apache-2.0](../../LICENSE).
 
 ---
 

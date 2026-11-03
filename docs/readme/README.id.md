@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,17 +8,17 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | **Bahasa Indonesia** | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | **Bahasa Indonesia** | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Terjemahan ini disiapkan dengan bantuan AI dari [README.md](README.md) untuk versi 1.10.0. README berbahasa Inggris adalah versi acuan. Koreksi sangat kami harapkan: lihat [CONTRIBUTING.md](CONTRIBUTING.md).
+> Terjemahan ini disiapkan dengan bantuan AI dari [README.md](../../README.md) untuk versi 1.10.0. README berbahasa Inggris adalah versi acuan. Koreksi sangat kami harapkan: lihat [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -107,20 +107,20 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ```
 
 Panduan lengkapnya, termasuk `doPost` dan aplikasi asinkron `AsyncApp`, ada di
-[panduan Quick Start](docs/guide/quick-start.md) (dalam bahasa Inggris).
+[panduan Quick Start](../guide/quick-start.md) (dalam bahasa Inggris).
 
 ## Dokumentasi
 
 Panduan terperinci tersedia dalam bahasa Inggris:
 
-- [Quick Start](docs/guide/quick-start.md): penyiapan `App` (sinkron) dan `AsyncApp` (asinkron).
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): parameter permintaan, tipe MIME,
+- [Quick Start](../guide/quick-start.md): penyiapan `App` (sinkron) dan `AsyncApp` (asinkron).
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): parameter permintaan, tipe MIME,
   panggilan melalui `google.script.run` dan URL Web App, pembungkusan respons.
-- [Decorators](docs/guide/decorators.md): dekorator kelas, method, dan parameter, validasi, serta pipe bawaan.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` dan `@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): pipe dan penanganan error global.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): daftar lengkap skill dan opsi instalasi.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): perbandingan arsitektur.
+- [Decorators](../guide/decorators.md): dekorator kelas, method, dan parameter, validasi, serta pipe bawaan.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` dan `@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): pipe dan penanganan error global.
+- [AI Agent Skills](../guide/ai-agent-skills.md): daftar lengkap skill dan opsi instalasi.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): perbandingan arsitektur.
 
 ## Skill untuk agen AI
 
@@ -134,7 +134,7 @@ terikat pada framework tertentu.
 /plugin install bootgs@bootgs-skills
 ```
 
-Daftar lengkap serta instalasi untuk Gemini CLI dan `npx skills` ada di [AI Agent Skills](docs/guide/ai-agent-skills.md).
+Daftar lengkap serta instalasi untuk Gemini CLI dan `npx skills` ada di [AI Agent Skills](../guide/ai-agent-skills.md).
 
 ## Rekomendasi
 
@@ -149,16 +149,16 @@ Daftar lengkap serta instalasi untuk Gemini CLI dan `npx skills` ada di [AI Agen
 
 ## Berkontribusi
 
-Kontribusi sangat kami sambut! Lihat [panduan kontribusi](CONTRIBUTING.md) untuk mengetahui kode etik dan proses
-pengajuan pull request. Untuk melaporkan kerentanan, ikuti [kebijakan keamanan](SECURITY.md).
+Kontribusi sangat kami sambut! Lihat [panduan kontribusi](../../CONTRIBUTING.md) untuk mengetahui kode etik dan proses
+pengajuan pull request. Untuk melaporkan kerentanan, ikuti [kebijakan keamanan](../../SECURITY.md).
 
 ## Peta jalan
 
-Lihat [peta jalan](ROADMAP.md) untuk mengetahui apa yang direncanakan pada rilis mendatang.
+Lihat [peta jalan](../../ROADMAP.md) untuk mengetahui apa yang direncanakan pada rilis mendatang.
 
 ## Catatan perubahan
 
-Daftar perubahan dan pembaruan secara terperinci ada di [CHANGELOG](CHANGELOG.md).
+Daftar perubahan dan pembaruan secara terperinci ada di [CHANGELOG](../../CHANGELOG.md).
 
 ## Dukungan
 
@@ -168,7 +168,7 @@ atau [Buy Me a Coffee](https://buymeacoffee.com/MaksymStoianov).
 
 ## Lisensi
 
-Proyek ini dilisensikan di bawah [lisensi Apache-2.0](LICENSE).
+Proyek ini dilisensikan di bawah [lisensi Apache-2.0](../../LICENSE).
 
 ---
 

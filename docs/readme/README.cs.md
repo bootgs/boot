@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,17 +8,17 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | **Čeština** | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | **Čeština** | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Tento překlad byl připraven s pomocí AI z [README.md](README.md) pro verzi 1.10.0. Referenční verzí je anglické README. Opravy jsou vítány: viz [CONTRIBUTING.md](CONTRIBUTING.md).
+> Tento překlad byl připraven s pomocí AI z [README.md](../../README.md) pro verzi 1.10.0. Referenční verzí je anglické README. Opravy jsou vítány: viz [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -108,20 +108,20 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ```
 
 Kompletní postup včetně `doPost` a asynchronní aplikace `AsyncApp` najdete v
-[průvodci Quick Start](docs/guide/quick-start.md) (v angličtině).
+[průvodci Quick Start](../guide/quick-start.md) (v angličtině).
 
 ## Dokumentace
 
 Podrobné průvodce jsou k dispozici v angličtině:
 
-- [Quick Start](docs/guide/quick-start.md): nastavení synchronní `App` a asynchronní `AsyncApp`.
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): parametry požadavku, typy MIME,
+- [Quick Start](../guide/quick-start.md): nastavení synchronní `App` a asynchronní `AsyncApp`.
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): parametry požadavku, typy MIME,
   volání přes `google.script.run` a URL webové aplikace, obalování odpovědí.
-- [Decorators](docs/guide/decorators.md): dekorátory tříd, metod a parametrů, validace a vestavěné pipes.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` a `@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): pipes a globální zpracování chyb.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): úplný seznam skills a možnosti instalace.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): srovnání architektur.
+- [Decorators](../guide/decorators.md): dekorátory tříd, metod a parametrů, validace a vestavěné pipes.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` a `@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): pipes a globální zpracování chyb.
+- [AI Agent Skills](../guide/ai-agent-skills.md): úplný seznam skills a možnosti instalace.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): srovnání architektur.
 
 ## Skills pro AI agenty
 
@@ -134,7 +134,7 @@ a validovat aplikace **Boot.gs**, a navíc obecné skills pro vývoj v Google Ap
 /plugin install bootgs@bootgs-skills
 ```
 
-Úplný seznam a instalaci pro Gemini CLI a `npx skills` najdete v [AI Agent Skills](docs/guide/ai-agent-skills.md).
+Úplný seznam a instalaci pro Gemini CLI a `npx skills` najdete v [AI Agent Skills](../guide/ai-agent-skills.md).
 
 ## Doporučujeme
 
@@ -150,16 +150,16 @@ a validovat aplikace **Boot.gs**, a navíc obecné skills pro vývoj v Google Ap
 ## Jak přispět
 
 Příspěvky jsou vítány! Pravidla chování a postup při odesílání pull requestů najdete v
-[pokynech pro přispěvatele](CONTRIBUTING.md). Chcete-li nahlásit zranitelnost, postupujte podle
-[bezpečnostní politiky](SECURITY.md).
+[pokynech pro přispěvatele](../../CONTRIBUTING.md). Chcete-li nahlásit zranitelnost, postupujte podle
+[bezpečnostní politiky](../../SECURITY.md).
 
 ## Plán vývoje
 
-V [plánu vývoje](ROADMAP.md) zjistíte, co chystáme v příštích verzích.
+V [plánu vývoje](../../ROADMAP.md) zjistíte, co chystáme v příštích verzích.
 
 ## Seznam změn
 
-Podrobný seznam změn a aktualizací najdete v [CHANGELOG](CHANGELOG.md).
+Podrobný seznam změn a aktualizací najdete v [CHANGELOG](../../CHANGELOG.md).
 
 ## Podpora
 
@@ -169,7 +169,7 @@ můžete ho podpořit přes [GitHub Sponsors](https://github.com/sponsors/Maksym
 
 ## Licence
 
-Tento projekt je licencován pod [licencí Apache-2.0](LICENSE).
+Tento projekt je licencován pod [licencí Apache-2.0](../../LICENSE).
 
 ---
 

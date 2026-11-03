@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,18 +8,18 @@
     </small>
 </p>
 
-[English](README.md) | **Українська** | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | **Українська** | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Цей переклад підготовлено за допомогою ШІ на основі [README.md](README.md) для версії 1.10.0. Основною є англійська
-> версія README. Виправлення вітаються — див. [CONTRIBUTING.md](CONTRIBUTING.md).
+> Цей переклад підготовлено за допомогою ШІ на основі [README.md](../../README.md) для версії 1.10.0. Основною є англійська
+> версія README. Виправлення вітаються — див. [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
   <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
@@ -108,20 +108,20 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ```
 
 Повний покроковий приклад, зокрема з `doPost` і асинхронним `AsyncApp`, — у
-[посібнику Quick Start](docs/guide/quick-start.md) (англійською).
+[посібнику Quick Start](../guide/quick-start.md) (англійською).
 
 ## Документація
 
 Детальні посібники доступні англійською:
 
-- [Quick Start](docs/guide/quick-start.md): налаштування синхронного `App` і асинхронного `AsyncApp`.
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): параметри запиту, MIME-типи,
+- [Quick Start](../guide/quick-start.md): налаштування синхронного `App` і асинхронного `AsyncApp`.
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): параметри запиту, MIME-типи,
   виклики через `google.script.run` і URL вебзастосунку, обгортання відповідей.
-- [Decorators](docs/guide/decorators.md): декоратори класів, методів і параметрів, валідація та вбудовані pipes.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` і `@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): pipes і глобальна обробка помилок.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): повний список навичок і способи встановлення.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): порівняння архітектур.
+- [Decorators](../guide/decorators.md): декоратори класів, методів і параметрів, валідація та вбудовані pipes.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` і `@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): pipes і глобальна обробка помилок.
+- [AI Agent Skills](../guide/ai-agent-skills.md): повний список навичок і способи встановлення.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): порівняння архітектур.
 
 ## Навички для ШІ-агентів
 
@@ -134,7 +134,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 /plugin install bootgs@bootgs-skills
 ```
 
-Повний список і встановлення для Gemini CLI та `npx skills` — у розділі [AI Agent Skills](docs/guide/ai-agent-skills.md).
+Повний список і встановлення для Gemini CLI та `npx skills` — у розділі [AI Agent Skills](../guide/ai-agent-skills.md).
 
 ## Рекомендуємо
 
@@ -149,16 +149,16 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 
 ## Як долучитися
 
-Ми раді внескам! Правила спільноти та порядок подання pull request описано в [настановах для учасників](CONTRIBUTING.md).
-Щоб повідомити про вразливість, дотримуйтеся [політики безпеки](SECURITY.md).
+Ми раді внескам! Правила спільноти та порядок подання pull request описано в [настановах для учасників](../../CONTRIBUTING.md).
+Щоб повідомити про вразливість, дотримуйтеся [політики безпеки](../../SECURITY.md).
 
 ## Дорожня карта
 
-Плани на наступні релізи — у [дорожній карті](ROADMAP.md).
+Плани на наступні релізи — у [дорожній карті](../../ROADMAP.md).
 
 ## Журнал змін
 
-Детальний перелік змін і оновлень — у [CHANGELOG](CHANGELOG.md).
+Детальний перелік змін і оновлень — у [CHANGELOG](../../CHANGELOG.md).
 
 ## Підтримка
 
@@ -168,7 +168,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 
 ## Ліцензія
 
-Проєкт поширюється за [ліцензією Apache-2.0](LICENSE).
+Проєкт поширюється за [ліцензією Apache-2.0](../../LICENSE).
 
 ---
 
