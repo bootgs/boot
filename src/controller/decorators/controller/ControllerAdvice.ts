@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { CONTROLLER_ADVICE_WATERMARK, INJECTABLE_WATERMARK } from "../../../domain/constants";
 
 /**

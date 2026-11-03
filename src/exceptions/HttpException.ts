@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { HttpStatus } from "../domain/enums";
 import { AppException } from "../exceptions";
 

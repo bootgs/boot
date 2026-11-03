@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { ParamDefinition } from "../domain/types";
 import { ParamSource } from "../domain/enums";
 

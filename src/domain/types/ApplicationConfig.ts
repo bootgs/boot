@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { ApplicationProperties } from "./ApplicationProperties";
 import { Newable } from "./Newable";
 import { Provider } from "./Provider";

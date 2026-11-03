@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { isHtmlOutput, isString, isTextOutput } from "apps-script-utils";
 import { ContentMimeType, HttpStatus, RequestMethod } from "../domain/enums";
 import { HttpHeaders, HttpRequest, HttpResponse } from "../domain/types";

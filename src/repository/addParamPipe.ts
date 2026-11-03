@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { PARAM_DEFINITIONS_METADATA } from "../domain/constants";
 import { ParamDefinition } from "../domain/types";
 

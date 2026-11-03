@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { RequestMethod } from "../../../domain/enums";
 import { createHttpDecorator } from "../../../repository";
 

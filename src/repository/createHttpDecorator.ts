@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { METHOD_METADATA, PATH_METADATA, PRODUCE_METADATA } from "../domain/constants";
 import { ContentMimeType, RequestMethod } from "../domain/enums";
 
