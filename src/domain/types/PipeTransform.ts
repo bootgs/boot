@@ -25,7 +25,7 @@ export interface ArgumentMetadata {
 /**
  * Interface representing a pipe transform.
  */
-export interface PipeTransform<T = any, R = any> {
+export interface PipeTransform<T = unknown, R = unknown> {
   /**
    * Transforms the input value.
    *

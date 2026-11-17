@@ -63,10 +63,10 @@ export function RequestMapping(
   const produces: ContentMimeType | ContentMimeType[] | undefined =
     typeof options === "object" ? options?.produces : undefined;
 
-  return (
+  return <T>(
     target: object,
     _propertyKey?: string | symbol,
-    descriptor?: TypedPropertyDescriptor<any>
+    descriptor?: TypedPropertyDescriptor<T>
   ): void => {
     if (descriptor?.value) {
       Reflect.defineMetadata(PATH_METADATA, path, descriptor.value);
@@ -83,7 +83,7 @@ export function RequestMapping(
         );
       }
     } else {
-      const existingOptions: Record<string, any> =
+      const existingOptions: Record<string, unknown> =
         Reflect.getMetadata(CONTROLLER_OPTIONS_METADATA, target) || {};
 
       Reflect.defineMetadata(

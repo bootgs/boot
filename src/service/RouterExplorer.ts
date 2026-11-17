@@ -38,7 +38,7 @@ export class RouterExplorer {
 
       const basePath: string = (controllerOptions.basePath as string) || "/";
 
-      let prototype: object = (controller as any).prototype;
+      let prototype: object = controller.prototype;
       const visitedMethods: Set<string> = new Set<string>();
 
       while (prototype && prototype !== Object.prototype) {
@@ -51,7 +51,7 @@ export class RouterExplorer {
 
           visitedMethods.add(propertyName);
 
-          const methodHandler: unknown = (prototype as any)[propertyName];
+          const methodHandler: unknown = (prototype as Record<string, unknown>)[propertyName];
 
           const routePath: string | undefined = Reflect.getMetadata(
             PATH_METADATA,

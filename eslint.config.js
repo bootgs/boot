@@ -10,6 +10,7 @@ import {
   overridesTests,
   rulesJsdoc,
   rulesPrettier,
+  rulesSecurity,
   rulesSpacing
 } from "./config/eslint/index.ts";
 
@@ -23,6 +24,7 @@ export default defineConfig([
   ...langMarkdown,
   rulesPrettier,
   rulesJsdoc,
+  ...rulesSecurity,
   rulesSpacing,
   overridesTests,
   commonIgnores

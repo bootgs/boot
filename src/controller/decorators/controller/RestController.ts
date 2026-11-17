@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { HttpController } from "./HttpController";
 import { ResponseBody } from "../web/ResponseBody";
+import { Newable } from "../../../domain/types";
 
 /**
  * Decorator that marks a class as a REST controller.
@@ -23,7 +24,7 @@ import { ResponseBody } from "../web/ResponseBody";
  */
 export function RestController(path?: string): ClassDecorator {
   return (target: object): void => {
-    HttpController(path)(target as any);
-    ResponseBody()(target as any);
+    HttpController(path)(target as Newable);
+    ResponseBody()(target as Newable);
   };
 }

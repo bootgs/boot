@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { RequestMethod } from "../../../domain/enums";
-import { createHttpDecorator, HttpDecoratorOptions } from "../../../repository";
+import { createHttpDecorator } from "../../../repository";
 
 /**
  * Route handler decorator for HTTP DELETE requests.

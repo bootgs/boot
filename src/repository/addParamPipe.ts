@@ -8,13 +8,13 @@ import { ParamDefinition } from "../domain/types";
  * @param   {object} target - The target object.
  * @param   {string | symbol | undefined} propertyKey - The property key.
  * @param   {number} index - The parameter index.
- * @param   {any} pipe - The pipe to add.
+ * @param   {unknown} pipe - The pipe to add.
  */
 export function addParamPipe(
   target: object,
   propertyKey: string | symbol | undefined,
   index: number,
-  pipe: any
+  pipe: unknown
 ): void {
   const metadataTarget: object = target;
 
@@ -38,9 +38,12 @@ export function addParamPipe(
     // Create a temporary definition for this index if none exists yet
     // Use a special prefix so it can be picked up by later decorators
     const tempKey: string = `__pending_pipes__:${index}`;
-    const definition: ParamDefinition = (existing[tempKey] as any) || { index, pipes: [] };
+    const definition: Pick<ParamDefinition, "index" | "pipes"> = existing[tempKey] || {
+      index,
+      pipes: []
+    };
     definition.pipes = [...(definition.pipes || []), pipe];
-    existing[tempKey] = definition as any;
+    existing[tempKey] = definition as ParamDefinition;
   }
 
   if (propertyKey) {
