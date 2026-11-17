@@ -78,10 +78,25 @@ jobs:
       - name: test
         run: npm test
 
-      - name: publish
-        run: npm publish --provenance --access public
+      # The packed tarball is what goes to npm and, signed, to the GitHub release.
+      - name: pack
+        id: pack
+        run: echo "file=$(npm pack --silent | tail -n 1)" >> "$GITHUB_OUTPUT"
 
-  # CycloneDX SBOM of the production dependency tree, attached to the GitHub release.
+      - name: publish
+        env:
+          FILE: ${{ steps.pack.outputs.file }}
+        run: npm publish "./$FILE" --provenance --access public
+
+      - name: keep-package
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: package
+          path: ${{ steps.pack.outputs.file }}
+          retention-days: 5
+
+  # Release assets: CycloneDX SBOM of the production dependency tree, the npm tarball and its
+  # signed build provenance (Sigstore bundle from actions/attest-build-provenance).
   sbom:
     needs: [release-please, publish]
     if: >-
@@ -89,7 +104,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
+      attestations: write
       contents: write
+      id-token: write
     env:
       TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || needs.release-please.outputs.tag_name }}
 
@@ -111,7 +128,23 @@ jobs:
       - name: sbom
         run: npm sbom --sbom-format cyclonedx --omit dev > sbom.cdx.json
 
+      - name: download-package
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: package
+          path: package
+
+      - name: attest
+        id: attest
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: package/*.tgz
+
       - name: upload
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "$TAG" sbom.cdx.json --clobber --repo "$GITHUB_REPOSITORY"
+          BUNDLE: ${{ steps.attest.outputs.bundle-path }}
+        run: |
+          tgz=$(ls package/*.tgz)
+          cp "$BUNDLE" "$tgz.sigstore.json"
+          gh release upload "$TAG" sbom.cdx.json "$tgz" "$tgz.sigstore.json" --clobber --repo "$GITHUB_REPOSITORY"

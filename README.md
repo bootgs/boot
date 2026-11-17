@@ -8,16 +8,28 @@
     </small>
 </p>
 
-**English** | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [日本語](README.ja.md) | [中文](README.zh.md)
+**English** | [Українська](docs/readme/README.uk.md) | [Русский](docs/readme/README.ru.md) | [Deutsch](docs/readme/README.de.md) | [Français](docs/readme/README.fr.md) | [Español](docs/readme/README.es.md) | [Português](docs/readme/README.pt.md) | [Italiano](docs/readme/README.it.md) | [Nederlands](docs/readme/README.nl.md) | [Polski](docs/readme/README.pl.md) | [Čeština](docs/readme/README.cs.md) | [Türkçe](docs/readme/README.tr.md) | [العربية](docs/readme/README.ar.md) | [Bahasa Indonesia](docs/readme/README.id.md) | [Tiếng Việt](docs/readme/README.vi.md) | [日本語](docs/readme/README.ja.md) | [한국어](docs/readme/README.ko.md) | [简体中文](docs/readme/README.zh.md) | [繁體中文](docs/readme/README.zh-TW.md)
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
-  <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
+  <a href="https://github.com/bootgs/boot/actions/workflows/ci.yml"><img src="https://github.com/bootgs/boot/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
+  <a href="https://github.com/bootgs/boot/actions/workflows/codeql.yml"><img src="https://github.com/bootgs/boot/actions/workflows/codeql.yml/badge.svg?branch=main" alt="CodeQL"></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/bootgs/boot"><img src="https://api.scorecard.dev/projects/github.com/bootgs/boot/badge" alt="OpenSSF Scorecard"></a>
+  <a href="https://api.reuse.software/info/github.com/bootgs/boot"><img src="https://api.reuse.software/badge/github.com/bootgs/boot" alt="REUSE status"></a>
+</p>
+
+<p align="left">
+  <a href="https://www.npmjs.com/package/bootgs"><img src="https://img.shields.io/npm/v/bootgs?label=npm" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/bootgs"><img src="https://img.shields.io/npm/dm/bootgs?label=downloads" alt="npm downloads"></a>
+  <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+</p>
+
+<p align="left">
+  <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
   <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
   <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
-  <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
 
 <p align="left">

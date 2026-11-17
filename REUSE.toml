@@ -1,0 +1,18 @@
+# Copyright and licence information for every file (https://reuse.software).
+# Checked in CI with `reuse lint`.
+version = 1
+SPDX-PackageName = "bootgs"
+SPDX-PackageDownloadLocation = "https://github.com/bootgs/boot"
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025-2026 Maksym Stoianov"
+SPDX-License-Identifier = "Apache-2.0"
+
+# Banner artwork: own terms, see NOTICE and docs/assets/images/README.md.
+[[annotations]]
+path = "docs/assets/images/banner-*.JPG"
+precedence = "override"
+SPDX-FileCopyrightText = "Daryna Mikhailenko"
+SPDX-License-Identifier = "LicenseRef-Banner-Artwork"

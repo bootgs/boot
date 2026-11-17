@@ -2,18 +2,33 @@
 /**
  * Checks that README translations stay in sync with README.md.
  *
- * For every language in LANGUAGES it verifies that README.<code>.md exists,
- * contains the exact language switcher line, has the same number of `##` and
- * `###` headings as README.md, and that its translation note names the
+ * For every language in LANGUAGES it verifies that docs/readme/README.<code>.md
+ * exists, contains the exact language switcher line, has the same number of
+ * `##` and `###` headings as README.md, and that its translation note names the
  * current package.json version. README.md itself must carry the switcher too.
+ *
+ * README.md (English) stays in the repository root and links the translations
+ * as `docs/readme/README.<code>.md`. Inside docs/readme/ a translation links the
+ * other translations as `README.<code>.md` and English as `../../README.md`.
+ * Every relative link in a README must resolve to an existing file, so a
+ * repository-root path not rewritten for docs/readme/ is caught.
+ *
+ * A right-to-left translation wraps its prose in `<div dir="rtl" ...>` blocks.
+ * Those wrapper lines are skipped when looking for the note, and the headings
+ * inside them still count, since they stay `##`/`###` lines of their own.
  *
  * Usage: npm run docs:check-i18n
  */
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+/**
+ * Folder of the translations, relative to the repository root.
+ */
+const TRANSLATIONS_DIR = "docs/readme";
 
 /**
  * Languages in switcher order. `code: null` is the English source README.md.
@@ -26,18 +41,41 @@ const LANGUAGES = [
   { code: "fr", label: "Français" },
   { code: "es", label: "Español" },
   { code: "pt", label: "Português" },
+  { code: "it", label: "Italiano" },
+  { code: "nl", label: "Nederlands" },
+  { code: "pl", label: "Polski" },
+  { code: "cs", label: "Čeština" },
+  { code: "tr", label: "Türkçe" },
+  { code: "ar", label: "العربية" },
+  { code: "id", label: "Bahasa Indonesia" },
+  { code: "vi", label: "Tiếng Việt" },
   { code: "ja", label: "日本語" },
-  { code: "zh", label: "中文" }
+  { code: "ko", label: "한국어" },
+  { code: "zh", label: "简体中文" },
+  { code: "zh-TW", label: "繁體中文" }
 ];
 
 /**
- * Returns the README file name for a language code.
+ * Returns the README path for a language code, relative to the repository root.
  *
  * @param {string | null} code Language code, or null for English.
- * @returns {string} File name relative to the repository root.
+ * @returns {string} `README.md` or `docs/readme/README.<code>.md`.
  */
 function fileName(code) {
-  return code ? `README.${code}.md` : "README.md";
+  return code ? `${TRANSLATIONS_DIR}/README.${code}.md` : "README.md";
+}
+
+/**
+ * Returns the link to a language's README as written in the README of `from`.
+ *
+ * @param {string | null} code Language code of the link target, or null for English.
+ * @param {string | null} from Language code of the file holding the link.
+ * @returns {string} Relative link.
+ */
+function linkTo(code, from) {
+  if (from === null) return fileName(code);
+
+  return code ? `README.${code}.md` : "../../README.md";
 }
 
 /**
@@ -48,8 +86,60 @@ function fileName(code) {
  */
 function switcherLine(current) {
   return LANGUAGES.map(({ code, label }) =>
-    code === current ? `**${label}**` : `[${label}](${fileName(code)})`
+    code === current ? `**${label}**` : `[${label}](${linkTo(code, current)})`
   ).join(" | ");
+}
+
+/**
+ * Lists relative link targets that do not exist, outside fenced code blocks.
+ *
+ * Markdown links and `href`/`src`/`srcset` attributes are checked; absolute
+ * URLs, `mailto:` links and same-file `#anchors` are skipped.
+ *
+ * @param {string[]} lines File lines.
+ * @param {string} dir Absolute folder of the file.
+ * @returns {string[]} Missing link targets as written in the file.
+ */
+function missingLinks(lines, dir) {
+  const missing = [];
+  let fence = false;
+
+  for (const line of lines) {
+    if (/^\s*(```|~~~)/.test(line)) {
+      fence = !fence;
+      continue;
+    }
+    if (fence) continue;
+
+    const targets = [
+      ...[...line.matchAll(/\]\(([^)\s]+)/g)].map((match) => match[1]),
+      ...[...line.matchAll(/\b(?:href|src)="([^"]+)"/g)].map((match) => match[1]),
+      ...[...line.matchAll(/\bsrcset="([^"]+)"/g)].flatMap((match) =>
+        match[1].split(",").map((entry) => entry.trim().split(/\s+/)[0])
+      )
+    ];
+
+    for (const target of targets) {
+      if (/^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(target)) continue;
+
+      const path = decodeURIComponent(target.split("#")[0]);
+
+      if (!existsSync(resolve(dir, path))) missing.push(target);
+    }
+  }
+  return missing;
+}
+
+/**
+ * Tells whether a line only opens or closes a right-to-left wrapper block.
+ *
+ * @param {string} line File line.
+ * @returns {boolean} True for `<div dir="rtl" ...>` and `</div>` lines.
+ */
+function isRtlWrapper(line) {
+  const trimmed = line.trim();
+
+  return /^<div\b[^>]*\bdir="rtl"[^>]*>$/.test(trimmed) || trimmed === "</div>";
 }
 
 /**
@@ -85,6 +175,10 @@ if (!sourceLines.includes(switcherLine(null))) {
   errors.push("README.md: language switcher line is missing or differs");
 }
 
+for (const target of missingLinks(sourceLines, ROOT)) {
+  errors.push(`README.md: link target ${target} does not exist`);
+}
+
 for (const { code } of LANGUAGES.filter((language) => language.code)) {
   const name = fileName(code);
   const path = join(ROOT, name);
@@ -96,6 +190,10 @@ for (const { code } of LANGUAGES.filter((language) => language.code)) {
 
   const lines = readFileSync(path, "utf8").split(/\r?\n/);
 
+  for (const target of missingLinks(lines, dirname(path))) {
+    errors.push(`${name}: link target ${target} does not exist`);
+  }
+
   const switcherIndex = lines.indexOf(switcherLine(code));
 
   if (switcherIndex === -1) {
@@ -103,7 +201,9 @@ for (const { code } of LANGUAGES.filter((language) => language.code)) {
   } else {
     let index = switcherIndex + 1;
 
-    while (index < lines.length && lines[index].trim() === "") index++;
+    while (index < lines.length && (lines[index].trim() === "" || isRtlWrapper(lines[index]))) {
+      index++;
+    }
 
     const note = [];
 

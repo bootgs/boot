@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,19 +8,31 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | **Português** | [日本語](README.ja.md) | [中文](README.zh.md)
+[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | **Português** | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Esta tradução foi feita com ajuda de IA a partir do [README.md](README.md) para a versão 1.10.0. O README em inglês é
-> a versão oficial. Correções são bem-vindas — veja o [CONTRIBUTING.md](CONTRIBUTING.md).
+> Esta tradução foi feita com ajuda de IA a partir do [README.md](../../README.md) para a versão 1.10.0. O README em inglês é
+> a versão oficial. Correções são bem-vindas — veja o [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
-  <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="https://github.com/bootgs/boot/actions/workflows/ci.yml"><img src="https://github.com/bootgs/boot/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
+  <a href="https://github.com/bootgs/boot/actions/workflows/codeql.yml"><img src="https://github.com/bootgs/boot/actions/workflows/codeql.yml/badge.svg?branch=main" alt="CodeQL"></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/bootgs/boot"><img src="https://api.scorecard.dev/projects/github.com/bootgs/boot/badge" alt="OpenSSF Scorecard"></a>
+  <a href="https://api.reuse.software/info/github.com/bootgs/boot"><img src="https://api.reuse.software/badge/github.com/bootgs/boot" alt="REUSE status"></a>
+</p>
+
+<p align="left">
+  <a href="https://www.npmjs.com/package/bootgs"><img src="https://img.shields.io/npm/v/bootgs?label=npm" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/bootgs"><img src="https://img.shields.io/npm/dm/bootgs?label=downloads" alt="npm downloads"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+</p>
+
+<p align="left">
+  <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
 </p>
 
 <p align="left">
@@ -110,20 +122,20 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ```
 
 O passo a passo completo, incluindo `doPost` e a aplicação assíncrona `AsyncApp`, está no
-[guia Quick Start](docs/guide/quick-start.md) (em inglês).
+[guia Quick Start](../guide/quick-start.md) (em inglês).
 
 ## Documentação
 
 Os guias detalhados estão disponíveis em inglês:
 
-- [Quick Start](docs/guide/quick-start.md): configuração do `App` (síncrono) e do `AsyncApp` (assíncrono).
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): parâmetros da requisição, tipos
+- [Quick Start](../guide/quick-start.md): configuração do `App` (síncrono) e do `AsyncApp` (assíncrono).
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): parâmetros da requisição, tipos
   MIME, chamadas via `google.script.run` e pela URL do app da web, empacotamento das respostas.
-- [Decorators](docs/guide/decorators.md): decorators de classe, método e parâmetro, validação e pipes nativos.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` e `@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): pipes e tratamento global de erros.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): lista completa de skills e opções de instalação.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): comparação de arquiteturas.
+- [Decorators](../guide/decorators.md): decorators de classe, método e parâmetro, validação e pipes nativos.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` e `@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): pipes e tratamento global de erros.
+- [AI Agent Skills](../guide/ai-agent-skills.md): lista completa de skills e opções de instalação.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): comparação de arquiteturas.
 
 ## Skills para agentes de IA
 
@@ -137,7 +149,7 @@ inicial, organizar e validar aplicações **Boot.gs**, além de skills genérica
 ```
 
 A lista completa e a instalação para Gemini CLI e `npx skills` estão em
-[AI Agent Skills](docs/guide/ai-agent-skills.md).
+[AI Agent Skills](../guide/ai-agent-skills.md).
 
 ## Recomendado
 
@@ -152,16 +164,16 @@ A lista completa e a instalação para Gemini CLI e `npx skills` estão em
 
 ## Como contribuir
 
-Contribuições são bem-vindas! Veja o [guia de contribuição](CONTRIBUTING.md) para conhecer o código de conduta e o
-processo de envio de pull requests. Para relatar uma vulnerabilidade, siga a [política de segurança](SECURITY.md).
+Contribuições são bem-vindas! Veja o [guia de contribuição](../../CONTRIBUTING.md) para conhecer o código de conduta e o
+processo de envio de pull requests. Para relatar uma vulnerabilidade, siga a [política de segurança](../../SECURITY.md).
 
 ## Roadmap
 
-Confira o [roadmap](ROADMAP.md) para ver o que está planejado para as próximas versões.
+Confira o [roadmap](../../ROADMAP.md) para ver o que está planejado para as próximas versões.
 
 ## Changelog
 
-A lista detalhada de mudanças e atualizações está no [CHANGELOG](CHANGELOG.md).
+A lista detalhada de mudanças e atualizações está no [CHANGELOG](../../CHANGELOG.md).
 
 ## Apoio
 
@@ -171,7 +183,7 @@ para você, apoie-o pelo [GitHub Sponsors](https://github.com/sponsors/MaksymSto
 
 ## Licença
 
-Este projeto é licenciado sob a [Licença Apache-2.0](LICENSE).
+Este projeto é licenciado sob a [Licença Apache-2.0](../../LICENSE).
 
 ---
 

@@ -11,8 +11,4 @@ import { ValueProvider } from "./ValueProvider";
  * @template T - The type of the instance provided.
  */
 export type Provider<T = unknown> =
-  | Newable<T>
-  | ValueProvider<T>
-  | ClassProvider<T>
-  | FactoryProvider<T>
-  | ExistingProvider<T>;
+  Newable<T> | ValueProvider<T> | ClassProvider<T> | FactoryProvider<T> | ExistingProvider<T>;

@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-![Project banner for Google Apps Script Boot Framework](docs/assets/images/banner-1280x640.JPG)
+![Project banner for Google Apps Script Boot Framework](../assets/images/banner-1280x640.JPG)
 
 <p align="right">
     <small>
@@ -8,19 +8,31 @@
     </small>
 </p>
 
-[English](README.md) | [Українська](README.uk.md) | **Русский** | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [日本語](README.ja.md) | [中文](README.zh.md)
+[English](../../README.md) | [Українська](README.uk.md) | **Русский** | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Этот перевод подготовлен с помощью ИИ на основе [README.md](README.md) для версии 1.10.0. Основной считается
-> английская версия README. Исправления приветствуются — см. [CONTRIBUTING.md](CONTRIBUTING.md).
+> Этот перевод подготовлен с помощью ИИ на основе [README.md](../../README.md) для версии 1.10.0. Основной считается
+> английская версия README. Исправления приветствуются — см. [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
 <p align="left">
-  <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
-  <a href="SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
+  <a href="https://github.com/bootgs/boot/actions/workflows/ci.yml"><img src="https://github.com/bootgs/boot/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
+  <a href="https://github.com/bootgs/boot/actions/workflows/codeql.yml"><img src="https://github.com/bootgs/boot/actions/workflows/codeql.yml/badge.svg?branch=main" alt="CodeQL"></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/bootgs/boot"><img src="https://api.scorecard.dev/projects/github.com/bootgs/boot/badge" alt="OpenSSF Scorecard"></a>
+  <a href="https://api.reuse.software/info/github.com/bootgs/boot"><img src="https://api.reuse.software/badge/github.com/bootgs/boot" alt="REUSE status"></a>
+</p>
+
+<p align="left">
+  <a href="https://www.npmjs.com/package/bootgs"><img src="https://img.shields.io/npm/v/bootgs?label=npm" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/bootgs"><img src="https://img.shields.io/npm/dm/bootgs?label=downloads" alt="npm downloads"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
+</p>
+
+<p align="left">
+  <a href="https://github.com/google/clasp"><img src="https://img.shields.io/badge/Built%20with-clasp-4285f4.svg" alt="Built with clasp"></a>
+  <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
 </p>
 
 <p align="left">
@@ -109,20 +121,20 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ```
 
 Полный пошаговый пример, в том числе с `doPost` и асинхронным `AsyncApp`, — в
-[руководстве Quick Start](docs/guide/quick-start.md) (на английском).
+[руководстве Quick Start](../guide/quick-start.md) (на английском).
 
 ## Документация
 
 Подробные руководства доступны на английском:
 
-- [Quick Start](docs/guide/quick-start.md): настройка синхронного `App` и асинхронного `AsyncApp`.
-- [Calling the API (Virtual Transport Layer)](docs/guide/virtual-transport-layer.md): параметры запроса, MIME-типы,
+- [Quick Start](../guide/quick-start.md): настройка синхронного `App` и асинхронного `AsyncApp`.
+- [Calling the API (Virtual Transport Layer)](../guide/virtual-transport-layer.md): параметры запроса, MIME-типы,
   вызовы через `google.script.run` и URL веб-приложения, обёртка ответов.
-- [Decorators](docs/guide/decorators.md): декораторы классов, методов и параметров, валидация и встроенные pipes.
-- [Controlling the Response](docs/guide/responses.md): `ResponseEntity` и `@ResponseBody`.
-- [Advanced Examples](docs/guide/examples.md): pipes и глобальная обработка ошибок.
-- [AI Agent Skills](docs/guide/ai-agent-skills.md): полный список навыков и способы установки.
-- [Boot.gs vs Spring Boot vs NestJS](docs/comparison.md): сравнение архитектур.
+- [Decorators](../guide/decorators.md): декораторы классов, методов и параметров, валидация и встроенные pipes.
+- [Controlling the Response](../guide/responses.md): `ResponseEntity` и `@ResponseBody`.
+- [Advanced Examples](../guide/examples.md): pipes и глобальная обработка ошибок.
+- [AI Agent Skills](../guide/ai-agent-skills.md): полный список навыков и способы установки.
+- [Boot.gs vs Spring Boot vs NestJS](../comparison.md): сравнение архитектур.
 
 ## Навыки для ИИ-агентов
 
@@ -135,7 +147,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 /plugin install bootgs@bootgs-skills
 ```
 
-Полный список и установка для Gemini CLI и `npx skills` — в разделе [AI Agent Skills](docs/guide/ai-agent-skills.md).
+Полный список и установка для Gemini CLI и `npx skills` — в разделе [AI Agent Skills](../guide/ai-agent-skills.md).
 
 ## Рекомендуем
 
@@ -151,15 +163,15 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 ## Как внести вклад
 
 Мы рады вашему участию! Правила сообщества и порядок отправки pull request описаны в
-[руководстве для участников](CONTRIBUTING.md). Чтобы сообщить об уязвимости, следуйте [политике безопасности](SECURITY.md).
+[руководстве для участников](../../CONTRIBUTING.md). Чтобы сообщить об уязвимости, следуйте [политике безопасности](../../SECURITY.md).
 
 ## Дорожная карта
 
-Планы на будущие релизы — в [дорожной карте](ROADMAP.md).
+Планы на будущие релизы — в [дорожной карте](../../ROADMAP.md).
 
 ## Журнал изменений
 
-Подробный список изменений и обновлений — в [CHANGELOG](CHANGELOG.md).
+Подробный список изменений и обновлений — в [CHANGELOG](../../CHANGELOG.md).
 
 ## Поддержка
 
@@ -169,7 +181,7 @@ export function doGet(event: GoogleAppsScript.Events.DoGet) {
 
 ## Лицензия
 
-Проект распространяется по [лицензии Apache-2.0](LICENSE).
+Проект распространяется по [лицензии Apache-2.0](../../LICENSE).
 
 ---
 

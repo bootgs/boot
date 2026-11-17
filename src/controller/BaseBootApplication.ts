@@ -84,8 +84,8 @@ export abstract class BaseBootApplication {
   protected constructor(config?: ApplicationConfig) {
     this._config = config?.config ?? {};
 
-    (config?.controllers || []).forEach(
-      (c: Newable): Map<Newable, unknown> => this._controllers.set(c, null)
+    (config?.controllers || []).forEach((c: Newable): Map<Newable, unknown> =>
+      this._controllers.set(c, null)
     );
 
     (config?.providers || []).forEach((provider: Provider): void => {
