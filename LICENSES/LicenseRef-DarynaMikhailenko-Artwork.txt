@@ -1,0 +1,12 @@
+Artwork licence (banner images in docs/assets/images)
+
+Copyright Daryna Mikhailenko (https://darynamikhailenko.com). All rights reserved
+except as stated below. These images are not covered by the Apache License 2.0.
+
+They may be reused on these terms:
+
+- unmodified - no crops, recolours, overlays or other alterations;
+- with the author credited by name;
+- with the credit linking to the author's portfolio.
+
+Anything beyond that needs the author's permission.
