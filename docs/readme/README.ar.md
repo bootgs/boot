@@ -23,6 +23,7 @@
   <a href="../../LICENSE"><img src="https://img.shields.io/github/license/bootgs/boot?label=License" alt="License"></a>
   <a href="../../SECURITY.md"><img src="https://img.shields.io/badge/Security-Policy-brightgreen.svg" alt="Security Policy"></a>
   <a href="https://scorecard.dev/viewer/?uri=github.com/bootgs/boot"><img src="https://api.scorecard.dev/projects/github.com/bootgs/boot/badge" alt="OpenSSF Scorecard"></a>
+  <a href="https://api.reuse.software/info/github.com/bootgs/boot"><img src="https://api.reuse.software/badge/github.com/bootgs/boot" alt="REUSE status"></a>
   <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/Roadmap-View-blue.svg" alt="Roadmap"></a>
   <a href="https://github.com/bootgs/boot/releases"><img src="https://img.shields.io/github/v/release/bootgs/boot?label=Release" alt="Latest release"></a>
 </p>
