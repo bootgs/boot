@@ -12,7 +12,7 @@
 
 <div dir="rtl" lang="ar">
 
-> أُعدّت هذه الترجمة بمساعدة الذكاء الاصطناعي انطلاقًا من [README.md](../../README.md) للإصدار 1.10.0. ملف README الإنجليزي هو النسخة المرجعية. نرحّب بالتصحيحات: راجع [CONTRIBUTING.md](../../CONTRIBUTING.md).
+> أُعدّت هذه الترجمة بمساعدة الذكاء الاصطناعي انطلاقًا من [README.md](../../README.md) للإصدار 1.10.1. ملف README الإنجليزي هو النسخة المرجعية. نرحّب بالتصحيحات: راجع [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 

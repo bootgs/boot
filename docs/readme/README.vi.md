@@ -10,7 +10,7 @@
 
 [English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | **Tiếng Việt** | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Bản dịch này được chuẩn bị với sự hỗ trợ của AI từ [README.md](../../README.md) cho phiên bản 1.10.0. README tiếng Anh là phiên bản tham chiếu. Mọi góp ý chỉnh sửa đều được hoan nghênh: xem [CONTRIBUTING.md](../../CONTRIBUTING.md).
+> Bản dịch này được chuẩn bị với sự hỗ trợ của AI từ [README.md](../../README.md) cho phiên bản 1.10.1. README tiếng Anh là phiên bản tham chiếu. Mọi góp ý chỉnh sửa đều được hoan nghênh: xem [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 

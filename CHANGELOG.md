@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.10.1](https://github.com/bootgs/boot/compare/v1.10.0...v1.10.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* **build:** exports map and fully specified ESM imports ([3df9d3e](https://github.com/bootgs/boot/commit/3df9d3e8d613908b56f9ac6496efd8b4e9bd1e19))
+* **build:** publish fully specified ESM imports and an exports map ([851d7aa](https://github.com/bootgs/boot/commit/851d7aa61da68ef57cb54a1b3297c325c18070e7))
+* **decorators:** use a relative import for HttpStatus in ResponseStatus ([fb6e3d8](https://github.com/bootgs/boot/commit/fb6e3d81da525ab6c97aac9844690fafd16fc8fb))
+* **deps:** update apps-script-utils to ^2.1.1 ([22bf63e](https://github.com/bootgs/boot/commit/22bf63ed454b05335e666db1511fc53a0982a2b0))
+* **eslint:** ignore docs/comparison.md to avoid markdown lint hang ([a43f97d](https://github.com/bootgs/boot/commit/a43f97d45872820309062fce4cccf750d4b89ad6))
+
 ## [1.10.0](https://github.com/bootgs/boot/compare/v1.9.1...v1.10.0) (2026-08-19)
 
 
