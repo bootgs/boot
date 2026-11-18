@@ -8,7 +8,7 @@
     </small>
 </p>
 
-[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | **Türkçe** | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [العربية](README.ar.md) | [Čeština](README.cs.md) | [Deutsch](README.de.md) | [Español](README.es.md) | [Français](README.fr.md) | [Bahasa Indonesia](README.id.md) | [Italiano](README.it.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Português](README.pt.md) | [Русский](README.ru.md) | **Türkçe** | [Українська](README.uk.md) | [Tiếng Việt](README.vi.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
 > Bu çeviri, 1.10.1 sürümü için [README.md](../../README.md) dosyasından yapay zekâ desteğiyle hazırlanmıştır. Referans sürüm İngilizce README'dir. Düzeltmelerinizi bekliyoruz: [CONTRIBUTING.md](../../CONTRIBUTING.md) dosyasına bakın.
 

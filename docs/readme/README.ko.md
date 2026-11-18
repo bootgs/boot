@@ -8,7 +8,7 @@
     </small>
 </p>
 
-[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | **한국어** | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [العربية](README.ar.md) | [Čeština](README.cs.md) | [Deutsch](README.de.md) | [Español](README.es.md) | [Français](README.fr.md) | [Bahasa Indonesia](README.id.md) | [Italiano](README.it.md) | [日本語](README.ja.md) | **한국어** | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [Türkçe](README.tr.md) | [Українська](README.uk.md) | [Tiếng Việt](README.vi.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
 > 이 번역은 버전 1.10.1의 [README.md](../../README.md)를 바탕으로 AI의 도움을 받아 작성되었습니다. 기준이 되는 버전은 영어 README입니다. 수정 제안을 환영합니다. 자세한 내용은 [CONTRIBUTING.md](../../CONTRIBUTING.md)를 참고하세요.
 

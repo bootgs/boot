@@ -8,7 +8,7 @@
     </small>
 </p>
 
-[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | **Español** | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [العربية](README.ar.md) | [Čeština](README.cs.md) | [Deutsch](README.de.md) | **Español** | [Français](README.fr.md) | [Bahasa Indonesia](README.id.md) | [Italiano](README.it.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [Türkçe](README.tr.md) | [Українська](README.uk.md) | [Tiếng Việt](README.vi.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
 > Esta traducción se preparó con ayuda de IA a partir de [README.md](../../README.md) para la versión 1.10.1. La versión en
 > inglés del README es la de referencia. Las correcciones son bienvenidas: consulta [CONTRIBUTING.md](../../CONTRIBUTING.md).
