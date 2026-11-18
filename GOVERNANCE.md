@@ -33,6 +33,12 @@ discussions — may be invited to become maintainers. You can also ask: open a d
 maintainer. New maintainers are added to [MAINTAINERS.md](MAINTAINERS.md) through a pull request and receive
 access step by step (triage, then write, then release).
 
+Before anyone receives write or admin access to the repository or organisation, or npm publishing rights, the lead
+maintainer reviews them: a track record of merged contributions, two-factor authentication on their GitHub and npm
+accounts, and agreement to handle vulnerabilities as described in [SECURITY.md](SECURITY.md). Access is reviewed
+whenever a role changes and removed when it is no longer needed. Current access is listed in
+[MAINTAINERS.md](MAINTAINERS.md#access-to-sensitive-resources).
+
 Maintainers who are inactive for 12 months may be moved to emeritus status, with thanks.
 
 ## Continuity

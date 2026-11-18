@@ -11,3 +11,4 @@ Detailed guides for **Boot.gs**. The [README](../../README.md) gives a short ove
 - [Advanced Examples](examples.md) — pipes and global error handling.
 - [AI Agent Skills](ai-agent-skills.md) — the full list of skills and how to install them.
 - [Boot.gs vs Spring Boot vs NestJS](../comparison.md) — architecture comparison.
+- [Design](../design.md) — actors, components and the request, event and error flows.
