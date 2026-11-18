@@ -8,7 +8,7 @@
     </small>
 </p>
 
-**English** | [Українська](docs/readme/README.uk.md) | [Русский](docs/readme/README.ru.md) | [Deutsch](docs/readme/README.de.md) | [Français](docs/readme/README.fr.md) | [Español](docs/readme/README.es.md) | [Português](docs/readme/README.pt.md) | [Italiano](docs/readme/README.it.md) | [Nederlands](docs/readme/README.nl.md) | [Polski](docs/readme/README.pl.md) | [Čeština](docs/readme/README.cs.md) | [Türkçe](docs/readme/README.tr.md) | [العربية](docs/readme/README.ar.md) | [Bahasa Indonesia](docs/readme/README.id.md) | [Tiếng Việt](docs/readme/README.vi.md) | [日本語](docs/readme/README.ja.md) | [한국어](docs/readme/README.ko.md) | [简体中文](docs/readme/README.zh.md) | [繁體中文](docs/readme/README.zh-TW.md)
+**English** | [العربية](docs/readme/README.ar.md) | [Čeština](docs/readme/README.cs.md) | [Deutsch](docs/readme/README.de.md) | [Español](docs/readme/README.es.md) | [Français](docs/readme/README.fr.md) | [Bahasa Indonesia](docs/readme/README.id.md) | [Italiano](docs/readme/README.it.md) | [日本語](docs/readme/README.ja.md) | [한국어](docs/readme/README.ko.md) | [Nederlands](docs/readme/README.nl.md) | [Polski](docs/readme/README.pl.md) | [Português](docs/readme/README.pt.md) | [Русский](docs/readme/README.ru.md) | [Türkçe](docs/readme/README.tr.md) | [Українська](docs/readme/README.uk.md) | [Tiếng Việt](docs/readme/README.vi.md) | [简体中文](docs/readme/README.zh.md) | [繁體中文](docs/readme/README.zh-TW.md)
 
 # Boot Framework for Google Apps Script™
 
