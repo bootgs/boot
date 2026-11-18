@@ -62,6 +62,64 @@ Out of scope: vulnerabilities in Google Apps Script itself or other Google servi
 [Google](https://bughunters.google.com/)), in third-party dependencies (report them upstream; we will update
 the dependency), and in applications built with Boot.gs that are caused by their own code or configuration.
 
+## Verifying a Release
+
+**npm package.** Versions from 1.10.0 on are published from GitHub Actions with
+[npm provenance](https://docs.npmjs.com/generating-provenance-statements). After installing, check the registry
+signatures and provenance attestations of your dependency tree:
+
+```bash
+npm audit signatures
+```
+
+The provenance shown on [npmjs.com/package/bootgs](https://www.npmjs.com/package/bootgs) names the repository
+`bootgs/boot`, the workflow `.github/workflows/release-please.yml` and the commit the version was built from.
+
+**GitHub release assets.** Releases after 1.10.1 (the workflow change in pull request #171) carry the npm tarball
+`bootgs-<version>.tgz`, its Sigstore build provenance `bootgs-<version>.tgz.sigstore.json` and the CycloneDX SBOM
+`bootgs-<version>.cdx.json`. 1.10.1 has only an SBOM (`sbom.cdx.json`); earlier releases have no assets. Verify a
+downloaded tarball with the [GitHub CLI](https://cli.github.com/):
+
+```bash
+gh attestation verify bootgs-<version>.tgz --repo bootgs/boot \
+  --signer-workflow bootgs/boot/.github/workflows/release-please.yml
+```
+
+The attestation is valid only if it was signed by the `release-please.yml` workflow of `bootgs/boot`, which runs on
+pushes to `main` (or a manual run for an existing tag).
+
+## Secrets and Credentials
+
+- No long-lived publishing credential exists: npm publishing uses
+  [trusted publishing](https://docs.npmjs.com/trusted-publishers) (OIDC) from the `npm` environment.
+- Workflows use only the per-run `GITHUB_TOKEN`, with permissions declared per job (`release-please.yml` passes
+  `secrets.GITHUB_TOKEN` to release-please; no other secret is referenced).
+- If a secret becomes necessary, it is stored only as a GitHub Actions secret scoped to an environment, is
+  accessible to maintainers only, and is rotated at least once a year and immediately on suspected exposure.
+- GitHub secret scanning and push protection are enabled for the repository.
+- Who has access to these resources: [MAINTAINERS.md](MAINTAINERS.md#access-to-sensitive-resources).
+
+## Dependency and Code Scanning Policy
+
+**Software composition analysis (SCA).**
+[ci.yml](.github/workflows/ci.yml) runs on every pull request and on pushes to `main` and `develop`:
+
+- `npm audit --omit=dev --audit-level=high` — a high or critical vulnerability in a runtime dependency fails the
+  check and blocks merging;
+- the `licences` step — a runtime dependency outside the allow-list (`Apache-2.0`, `MIT`, `BSD-2-Clause`,
+  `BSD-3-Clause`, `ISC`, `0BSD`) fails the check and always blocks merging.
+
+Moderate and low findings are fixed within 30 days or before the next release, whichever comes first, usually
+through [Dependabot](.github/dependabot.yml) updates. No release is made while an SCA violation is open.
+
+**Static analysis (SAST).** [CodeQL](.github/workflows/codeql.yml) analyses JavaScript/TypeScript and GitHub Actions
+on every pull request and push to `main` and `develop` and weekly; ESLint with `eslint-plugin-security` runs in CI.
+High and critical CodeQL alerts are fixed before merging, medium ones before the next release. A finding may be
+dismissed only as a false positive or not exploitable, with the reason written in the alert.
+
+These thresholds are project policy, applied through the required CI checks and maintainer review of every pull
+request.
+
 ## Security Best Practices for Users
 
 1. **Keep dependencies updated:** use the latest `bootgs` release and keep other packages current.
