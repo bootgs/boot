@@ -23,5 +23,5 @@ export interface ParamDefinition {
   /**
    * Optional pipes for the parameter.
    */
-  pipes?: any[];
+  pipes?: unknown[];
 }

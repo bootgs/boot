@@ -56,7 +56,7 @@ export function Value(key: string): ParameterDecorator {
           type: ParamSource.VALUE,
           token: key,
           index: parameterIndex
-        } as any
+        }
       };
 
       Reflect.defineMetadata(INJECT_TOKENS_METADATA, updatedTokens, metadataTarget);

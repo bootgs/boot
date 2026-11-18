@@ -5,6 +5,12 @@ import { AppsScriptEventType, RequestMethod } from "../domain/enums";
 import { BaseBootApplication } from "./BaseBootApplication";
 
 /**
+ * Output returned to Google Apps Script by doGet and doPost.
+ */
+type AppsScriptHttpOutput =
+  GoogleAppsScript.HTML.HtmlOutput | GoogleAppsScript.Content.TextOutput | string;
+
+/**
  * Synchronous application class for bootstrapping and handling Google Apps Script events.
  */
 export class BootApplication extends BaseBootApplication {
@@ -26,7 +32,7 @@ export class BootApplication extends BaseBootApplication {
     const handler: () => AppsScriptMenuProxy = (): AppsScriptMenuProxy => proxy;
 
     const proxy: AppsScriptMenuProxy = new Proxy(handler, {
-      get: (target, prop, receiver: any): any => {
+      get: (target, prop, receiver: unknown): unknown => {
         if (!isString(prop)) {
           return Reflect.get(target, prop, receiver);
         }
@@ -43,7 +49,7 @@ export class BootApplication extends BaseBootApplication {
           return this._eventDispatcher.dispatchByName(prop, event);
         };
       },
-      apply: (target, thisArg: any, argArray): any => {
+      apply: (target, thisArg: unknown, argArray): unknown => {
         return Reflect.apply(target, thisArg, argArray);
       }
     }) as unknown as AppsScriptMenuProxy;
@@ -67,9 +73,9 @@ export class BootApplication extends BaseBootApplication {
       this.handleHttpRequestInternal(RequestMethod.GET, event);
 
     if (response instanceof Promise) {
-      return response.then((res: HttpResponse): any =>
+      return response.then((res: HttpResponse): AppsScriptHttpOutput =>
         this._responseBuilder.wrap(request, res)
-      ) as unknown as any;
+      ) as unknown as AppsScriptHttpOutput;
     }
 
     return this._responseBuilder.wrap(request, response);
@@ -91,9 +97,9 @@ export class BootApplication extends BaseBootApplication {
       this.handleHttpRequestInternal(RequestMethod.POST, event);
 
     if (response instanceof Promise) {
-      return response.then((res: HttpResponse): any =>
+      return response.then((res: HttpResponse): AppsScriptHttpOutput =>
         this._responseBuilder.wrap(request, res)
-      ) as unknown as any;
+      ) as unknown as AppsScriptHttpOutput;
     }
 
     return this._responseBuilder.wrap(request, response);

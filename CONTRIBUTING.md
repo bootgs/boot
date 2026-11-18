@@ -24,6 +24,7 @@ Great that you are here and you want to contribute to **Boot.gs**!
       - [2. PR Specific Requirements](#2-pr-specific-requirements)
     - [Test Suite](#test-suite)
     - [README Translations](#readme-translations)
+  - [Dependencies](#dependencies)
   - [Roadmap](#roadmap)
   - [License](#license)
 
@@ -44,6 +45,8 @@ The project is organized as follows:
 - [**`scripts/`**](scripts/) — Utility scripts for maintenance and development.
 - [**`src/`**](src/) — Source code of the framework.
 - [**`test/`**](test/) — Test suites mirroring the `src` structure.
+
+How the components in `src/` fit together is described in [Design](docs/design.md).
 
 ## Development Setup
 
@@ -69,9 +72,9 @@ The project is organized as follows:
    ```bash
    git remote add upstream https://github.com/bootgs/boot.git
    ```
-4. **Install dependencies**:
+4. **Install dependencies** from the lockfile:
    ```bash
-   npm install
+   npm ci
    ```
 5. **Build the project**:
    ```bash
@@ -261,6 +264,41 @@ other translations are `README.<lang>.md`, English is `../../README.md`, root fi
 ```bash
 npm run docs:check-i18n
 ```
+
+## Dependencies
+
+**Obtaining.** Dependencies come from the npm registry. `package-lock.json` is committed and pins every direct and
+transitive version with its integrity hash; install with `npm ci`, which installs exactly what the lockfile says.
+Commit `package.json` and `package-lock.json` together whenever a dependency changes.
+
+**Selecting.** Runtime dependencies are kept to a minimum. The published package currently depends on:
+
+| Package                                                                | Licence    | Used for                                 |
+| :--------------------------------------------------------------------- | :--------- | :--------------------------------------- |
+| [`apps-script-utils`](https://www.npmjs.com/package/apps-script-utils) | Apache-2.0 | type guards and string/path helpers      |
+| [`reflect-metadata`](https://www.npmjs.com/package/reflect-metadata)   | Apache-2.0 | decorator metadata (`Reflect.*Metadata`) |
+
+Everything else in `package.json` is a `devDependency` (build, lint, test) and is not shipped. A new dependency,
+runtime or development, needs a reason in the issue or pull request and must be:
+
+- free/open-source software; a runtime dependency must use a licence on the CI allow-list: `Apache-2.0`, `MIT`,
+  `BSD-2-Clause`, `BSD-3-Clause`, `ISC` or `0BSD` (the `licences` step in [ci.yml](.github/workflows/ci.yml) fails
+  otherwise);
+- actively maintained (recent releases, issues answered) and without known high or critical vulnerabilities;
+- small for what it does: prefer a few lines of our own code over a package for a trivial helper.
+
+**Tracking.**
+
+- [Dependabot](.github/dependabot.yml) checks npm packages and GitHub Actions weekly and opens pull requests against
+  `develop`. Minor and patch updates are grouped into one pull request per group (`dev-dependencies`,
+  `production-dependencies`, `github-actions`); major versions are not proposed automatically and are upgraded by
+  hand, one at a time.
+- CI runs `npm audit --omit=dev --audit-level=high` on every pull request and push to `main` and `develop`, so a
+  known high or critical vulnerability in a runtime dependency fails the build.
+- GitHub Actions in workflows are pinned to full commit SHAs, with the version in a comment.
+- [OpenSSF Scorecard](.github/workflows/scorecard.yml) runs weekly and on pushes to `main`, and reports supply-chain
+  issues such as unpinned dependencies to code scanning.
+- Each GitHub release carries a CycloneDX SBOM of the runtime dependency tree.
 
 ## Roadmap
 

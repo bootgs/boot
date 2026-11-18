@@ -12,7 +12,7 @@
 
 <div dir="rtl" lang="ar">
 
-> أُعدّت هذه الترجمة بمساعدة الذكاء الاصطناعي انطلاقًا من [README.md](../../README.md) للإصدار 1.10.0. ملف README الإنجليزي هو النسخة المرجعية. نرحّب بالتصحيحات: راجع [CONTRIBUTING.md](../../CONTRIBUTING.md).
+> أُعدّت هذه الترجمة بمساعدة الذكاء الاصطناعي انطلاقًا من [README.md](../../README.md) للإصدار 1.10.1. ملف README الإنجليزي هو النسخة المرجعية. نرحّب بالتصحيحات: راجع [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
@@ -23,6 +23,8 @@
   <a href="https://github.com/bootgs/boot/actions/workflows/codeql.yml"><img src="https://github.com/bootgs/boot/actions/workflows/codeql.yml/badge.svg?branch=main" alt="CodeQL"></a>
   <a href="https://scorecard.dev/viewer/?uri=github.com/bootgs/boot"><img src="https://api.scorecard.dev/projects/github.com/bootgs/boot/badge" alt="OpenSSF Scorecard"></a>
   <a href="https://api.reuse.software/info/github.com/bootgs/boot"><img src="https://api.reuse.software/badge/github.com/bootgs/boot" alt="REUSE status"></a>
+  <a href="https://www.bestpractices.dev/projects/16864"><img src="https://www.bestpractices.dev/projects/16864/badge" alt="OpenSSF Best Practices"></a>
+  <a href="https://www.bestpractices.dev/projects/16864"><img src="https://www.bestpractices.dev/projects/16864/baseline" alt="OpenSSF Baseline"></a>
 </p>
 
 <p align="left">

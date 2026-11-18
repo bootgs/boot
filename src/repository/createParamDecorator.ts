@@ -11,7 +11,7 @@ import { assignParamMetadata } from "../repository";
  * @returns {Function} A function that returns a parameter decorator.
  */
 export function createParamDecorator(type: ParamSource) {
-  return (key?: string, ...pipes: any[]): ParameterDecorator => {
+  return (key?: string, ...pipes: unknown[]): ParameterDecorator => {
     return (
       target: object,
       propertyKey: string | symbol | undefined,

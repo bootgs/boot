@@ -1,4 +1,5 @@
 import type { Linter } from "eslint";
+import stylistic from "@stylistic/eslint-plugin";
 import jsdoc from "eslint-plugin-jsdoc";
 
 /**
@@ -9,7 +10,8 @@ import jsdoc from "eslint-plugin-jsdoc";
 const config: Linter.Config = {
   files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
   plugins: {
-    jsdoc
+    jsdoc,
+    "@stylistic": stylistic
   },
   rules: {
     /**
@@ -23,17 +25,22 @@ const config: Linter.Config = {
     ],
 
     /**
-     * Enforces a blank line before JSDoc comments.
-     * @see {@link https://eslint.org/docs/latest/rules/lines-around-comment lines-around-comment}
+     * Enforces a blank line before JSDoc comments, except at the start of a block, object, array,
+     * class, interface, enum, type literal or module (where Prettier removes the blank line).
+     * @see {@link https://eslint.style/rules/lines-around-comment @stylistic/lines-around-comment}
      */
-    "lines-around-comment": [
+    "@stylistic/lines-around-comment": [
       "warn",
       {
         beforeBlockComment: true,
         allowBlockStart: true,
         allowObjectStart: true,
         allowArrayStart: true,
-        allowClassStart: true
+        allowClassStart: true,
+        allowInterfaceStart: true,
+        allowEnumStart: true,
+        allowTypeStart: true,
+        allowModuleStart: true
       }
     ]
   }

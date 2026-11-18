@@ -9,7 +9,7 @@ import { ParamSource } from "../domain/enums";
  * @param   {number} index - The index of the parameter in the function's argument list.
  * @param   {ParamSource} type - The data source type for the parameter.
  * @param   {string} key - An optional key to extract a specific value.
- * @param   {any[]} pipes - Optional pipes for the parameter.
+ * @param   {unknown[]} pipes - Optional pipes for the parameter.
  * @returns {Record<string, ParamDefinition>} The updated parameter metadata.
  */
 export function assignParamMetadata(
@@ -17,11 +17,11 @@ export function assignParamMetadata(
   index: number,
   type: ParamSource,
   key?: string,
-  pipes?: any[]
+  pipes?: unknown[]
 ): Record<string, ParamDefinition> {
   const pendingKey: string = `__pending_pipes__:${index}`;
   const pending: ParamDefinition | undefined = existing[pendingKey];
-  const updatedPipes: any[] = [...(pending?.pipes || []), ...(pipes || [])];
+  const updatedPipes: unknown[] = [...(pending?.pipes || []), ...(pipes || [])];
 
   const definition: ParamDefinition = { type, key, index };
 

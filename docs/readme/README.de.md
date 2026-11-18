@@ -10,7 +10,7 @@
 
 [English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | **Deutsch** | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Diese Übersetzung wurde mit KI-Unterstützung aus [README.md](../../README.md) für Version 1.10.0 erstellt. Maßgeblich ist
+> Diese Übersetzung wurde mit KI-Unterstützung aus [README.md](../../README.md) für Version 1.10.1 erstellt. Maßgeblich ist
 > die englische README. Korrekturen sind willkommen — siehe [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
@@ -20,6 +20,8 @@
   <a href="https://github.com/bootgs/boot/actions/workflows/codeql.yml"><img src="https://github.com/bootgs/boot/actions/workflows/codeql.yml/badge.svg?branch=main" alt="CodeQL"></a>
   <a href="https://scorecard.dev/viewer/?uri=github.com/bootgs/boot"><img src="https://api.scorecard.dev/projects/github.com/bootgs/boot/badge" alt="OpenSSF Scorecard"></a>
   <a href="https://api.reuse.software/info/github.com/bootgs/boot"><img src="https://api.reuse.software/badge/github.com/bootgs/boot" alt="REUSE status"></a>
+  <a href="https://www.bestpractices.dev/projects/16864"><img src="https://www.bestpractices.dev/projects/16864/badge" alt="OpenSSF Best Practices"></a>
+  <a href="https://www.bestpractices.dev/projects/16864"><img src="https://www.bestpractices.dev/projects/16864/baseline" alt="OpenSSF Baseline"></a>
 </p>
 
 <p align="left">

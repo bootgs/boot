@@ -121,14 +121,14 @@ export class Resolver {
 
     const parts: string[] = key.split(".");
 
-    let current: ApplicationProperties = this._config;
+    let current: unknown = this._config;
 
     for (const part of parts) {
       if (current === null || typeof current !== "object") {
         return undefined;
       }
 
-      current = current[part];
+      current = (current as ApplicationProperties)[part];
     }
 
     return current;
