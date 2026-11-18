@@ -21,6 +21,9 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - name: checkout
@@ -46,7 +49,16 @@ jobs:
         run: npm run format
 
       - name: test
-        run: npm run test:cov
+        run: npm run test:cov -- --coverage.reporter=text --coverage.reporter=lcov
+
+      # Coverage report to Codecov (OIDC, no token). Never fails the build: forks get no OIDC token.
+      - name: codecov
+        if: always() && !cancelled()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+          files: ./coverage/lcov.info
+          fail_ci_if_error: false
 
       - name: build
         run: npm run build

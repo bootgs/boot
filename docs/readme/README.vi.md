@@ -8,7 +8,7 @@
     </small>
 </p>
 
-[English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | [Bahasa Indonesia](README.id.md) | **Tiếng Việt** | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
+[English](../../README.md) | [العربية](README.ar.md) | [Čeština](README.cs.md) | [Deutsch](README.de.md) | [Español](README.es.md) | [Français](README.fr.md) | [Bahasa Indonesia](README.id.md) | [Italiano](README.it.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [Türkçe](README.tr.md) | [Українська](README.uk.md) | **Tiếng Việt** | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
 > Bản dịch này được chuẩn bị với sự hỗ trợ của AI từ [README.md](../../README.md) cho phiên bản 1.10.1. README tiếng Anh là phiên bản tham chiếu. Mọi góp ý chỉnh sửa đều được hoan nghênh: xem [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
@@ -17,6 +17,7 @@
 <p align="left">
   <a href="https://github.com/bootgs/boot/actions/workflows/ci.yml"><img src="https://github.com/bootgs/boot/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <a href="https://github.com/bootgs/boot/actions/workflows/codeql.yml"><img src="https://github.com/bootgs/boot/actions/workflows/codeql.yml/badge.svg?branch=main" alt="CodeQL"></a>
+  <a href="https://codecov.io/gh/bootgs/boot"><img src="https://codecov.io/gh/bootgs/boot/graph/badge.svg" alt="Codecov"></a>
   <a href="https://scorecard.dev/viewer/?uri=github.com/bootgs/boot"><img src="https://api.scorecard.dev/projects/github.com/bootgs/boot/badge" alt="OpenSSF Scorecard"></a>
   <a href="https://api.reuse.software/info/github.com/bootgs/boot"><img src="https://api.reuse.software/badge/github.com/bootgs/boot" alt="REUSE status"></a>
   <a href="https://www.bestpractices.dev/projects/16864"><img src="https://www.bestpractices.dev/projects/16864/badge" alt="OpenSSF Best Practices"></a>
