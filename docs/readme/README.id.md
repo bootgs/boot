@@ -10,7 +10,7 @@
 
 [English](../../README.md) | [Українська](README.uk.md) | [Русский](README.ru.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português](README.pt.md) | [Italiano](README.it.md) | [Nederlands](README.nl.md) | [Polski](README.pl.md) | [Čeština](README.cs.md) | [Türkçe](README.tr.md) | [العربية](README.ar.md) | **Bahasa Indonesia** | [Tiếng Việt](README.vi.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-TW.md)
 
-> Terjemahan ini disiapkan dengan bantuan AI dari [README.md](../../README.md) untuk versi 1.10.0. README berbahasa Inggris adalah versi acuan. Koreksi sangat kami harapkan: lihat [CONTRIBUTING.md](../../CONTRIBUTING.md).
+> Terjemahan ini disiapkan dengan bantuan AI dari [README.md](../../README.md) untuk versi 1.10.1. README berbahasa Inggris adalah versi acuan. Koreksi sangat kami harapkan: lihat [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 # Boot Framework for Google Apps Script™
 
