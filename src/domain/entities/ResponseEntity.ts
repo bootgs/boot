@@ -4,7 +4,7 @@ import { ContentMimeType, HttpStatus } from "../enums";
 /**
  * Class representing an HTTP response, including the status code, headers, and body.
  */
-export class ResponseEntity<T = any> {
+export class ResponseEntity<T = unknown> {
   private readonly body: T | null;
   private readonly status: HttpStatus;
   private readonly headers: Record<string, string>;

@@ -39,13 +39,13 @@ export class Router {
    * @param {Resolver} _resolver The dependency resolver.
    * @param {RouteMetadata[]} _routes The registered routes.
    * @param {InjectionToken[]} _advices The registered controller advices.
-   * @param {Record<string, any>} _config Application configuration.
+   * @param {Record<string, unknown>} _config Application configuration.
    */
   constructor(
     private readonly _resolver: Resolver,
     private readonly _routes: RouteMetadata[],
     private readonly _advices: InjectionToken[] = [],
-    private readonly _config: Record<string, any> = {},
+    private readonly _config: Record<string, unknown> = {},
     private readonly _apiPrefix: string | null = null
   ) {}
 
@@ -92,13 +92,13 @@ export class Router {
       );
     }
 
-    const controllerInstance: any = this._resolver.resolve(route.controller);
+    const controllerInstance: unknown = this._resolver.resolve(route.controller);
 
     if (!isRecord(controllerInstance)) {
       throw new Error(`Controller '${route.controller.name}' is not a valid object.`);
     }
 
-    const handler: any = controllerInstance[route.handler];
+    const handler: unknown = controllerInstance[route.handler];
 
     if (!isFunctionLike(handler)) {
       throw new Error(
@@ -221,7 +221,7 @@ export class Router {
    * Processes the result of a controller method.
    *
    * @param   {unknown} result - The result of the controller method.
-   * @param   {any} handler - The controller method handler.
+   * @param   {object} handler - The controller method handler.
    * @param   {HttpRequest} request - The HTTP request object.
    * @param   {RouteExecutionContext} ctx - The route execution context.
    * @param   {Function} responseBuilder - A function to build an HTTP response.
@@ -229,7 +229,7 @@ export class Router {
    */
   private processResult(
     result: unknown,
-    handler: any,
+    handler: object,
     request: HttpRequest,
     ctx: RouteExecutionContext,
     responseBuilder: (
@@ -241,7 +241,7 @@ export class Router {
       isResponseBody?: boolean
     ) => HttpResponse,
     produce?: ContentMimeType,
-    controllerInstance?: any
+    controllerInstance?: object
   ): HttpResponse {
     if (isHttpResponse(result)) {
       return result;
@@ -315,7 +315,7 @@ export class Router {
    * Handles an exception using registered exception handlers.
    *
    * @param   {unknown} err - The error to handle.
-   * @param   {any} controllerInstance - The controller instance where the error occurred.
+   * @param   {object} controllerInstance - The controller instance where the error occurred.
    * @param   {HttpRequest} request - The HTTP request object.
    * @param   {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event - The Apps Script event object.
    * @param   {Function} responseBuilder - A function to build an HTTP response.
@@ -323,7 +323,7 @@ export class Router {
    */
   private handleException(
     err: unknown,
-    controllerInstance: any,
+    controllerInstance: object,
     request: HttpRequest,
     event: GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost,
     responseBuilder: (
@@ -375,15 +375,15 @@ export class Router {
    * Finds an exception handler for a given error in a target instance.
    *
    * @param   {unknown} err - The error to handle.
-   * @param   {any} instance - The instance to search for handlers.
+   * @param   {unknown} instance - The instance to search for handlers.
    * @returns {string | null} The name of the handler method, or null if not found.
    */
-  private findExceptionHandler(err: unknown, instance: any): string | null {
+  private findExceptionHandler(err: unknown, instance: unknown): string | null {
     if (!instance) {
       return null;
     }
 
-    let prototype: any = Object.getPrototypeOf(instance);
+    let prototype: unknown = Object.getPrototypeOf(instance);
     const visitedMethods: Set<string> = new Set<string>();
 
     while (prototype && prototype !== Object.prototype) {
@@ -396,7 +396,7 @@ export class Router {
 
         visitedMethods.add(propertyName);
 
-        const method: any = instance[propertyName];
+        const method: unknown = (instance as Record<string, unknown>)[propertyName];
 
         if (!isFunctionLike(method)) continue;
 
@@ -424,7 +424,7 @@ export class Router {
    * Calls an exception handler method.
    *
    * @param   {string} handlerName - The name of the handler method.
-   * @param   {any} instance - The instance containing the handler method.
+   * @param   {unknown} instance - The instance containing the handler method.
    * @param   {unknown} err - The error to handle.
    * @param   {HttpRequest} request - The HTTP request object.
    * @param   {GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost} event - The Apps Script event object.
@@ -433,7 +433,7 @@ export class Router {
    */
   private callExceptionHandler(
     handlerName: string,
-    instance: any,
+    instance: unknown,
     err: unknown,
     request: HttpRequest,
     event: GoogleAppsScript.Events.DoGet | GoogleAppsScript.Events.DoPost,
@@ -447,11 +447,14 @@ export class Router {
     ) => HttpResponse,
     produce?: ContentMimeType
   ): HttpResponse | Promise<HttpResponse> {
-    const handler: any = instance[handlerName];
+    const target: Record<string, unknown> = instance as Record<string, unknown>;
+    const handler: (...args: unknown[]) => unknown = target[handlerName] as (
+      ...args: unknown[]
+    ) => unknown;
 
     const isResponseBody: boolean = !!(
       Reflect.getMetadata(RESPONSE_BODY_METADATA, handler) ||
-      Reflect.getMetadata(RESPONSE_BODY_METADATA, instance.constructor)
+      Reflect.getMetadata(RESPONSE_BODY_METADATA, target.constructor as object)
     );
 
     // TODO: Support argument injection for exception handlers (similar to buildMethodParams)
@@ -533,14 +536,14 @@ export class Router {
 
     const parts: string[] = key.split(".");
 
-    let current: any = this._config;
+    let current: unknown = this._config;
 
     for (const part of parts) {
       if (current === null || typeof current !== "object") {
         return undefined;
       }
 
-      current = current[part];
+      current = (current as Record<string, unknown>)[part];
     }
 
     return current;
@@ -584,14 +587,16 @@ export class Router {
     const designParamTypes: Newable[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
 
-    const handler: any = (target as any)[propertyKey];
+    const handler: (...args: unknown[]) => unknown = (target as Record<PropertyKey, unknown>)[
+      propertyKey
+    ] as (...args: unknown[]) => unknown;
 
-    const controllerPipes: any[] =
+    const controllerPipes: unknown[] =
       Reflect.getMetadata(PIPES_METADATA, targetPrototype.constructor) || [];
 
-    const methodPipes: any[] = Reflect.getMetadata(PIPES_METADATA, handler) || [];
+    const methodPipes: unknown[] = Reflect.getMetadata(PIPES_METADATA, handler) || [];
 
-    const globalPipes: any[] = [...controllerPipes, ...methodPipes];
+    const globalPipes: unknown[] = [...controllerPipes, ...methodPipes];
 
     const args: unknown[] = new Array(
       Math.max(
@@ -678,7 +683,7 @@ export class Router {
           break;
       }
 
-      const pipes: any[] = [
+      const pipes: unknown[] = [
         ...globalPipes,
         ...("pipes" in param && Array.isArray(param.pipes) ? param.pipes : [])
       ];
@@ -687,7 +692,9 @@ export class Router {
         try {
           if (typeof pipe === "function") {
             if (pipe.prototype && pipe.prototype.transform) {
-              const pipeInstance = this._resolver.resolve<PipeTransform>(pipe);
+              const pipeInstance: PipeTransform = this._resolver.resolve<PipeTransform>(
+                pipe as Newable<PipeTransform>
+              );
 
               value = pipeInstance.transform(value, {
                 type: param.type,
@@ -701,7 +708,7 @@ export class Router {
                 data: "key" in param ? param.key : undefined
               });
             }
-          } else if (pipe && typeof pipe.transform === "function") {
+          } else if (pipe && typeof (pipe as Partial<PipeTransform>).transform === "function") {
             value = (pipe as PipeTransform).transform(value, {
               type: param.type,
               metatype: designParamTypes[param.index],

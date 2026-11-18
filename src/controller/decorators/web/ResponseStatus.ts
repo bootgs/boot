@@ -20,11 +20,11 @@ import { HttpStatus } from "../../../domain/enums";
  * ```
  */
 export function ResponseStatus(status: HttpStatus): MethodDecorator {
-  return (
+  return <T>(
     _target: object,
     _propertyKey: string | symbol,
-    descriptor: TypedPropertyDescriptor<any>
-  ): TypedPropertyDescriptor<any> => {
+    descriptor: TypedPropertyDescriptor<T>
+  ): TypedPropertyDescriptor<T> => {
     if (descriptor.value) {
       Reflect.defineMetadata(RESPONSE_STATUS_METADATA, status, descriptor.value);
     }

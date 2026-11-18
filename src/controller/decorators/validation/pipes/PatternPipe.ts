@@ -13,6 +13,8 @@ export class PatternPipe implements PipeTransform<string, string> {
    * @param   {string | RegExp} regexp - The regular expression to match.
    */
   constructor(regexp: string | RegExp) {
+    // The pattern is the application's own (decorator argument), not request input.
+    // eslint-disable-next-line security/detect-non-literal-regexp
     this.regexp = typeof regexp === "string" ? new RegExp(regexp) : regexp;
   }
 

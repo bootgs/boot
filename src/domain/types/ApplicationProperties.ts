@@ -2,4 +2,4 @@
 /**
  * Interface representing application configuration properties.
  */
-export type ApplicationProperties = Record<string, any>;
+export type ApplicationProperties = Record<string, unknown>;

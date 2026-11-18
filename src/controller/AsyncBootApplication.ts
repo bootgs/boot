@@ -26,7 +26,7 @@ export class AsyncBootApplication extends BaseBootApplication {
     const handler: () => AppsScriptMenuProxy = (): AppsScriptMenuProxy => proxy;
 
     const proxy: AppsScriptMenuProxy = new Proxy(handler, {
-      get: (target, prop, receiver: any): any => {
+      get: (target, prop, receiver: unknown): unknown => {
         if (!isString(prop)) {
           return Reflect.get(target, prop, receiver);
         }
@@ -43,7 +43,7 @@ export class AsyncBootApplication extends BaseBootApplication {
           await this._eventDispatcher.dispatchByName(prop, event);
         };
       },
-      apply: (target, thisArg: any, argArray): any => {
+      apply: (target, thisArg: unknown, argArray): unknown => {
         return Reflect.apply(target, thisArg, argArray);
       }
     }) as unknown as AppsScriptMenuProxy;

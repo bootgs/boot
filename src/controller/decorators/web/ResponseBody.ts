@@ -25,10 +25,10 @@ import { RESPONSE_BODY_METADATA } from "../../../domain/constants";
  * ```
  */
 export function ResponseBody(): MethodDecorator & ClassDecorator {
-  return (
+  return <T>(
     target: object,
     propertyKey?: string | symbol,
-    descriptor?: TypedPropertyDescriptor<any>
+    descriptor?: TypedPropertyDescriptor<T>
   ): void => {
     if (propertyKey) {
       if (descriptor && descriptor.value) {

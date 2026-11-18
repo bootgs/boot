@@ -4,7 +4,7 @@ import { PIPES_METADATA } from "../../../domain/constants";
 /**
  * Decorator for applying pipes to a controller or method.
  *
- * @param   {...any[]} pipes - The pipes to apply.
+ * @param   {...unknown[]} pipes - The pipes to apply.
  * @returns {MethodDecorator & ClassDecorator} A decorator.
  *
  * @example
@@ -27,15 +27,15 @@ import { PIPES_METADATA } from "../../../domain/constants";
  * }
  * ```
  */
-export function UsePipes(...pipes: any[]): MethodDecorator & ClassDecorator {
-  return (
+export function UsePipes(...pipes: unknown[]): MethodDecorator & ClassDecorator {
+  return <T>(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     target: object | Function,
     key?: string | symbol,
-    descriptor?: TypedPropertyDescriptor<any>
+    descriptor?: TypedPropertyDescriptor<T>
   ): void => {
     if (descriptor) {
-      Reflect.defineMetadata(PIPES_METADATA, pipes, descriptor.value);
+      Reflect.defineMetadata(PIPES_METADATA, pipes, descriptor.value as object);
     } else {
       Reflect.defineMetadata(PIPES_METADATA, pipes, target);
     }

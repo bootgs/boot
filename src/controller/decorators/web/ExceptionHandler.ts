@@ -20,11 +20,11 @@ import { Newable } from "../../../domain/types";
  * ```
  */
 export function ExceptionHandler(...exceptions: Newable<Error>[]): MethodDecorator {
-  return (
+  return <T>(
     _target: object,
     _propertyKey: string | symbol,
-    descriptor: TypedPropertyDescriptor<any>
-  ): TypedPropertyDescriptor<any> => {
+    descriptor: TypedPropertyDescriptor<T>
+  ): TypedPropertyDescriptor<T> => {
     if (descriptor.value) {
       Reflect.defineMetadata(EXCEPTION_HANDLER_METADATA, exceptions, descriptor.value);
     }

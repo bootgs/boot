@@ -6,6 +6,7 @@ import langMarkdown from "./lang-markdown.ts";
 import langTypescript from "./lang-typescript.ts";
 import overridesTests from "./overrides-tests.ts";
 import rulesJsdoc from "./rules-jsdoc.ts";
+import rulesSecurity from "./rules-security.ts";
 import rulesSpacing from "./rules-spacing.ts";
 import rulesPrettier from "./rules-prettier.ts";
 
@@ -20,6 +21,7 @@ export {
   langMarkdown,
   langTypescript,
   rulesJsdoc,
+  rulesSecurity,
   rulesSpacing,
   overridesTests,
   rulesPrettier

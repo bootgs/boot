@@ -4,21 +4,26 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
 /**
  * Pipe for validating that a value is not null, undefined, or empty.
  */
-export class NotEmptyPipe implements PipeTransform<any, any> {
-  public transform(value: any, metadata: ArgumentMetadata): any {
+export class NotEmptyPipe implements PipeTransform<unknown, unknown> {
+  public transform<T>(value: T, metadata: ArgumentMetadata): T {
     if (value === null || value === undefined) {
       throw new Error(
         `Validation failed (${metadata.data ? `for "${metadata.data}" ` : ""}value must not be empty)`
       );
     }
 
-    if (typeof value.length === "number" && value.length === 0) {
+    const { length, size }: { length?: unknown; size?: unknown } = value as {
+      length?: unknown;
+      size?: unknown;
+    };
+
+    if (typeof length === "number" && length === 0) {
       throw new Error(
         `Validation failed (${metadata.data ? `for "${metadata.data}" ` : ""}value must not be empty)`
       );
     }
 
-    if (typeof value.size === "number" && value.size === 0) {
+    if (typeof size === "number" && size === 0) {
       throw new Error(
         `Validation failed (${metadata.data ? `for "${metadata.data}" ` : ""}value must not be empty)`
       );

@@ -4,7 +4,7 @@ import { ArgumentMetadata, PipeTransform } from "../../../../domain/types";
 /**
  * Pipe for validating the size of a string, array, map, or set.
  */
-export class SizePipe implements PipeTransform<any, any> {
+export class SizePipe implements PipeTransform<unknown, unknown> {
   private readonly min: number;
   private readonly max: number;
 
@@ -20,7 +20,7 @@ export class SizePipe implements PipeTransform<any, any> {
     this.max = max;
   }
 
-  public transform(value: any, metadata: ArgumentMetadata): any {
+  public transform<T>(value: T, metadata: ArgumentMetadata): T {
     const size: number = this.getSize(value);
 
     if (size < this.min || size > this.max) {
@@ -32,17 +32,22 @@ export class SizePipe implements PipeTransform<any, any> {
     return value;
   }
 
-  private getSize(value: any): number {
+  private getSize(value: unknown): number {
     if (value === null || value === undefined) {
       return 0;
     }
 
-    if (typeof value.length === "number") {
-      return value.length;
+    const { length, size }: { length?: unknown; size?: unknown } = value as {
+      length?: unknown;
+      size?: unknown;
+    };
+
+    if (typeof length === "number") {
+      return length;
     }
 
-    if (typeof value.size === "number") {
-      return value.size;
+    if (typeof size === "number") {
+      return size;
     }
 
     if (typeof value === "object") {

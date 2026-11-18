@@ -40,7 +40,7 @@ export class EventDispatcher {
     for (const controller of this.controllers.keys()) {
       const processedMethods: Set<string> = new Set<string>();
 
-      let prototype: object = (controller as any).prototype;
+      let prototype: object = controller.prototype;
 
       while (prototype && prototype !== Object.prototype) {
         const propertyNames: string[] = Object.getOwnPropertyNames(prototype);
@@ -52,7 +52,7 @@ export class EventDispatcher {
 
           processedMethods.add(propertyName);
 
-          const methodHandler: unknown = (prototype as any)[propertyName];
+          const methodHandler: unknown = (prototype as Record<string, unknown>)[propertyName];
 
           const eventMetadata: AppsScriptEventType | undefined = Reflect.getMetadata(
             APPSSCRIPT_EVENT_METADATA,
@@ -202,7 +202,9 @@ export class EventDispatcher {
     const designParamTypes: Newable[] =
       Reflect.getMetadata(PARAMTYPES_METADATA, targetPrototype, propertyKey) || [];
 
-    const handler: any = (target as any)[propertyKey];
+    const handler: (...args: unknown[]) => unknown = (target as Record<PropertyKey, unknown>)[
+      propertyKey
+    ] as (...args: unknown[]) => unknown;
 
     const args: unknown[] = new Array(
       Math.max(
